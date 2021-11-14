@@ -1,0 +1,304 @@
+@extends('layouts.dashboard.index')
+@section('page_title')
+    {{__('app.gym.places_maintenence')}}
+@endsection
+@section('meta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+@push('css')
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .select2-selection.select2-selection--multiple {
+            min-height: 40px !important;
+        }
+
+        .select-model h3 {
+            width: 230px;
+        }
+    </style>
+@endpush
+@section('content')
+    <!-- Page Content  -->
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-body">
+{{--                            <div class="related-heading mb-5 ">--}}
+{{--                                <form id="download_form" action="{{route('report.download','place')}}" method="get">--}}
+{{--                                    <h2 class="d-flex justify-content-between align-items-center">--}}
+{{--                                        <div><img src="{{ asset('gym/img/active.svg') }}" width="20" alt=""> Reports</div>--}}
+{{--                                        <a href="javascript:void(0)" class="cursor-pointer download d-flex align-items-center" title="download pdf">--}}
+{{--                                            <i class=" fas fa-download"></i> <h3>Download</h3>--}}
+{{--                                        </a>--}}
+{{--                                    </h2>--}}
+{{--                                </form>--}}
+{{--                            </div>--}}
+                            <div>
+                                <div class="row col-12 p-0 m-0 mb-3 menu-and-filter">
+                                    <div class="col">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'place'], request()->toArray()))}} @else {{ route('reports.index','place')}} @endif">{{ __('app.Bay_Area') }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'plate'], request()->toArray()))}} @else {{ route('reports.index','plate')}} @endif">{{ __('app.Car_Plate') }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <div class="d-flex justify-content-end position-relative mt-2">
+                                            @include('customer.reports._filter',['type' => 'place'])
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active">
+
+
+                                        <div class="row" id="statistic">
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{route('customerRegions.index')}}" class="iq-card-body">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6>{{ __('app.Regions') }}</h6>
+                                                        </div>
+                                                        <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
+                                                                    <i class="fa fa-id-card"></i></div>
+                                                                <h3>{{$regioncount}}</h3>
+                                                            </div>
+                                                            <div
+                                                                class="iq-map text-primary font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{route('customerBranches.index')}}" class="iq-card-body">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6>{{ __('app.Branches') }}</h6>
+                                                        </div>
+                                                        <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                    <i class="fa fa-subway"></i></div>
+                                                                <h3>{{$branchcount}}</h3></div>
+                                                            <div
+                                                                class="iq-map text-danger font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{route('customerUsers.index')}}" class="iq-card-body">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6>{{ __('app.Users') }}</h6>
+                                                        </div>
+                                                        <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-warning mr-2">
+                                                                    <i class="fa fa-bars"></i></div>
+                                                                <h3>{{$userscount}}</h3></div>
+                                                            <div
+                                                                class="iq-map text-warning font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{url('customer/customerPackages')}}" class="iq-card-body">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6>{{ __('app.Models') }}</h6>
+                                                        </div>
+                                                        <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-info mr-2">
+                                                                    <i class="fa fa-users"></i></div>
+                                                                <h3>{{$modelscount}}</h3></div>
+                                                            <div class="iq-map text-info font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @if(count($charts))
+                                        <div class="pt-4 mb-5" id="BranchPLaceBarCon"  style="display: none">
+                                            <div id="BranchPLaceBar" class="chartDiv" style="min-height: 450px"></div>
+                                        </div>
+
+                                        <div class="row pb-5" id="PlaceCircleCon" style="display: none">
+                                            <div class="col-lg-6">
+                                                <div class="pt-8">
+                                                    <div id="PlaceCircleWork" class="chartDiv" style="min-height: 450px"></div>
+                                                </div>
+                                                <h4 class="text-center">{{__('app.gym.DurationWork')}} ({{ __('app.Hours') }})</h4>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="pt-8">
+                                                    <div id="PlaceCircleEmpty" class="chartDiv" style="min-height: 450px"></div>
+                                                </div>
+                                                <h4 class="text-center">{{__('app.gym.DurationEmpty')}} ({{ __('app.Hours') }})</h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="pt-4 mb-5" id="BranchPLaceSideBarCon" style="display: none">
+                                            <div id="BranchPLaceSideBar" class="chartDiv" style="min-height: 450px"></div>
+                                        </div>
+
+                                        <div class="pt-4 mb-5" id="BranchPLaceLineCon" style="display: none">
+                                            <div id="BranchPLaceLine" class="chartDiv" style="min-height: 450px"></div>
+                                        </div>
+
+                                        <div class="pt-4 mb-5" id="BranchPLaceDynamicBarCon" style="display: none">
+                                            <div id="BranchPLaceDynamicBar" class="chartDiv" style="min-height: 450px;"></div>
+                                            <h4 class="text-center">{{ __('app.Duration_Work_Flow') }}</h4>
+                                        </div>
+
+                                        <div class="p-4">
+                                            <div class="custom-table mt-5">
+                                                <table class="table {{handleTableConfig($config['table'],'report')}}"
+                                                       id="place_table" width="100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="th-sm">{{ucfirst($filter_key)}}
+                                                        </th>
+                                                        <th class="th-sm">{{ __('app.Duration_Work') }}</th>
+                                                        <th class="th-sm">{{ __('app.Duration_Empty') }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($charts['bar'] as $place)
+                                                        <tr style="cursor: pointer;" class="record">
+                                                            <td>{{$place[$filter_key]}}</td>
+                                                            <td class="open">{{$place['work']}} {{ __('app.Hours') }}</td>
+                                                            <td class="open warning">{{$place['empty']}} {{ __('app.Hours') }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        @else
+                                            <div class="col-12 text-center">
+                                                <img src="{{ asset('images/no-results.webp') }}" class="no-results-image col-12 col-md-7  mt-5"
+                                                     alt="">
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@push('js')
+    <script src="{{asset('js/branchCharts.js')}}"></script>
+    <script src="{{asset('js/comparisonChart.js')}}"></script>
+    <script>
+        /****** Place Chart ******/
+        @php $key_name = 'report'; @endphp
+
+        /*************** Start Table And Statistics *************/
+        @if(!in_array($key_name ,array_values($config['statistics']['1'])))
+            $("#statistics").hide();
+        @endif
+        @if(!in_array($key_name ,Arr::flatten(array_values($config['table']))))
+            $("#place_table").hide();
+        @endif
+        /*************** End Table And Statistics *************/
+
+        /************* Start Bar Chart ****************/
+        @if(in_array($key_name ,array_values($config['chart']['bar'])))
+            @if(count($charts))
+                $("#BranchPLaceBarCon").show();
+                @if($filter_type == 'comparison')
+                    comparisonPlaceBar('BranchPLaceBar', @json($charts['bar']));
+                @else
+                    branchPlaceBar('BranchPLaceBar', @json($charts['bar']));
+                @endif
+            @endif
+        @endif
+       /**************** End Bar Chart****************/
+
+       /**************** Start Line Chart ************/
+        @if(in_array($key_name ,array_values($config['chart']['line'])))
+            @if(count($charts))
+                $("#BranchPLaceLineCon").show();
+                @if($filter_type == 'comparison')
+                    comparisonPlaceLine('BranchPLaceLine', @json($charts['bar']));
+                @else
+                    branchPlaceLine('BranchPLaceLine', @json($charts['bar']));
+                @endif
+            @endif
+        @endif
+        /************** End Line Chart ************/
+
+        /**************** Start Line Chart ************/
+        @if(in_array($key_name ,array_values($config['chart']['side_bar'])))
+            @if(count($charts))
+                $("#BranchPLaceSideBarCon").show();
+                @if($filter_type == 'comparison')
+                    comparisonPlaceSideBar('BranchPLaceSideBar', @json($charts['bar']));
+                @else
+                    branchPlaceSideBar('BranchPLaceSideBar', @json($charts['bar']));
+                @endif
+            @endif
+        @endif
+        /************** End Line Chart ************/
+
+        /********************* Start Dynamic Chart *********/
+        @if($filter_type == 'comparison')
+            @if(in_array($key_name ,array_values($config['chart']['circle'])))
+                @if(count($charts))
+                    @if(diffMonth($charts['dynamic_bar']['start_at'],$charts['dynamic_bar']['end_at']) > 1)
+                        $("#BranchPLaceDynamicBarCon").show();
+                        comparisonPlaceDynamicBar('BranchPLaceDynamicBar', @json($charts['dynamic_bar']['data']),"{{$charts['dynamic_bar']['start_at']}}","{{$charts['dynamic_bar']['end_at']}}");
+                    @endif
+                @endif
+            @endif
+        @endif
+        /*********************** End Dynamic Chart *************/
+
+        /********************** Start Circle Chart ************/
+        @if(in_array($key_name ,array_values($config['chart']['circle'])))
+            @if(count($charts))
+                $("#PlaceCircleCon").show();
+                @if($filter_type == 'comparison')
+                    comparisonPlaceCircleWork('PlaceCircleWork',@json($charts['circle']['work']));
+                    comparisonPlaceCircleEmpty('PlaceCircleEmpty', @json($charts['circle']['empty']));
+                @else
+                    branchPlaceCircleWork('PlaceCircleWork',@json($charts['circle']['work']));
+                    branchPlaceCircleWork('PlaceCircleEmpty', @json($charts['circle']['empty']));
+                @endif
+             @endif
+        @endif
+        /**************** End Circle Chart ***************/
+
+        $(".download").on('click',function (e){
+            $("#download_form").submit();
+        });
+    </script>
+@endpush

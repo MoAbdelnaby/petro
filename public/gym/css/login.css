@@ -1,0 +1,387 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap');
+
+body {
+    background-color: #fff;
+    color: #11044C;
+    font-family: 'Cairo', sans-serif;
+}
+
+:root {
+    --main-one-color: #90218A;
+    --main-two-color: #29ABE2;
+
+  }
+
+.container, .container-lg, .container-md,
+ .container-sm, .container-xl {
+    max-width: 1240px;
+}
+
+/******* Start login-header *******/
+
+
+.login-header {
+    position: relative;
+}
+
+.login-header .logo {
+    padding-top: 14px;
+}
+
+
+.login-header .logo .border {
+    margin-top: 18px;
+}
+
+.login-header h2 {
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.login-header h2 span {
+    color: var(--main-one-color);
+}
+
+.login-header p {
+    color: var(--main-two-color);
+    font-size: 17px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.login-header ul {
+    list-style: none;
+    padding-right: 43px;
+}
+
+.login-header ul li {
+    display: inline-block;
+    width: 12px;
+    height: 9px;
+    background-color: #11044C;
+}
+
+.login-header ul .part-1 {
+    background-color: #11044C;
+}
+
+.login-header ul .part-2 {
+    background-color: #11044C;
+
+}
+
+.login-header ul .part-3 {
+    background-color: var(--main-one-color);
+}
+
+.login-header ul .part-4 {
+    background-color: var(--main-one-color);
+}
+
+.login-header ul .part-5 {
+    background-color: var(--main-two-color);
+}
+
+.login-header ul .part-6 {
+    background-color: var(--main-two-color);
+}
+
+
+.login-header .back {
+    background-image: url(../img/Group\ 23069.png);
+    position: relative;
+    background-size: 70% 80%;
+    width: 100%;
+    height: 34vh;
+    background-repeat: no-repeat;
+    background-position: 185px 45px;
+    margin-top: 30px;
+}
+
+.login-header .back .card {
+    background-color: #fff;
+    width: 345px;
+    border: 1px solid#e0dcdc;
+    margin: 0 auto;
+    border-radius: 10%;
+    box-shadow: 0px 14px 22px -9px #bbcbd8;
+
+}
+
+.login-header .back .card h5 {
+    color: #757575 !important;
+    float: left;
+    font-size: 16px;
+}
+
+.login-header .back .card h5 strong {
+    float: left;
+    color: var(--main-one-color);
+}
+
+.login-header .back .card-login-header {
+    background-color: transparent;
+    border-bottom: none;
+}
+
+.login-header .back .info-color {
+    background-color: transparent !important;
+}
+
+.back .card .card-body {
+    padding-left: 1rem!important;
+    padding-right: 1rem!important;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.back .card .card-body .md-form .form-control {
+    margin: 0 0 2rem 0;
+    padding: 1rem 0 .4rem 0;
+}
+
+
+.back .card .card-body .btn {
+    background-image: linear-gradient(180deg, #11044C, #03010F) !important;
+    border: none !important;
+    padding: 8px;
+    width: 194px;
+    margin: 0 auto;
+    border-radius: 20px;
+    color: #fff !important;
+    text-transform: capitalize;
+    font-size: 15px;
+}
+
+
+/******* End login-header *******/
+
+
+/****** Start login-footer ******/
+
+.login-footer {
+    position: relative;
+}
+
+.login-footer .text {
+    margin-top: 95px;
+    height: 26px;
+    background-color: #11044C;
+}
+
+.login-footer .left {
+    position: absolute;
+    top: 60px;
+    left: 25px;
+}
+
+.login-footer .right {
+    position: absolute;
+    right: 30px;
+    top: 61px;
+}
+
+.login-footer .container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1065px;
+    margin-top: 18px;
+}
+
+.login-footer .table-responsive {
+    overflow: hidden;
+
+}
+
+.login-footer table.table th, table.table td {
+    padding-top: 5px;
+    border-bottom: none;
+}
+
+
+/***** animation ******/
+
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+    }
+
+100% {
+    transform: translateX(-233px);
+    -webkit-transform: translateX(-233px);
+    -moz-transform: translateX(-233px);
+    -ms-transform: translateX(-233px);
+    -o-transform: translateX(-233px);
+    }
+}
+
+
+@-webkit-keyframes ticker {
+    0% {
+     transform: translateX(0);
+     -webkit-transform: translateX(0);
+     -moz-transform: translateX(0);
+     -ms-transform: translateX(0);
+     -o-transform: translateX(0);
+}
+
+    100% {
+    transform: translateX(-233px);
+    -webkit-transform: translateX(-233px);
+    -moz-transform: translateX(-233px);
+    -ms-transform: translateX(-233px);
+    -o-transform: translateX(-233px);
+}
+  }
+
+
+
+
+.login-footer .table:hover table th{
+    animation-play-state: paused;
+}
+
+
+.login-footer .table td, .table th {
+    padding: 1.50rem;
+    cursor: pointer;
+
+}
+
+
+.login-footer .copyright {
+    height: 27px;
+    background-color: #03010F;
+}
+
+.login-footer .copyright p {
+    color: #fff;
+    font-size: 14px;
+}
+
+
+.login-footer .table th span:nth-child(2)::before  {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 14px;
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    border-top: 2px solid #11044C;
+    border-left: 2px solid #11044C;
+    transition: .2s;
+    -webkit-transition: .2s;
+    -moz-transition: .2s;
+    -ms-transition: .2s;
+    -o-transition: .2s;
+    opacity: 1;
+}
+
+.login-footer .table th span:nth-child(2)::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 14px;
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    border-top: 2px solid #11044C;
+    border-right: 2px solid #11044C;
+    transition: .2s;
+    -webkit-transition: .2s;
+    -moz-transition: .2s;
+    -ms-transition: .2s;
+    -o-transition: .2s;
+    opacity: 1;
+}
+
+
+.login-footer .table th span:last-child::before {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 14px;
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    border-bottom: 2px solid #11044C;
+    border-left: 2px solid #11044C;
+    transition: .2s;
+    -webkit-transition: .2s;
+    -moz-transition: .2s;
+    -ms-transition: .2s;
+    -o-transition: .2s;
+    opacity: 1;
+}
+
+
+.login-footer .table th span:last-child::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    right: 14px;
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    border-bottom: 2px solid #11044C;
+    border-right: 2px solid #11044C;
+    transition: .2s;
+    -webkit-transition: .2s;
+    -moz-transition: .2s;
+    -ms-transition: .2s;
+    -o-transition: .2s;
+    opacity: 1;
+}
+
+
+
+.login-footer .table th:hover img {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+}
+
+
+
+
+ /*.login-footer .table th:hover img {
+    animation: animat .5s linear infinite;
+    -webkit-animation: animat .5s linear infinite;
+}
+
+
+@keyframes animat {
+    0%{
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+}
+
+    100%{
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+[
+    {
+        "name":"Makkah Region",
+        "branches":[
+            "one", "tow"
+        ]
+    },
+    {
+        "name":"Ha'il Region",
+        "branches":["one","tow","three","for"]
+    },
+    {
+        "name":"Aljawf Region",
+        "branches":["one"]
+    }
+]

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+  <g id="Group_6580" data-name="Group 6580" transform="translate(-976.598 10.965)">
+    <g id="Group_6575" data-name="Group 6575" transform="translate(1019.647 20)">
+      <g id="XMLID_17_">
+        <path id="XMLID_19_" d="M91.75,416.247s-.052-4.3,3.778-4.3,3.741,4.261,3.741,4.261" transform="translate(-66.982 -411.95)" fill="none" stroke="#11044c" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5"/>
+        <path id="XMLID_18_" d="M30.25,416.247s-.052-4.3,3.774-4.3,3.741,4.261,3.741,4.261" transform="translate(-30.25 -411.95)" fill="none" stroke="#11044c" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5"/>
+      </g>
+      <path id="XMLID_16_" d="M65.531,445.96s-2.1,7.35-9.98,7.35-9.891-7.293-9.891-7.293" transform="translate(-39.454 -432.263)" fill="none" stroke="#11044c" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    </g>
+    <g id="Group_6576" data-name="Group 6576">
+      <g id="Group_6579" data-name="Group 6579" transform="translate(980.523 20)">
+        <g id="XMLID_10_">
+          <path id="XMLID_12_" d="M32.12,245.48l6.657,3.778L32.172,253" transform="translate(-32.12 -245.48)" fill="none" stroke="#11044c" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+          <path id="XMLID_11_" d="M95.9,253l-6.5-3.778,6.448-3.741" transform="translate(-66.331 -245.48)" fill="none" stroke="#11044c" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+        </g>
+        <path id="XMLID_9_" d="M44.16,287.48s2.1-7.35,9.98-7.35,9.891,7.293,9.891,7.293" transform="translate(-39.311 -266.175)" fill="none" stroke="#11044c" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5"/>
+      </g>
+      <g id="Group_1895" data-name="Group 1895" transform="translate(976.598 -10.965)">
+        <path id="Union_1" data-name="Union 1" d="M8.843,11.305V2.463H0V0H11.194V.112h.112V11.305Z" transform="translate(68.695)" fill="#11044c"/>
+        <path id="Union_3" data-name="Union 3" d="M8.843,0V8.843H0v2.463H11.194v-.112h.112V0Z" transform="translate(68.695 68.695)" fill="#11044c"/>
+        <path id="Union_2" data-name="Union 2" d="M8.843,0V8.843H0v2.463H11.194v-.112h.112V0Z" transform="translate(11.305 11.305) rotate(180)" fill="#11044c"/>
+        <path id="Union_4" data-name="Union 4" d="M8.843,11.305V2.463H0V0H11.194V.112h.112V11.305Z" transform="translate(11.305 80) rotate(180)" fill="#11044c"/>
+      </g>
+    </g>
+  </g>
+</svg>

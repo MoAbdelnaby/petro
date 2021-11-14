@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="52.843" viewBox="0 0 44 52.843">
+  <g id="Group_23128" data-name="Group 23128" transform="translate(-1284 -475.157)">
+    <g id="Group_23127" data-name="Group 23127" transform="translate(1289.684 475.157)">
+      <g id="Bg">
+        <g id="Group_3830" data-name="Group 3830" transform="translate(0)">
+          <path id="Path_7401" data-name="Path 7401" d="M312.37,381.837a13.13,13.13,0,1,0,13.13-13.13A13.13,13.13,0,0,0,312.37,381.837Zm23.27,0A10.14,10.14,0,1,1,325.5,371.7,10.139,10.139,0,0,1,335.64,381.837Z" transform="translate(-312.37 -368.707)" fill="#11044c"/>
+          <path id="Path_7402" data-name="Path 7402" d="M348.615,383.369v7.694a.408.408,0,1,0,.816,0v-7.694a.408.408,0,1,0-.816,0Z" transform="translate(-335.951 -377.98)" fill="#11044c"/>
+          <path id="Path_7403" data-name="Path 7403" d="M328.664,408.975c-.208.087-.363.189-.347.229s.2,0,.407-.084l7.1-2.96c.208-.086.363-.189.346-.229s-.2,0-.406.085Z" transform="translate(-322.745 -392.915)" fill="#11044c"/>
+          <path id="Path_7404" data-name="Path 7404" d="M349.23,404.6a.6.6,0,1,0,0,1.194h5.044a.6.6,0,0,0,0-1.194Z" transform="translate(-335.962 -392.058)" fill="#11044c"/>
+          <path id="Path_7405" data-name="Path 7405" d="M347.215,404.2a1.016,1.016,0,1,0,1.016-1.016A1.016,1.016,0,0,0,347.215,404.2Z" transform="translate(-335.04 -391.137)" fill="#11044c"/>
+        </g>
+      </g>
+    </g>
+    <text id="Empty" transform="translate(1306 519)" fill="#f02020" font-size="15" font-family="Cairo-Bold, Cairo" font-weight="700"><tspan x="-21.007" y="0">Empty</tspan></text>
+  </g>
+</svg>

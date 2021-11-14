@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap');
+
+html,
+body,h1, h2, h3, h4, h5, h6,.btn{
+    direction: rtl!important;
+    font-family: 'Cairo', sans-serif!important;
+}
+body.sidebar-main .content-page, body.sidebar-main .iq-footer {
+    margin-right: 80px;
+    margin-left: 0;
+}
+.iq-top-navbar {
+    left: 30px!important;
+    right: auto!important;
+}
+.navbar-list li {
+    float: right;
+    list-style-type: none;
+    position: relative;
+}
