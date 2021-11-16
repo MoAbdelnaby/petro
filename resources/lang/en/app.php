@@ -335,7 +335,7 @@ return [
         'Success' => 'Success !',
         'emailhasbeensend' => 'A email has been send to your email Please check for an email from company and click on the included link to reset your password.',
         'BacktoHome' => 'Back to Home',
-        'Logout' => 'Logout'
+        'Logout' => 'Logout',
 
     ],
     'side_bar' => [
@@ -359,7 +359,7 @@ return [
         ],
         'settings_control' => [
             'languages' => 'Languages',
-            'settings' => 'Website'
+            'settings' => 'Website',
         ],
         'auth_control' => [
             'users' => 'Users',
@@ -368,7 +368,7 @@ return [
             'settings' => 'Settings',
             'translations' => 'Translations',
             'permissions' => 'Permissions',
-            'models' => 'Models'
+            'models' => 'Models',
         ],
         'customers' => [
             'regions' => 'Regions',
@@ -378,11 +378,11 @@ return [
             'branches' => 'Branches',
             'branchmodels' => 'Assign Models To Branch',
 
-        ]
+        ],
     ],
     'errors' => [
         'woops' => 'Whoops!',
-        'message' => 'There were some problems with your input.'
+        'message' => 'There were some problems with your input.',
     ],
     'permissions' => [
         'page_title' => [
@@ -407,7 +407,7 @@ return [
             'display_name' => 'Display Name ',
             'submit' => 'Submit',
             'reset' => 'Reset',
-            'edit' => 'Edit'
+            'edit' => 'Edit',
         ],
         'delete_message' => 'Are you sure you need to delete this permission',
         'delete' => 'Delete',
@@ -433,7 +433,7 @@ return [
             'records' => 'Records',
             'selected' => 'Selected',
             'delete_selected' => 'Delete selected Permissions',
-        ]
+        ],
     ],
     'roles' => [
         'page_title' => [
@@ -458,7 +458,7 @@ return [
             'display_name' => 'Display Name ',
             'submit' => 'Submit',
             'reset' => 'Reset',
-            'edit' => 'Edit'
+            'edit' => 'Edit',
         ],
         'delete_message' => 'Are you sure you need to delete this Role',
         'delete' => 'Delete',
@@ -483,7 +483,7 @@ return [
             'records' => 'Records',
             'selected' => 'Selected',
             'delete_selected' => 'Delete selected Roles',
-        ]
+        ],
     ],
     'users' => [
         'page_title' => [
@@ -508,7 +508,7 @@ return [
             'display_name' => 'Display Name ',
             'submit' => 'Submit',
             'reset' => 'Reset',
-            'edit' => 'Edit'
+            'edit' => 'Edit',
         ],
         'delete_message' => 'Are you sure you need to delete this record',
         'delete' => 'Delete',
@@ -557,7 +557,7 @@ return [
             'subject_id' => 'Subject ID',
             'subject_id' => 'Subject ID',
             'changes' => 'Changes',
-        ]
+        ],
     ],
     'activities' => [
         'activities' => 'Activities',
@@ -588,7 +588,7 @@ return [
             'subject_id' => 'Subject ID',
             'subject_id' => 'Subject ID',
             'changes' => 'Changes',
-        ]
+        ],
     ],
     'saas' => [
         'packages' => [
@@ -662,7 +662,7 @@ return [
                 'records' => 'Records',
                 'selected' => 'Selected',
                 'delete_selected' => 'Delete selected',
-            ]
+            ],
         ],
 
         'features' => [
@@ -722,9 +722,8 @@ return [
                 'records' => 'Records',
                 'selected' => 'Selected',
                 'delete_selected' => 'Delete selected',
-            ]
+            ],
         ],
-
 
         'models' => [
             'page_title' => [
@@ -786,9 +785,8 @@ return [
                 'records' => 'Records',
                 'selected' => 'Selected',
                 'delete_selected' => 'Delete selected',
-            ]
+            ],
         ],
-
 
         'modelstatus' => [
             'page_title' => [
@@ -850,7 +848,7 @@ return [
                 'records' => 'Records',
                 'selected' => 'Selected',
                 'delete_selected' => 'Delete selected',
-            ]
+            ],
         ],
 
         'modelfeatures' => [
@@ -913,7 +911,7 @@ return [
                 'records' => 'Records',
                 'selected' => 'Selected',
                 'delete_selected' => 'Delete selected',
-            ]
+            ],
         ],
     ],
     'customers' => [
@@ -978,7 +976,7 @@ return [
                 'records' => 'Records',
                 'selected' => 'Selected',
                 'delete_selected' => 'Delete selected',
-            ]
+            ],
         ],
         'regions' => [
             'page_title' => [
@@ -986,7 +984,6 @@ return [
                 'create' => 'Create Region',
                 'update' => 'Update Region',
             ],
-
 
             'delete_message' => 'Are you sure you need to delete this Region',
             'delete' => 'Delete',
@@ -1014,7 +1011,7 @@ return [
                 'records' => 'Records',
                 'selected' => 'Selected',
                 'delete_selected' => 'Delete selected Regions',
-            ]
+            ],
         ],
         'branches' => [
             'page_title' => [
@@ -1056,7 +1053,7 @@ return [
                 'selected' => 'Selected',
                 'delete_selected' => 'Delete selected Branches',
             ],
-            'files' => 'Branch Files'
+            'files' => 'Branch Files',
         ],
         'branchmodels' => [
             'page_title' => [
@@ -1064,7 +1061,6 @@ return [
                 'create' => 'Create New',
                 'update' => 'Update',
             ],
-
 
             'delete_message' => 'Are you sure you need to delete this Relation',
             'duplicate_message' => 'Error this model has been assigned to this model',
@@ -1093,7 +1089,7 @@ return [
                 'records' => 'Records',
                 'selected' => 'Selected',
                 'delete_selected' => 'Delete selected',
-            ]
+            ],
         ],
         'speed' => [
             'index' => [
@@ -1104,13 +1100,12 @@ return [
             ],
             'show' => [
                 'action' => 'Branch history',
-                'title' => ':branch internet speeds log'
+                'title' => ':branch internet speeds log',
             ],
-            'unit' => 'MB'
+            'unit' => 'MB',
         ],
 
     ],
-
 
     'gym' => [
 
@@ -1202,7 +1197,7 @@ return [
         'Statistics' => 'Statistics',
         'Monthly' => 'Monthly',
         'Weekly' => 'Weekly',
-        'Daily' => 'Daily'
+        'Daily' => 'Daily',
 
     ],
     'languages' => [
@@ -1228,7 +1223,7 @@ return [
             'display_name' => 'Display Name ',
             'submit' => 'Submit',
             'reset' => 'Reset',
-            'edit' => 'Edit'
+            'edit' => 'Edit',
         ],
         'delete_message' => 'Are you sure you need to delete this Language',
         'delete' => 'Delete',
@@ -1254,7 +1249,7 @@ return [
             'records' => 'Records',
             'selected' => 'Selected',
             'delete_selected' => 'Delete selected Languages',
-        ]
+        ],
     ],
     'settings' => [
         'previous_page' => 'Previous',
@@ -1417,7 +1412,7 @@ return [
             'records' => 'Records',
             'selected' => 'Selected',
             'delete_selected' => 'Delete selected Users',
-        ]
+        ],
     ],
 
     'products' => [
@@ -1468,17 +1463,30 @@ return [
             'records' => 'Records',
             'selected' => 'Selected',
             'delete_selected' => 'Delete selected Users',
-        ]
+        ],
     ],
 
     'places' => [
         'file_will_prepare_soon' => 'File wil be prepare soon in prepared files',
         'files_prepared_successfully' => 'File will start downloading now',
         'file_not_found' => 'File Not Available Now',
-        'files_prepared' => 'Prepared Files'
+        'files_prepared' => 'Prepared Files',
     ],
     'plates' => [
-        'plate_put_in_error' => 'Plate moved to error successfully'
-    ]
+        'plate_put_in_error' => 'Plate moved to error successfully',
+    ],
+
+    'service' => [
+        'service' => 'service',
+        'index' => 'index',
+        'create' => 'create service',
+        'update' => 'update service',
+        'delete' => 'delete service',
+        'arabic_name' => 'arabic name',
+        'english_name' => 'english name',
+        'arabic_description' => 'arabic description',
+        'english_description' => 'english description',
+        'action' => 'action',
+    ],
 
 ];

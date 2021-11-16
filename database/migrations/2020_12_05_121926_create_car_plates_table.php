@@ -17,7 +17,7 @@ class CreateCarPLatesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_model_branch_id');
             $table->unsignedBigInteger('setting_id');
-            $table->enum('area', [1,2,3,4]);
+            $table->enum('area', [1, 2, 3, 4]);
             $table->string('plate_no');
             $table->date('date');
             $table->string('time');

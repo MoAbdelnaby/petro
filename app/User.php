@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -40,18 +39,17 @@ class User extends Authenticatable implements JWTSubject
         $this->attributes['password'] = bcrypt($value);
     }
 
-
 //
-//    protected static $logAttributes = ['name', 'email', 'phone','type','avatar'];
-//    protected static $ignoreChangedAttributes = ['password','updated_at'];
-//    protected static $submitEmptyLogs = false;
-//    protected static $logOnlyDirty = true;
-//    protected static $logName = 'user';
-//
-//    public function  getDescriptionForEvent(string $eventName): string
-//    {
-//        return "you Have {$eventName} user";
-//    }
+    //    protected static $logAttributes = ['name', 'email', 'phone','type','avatar'];
+    //    protected static $ignoreChangedAttributes = ['password','updated_at'];
+    //    protected static $submitEmptyLogs = false;
+    //    protected static $logOnlyDirty = true;
+    //    protected static $logName = 'user';
+    //
+    //    public function  getDescriptionForEvent(string $eventName): string
+    //    {
+    //        return "you Have {$eventName} user";
+    //    }
 
     protected static function booted()
     {
@@ -93,7 +91,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
-
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
