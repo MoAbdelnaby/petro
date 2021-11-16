@@ -85,9 +85,9 @@ Route::get('testcase',function(){
 
 
 
-Route::get('jobs-run', function (){
-    \Illuminate\Support\Facades\Artisan::call('queue:work --tries=3 --stop-when-empty');
-});
+//Route::get('jobs-run', function (){
+//    \Illuminate\Support\Facades\Artisan::call('queue:work --tries=3 --stop-when-empty');
+//});
 
 Route::get('azure-images-upload', function (){
     \Illuminate\Support\Facades\Artisan::call('plate-images:upload');

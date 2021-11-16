@@ -40,7 +40,10 @@ class Kernel extends ConsoleKernel
          $schedule->command('reminder:send')->daily()->timezone('Asia/Riyadh');
          $schedule->command('profile:handle')->dailyAt('01:00')->timezone('Asia/Riyadh');
          $schedule->command('carplate:images-handle')->dailyAt('01:00')->timezone('Asia/Riyadh');
-         $schedule->command('queue:work --tries=3')->everyMinute()->withoutOverlapping();
+//         $schedule->command('queue:work --tries=3')->everyMinute()->withoutOverlapping();
+         /* azure-images-upload */
+         $schedule->command('plate-images:upload')->everyMinute()->timezone('Asia/Riyadh');
+         $schedule->command('place-images:upload')->everyMinute()->timezone('Asia/Riyadh');
     }
 
     /**
