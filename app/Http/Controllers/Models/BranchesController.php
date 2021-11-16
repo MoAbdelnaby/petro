@@ -49,6 +49,7 @@ class BranchesController extends Controller
         $activepackage = UserPackages::where('user_id', parentID())->where('active', '1')->first();
 
         if ($branch_id) {
+
             $query = DB::table('user_model_branches')
                 ->select(['user_model_branches.*', 'branches.name as bname', 'models.name as mname', 'lt_models.id as lt_id'])
                 ->join('users_models', 'users_models.id', '=', 'user_model_branches.user_model_id')
@@ -79,7 +80,10 @@ class BranchesController extends Controller
             } else {
                 if ($items[0]->lt_id == 9) {
                     return redirect()->route('branchmodelpreview.plates', [$branch_id, $items[0]->id]);
-                } else {
+                }elseif ($items[0]->lt_id == 8) {
+                    return redirect()->route('branchmodelpreview.places', [$branch_id, $items[0]->id]);
+                }
+                else {
                     return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotexist'));
                 }
             }
