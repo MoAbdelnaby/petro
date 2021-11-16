@@ -3,16 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SendWelcomeMessage;
-use App\Phonetics\Phonetics;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Models\Models;
-use App\Models\UserModel;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Session;
 use Illuminate\Support\Facades\Redirect;
+use Session;
 
 class HomeController extends Controller
 {
