@@ -40,9 +40,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with('oldRequest', $oldRequest);
         });
 
-        if (\Schema::hasTable('userSettings')) {
             View::share('userSettings', UserSetting::where('user_id', 3)->first());
-        }
-
     }
 }
