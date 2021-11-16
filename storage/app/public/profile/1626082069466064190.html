@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en"  dir="ltr">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="csrf-token" content="Mh8JF7UkbJFh6oFwaJy0b7yXGzBzjiC7cRDvL2su" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="csrf-token" content="Mh8JF7UkbJFh6oFwaJy0b7yXGzBzjiC7cRDvL2su">
+    <title>General Dashboard |     Car plates
+</title>
+
+    <link rel="shortcut icon" href="http://rased.test/images/Logo.svg" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://rased.test/asset_en/css/bootstrap.min.css">
+    <!-- Typography CSS -->
+    <link rel="stylesheet" href="http://rased.test/asset_en/css/typography.css">
+    <link rel="stylesheet" href="http://rased.test/asset_en/css/style.css">
+    <link rel="stylesheet" href="http://rased.test/asset_en/css/responsive.css">
+    <link rel="stylesheet" href="http://rased.test/css/avatar.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="http://rased.test/assets/css/custom.css" rel="stylesheet" type="text/css"/>
+
+    
+        <style>
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .select2-selection.select2-selection--multiple {
+            min-height: 40px !important;
+        }
+
+        .select-model h3 {
+            width: 230px;
+        }
+    </style>
+
+    <link rel="stylesheet" href=" http://rased.test/assets/noty/noty.css ">
+    <script src=" http://rased.test/assets/noty/noty.min.js "></script>
+<link rel='stylesheet' type='text/css' property='stylesheet' href='//rased.test/_debugbar/assets/stylesheets?v=1624190261&theme=auto'><script type='text/javascript' src='//rased.test/_debugbar/assets/javascript?v=1624190261'></script><script type="text/javascript">jQuery.noConflict(true);</script>
+<script> Sfdump = window.Sfdump || (function (doc) { var refStyle = doc.createElement('style'), rxEsc = /([.*+?^${}()|\[\]\/\\])/g, idRx = /\bsf-dump-\d+-ref[012]\w+\b/, keyHint = 0 <= navigator.platform.toUpperCase().indexOf('MAC') ? 'Cmd' : 'Ctrl', addEventListener = function (e, n, cb) { e.addEventListener(n, cb, false); }; refStyle.innerHTML = '.phpdebugbar pre.sf-dump .sf-dump-compact, .sf-dump-str-collapse .sf-dump-str-collapse, .sf-dump-str-expand .sf-dump-str-expand { display: none; }'; (doc.documentElement.firstElementChild || doc.documentElement.children[0]).appendChild(refStyle); refStyle = doc.createElement('style'); (doc.documentElement.firstElementChild || doc.documentElement.children[0]).appendChild(refStyle); if (!doc.addEventListener) { addEventListener = function (element, eventName, callback) { element.attachEvent('on' + eventName, function (e) { e.preventDefault = function () {e.returnValue = false;}; e.target = e.srcElement; callback(e); }); }; } function toggle(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className, arrow, newClass; if (/\bsf-dump-compact\b/.test(oldClass)) { arrow = '▼'; newClass = 'sf-dump-expanded'; } else if (/\bsf-dump-expanded\b/.test(oldClass)) { arrow = '▶'; newClass = 'sf-dump-compact'; } else { return false; } if (doc.createEvent && s.dispatchEvent) { var event = doc.createEvent('Event'); event.initEvent('sf-dump-expanded' === newClass ? 'sfbeforedumpexpand' : 'sfbeforedumpcollapse', true, false); s.dispatchEvent(event); } a.lastChild.innerHTML = arrow; s.className = s.className.replace(/\bsf-dump-(compact|expanded)\b/, newClass); if (recursive) { try { a = s.querySelectorAll('.'+oldClass); for (s = 0; s < a.length; ++s) { if (-1 == a[s].className.indexOf(newClass)) { a[s].className = newClass; a[s].previousSibling.lastChild.innerHTML = arrow; } } } catch (e) { } } return true; }; function collapse(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className; if (/\bsf-dump-expanded\b/.test(oldClass)) { toggle(a, recursive); return true; } return false; }; function expand(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className; if (/\bsf-dump-compact\b/.test(oldClass)) { toggle(a, recursive); return true; } return false; }; function collapseAll(root) { var a = root.querySelector('a.sf-dump-toggle'); if (a) { collapse(a, true); expand(a); return true; } return false; } function reveal(node) { var previous, parents = []; while ((node = node.parentNode || {}) && (previous = node.previousSibling) && 'A' === previous.tagName) { parents.push(previous); } if (0 !== parents.length) { parents.forEach(function (parent) { expand(parent); }); return true; } return false; } function highlight(root, activeNode, nodes) { resetHighlightedNodes(root); Array.from(nodes||[]).forEach(function (node) { if (!/\bsf-dump-highlight\b/.test(node.className)) { node.className = node.className + ' sf-dump-highlight'; } }); if (!/\bsf-dump-highlight-active\b/.test(activeNode.className)) { activeNode.className = activeNode.className + ' sf-dump-highlight-active'; } } function resetHighlightedNodes(root) { Array.from(root.querySelectorAll('.sf-dump-str, .sf-dump-key, .sf-dump-public, .sf-dump-protected, .sf-dump-private')).forEach(function (strNode) { strNode.className = strNode.className.replace(/\bsf-dump-highlight\b/, ''); strNode.className = strNode.className.replace(/\bsf-dump-highlight-active\b/, ''); }); } return function (root, x) { root = doc.getElementById(root); var indentRx = new RegExp('^('+(root.getAttribute('data-indent-pad') || ' ').replace(rxEsc, '\\$1')+')+', 'm'), options = {"maxDepth":1,"maxStringLength":160,"fileLinkFormat":false}, elt = root.getElementsByTagName('A'), len = elt.length, i = 0, s, h, t = []; while (i < len) t.push(elt[i++]); for (i in x) { options[i] = x[i]; } function a(e, f) { addEventListener(root, e, function (e, n) { if ('A' == e.target.tagName) { f(e.target, e); } else if ('A' == e.target.parentNode.tagName) { f(e.target.parentNode, e); } else { n = /\bsf-dump-ellipsis\b/.test(e.target.className) ? e.target.parentNode : e.target; if ((n = n.nextElementSibling) && 'A' == n.tagName) { if (!/\bsf-dump-toggle\b/.test(n.className)) { n = n.nextElementSibling || n; } f(n, e, true); } } }); }; function isCtrlKey(e) { return e.ctrlKey || e.metaKey; } function xpathString(str) { var parts = str.match(/[^'"]+|['"]/g).map(function (part) { if ("'" == part) { return '"\'"'; } if ('"' == part) { return "'\"'"; } return "'" + part + "'"; }); return "concat(" + parts.join(",") + ", '')"; } function xpathHasClass(className) { return "contains(concat(' ', normalize-space(@class), ' '), ' " + className +" ')"; } addEventListener(root, 'mouseover', function (e) { if ('' != refStyle.innerHTML) { refStyle.innerHTML = ''; } }); a('mouseover', function (a, e, c) { if (c) { e.target.style.cursor = "pointer"; } else if (a = idRx.exec(a.className)) { try { refStyle.innerHTML = '.phpdebugbar pre.sf-dump .'+a[0]+'{background-color: #B729D9; color: #FFF !important; border-radius: 2px}'; } catch (e) { } } }); a('click', function (a, e, c) { if (/\bsf-dump-toggle\b/.test(a.className)) { e.preventDefault(); if (!toggle(a, isCtrlKey(e))) { var r = doc.getElementById(a.getAttribute('href').substr(1)), s = r.previousSibling, f = r.parentNode, t = a.parentNode; t.replaceChild(r, a); f.replaceChild(a, s); t.insertBefore(s, r); f = f.firstChild.nodeValue.match(indentRx); t = t.firstChild.nodeValue.match(indentRx); if (f && t && f[0] !== t[0]) { r.innerHTML = r.innerHTML.replace(new RegExp('^'+f[0].replace(rxEsc, '\\$1'), 'mg'), t[0]); } if (/\bsf-dump-compact\b/.test(r.className)) { toggle(s, isCtrlKey(e)); } } if (c) { } else if (doc.getSelection) { try { doc.getSelection().removeAllRanges(); } catch (e) { doc.getSelection().empty(); } } else { doc.selection.empty(); } } else if (/\bsf-dump-str-toggle\b/.test(a.className)) { e.preventDefault(); e = a.parentNode.parentNode; e.className = e.className.replace(/\bsf-dump-str-(expand|collapse)\b/, a.parentNode.className); } }); elt = root.getElementsByTagName('SAMP'); len = elt.length; i = 0; while (i < len) t.push(elt[i++]); len = t.length; for (i = 0; i < len; ++i) { elt = t[i]; if ('SAMP' == elt.tagName) { a = elt.previousSibling || {}; if ('A' != a.tagName) { a = doc.createElement('A'); a.className = 'sf-dump-ref'; elt.parentNode.insertBefore(a, elt); } else { a.innerHTML += ' '; } a.title = (a.title ? a.title+'\n[' : '[')+keyHint+'+click] Expand all children'; a.innerHTML += elt.className == 'sf-dump-compact' ? '<span>▶</span>' : '<span>▼</span>'; a.className += ' sf-dump-toggle'; x = 1; if ('sf-dump' != elt.parentNode.className) { x += elt.parentNode.getAttribute('data-depth')/1; } } else if (/\bsf-dump-ref\b/.test(elt.className) && (a = elt.getAttribute('href'))) { a = a.substr(1); elt.className += ' '+a; if (/[\[{]$/.test(elt.previousSibling.nodeValue)) { a = a != elt.nextSibling.id && doc.getElementById(a); try { s = a.nextSibling; elt.appendChild(a); s.parentNode.insertBefore(a, s); if (/^[@#]/.test(elt.innerHTML)) { elt.innerHTML += ' <span>▶</span>'; } else { elt.innerHTML = '<span>▶</span>'; elt.className = 'sf-dump-ref'; } elt.className += ' sf-dump-toggle'; } catch (e) { if ('&' == elt.innerHTML.charAt(0)) { elt.innerHTML = '…'; elt.className = 'sf-dump-ref'; } } } } } if (doc.evaluate && Array.from && root.children.length > 1) { root.setAttribute('tabindex', 0); SearchState = function () { this.nodes = []; this.idx = 0; }; SearchState.prototype = { next: function () { if (this.isEmpty()) { return this.current(); } this.idx = this.idx < (this.nodes.length - 1) ? this.idx + 1 : 0; return this.current(); }, previous: function () { if (this.isEmpty()) { return this.current(); } this.idx = this.idx > 0 ? this.idx - 1 : (this.nodes.length - 1); return this.current(); }, isEmpty: function () { return 0 === this.count(); }, current: function () { if (this.isEmpty()) { return null; } return this.nodes[this.idx]; }, reset: function () { this.nodes = []; this.idx = 0; }, count: function () { return this.nodes.length; }, }; function showCurrent(state) { var currentNode = state.current(), currentRect, searchRect; if (currentNode) { reveal(currentNode); highlight(root, currentNode, state.nodes); if ('scrollIntoView' in currentNode) { currentNode.scrollIntoView(true); currentRect = currentNode.getBoundingClientRect(); searchRect = search.getBoundingClientRect(); if (currentRect.top < (searchRect.top + searchRect.height)) { window.scrollBy(0, -(searchRect.top + searchRect.height + 5)); } } } counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count(); } var search = doc.createElement('div'); search.className = 'sf-dump-search-wrapper sf-dump-search-hidden'; search.innerHTML = ' <input type="text" class="sf-dump-search-input"> <span class="sf-dump-search-count">0 of 0<\/span> <button type="button" class="sf-dump-search-input-previous" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> <button type="button" class="sf-dump-search-input-next" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> '; root.insertBefore(search, root.firstChild); var state = new SearchState(); var searchInput = search.querySelector('.sf-dump-search-input'); var counter = search.querySelector('.sf-dump-search-count'); var searchInputTimer = 0; var previousSearchQuery = ''; addEventListener(searchInput, 'keyup', function (e) { var searchQuery = e.target.value; /* Don't perform anything if the pressed key didn't change the query */ if (searchQuery === previousSearchQuery) { return; } previousSearchQuery = searchQuery; clearTimeout(searchInputTimer); searchInputTimer = setTimeout(function () { state.reset(); collapseAll(root); resetHighlightedNodes(root); if ('' === searchQuery) { counter.textContent = '0 of 0'; return; } var classMatches = [ "sf-dump-str", "sf-dump-key", "sf-dump-public", "sf-dump-protected", "sf-dump-private", ].map(xpathHasClass).join(' or '); var xpathResult = doc.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); while (node = xpathResult.iterateNext()) state.nodes.push(node); showCurrent(state); }, 400); }); Array.from(search.querySelectorAll('.sf-dump-search-input-next, .sf-dump-search-input-previous')).forEach(function (btn) { addEventListener(btn, 'click', function (e) { e.preventDefault(); -1 !== e.target.className.indexOf('next') ? state.next() : state.previous(); searchInput.focus(); collapseAll(root); showCurrent(state); }) }); addEventListener(root, 'keydown', function (e) { var isSearchActive = !/\bsf-dump-search-hidden\b/.test(search.className); if ((114 === e.keyCode && !isSearchActive) || (isCtrlKey(e) && 70 === e.keyCode)) { /* F3 or CMD/CTRL + F */ if (70 === e.keyCode && document.activeElement === searchInput) { /* * If CMD/CTRL + F is hit while having focus on search input, * the user probably meant to trigger browser search instead. * Let the browser execute its behavior: */ return; } e.preventDefault(); search.className = search.className.replace(/\bsf-dump-search-hidden\b/, ''); searchInput.focus(); } else if (isSearchActive) { if (27 === e.keyCode) { /* ESC key */ search.className += ' sf-dump-search-hidden'; e.preventDefault(); resetHighlightedNodes(root); searchInput.value = ''; } else if ( (isCtrlKey(e) && 71 === e.keyCode) /* CMD/CTRL + G */ || 13 === e.keyCode /* Enter */ || 114 === e.keyCode /* F3 */ ) { e.preventDefault(); e.shiftKey ? state.previous() : state.next(); collapseAll(root); showCurrent(state); } } }); } if (0 >= options.maxStringLength) { return; } try { elt = root.querySelectorAll('.sf-dump-str'); len = elt.length; i = 0; t = []; while (i < len) t.push(elt[i++]); len = t.length; for (i = 0; i < len; ++i) { elt = t[i]; s = elt.innerText || elt.textContent; x = s.length - options.maxStringLength; if (0 < x) { h = elt.innerHTML; elt[elt.innerText ? 'innerText' : 'textContent'] = s.substring(0, options.maxStringLength); elt.className += ' sf-dump-str-collapse'; elt.innerHTML = '<span class=sf-dump-str-collapse>'+h+'<a class="sf-dump-ref sf-dump-str-toggle" title="Collapse"> ◀</a></span>'+ '<span class=sf-dump-str-expand>'+elt.innerHTML+'<a class="sf-dump-ref sf-dump-str-toggle" title="'+x+' remaining characters"> ▶</a></span>'; } } } catch (e) { } }; })(document); </script><style> .phpdebugbar pre.sf-dump { display: block; white-space: pre; padding: 5px; overflow: initial !important; } .phpdebugbar pre.sf-dump:after { content: ""; visibility: hidden; display: block; height: 0; clear: both; } .phpdebugbar pre.sf-dump span { display: inline; } .phpdebugbar pre.sf-dump a { text-decoration: none; cursor: pointer; border: 0; outline: none; color: inherit; } .phpdebugbar pre.sf-dump img { max-width: 50em; max-height: 50em; margin: .5em 0 0 0; padding: 0; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAHUlEQVQY02O8zAABilCaiQEN0EeA8QuUcX9g3QEAAjcC5piyhyEAAAAASUVORK5CYII=) #D3D3D3; } .phpdebugbar pre.sf-dump .sf-dump-ellipsis { display: inline-block; overflow: visible; text-overflow: ellipsis; max-width: 5em; white-space: nowrap; overflow: hidden; vertical-align: top; } .phpdebugbar pre.sf-dump .sf-dump-ellipsis+.sf-dump-ellipsis { max-width: none; } .phpdebugbar pre.sf-dump code { display:inline; padding:0; background:none; } .sf-dump-public.sf-dump-highlight, .sf-dump-protected.sf-dump-highlight, .sf-dump-private.sf-dump-highlight, .sf-dump-str.sf-dump-highlight, .sf-dump-key.sf-dump-highlight { background: rgba(111, 172, 204, 0.3); border: 1px solid #7DA0B1; border-radius: 3px; } .sf-dump-public.sf-dump-highlight-active, .sf-dump-protected.sf-dump-highlight-active, .sf-dump-private.sf-dump-highlight-active, .sf-dump-str.sf-dump-highlight-active, .sf-dump-key.sf-dump-highlight-active { background: rgba(253, 175, 0, 0.4); border: 1px solid #ffa500; border-radius: 3px; } .phpdebugbar pre.sf-dump .sf-dump-search-hidden { display: none !important; } .phpdebugbar pre.sf-dump .sf-dump-search-wrapper { font-size: 0; white-space: nowrap; margin-bottom: 5px; display: flex; position: -webkit-sticky; position: sticky; top: 5px; } .phpdebugbar pre.sf-dump .sf-dump-search-wrapper > * { vertical-align: top; box-sizing: border-box; height: 21px; font-weight: normal; border-radius: 0; background: #FFF; color: #757575; border: 1px solid #BBB; } .phpdebugbar pre.sf-dump .sf-dump-search-wrapper > input.sf-dump-search-input { padding: 3px; height: 21px; font-size: 12px; border-right: none; border-top-left-radius: 3px; border-bottom-left-radius: 3px; color: #000; min-width: 15px; width: 100%; } .phpdebugbar pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-next, .phpdebugbar pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-previous { background: #F2F2F2; outline: none; border-left: none; font-size: 0; line-height: 0; } .phpdebugbar pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-next { border-top-right-radius: 3px; border-bottom-right-radius: 3px; } .phpdebugbar pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-next > svg, .phpdebugbar pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-previous > svg { pointer-events: none; width: 12px; height: 12px; } .phpdebugbar pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-count { display: inline-block; padding: 0 5px; margin: 0; border-left: none; line-height: 21px; font-size: 12px; }.phpdebugbar pre.sf-dump, .phpdebugbar pre.sf-dump .sf-dump-default{word-wrap: break-word; white-space: pre-wrap; word-break: normal}.phpdebugbar pre.sf-dump .sf-dump-num{font-weight:bold; color:#1299DA}.phpdebugbar pre.sf-dump .sf-dump-const{font-weight:bold}.phpdebugbar pre.sf-dump .sf-dump-str{font-weight:bold; color:#3A9B26}.phpdebugbar pre.sf-dump .sf-dump-note{color:#1299DA}.phpdebugbar pre.sf-dump .sf-dump-ref{color:#7B7B7B}.phpdebugbar pre.sf-dump .sf-dump-public{color:#000000}.phpdebugbar pre.sf-dump .sf-dump-protected{color:#000000}.phpdebugbar pre.sf-dump .sf-dump-private{color:#000000}.phpdebugbar pre.sf-dump .sf-dump-meta{color:#B729D9}.phpdebugbar pre.sf-dump .sf-dump-key{color:#3A9B26}.phpdebugbar pre.sf-dump .sf-dump-index{color:#1299DA}.phpdebugbar pre.sf-dump .sf-dump-ellipsis{color:#A0A000}.phpdebugbar pre.sf-dump .sf-dump-ns{user-select:none;}.phpdebugbar pre.sf-dump .sf-dump-ellipsis-note{color:#1299DA}</style>
+</head>
+<body class="sidebar-main">
+
+<!-- loader Start -->
+<div id="loading">
+    <div id="loading-center">
+
+    </div>
+</div>
+<!-- loader END -->
+
+<!-- Wrapper Start -->
+<div class="wrapper">
+
+
+		<!-- Sidebar  -->
+<div class="iq-sidebar">
+    <div class="iq-sidebar-logo d-flex justify-content-center p-0">
+        <a href="http://rased.test/home">
+
+
+
+
+
+
+        </a>
+
+
+
+
+
+
+
+
+    </div>
+    <div id="sidebar-scrollbar">
+        <nav class="iq-sidebar-menu">
+            <ul id="iq-sidebar-toggle" class="iq-menu p-0 m-0">
+
+                                                <br>
+                <div class="row justify-content-center">
+                    <div class="col-12 justify-content-center">
+                        <div class="iq-product-cover d-flex justify-content-center">
+                            <a href="http://rased.test/home" class="iq-waves-effect">
+
+                               <img alt="Logo" src="http://rased.test/gym/img/homemenu.svg" class="img-fluid"/>
+
+                            </a>
+                        </div>
+                        <div class="iq-product-cover d-flex justify-content-center"> <a href="http://rased.test/home" class="iq-waves-effect menutext" >General Dashboard</a></div>
+                    </div>
+                </div>
+
+                <hr style="">
+
+                <div class="row justify-content-center">
+                    <div class="col-12 justify-content-center">
+                        <div class="iq-product-cover d-flex justify-content-center">
+                            <a href="http://rased.test/customer/map" class="iq-waves-effect">
+                                <img src="http://rased.test/gym/img/map.png" alt="product-image" class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="iq-product-cover d-flex justify-content-center">
+                            <a href="http://rased.test/customer/map">Map</a>
+                        </div>
+                    </div>
+                </div>
+
+                    <hr style="">
+
+                                    <div class="row justify-content-center">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="http://rased.test/customer/customerPackages" class="iq-waves-effect">
+                                    <img src="http://rased.test/gym/img/package.svg" alt="product-image" class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center"> <a href="http://rased.test/customer/customerPackages" class="iq-waves-effect menutext">My Models</a></div>
+                        </div>
+                    </div>
+                    
+                <hr style="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <div class="row justify-content-center">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="http://rased.test/customer/customerUsers" class="iq-waves-effect"><img src="http://rased.test/gym/img/users.svg"  alt="product-image" class="img-fluid"></a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center"> <a href="http://rased.test/customer/customerUsers" class="iq-waves-effect menutext" >Users</a></div>
+                        </div>
+                    </div>
+                                    <hr style="">
+
+                                            <div class="row justify-content-center">
+                            <div class="col-12 justify-content-center">
+                                <div class="iq-product-cover d-flex justify-content-center">
+                                    <a href="http://rased.test/customer/activities" class="iq-waves-effect"><img src="http://rased.test/gym/img/work-time.svg"  alt="product-image" class="img-fluid"></a>
+                                </div>
+                                <div class="iq-product-cover d-flex justify-content-center"> <a href="http://rased.test/customer/activities" class="iq-waves-effect menutext" >Activities</a></div>
+                            </div>
+                        </div>
+                                        <hr style="">
+                    <div class="row justify-content-center">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="http://rased.test/customer/config/place/get" class="iq-waves-effect"><img src="http://rased.test/gym/img/config.png"  alt="Config" class="img-fluid"></a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center"> <a href="http://rased.test/customer/config/place/get" class="iq-waves-effect menutext" >Config</a></div>
+                        </div>
+                    </div>
+                    <hr style="">
+                    <div class="row justify-content-center">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="http://rased.test/customer/reports/place/get" class="iq-waves-effect"><img src="http://rased.test/gym/img/report.svg"  alt="Reports" class="img-fluid"></a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center"> <a href="http://rased.test/customer/reports/place/get" class="iq-waves-effect menutext" >Reports</a></div>
+                        </div>
+                    </div>
+                    <hr style="">
+
+                    <div class="row justify-content-center">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="http://rased.test/settings/translations" class="iq-waves-effect"><img src="http://rased.test/gym/img/translate.svg"  alt="Reports" class="img-fluid"></a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center"> <a href="http://rased.test/settings/translations" class="iq-waves-effect menutext" >Translations</a></div>
+                        </div>
+                    </div>
+
+
+                
+                <hr style="">
+
+                
+            </ul>
+        </nav>
+        <div class="p-3"></div>
+    </div>
+</div>
+
+		<!-- TOP Nav Bar -->
+<div class="iq-top-navbar">
+    <div class="iq-navbar-custom">
+        <div class="iq-sidebar-logo">
+            <div class="top-logo">
+                <a href="http://rased.test/home" class="logo">
+                    <img src="http://rased.test/images/wakeb.png" class="img-fluid" alt="">
+                    <span>General Dashboard</span>
+                </a>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light p-0 allshadow">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
+                <i class="ri-menu-3-line"></i>
+            </button>
+            <div class="iq-menu-bt align-self-center">
+                <div class="wrapper-menu">
+                    <div class="main-circle"><i class="ri-arrow-left-s-line"></i></div>
+                    <div class="hover-circle"><i class="ri-arrow-right-s-line"></i></div>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <ul class="navbar-nav ml-auto navbar-list">
+                    <li>
+                        <a class="wrapper-menu">
+                            <i class="fas fa-bars" style="display: none"></i>
+
+                            <i class="fas fa-indent"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item navDark">
+                                                    <a href="http://rased.test/dark/on" data-toggle="tooltip" data-placement="top" title="" data-original-title="Dark Mode">
+                                <i class="fas fa-moon"></i>
+                            </a>
+                                            </li>
+                    <li class="nav-item">
+                                                    <a class="language-title " href="http://rased.test/lang/ar" data-toggle="tooltip" data-placement="top" title="" data-original-title="Arabic">
+                                <i class="fas fa-language"></i>
+                                <small>ar</small>
+                            </a>
+                                            </li>
+                </ul>
+            </div>
+            <ul class="navbar-list">
+                <li class="nav-item mr-1">
+                    <a href="#" class="search-toggle iq-waves-effect" data-toggle="tooltip" data-placement="top" title="" data-original-title="Notifications">
+                                                    <i class="far fa-bell" style="font-size: 14px"></i>
+                                            </a>
+                    <div class="iq-sub-dropdown">
+                        <div class="iq-card shadow-none m-0">
+                            <div class="iq-card-body p-0 ">
+                                <div class="bg-primary">
+                                    <h5 class="mb-0 text-white">All notification<small class="badge  badge-light float-right pt-1">0</small></h5>
+                                </div>
+                                                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="user-settings">
+                    <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
+                        <img src="http://rased.test/storage/profile/1621334323975648284.svg" class="img-fluid rounded mr-3" alt="user">
+                        <div class="caption">
+                            <h6 class="mb-0 line-height">Petromin</h6>
+                            <span class="font-size-12">Available</span>
+                        </div>
+                    </a>
+                    <div class="iq-sub-dropdown iq-user-dropdown">
+                        <div class="iq-card shadow-none m-0">
+                            <div class="iq-card-body p-0 ">
+                                <div class="bg-primary p-1">
+                                    <h5 class="mb-0 text-white ">Petromin</h5>
+                                </div>
+                                <a href="http://rased.test/auth/users/profile" class="iq-sub-card iq-bg-primary-hover">
+                                    <h6 class=""> <i class="ri-file-user-line"></i> My Profile</h6>
+                                </a>
+                                <a href="http://rased.test/auth/users/changepassword/3" class="iq-sub-card iq-bg-primary-hover">
+                                    <h6 class=""><i class="ri-profile-line"></i> Change Password</h6>
+                                </a>
+
+                                <div class="w-100 p-0">
+                                    <a class="iq-sub-card iq-bg-primary-hover"  href="http://rased.test/logout" onclick="event.preventDefault();document.getElementById('logout-form').submit();" role="button">
+                                        <h6><i class="ri-login-box-line"></i> Logout</h6>
+                                    </a>
+                                    <form id="logout-form" action="http://rased.test/logout" method="POST" style="display: none;">
+                                        <input type="hidden" name="_token" value="Mh8JF7UkbJFh6oFwaJy0b7yXGzBzjiC7cRDvL2su">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+
+    </div>
+</div>
+<!-- TOP Nav Bar END -->
+
+            <!-- Page Content  -->
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="text-center alert-cont">
+                                            </div>
+            <div class="row col-12 p-0 m-0 text-right d-block mb-2">
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-body">
+                            <div class="related-heading mb-5 ">
+                                <h2 class="d-flex justify-content-between align-items-center">
+                                    <div><img src="http://rased.test/gym/img/active.svg" width="20" alt=""> Reports</div>
+                                    <a href="#" class="cursor-pointer download" title="download pdf" download>
+                                        <i class=" fas fa-download "></i>
+                                    </a>
+                                </h2>
+                            </div>
+                            <div>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="http://rased.test/customer/reports/place/get">Bay area</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="http://rased.test/customer/reports/plate/get">Car Plate</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" >
+                                    <div class="tab-pane fade show active">
+                                        <div class="d-flex justify-content-end position-relative">
+                                            <div class="filter-dropdown">
+    <a class="btn-filter btn btn-primary waves-effect waves-light px-4 py-2" data-toggle="dropdown" href="#">
+        <i class="fas fa-sort-alt"></i> &nbsp;Filter
+    </a>
+    <div class="filter-content" aria-labelledby="dropdownMenuButton">
+        <form action="http://rased.test/customer/reports/plate/filter" method="Get">
+            <input type="hidden" name="_token" value="Mh8JF7UkbJFh6oFwaJy0b7yXGzBzjiC7cRDvL2su">            <label>Type:</label>
+            <select name="filter_type" class="form-control filter-select">
+                <option value="comparison">Comparison Branch data</option>
+                <option value="branch">Branch data</option>
+            </select>
+            <div class="mt-4" id="filter_comparison">
+                <lebel>Select branches:</lebel>
+                <select class="form-control" id="select_comparison" multiple name="branch_comparison[]">
+                                            <option value="1">Jeddah</option>
+                                            <option value="2">Riyadh</option>
+                                            <option value="17">test 50</option>
+                                            <option value="20">test</option>
+                                            <option value="21">Tarek Board Mesalam</option>
+                                    </select>
+            </div>
+            <div class="mt-4" id="filter_branch" style="display: none">
+                <lebel>Select branch:</lebel>
+                <select class="form-control" id="select_branch" name="branch_data">
+                                            <option value="1">Jeddah</option>
+                                            <option value="2">Riyadh</option>
+                                            <option value="17">test 50</option>
+                                            <option value="20">test</option>
+                                            <option value="21">Tarek Board Mesalam</option>
+                                    </select>
+            </div>
+            <div class="form-group input-group input-daterange">
+                <div class="d-flex align-items-end mt-4">
+                    <div>
+                        <label class="mb-0  p-0">Start Date</label>
+                        <input type="date" value="" name="start_date" class="form-control" x-webkit-speech>
+                    </div>
+                    <div class="input-group-addon">
+                        <small>TO</small>
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                    <div>
+                        <label class="mb-0 ">End Date</label>
+                        <input type="date" value="" name="end_date" class="form-control" x-webkit-speech>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-secondary waves-effect waves-light px-4 py-2">Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+                                        </div>
+                                        <div class="row mt-4" id="statistics">
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div
+                                                    class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <div class="iq-card-body">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-between">
+                                                            <h6>Regions</h6>
+                                                        </div>
+                                                        <div
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-primary mr-2">
+                                                                    <i class="fa fa-id-card"></i></div>
+                                                                <h3>13</h3>
+                                                            </div>
+                                                            <div
+                                                                class="iq-map text-primary font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div
+                                                    class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <div class="iq-card-body">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-between">
+                                                            <h6>Branches</h6>
+                                                        </div>
+                                                        <div
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                    <i class="fa fa-subway"></i></div>
+                                                                <h3>5</h3></div>
+                                                            <div
+                                                                class="iq-map text-danger font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div
+                                                    class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <div class="iq-card-body">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-between">
+                                                            <h6>Users</h6>
+                                                        </div>
+                                                        <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-warning mr-2">
+                                                                    <i class="fa fa-bars"></i></div>
+                                                                <h3>1</h3></div>
+                                                            <div class="iq-map text-warning font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div
+                                                    class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <div class="iq-card-body">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6>Models</h6>
+                                                        </div>
+                                                        <div
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-info mr-2">
+                                                                    <i class="fa fa-users"></i></div>
+                                                                <h3>2</h3></div>
+                                                            <div
+                                                                class="iq-map text-info font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                                                <div class="pt-4">
+                                            <div id="BranchPLateBar" class="chartDiv" style="min-height: 450px"></div>
+                                        </div>
+                                        <div class="pt-4 pb-5">
+                                            <div id="BranchPlaceCircle" class="chartDiv" style="min-height: 450px"></div>
+                                        </div>
+
+                                        <div class="pt-4 mb-5">
+                                            <div id="BranchPLateLine" class="chartDiv" style="min-height: 450px"></div>
+                                        </div>
+
+                                        <div class="p-4">
+                                            <div class="custom-table mt-5"  >
+                                                <table class="table table-striped" id="plate_table" width="100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="th-sm">Branch</th>
+                                                        <th class="th-sm">Car Count</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                                                                            <tr style="cursor: pointer;" class="record">
+                                                            <td class="open">Branch#Riyadh</td>
+                                                            <td class="open warning ">1362324 Times</td>
+                                                        </tr>
+                                                                                                        </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+<!-- Footer -->
+<footer class="bg-white iq-footer">
+    <div class="container-fluid">
+        <div class="row">
+
+
+
+
+
+
+            <div class="col-lg-12 text-center">
+                Copyright 2020 wakeb All Rights Reserved.
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer END -->
+
+<script>var app_url = "http://rased.test";</script>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="http://rased.test/asset_en/js/jquery.min.js"></script>
+<script src="http://rased.test/js/jquery.validate.min.js"></script>
+<script src="http://rased.test/asset_en/js/popper.min.js"></script>
+<script src="http://rased.test/asset_en/js/bootstrap.min.js"></script>
+<!-- Appear JavaScript -->
+<script src="http://rased.test/asset_en/js/jquery.appear.js"></script>
+<!-- Countdown JavaScript -->
+<script src="http://rased.test/asset_en/js/countdown.min.js"></script>
+<!-- Counterup JavaScript -->
+<script src="http://rased.test/asset_en/js/waypoints.min.js"></script>
+<script src="http://rased.test/asset_en/js/jquery.counterup.min.js"></script>
+<!-- Wow JavaScript -->
+<script src="http://rased.test/asset_en/js/wow.min.js"></script>
+<!-- Apexcharts JavaScript -->
+<script src="http://rased.test/asset_en/js/apexcharts.js"></script>
+<!-- Slick JavaScript -->
+<script src="http://rased.test/asset_en/js/slick.min.js"></script>
+<!-- Select2 JavaScript -->
+<script src="http://rased.test/asset_en/js/select2.min.js"></script>
+<!-- Owl Carousel JavaScript -->
+<script src="http://rased.test/asset_en/js/owl.carousel.min.js"></script>
+<!-- Magnific Popup JavaScript -->
+<script src="http://rased.test/asset_en/js/jquery.magnific-popup.min.js"></script>
+<!-- Smooth Scrollbar JavaScript -->
+<script src="http://rased.test/asset_en/js/smooth-scrollbar.js"></script>
+<!-- lottie JavaScript -->
+<script src="http://rased.test/asset_en/js/lottie.js"></script>
+<!-- Chart Custom JavaScript -->
+<script src="http://rased.test/asset_en/js/chart-custom.js"></script>
+<!-- Custom JavaScript -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+
+<script src="http://rased.test/asset_en/js/custom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+<script src="http://rased.test/js/scripts.js"></script>
+<script src="http://rased.test/js/avatar.js"></script>
+<script src="http://rased.test/js/custom.js"></script>
+<script src="http://rased.test/gym/js/mdb.min.js"></script>
+
+<!-- amcharts scripts -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/plugins/wordCloud.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+<script src="http://rased.test/chartjs/heatmap.js"></script>
+
+
+<script>
+    var app_url = "http://rased.test";
+    $(document).ready(function (){
+        // data table function any div has class="dataTable"
+        $('.dataTable').DataTable();
+
+        // toggle icon menu
+        $('.wrapper-menu').click(function (){
+            $(this).find('i').toggle();
+        });
+
+        // set width div scroll vertical
+        $('.scroll-vertical-custom-div').width(function () {
+            var cou = $(this).find('li').length;
+            var wi = $(this).find('li').width();
+            console.log((cou * wi + 30) + "px");
+            return ((cou * (wi + 50)) + "px");
+        });
+        // show branches in small popup
+        $('.showbranchesAll').click(function(){
+            $(this).parent('h5').find('.branchesAll').toggle();
+            $(this).find('i').toggleClass('fa-times-circle fa-info');
+        });
+        // close branches in small popup
+        $('.closebranchesAll').click(function(){
+            $(this).closest('.branchesAll').toggle();
+            $(this).closest('.product-miniature').find('.showbranchesAll i').toggleClass('fa-times-circle fa-info');
+        });
+        // change viwe [ small columns ]
+        $('.fa-th').click(function (){
+            $('.related-product-block').removeClass('large');
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.related-product-block .product_item').addClass('col-lg-3').removeClass('col-lg-6');
+            $('.product_list').show();
+            $('.product_table').hide();
+            loadding();
+
+        });
+        // change viwe [ large columns ]
+        $('.fa-th-large').click(function (){
+            $('.related-product-block').addClass('large');
+            $('.related-product-block .product_item').addClass('col-lg-6').removeClass('col-lg-3');
+            $(this).addClass('active').siblings().removeClass('active');
+
+            $('.product_list').show();
+            $('.product_table').hide();
+            loadding();
+        });
+        // change viwe [ table ]
+        $('.fa-table').click(function (){
+            $('.related-product-block').addClass('table').removeClass('large');
+            $('.product_list').hide();
+            $('.product_table').show();
+            $(this).addClass('active').siblings().removeClass('active');
+            loadding();
+        });
+
+        // loading function to change viwe [ columns, table]
+        function loadding(){
+            $('.related-product-block').append('<div class="loading-view"><span></span></div>');
+            setTimeout(function (){
+                $('.loading-view').fadeOut();
+                setTimeout(function (){
+                    $('.loading-view').remove();
+                }, 500);
+            },1000);
+        };
+
+        // close alert [ 'Success' , 'error' ]
+        $('.alert-head i').click(function (){
+            $(this).parents('.alert').fadeOut();
+            setTimeout(function (){
+                $('.alert').remove();
+            },500);
+        });
+        // close alert by set time out function limit 4 sec
+        setTimeout(function (){
+            $('.alert').fadeOut();
+            setTimeout(function (){
+                $('.alert').remove();
+            },500);
+        }, 4000);
+
+        // go to back button in pages [ create, edit ]
+        $('.back').click(function (){
+            goBack();
+        });
+            function goBack() {
+            window.history.back();
+        }
+
+    });
+</script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.btn-filter').on('click', function () {
+                $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');
+            })
+            $('.filter-select').change(function () {
+                if ($(this).val() == 'comparison') {
+                    $("#filter_branch").slideUp();
+                    $("#filter_comparison").slideDown();
+                } else {
+                    $("#filter_comparison").slideUp();
+                    $("#filter_branch").slideDown();
+                }
+            });
+
+            $("#select_comparison, #select_branch").select2();
+
+        });
+
+    </script>
+    <script src="http://rased.test/js/charts.js"></script>
+    <script>
+        /****** Place Chart ******/
+        
+        
+                    $("#BranchPLateBar").hide();
+        
+        
+                                    comparisonPlateCircle('BranchPlaceCircle', [{"branch":"Branch#Riyadh","count":"1362324"}]);
+            
+                    
+                                                        comparisonPlateLine('BranchPLateLine', [{"branch":"Branch#Riyadh","count":"1362324"}]);
+                                    
+
+            </script>
+<script type="text/javascript">
+var phpdebugbar = new PhpDebugBar.DebugBar();
+phpdebugbar.addIndicator("php_version", new PhpDebugBar.DebugBar.Indicator({"icon":"code","tooltip":"PHP Version"}), "right");
+phpdebugbar.addTab("messages", new PhpDebugBar.DebugBar.Tab({"icon":"list-alt","title":"Messages", "widget": new PhpDebugBar.Widgets.MessagesWidget()}));
+phpdebugbar.addIndicator("time", new PhpDebugBar.DebugBar.Indicator({"icon":"clock-o","tooltip":"Request Duration"}), "right");
+phpdebugbar.addTab("timeline", new PhpDebugBar.DebugBar.Tab({"icon":"tasks","title":"Timeline", "widget": new PhpDebugBar.Widgets.TimelineWidget()}));
+phpdebugbar.addIndicator("memory", new PhpDebugBar.DebugBar.Indicator({"icon":"cogs","tooltip":"Memory Usage"}), "right");
+phpdebugbar.addTab("exceptions", new PhpDebugBar.DebugBar.Tab({"icon":"bug","title":"Exceptions", "widget": new PhpDebugBar.Widgets.ExceptionsWidget()}));
+phpdebugbar.addTab("views", new PhpDebugBar.DebugBar.Tab({"icon":"leaf","title":"Views", "widget": new PhpDebugBar.Widgets.TemplatesWidget()}));
+phpdebugbar.addTab("route", new PhpDebugBar.DebugBar.Tab({"icon":"share","title":"Route", "widget": new PhpDebugBar.Widgets.VariableListWidget()}));
+phpdebugbar.addIndicator("currentroute", new PhpDebugBar.DebugBar.Indicator({"icon":"share","tooltip":"Route"}), "right");
+phpdebugbar.addTab("queries", new PhpDebugBar.DebugBar.Tab({"icon":"database","title":"Queries", "widget": new PhpDebugBar.Widgets.LaravelSQLQueriesWidget()}));
+phpdebugbar.addTab("models", new PhpDebugBar.DebugBar.Tab({"icon":"cubes","title":"Models", "widget": new PhpDebugBar.Widgets.HtmlVariableListWidget()}));
+phpdebugbar.addTab("emails", new PhpDebugBar.DebugBar.Tab({"icon":"inbox","title":"Mails", "widget": new PhpDebugBar.Widgets.MailsWidget()}));
+phpdebugbar.addTab("gate", new PhpDebugBar.DebugBar.Tab({"icon":"list-alt","title":"Gate", "widget": new PhpDebugBar.Widgets.MessagesWidget()}));
+phpdebugbar.addTab("session", new PhpDebugBar.DebugBar.Tab({"icon":"archive","title":"Session", "widget": new PhpDebugBar.Widgets.VariableListWidget()}));
+phpdebugbar.addTab("request", new PhpDebugBar.DebugBar.Tab({"icon":"tags","title":"Request", "widget": new PhpDebugBar.Widgets.HtmlVariableListWidget()}));
+phpdebugbar.setDataMap({
+"php_version": ["php.version", ],
+"messages": ["messages.messages", []],
+"messages:badge": ["messages.count", null],
+"time": ["time.duration_str", '0ms'],
+"timeline": ["time", {}],
+"memory": ["memory.peak_usage_str", '0B'],
+"exceptions": ["exceptions.exceptions", []],
+"exceptions:badge": ["exceptions.count", null],
+"views": ["views", []],
+"views:badge": ["views.nb_templates", 0],
+"route": ["route", {}],
+"currentroute": ["route.uri", ],
+"queries": ["queries", []],
+"queries:badge": ["queries.nb_statements", 0],
+"models": ["models.data", {}],
+"models:badge": ["models.count", 0],
+"emails": ["swiftmailer_mails.mails", []],
+"emails:badge": ["swiftmailer_mails.count", null],
+"gate": ["gate.messages", []],
+"gate:badge": ["gate.count", null],
+"session": ["session", {}],
+"request": ["request", {}]
+});
+phpdebugbar.restoreState();
+phpdebugbar.ajaxHandler = new PhpDebugBar.AjaxHandler(phpdebugbar, undefined, true);
+phpdebugbar.ajaxHandler.bindToFetch();
+phpdebugbar.ajaxHandler.bindToXHR();
+phpdebugbar.setOpenHandler(new PhpDebugBar.OpenHandler({"url":"http:\/\/rased.test\/_debugbar\/open"}));
+phpdebugbar.addDataSet({"__meta":{"id":"Xf35a2bdaf2b912d39edf204f33ead559","datetime":"2021-07-12 09:25:13","utime":1626081913.143363,"method":"GET","uri":"\/customer\/reports\/plate\/get","ip":"127.0.0.1"},"php":{"version":"7.4.16","interface":"apache2handler"},"messages":{"count":0,"messages":[]},"time":{"start":1626081912.820173,"end":1626081913.143377,"duration":0.32320404052734375,"duration_str":"323ms","measures":[{"label":"Booting","start":1626081912.820173,"relative_start":0,"end":1626081913.029334,"relative_end":1626081913.029334,"duration":0.20916104316711426,"duration_str":"209ms","params":[],"collector":null},{"label":"Application","start":1626081913.032248,"relative_start":0.21207499504089355,"end":1626081913.143378,"relative_end":9.5367431640625e-7,"duration":0.1111299991607666,"duration_str":"111ms","params":[],"collector":null}]},"memory":{"peak_usage":24460992,"peak_usage_str":"23MB"},"exceptions":{"count":0,"exceptions":[]},"views":{"nb_templates":8,"templates":[{"name":"customer.reports.plate (\\resources\\views\\customer\\reports\\plate.blade.php)","param_count":10,"params":["regioncount","branchcount","userscount","branches","modelscount","charts","config","filter_type","filter_key","oldRequest"],"type":"blade"},{"name":"customer.reports._filter (\\resources\\views\\customer\\reports\\_filter.blade.php)","param_count":16,"params":["obLevel","__env","app","userSettings","errors","regioncount","branchcount","userscount","branches","modelscount","charts","config","filter_type","filter_key","oldRequest","type"],"type":"blade"},{"name":"layouts.dashboard.index (\\resources\\views\\layouts\\dashboard\\index.blade.php)","param_count":19,"params":["obLevel","__env","app","userSettings","errors","regioncount","branchcount","userscount","branches","modelscount","charts","config","filter_type","filter_key","oldRequest","__currentLoopData","plate","loop","key_name"],"type":"blade"},{"name":"layouts.dashboard.partials._page-loader (\\resources\\views\\layouts\\dashboard\\partials\\_page-loader.blade.php)","param_count":19,"params":["obLevel","__env","app","userSettings","errors","regioncount","branchcount","userscount","branches","modelscount","charts","config","filter_type","filter_key","oldRequest","__currentLoopData","plate","loop","key_name"],"type":"blade"},{"name":"layouts.dashboard.layout (\\resources\\views\\layouts\\dashboard\\layout.blade.php)","param_count":19,"params":["obLevel","__env","app","userSettings","errors","regioncount","branchcount","userscount","branches","modelscount","charts","config","filter_type","filter_key","oldRequest","__currentLoopData","plate","loop","key_name"],"type":"blade"},{"name":"layouts.dashboard.partials._aside.base (\\resources\\views\\layouts\\dashboard\\partials\\_aside\\base.blade.php)","param_count":19,"params":["obLevel","__env","app","userSettings","errors","regioncount","branchcount","userscount","branches","modelscount","charts","config","filter_type","filter_key","oldRequest","__currentLoopData","plate","loop","key_name"],"type":"blade"},{"name":"layouts.dashboard.partials._header.base (\\resources\\views\\layouts\\dashboard\\partials\\_header\\base.blade.php)","param_count":19,"params":["obLevel","__env","app","userSettings","errors","regioncount","branchcount","userscount","branches","modelscount","charts","config","filter_type","filter_key","oldRequest","__currentLoopData","plate","loop","key_name"],"type":"blade"},{"name":"layouts.dashboard.partials._footer.base (\\resources\\views\\layouts\\dashboard\\partials\\_footer\\base.blade.php)","param_count":19,"params":["obLevel","__env","app","userSettings","errors","regioncount","branchcount","userscount","branches","modelscount","charts","config","filter_type","filter_key","oldRequest","__currentLoopData","plate","loop","key_name"],"type":"blade"}]},"route":{"uri":"GET customer\/reports\/{type}\/get","middleware":"web, auth","controller":"App\\Http\\Controllers\\Customer\\ReportController@index","namespace":"App\\Http\\Controllers\\Customer","prefix":"\/customer","where":[],"as":"reports.index","file":"\\app\\Http\\Controllers\\Customer\\ReportController.php:21-47"},"queries":{"nb_statements":11,"nb_failed_statements":0,"accumulated_duration":0.00931,"accumulated_duration_str":"9.31ms","statements":[{"sql":"select * from `users` where `id` = 3 and `users`.`deleted_at` is null limit 1","type":"query","params":[],"bindings":["3"],"hints":null,"show_copy":false,"backtrace":[{"index":15,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\EloquentUserProvider.php","line":52},{"index":16,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\SessionGuard.php","line":139},{"index":17,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\GuardHelpers.php","line":60},{"index":18,"namespace":"middleware","name":"auth","line":63},{"index":19,"namespace":"middleware","name":"auth","line":42}],"duration":0.00061,"duration_str":"610\u03bcs","stmt_id":"\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\EloquentUserProvider.php:52","connection":"new_general_dash","start_percent":0,"width_percent":6.552},{"sql":"select `branch_id`, `branches`.`name` as `branch_name`, SUM(carprofiles.id) as count from `carprofiles` inner join `branches` on `branches`.`id` = `carprofiles`.`branch_id` where `status` = 'completed' and `branches`.`user_id` = 3 and `carprofiles`.`deleted_at` is null group by `branch_id` limit 5","type":"query","params":[],"bindings":["completed","3"],"hints":null,"show_copy":false,"backtrace":[{"index":14,"namespace":null,"name":"\\app\\Services\\ReportService.php","line":135},{"index":15,"namespace":null,"name":"\\app\\Services\\ReportService.php","line":50},{"index":16,"namespace":null,"name":"\\app\\Http\\Controllers\\Customer\\ReportController.php","line":25},{"index":17,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php","line":54},{"index":18,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php","line":45}],"duration":0.0030099999999999997,"duration_str":"3.01ms","stmt_id":"\\app\\Services\\ReportService.php:135","connection":"new_general_dash","start_percent":6.552,"width_percent":32.331},{"sql":"select * from `configs` where `user_id` = 3 and `model_type` = 'plate'","type":"query","params":[],"bindings":["3","plate"],"hints":null,"show_copy":false,"backtrace":[{"index":14,"namespace":null,"name":"\\app\\Services\\ConfigService.php","line":28},{"index":15,"namespace":null,"name":"\\app\\Services\\ConfigService.php","line":13},{"index":16,"namespace":null,"name":"\\app\\Http\\Controllers\\Customer\\ReportController.php","line":26},{"index":17,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php","line":54},{"index":18,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php","line":45}],"duration":0.0005899999999999999,"duration_str":"590\u03bcs","stmt_id":"\\app\\Services\\ConfigService.php:28","connection":"new_general_dash","start_percent":38.883,"width_percent":6.337},{"sql":"select count(*) as aggregate from `regions` where `active` = 1 and `user_id` = 3 and `regions`.`deleted_at` is null","type":"query","params":[],"bindings":["1","3"],"hints":null,"show_copy":false,"backtrace":[{"index":15,"namespace":null,"name":"\\app\\Http\\Controllers\\Customer\\ReportController.php","line":27},{"index":16,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php","line":54},{"index":17,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php","line":45},{"index":18,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php","line":239},{"index":19,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php","line":196}],"duration":0.0005200000000000001,"duration_str":"520\u03bcs","stmt_id":"\\app\\Http\\Controllers\\Customer\\ReportController.php:27","connection":"new_general_dash","start_percent":45.22,"width_percent":5.585},{"sql":"select count(*) as aggregate from `branches` where `active` = 1 and `user_id` = 3 and `branches`.`deleted_at` is null","type":"query","params":[],"bindings":["1","3"],"hints":null,"show_copy":false,"backtrace":[{"index":15,"namespace":null,"name":"\\app\\Http\\Controllers\\Customer\\ReportController.php","line":28},{"index":16,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php","line":54},{"index":17,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php","line":45},{"index":18,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php","line":239},{"index":19,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php","line":196}],"duration":0.0005,"duration_str":"500\u03bcs","stmt_id":"\\app\\Http\\Controllers\\Customer\\ReportController.php:28","connection":"new_general_dash","start_percent":50.806,"width_percent":5.371},{"sql":"select count(*) as aggregate from `users` where `parent_id` = 3 and `users`.`deleted_at` is null","type":"query","params":[],"bindings":["3"],"hints":null,"show_copy":false,"backtrace":[{"index":15,"namespace":null,"name":"\\app\\Http\\Controllers\\Customer\\ReportController.php","line":29},{"index":16,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php","line":54},{"index":17,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php","line":45},{"index":18,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php","line":239},{"index":19,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php","line":196}],"duration":0.0006,"duration_str":"600\u03bcs","stmt_id":"\\app\\Http\\Controllers\\Customer\\ReportController.php:29","connection":"new_general_dash","start_percent":56.176,"width_percent":6.445},{"sql":"select `name`, `id` from `branches` where `active` = 1 and `user_id` = 3 and `branches`.`deleted_at` is null","type":"query","params":[],"bindings":["1","3"],"hints":null,"show_copy":false,"backtrace":[{"index":13,"namespace":null,"name":"\\app\\Http\\Controllers\\Customer\\ReportController.php","line":30},{"index":14,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php","line":54},{"index":15,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php","line":45},{"index":16,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php","line":239},{"index":17,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php","line":196}],"duration":0.00053,"duration_str":"530\u03bcs","stmt_id":"\\app\\Http\\Controllers\\Customer\\ReportController.php:30","connection":"new_general_dash","start_percent":62.621,"width_percent":5.693},{"sql":"select column_name as `column_name` from information_schema.columns where table_schema = 'new_general_dash' and table_name = 'roles'","type":"query","params":[],"bindings":["new_general_dash","roles"],"hints":null,"show_copy":false,"backtrace":[{"index":14,"namespace":null,"name":"\\vendor\\spatie\\laravel-permission\\src\\Models\\Role.php","line":26},{"index":17,"namespace":null,"name":"\\vendor\\spatie\\laravel-permission\\src\\Traits\\HasRoles.php","line":47},{"index":22,"namespace":null,"name":"\\vendor\\spatie\\laravel-permission\\src\\Traits\\HasRoles.php","line":185},{"index":23,"namespace":"view","name":"layouts.dashboard.partials._aside.base","line":25},{"index":25,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php","line":57}],"duration":0.00095,"duration_str":"950\u03bcs","stmt_id":"\\vendor\\spatie\\laravel-permission\\src\\Models\\Role.php:26","connection":"new_general_dash","start_percent":68.314,"width_percent":10.204},{"sql":"select `roles`.*, `model_has_roles`.`model_id` as `pivot_model_id`, `model_has_roles`.`role_id` as `pivot_role_id`, `model_has_roles`.`model_type` as `pivot_model_type` from `roles` inner join `model_has_roles` on `roles`.`id` = `model_has_roles`.`role_id` where `model_has_roles`.`model_id` = 3 and `model_has_roles`.`model_type` = 'App\\User'","type":"query","params":[],"bindings":["3","App\\User"],"hints":null,"show_copy":false,"backtrace":[{"index":19,"namespace":null,"name":"\\vendor\\spatie\\laravel-permission\\src\\Traits\\HasRoles.php","line":185},{"index":20,"namespace":"view","name":"layouts.dashboard.partials._aside.base","line":25},{"index":22,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php","line":57},{"index":23,"namespace":null,"name":"\\vendor\\facade\\ignition\\src\\Views\\Engines\\CompilerEngine.php","line":37},{"index":24,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php","line":139}],"duration":0.00066,"duration_str":"660\u03bcs","stmt_id":"\\vendor\\spatie\\laravel-permission\\src\\Traits\\HasRoles.php:185","connection":"new_general_dash","start_percent":78.518,"width_percent":7.089},{"sql":"select column_name as `column_name` from information_schema.columns where table_schema = 'new_general_dash' and table_name = 'permissions'","type":"query","params":[],"bindings":["new_general_dash","permissions"],"hints":null,"show_copy":false,"backtrace":[{"index":14,"namespace":null,"name":"\\vendor\\spatie\\laravel-permission\\src\\Models\\Permission.php","line":27},{"index":16,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php","line":849},{"index":17,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php","line":691},{"index":18,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php","line":796},{"index":19,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php","line":637}],"duration":0.0008100000000000001,"duration_str":"810\u03bcs","stmt_id":"\\vendor\\spatie\\laravel-permission\\src\\Models\\Permission.php:27","connection":"new_general_dash","start_percent":85.607,"width_percent":8.7},{"sql":"select `permissions`.*, `model_has_permissions`.`model_id` as `pivot_model_id`, `model_has_permissions`.`permission_id` as `pivot_permission_id`, `model_has_permissions`.`model_type` as `pivot_model_type` from `permissions` inner join `model_has_permissions` on `permissions`.`id` = `model_has_permissions`.`permission_id` where `model_has_permissions`.`model_id` = 3 and `model_has_permissions`.`model_type` = 'App\\User'","type":"query","params":[],"bindings":["3","App\\User"],"hints":null,"show_copy":false,"backtrace":[{"index":19,"namespace":null,"name":"\\vendor\\spatie\\laravel-permission\\src\\Traits\\HasPermissions.php","line":285},{"index":20,"namespace":null,"name":"\\vendor\\spatie\\laravel-permission\\src\\Traits\\HasPermissions.php","line":139},{"index":21,"namespace":null,"name":"\\vendor\\spatie\\laravel-permission\\src\\Traits\\HasPermissions.php","line":201},{"index":22,"namespace":null,"name":"\\vendor\\spatie\\laravel-permission\\src\\PermissionRegistrar.php","line":90},{"index":23,"namespace":null,"name":"\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Access\\Gate.php","line":491}],"duration":0.00053,"duration_str":"530\u03bcs","stmt_id":"\\vendor\\spatie\\laravel-permission\\src\\Traits\\HasPermissions.php:285","connection":"new_general_dash","start_percent":94.307,"width_percent":5.693}]},"models":{"data":{"Spatie\\Permission\\Models\\Role":1,"App\\Models\\Config":10,"App\\Models\\Carprofile":1,"App\\User":1},"count":13},"swiftmailer_mails":{"count":0,"mails":[]},"gate":{"count":3,"messages":[{"message":"[ability => list-mypackages, result => true, user => 3, arguments => []]","message_html":"<pre class=sf-dump id=sf-dump-722085510 data-indent-pad=\"  \"><span class=sf-dump-note>array:4<\/span> [<samp data-depth=1 class=sf-dump-expanded>\n  \"<span class=sf-dump-key>ability<\/span>\" => \"<span class=sf-dump-str title=\"15 characters\">list-mypackages<\/span>\"\n  \"<span class=sf-dump-key>result<\/span>\" => <span class=sf-dump-const>true<\/span>\n  \"<span class=sf-dump-key>user<\/span>\" => <span class=sf-dump-num>3<\/span>\n  \"<span class=sf-dump-key>arguments<\/span>\" => \"<span class=sf-dump-str title=\"2 characters\">[]<\/span>\"\n<\/samp>]\n<\/pre><script>Sfdump(\"sf-dump-722085510\", {\"maxDepth\":0})<\/script>\n","is_string":false,"label":"success","time":1626081913.132907},{"message":"[ability => list-CustomerUsers, result => true, user => 3, arguments => []]","message_html":"<pre class=sf-dump id=sf-dump-91618596 data-indent-pad=\"  \"><span class=sf-dump-note>array:4<\/span> [<samp data-depth=1 class=sf-dump-expanded>\n  \"<span class=sf-dump-key>ability<\/span>\" => \"<span class=sf-dump-str title=\"18 characters\">list-CustomerUsers<\/span>\"\n  \"<span class=sf-dump-key>result<\/span>\" => <span class=sf-dump-const>true<\/span>\n  \"<span class=sf-dump-key>user<\/span>\" => <span class=sf-dump-num>3<\/span>\n  \"<span class=sf-dump-key>arguments<\/span>\" => \"<span class=sf-dump-str title=\"2 characters\">[]<\/span>\"\n<\/samp>]\n<\/pre><script>Sfdump(\"sf-dump-91618596\", {\"maxDepth\":0})<\/script>\n","is_string":false,"label":"success","time":1626081913.133608},{"message":"[ability => list-CustomerUsers, result => true, user => 3, arguments => []]","message_html":"<pre class=sf-dump id=sf-dump-1028864467 data-indent-pad=\"  \"><span class=sf-dump-note>array:4<\/span> [<samp data-depth=1 class=sf-dump-expanded>\n  \"<span class=sf-dump-key>ability<\/span>\" => \"<span class=sf-dump-str title=\"18 characters\">list-CustomerUsers<\/span>\"\n  \"<span class=sf-dump-key>result<\/span>\" => <span class=sf-dump-const>true<\/span>\n  \"<span class=sf-dump-key>user<\/span>\" => <span class=sf-dump-num>3<\/span>\n  \"<span class=sf-dump-key>arguments<\/span>\" => \"<span class=sf-dump-str title=\"2 characters\">[]<\/span>\"\n<\/samp>]\n<\/pre><script>Sfdump(\"sf-dump-1028864467\", {\"maxDepth\":0})<\/script>\n","is_string":false,"label":"success","time":1626081913.134067}]},"session":{"_token":"Mh8JF7UkbJFh6oFwaJy0b7yXGzBzjiC7cRDvL2su","url":"[]","_previous":"array:1 [\n  \"url\" => \"http:\/\/rased.test\/customer\/reports\/plate\/get\"\n]","_flash":"array:2 [\n  \"old\" => []\n  \"new\" => []\n]","login_web_59ba36addc2b2f9401580f014c7f58ea4e30989d":"3","PHPDEBUGBAR_STACK_DATA":"[]"},"request":{"path_info":"\/customer\/reports\/plate\/get","status_code":"<pre class=sf-dump id=sf-dump-626626933 data-indent-pad=\"  \"><span class=sf-dump-num>200<\/span>\n<\/pre><script>Sfdump(\"sf-dump-626626933\", {\"maxDepth\":0})<\/script>\n","status_text":"OK","format":"html","content_type":"text\/html; charset=UTF-8","request_query":"<pre class=sf-dump id=sf-dump-13884282 data-indent-pad=\"  \">[]\n<\/pre><script>Sfdump(\"sf-dump-13884282\", {\"maxDepth\":0})<\/script>\n","request_request":"<pre class=sf-dump id=sf-dump-741098713 data-indent-pad=\"  \">[]\n<\/pre><script>Sfdump(\"sf-dump-741098713\", {\"maxDepth\":0})<\/script>\n","request_headers":"<pre class=sf-dump id=sf-dump-197288424 data-indent-pad=\"  \"><span class=sf-dump-note>array:7<\/span> [<samp data-depth=1 class=sf-dump-expanded>\n  \"<span class=sf-dump-key>host<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"10 characters\">rased.test<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>connection<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"10 characters\">keep-alive<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>referer<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"44 characters\">http:\/\/rased.test\/customer\/reports\/plate\/get<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>user-agent<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"115 characters\">Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/91.0.4472.124 Safari\/537.36<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>accept-encoding<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"13 characters\">gzip, deflate<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>accept-language<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"35 characters\">en-US,en;q=0.9,ar-AE;q=0.8,ar;q=0.7<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>cookie<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"689 characters\">XSRF-TOKEN=eyJpdiI6Ik5LSVd4NVNQTlFJaTMzNHlIRTU1MFE9PSIsInZhbHVlIjoiaHl0aTNWQ3FKVVZjVTJqMHZDM3hpVjQyYy9BRmxuTnpYa0orOUxvOS91K1BjcFlQVTlibitUUlZWNzk3YnlueklWK0RzT2c2SEt4OCs0emRZQjNpN2ZjS2REMFhjTmNvcDBqMjlEL0tTZ3RkUFIxZWN3eVhKbGZTWUNtZjhocmkiLCJtYWMiOiI0YTY3ZTI2ZDEzNDc4YjA3NDc4ZWJiYjA1NjI2NmQ2YWU4OWVjZmI1MzFjOTk2NmZlOWU0NjQyZWJkNzMyMjBlIn0%3D; laravel_session=eyJpdiI6IkcvbEpSME1sZERMT2NUR0JZc2RBb0E9PSIsInZhbHVlIjoiWVd5QjZuLzEyZDMwMzUvZTQ0SjFiWTdtdG53WFhRUmRuczY0K0VnTE00dnRCb2NUY09HQ0tsNkNIWTRXRFMrZC9Jd2MvWlNGL2hIaEtWcjRkS1dSdVJ4YWhHK2RJanh3RFdWaDhZeEgwWHA1N3RHQVBtRlRYVFlnbGEwcVN3YmIiLCJtYWMiOiI1ZWU5MjdlM2E5ODAxNWMwYWJjZWQ4YWM0OGZlMzc2YzhjYTBiMmNlOTg5ODUzMTUwZGMyOWI1N2JlMDAzOTA2In0%3D<\/span>\"\n  <\/samp>]\n<\/samp>]\n<\/pre><script>Sfdump(\"sf-dump-197288424\", {\"maxDepth\":0})<\/script>\n","request_server":"<pre class=sf-dump id=sf-dump-2004655878 data-indent-pad=\"  \"><span class=sf-dump-note>array:36<\/span> [<samp data-depth=1 class=sf-dump-expanded>\n  \"<span class=sf-dump-key>REDIRECT_STATUS<\/span>\" => \"<span class=sf-dump-str title=\"3 characters\">200<\/span>\"\n  \"<span class=sf-dump-key>HTTP_HOST<\/span>\" => \"<span class=sf-dump-str title=\"10 characters\">rased.test<\/span>\"\n  \"<span class=sf-dump-key>HTTP_CONNECTION<\/span>\" => \"<span class=sf-dump-str title=\"10 characters\">keep-alive<\/span>\"\n  \"<span class=sf-dump-key>HTTP_REFERER<\/span>\" => \"<span class=sf-dump-str title=\"44 characters\">http:\/\/rased.test\/customer\/reports\/plate\/get<\/span>\"\n  \"<span class=sf-dump-key>HTTP_USER_AGENT<\/span>\" => \"<span class=sf-dump-str title=\"115 characters\">Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/91.0.4472.124 Safari\/537.36<\/span>\"\n  \"<span class=sf-dump-key>HTTP_ACCEPT_ENCODING<\/span>\" => \"<span class=sf-dump-str title=\"13 characters\">gzip, deflate<\/span>\"\n  \"<span class=sf-dump-key>HTTP_ACCEPT_LANGUAGE<\/span>\" => \"<span class=sf-dump-str title=\"35 characters\">en-US,en;q=0.9,ar-AE;q=0.8,ar;q=0.7<\/span>\"\n  \"<span class=sf-dump-key>HTTP_COOKIE<\/span>\" => \"<span class=sf-dump-str title=\"689 characters\">XSRF-TOKEN=eyJpdiI6Ik5LSVd4NVNQTlFJaTMzNHlIRTU1MFE9PSIsInZhbHVlIjoiaHl0aTNWQ3FKVVZjVTJqMHZDM3hpVjQyYy9BRmxuTnpYa0orOUxvOS91K1BjcFlQVTlibitUUlZWNzk3YnlueklWK0RzT2c2SEt4OCs0emRZQjNpN2ZjS2REMFhjTmNvcDBqMjlEL0tTZ3RkUFIxZWN3eVhKbGZTWUNtZjhocmkiLCJtYWMiOiI0YTY3ZTI2ZDEzNDc4YjA3NDc4ZWJiYjA1NjI2NmQ2YWU4OWVjZmI1MzFjOTk2NmZlOWU0NjQyZWJkNzMyMjBlIn0%3D; laravel_session=eyJpdiI6IkcvbEpSME1sZERMT2NUR0JZc2RBb0E9PSIsInZhbHVlIjoiWVd5QjZuLzEyZDMwMzUvZTQ0SjFiWTdtdG53WFhRUmRuczY0K0VnTE00dnRCb2NUY09HQ0tsNkNIWTRXRFMrZC9Jd2MvWlNGL2hIaEtWcjRkS1dSdVJ4YWhHK2RJanh3RFdWaDhZeEgwWHA1N3RHQVBtRlRYVFlnbGEwcVN3YmIiLCJtYWMiOiI1ZWU5MjdlM2E5ODAxNWMwYWJjZWQ4YWM0OGZlMzc2YzhjYTBiMmNlOTg5ODUzMTUwZGMyOWI1N2JlMDAzOTA2In0%3D<\/span>\"\n  \"<span class=sf-dump-key>PATH<\/span>\" => \"<span class=sf-dump-str title=\"1183 characters\">C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\laragon\\bin\\php\\php-7.4.16-Win32-vc15-x64;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\Git\\cmd;C:\\laragon\\bin;C:\\laragon\\bin\\apache\\httpd-2.4.35-win64-VC15\\bin;C:\\laragon\\bin\\composer;C:\\laragon\\bin\\git\\bin;C:\\laragon\\bin\\git\\cmd;C:\\laragon\\bin\\git\\mingw64\\bin;C:\\laragon\\bin\\git\\usr\\bin;C:\\laragon\\bin\\laragon\\utils;C:\\laragon\\bin\\mysql\\mysql-5.7.24-winx64\\bin;C:\\laragon\\bin\\nginx\\nginx-1.16.0;C:\\laragon\\bin\\ngrok;C:\\laragon\\bin\\nodejs\\node-v12;C:\\laragon\\bin\\notepad++;C:\\laragon\\bin\\php\\php-7.4.16-Win32-vc15-x64;C:\\laragon\\bin\\putty;C:\\laragon\\bin\\redis\\redis-x64-3.2.100;C:\\laragon\\bin\\telnet;C:\\laragon\\bin\\yarn\\bin;C:\\laragon\\usr\\bin;C:\\Users\\Hassan Elhawary\\AppData\\Local\\Yarn\\config\\global\\node_modules\\.bin;C:\\Users\\Hassan Elhawary\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Hassan Elhawary\\AppData\\Roaming\\npm;C:\\Users\\Hassan Elhawary\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\JetBrains\\PhpStorm 2020.3.3\\bin;;C:\\Program Files\\JetBrains\\PhpStorm 2021.1.3\\bin;;C:\\Users\\Hassan Elhawary\\AppData\\Local\\Microsoft\\WindowsApps<\/span>\"\n  \"<span class=sf-dump-key>SystemRoot<\/span>\" => \"<span class=sf-dump-str title=\"10 characters\">C:\\WINDOWS<\/span>\"\n  \"<span class=sf-dump-key>COMSPEC<\/span>\" => \"<span class=sf-dump-str title=\"27 characters\">C:\\WINDOWS\\system32\\cmd.exe<\/span>\"\n  \"<span class=sf-dump-key>PATHEXT<\/span>\" => \"<span class=sf-dump-str title=\"53 characters\">.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC<\/span>\"\n  \"<span class=sf-dump-key>WINDIR<\/span>\" => \"<span class=sf-dump-str title=\"10 characters\">C:\\WINDOWS<\/span>\"\n  \"<span class=sf-dump-key>SERVER_SIGNATURE<\/span>\" => \"\"\n  \"<span class=sf-dump-key>SERVER_SOFTWARE<\/span>\" => \"<span class=sf-dump-str title=\"47 characters\">Apache\/2.4.35 (Win64) OpenSSL\/1.1.1i PHP\/7.4.16<\/span>\"\n  \"<span class=sf-dump-key>SERVER_NAME<\/span>\" => \"<span class=sf-dump-str title=\"10 characters\">rased.test<\/span>\"\n  \"<span class=sf-dump-key>SERVER_ADDR<\/span>\" => \"<span class=sf-dump-str title=\"9 characters\">127.0.0.1<\/span>\"\n  \"<span class=sf-dump-key>SERVER_PORT<\/span>\" => \"<span class=sf-dump-str title=\"2 characters\">80<\/span>\"\n  \"<span class=sf-dump-key>REMOTE_ADDR<\/span>\" => \"<span class=sf-dump-str title=\"9 characters\">127.0.0.1<\/span>\"\n  \"<span class=sf-dump-key>DOCUMENT_ROOT<\/span>\" => \"<span class=sf-dump-str title=\"28 characters\">C:\/laragon\/www\/rased\/public\/<\/span>\"\n  \"<span class=sf-dump-key>REQUEST_SCHEME<\/span>\" => \"<span class=sf-dump-str title=\"4 characters\">http<\/span>\"\n  \"<span class=sf-dump-key>CONTEXT_PREFIX<\/span>\" => \"\"\n  \"<span class=sf-dump-key>CONTEXT_DOCUMENT_ROOT<\/span>\" => \"<span class=sf-dump-str title=\"28 characters\">C:\/laragon\/www\/rased\/public\/<\/span>\"\n  \"<span class=sf-dump-key>SERVER_ADMIN<\/span>\" => \"<span class=sf-dump-str title=\"17 characters\">admin@example.com<\/span>\"\n  \"<span class=sf-dump-key>SCRIPT_FILENAME<\/span>\" => \"<span class=sf-dump-str title=\"37 characters\">C:\/laragon\/www\/rased\/public\/index.php<\/span>\"\n  \"<span class=sf-dump-key>REMOTE_PORT<\/span>\" => \"<span class=sf-dump-str title=\"5 characters\">63402<\/span>\"\n  \"<span class=sf-dump-key>REDIRECT_URL<\/span>\" => \"<span class=sf-dump-str title=\"27 characters\">\/customer\/reports\/plate\/get<\/span>\"\n  \"<span class=sf-dump-key>GATEWAY_INTERFACE<\/span>\" => \"<span class=sf-dump-str title=\"7 characters\">CGI\/1.1<\/span>\"\n  \"<span class=sf-dump-key>SERVER_PROTOCOL<\/span>\" => \"<span class=sf-dump-str title=\"8 characters\">HTTP\/1.1<\/span>\"\n  \"<span class=sf-dump-key>REQUEST_METHOD<\/span>\" => \"<span class=sf-dump-str title=\"3 characters\">GET<\/span>\"\n  \"<span class=sf-dump-key>QUERY_STRING<\/span>\" => \"\"\n  \"<span class=sf-dump-key>REQUEST_URI<\/span>\" => \"<span class=sf-dump-str title=\"27 characters\">\/customer\/reports\/plate\/get<\/span>\"\n  \"<span class=sf-dump-key>SCRIPT_NAME<\/span>\" => \"<span class=sf-dump-str title=\"10 characters\">\/index.php<\/span>\"\n  \"<span class=sf-dump-key>PHP_SELF<\/span>\" => \"<span class=sf-dump-str title=\"10 characters\">\/index.php<\/span>\"\n  \"<span class=sf-dump-key>REQUEST_TIME_FLOAT<\/span>\" => <span class=sf-dump-num>1626081912.8202<\/span>\n  \"<span class=sf-dump-key>REQUEST_TIME<\/span>\" => <span class=sf-dump-num>1626081912<\/span>\n<\/samp>]\n<\/pre><script>Sfdump(\"sf-dump-2004655878\", {\"maxDepth\":0})<\/script>\n","request_cookies":"<pre class=sf-dump id=sf-dump-1332720798 data-indent-pad=\"  \"><span class=sf-dump-note>array:2<\/span> [<samp data-depth=1 class=sf-dump-expanded>\n  \"<span class=sf-dump-key>XSRF-TOKEN<\/span>\" => \"<span class=sf-dump-str title=\"40 characters\">Mh8JF7UkbJFh6oFwaJy0b7yXGzBzjiC7cRDvL2su<\/span>\"\n  \"<span class=sf-dump-key>laravel_session<\/span>\" => \"<span class=sf-dump-str title=\"40 characters\">aLShuMxoBnhtm3sLxmThpz5t8I0jpnXMtjGbUPhQ<\/span>\"\n<\/samp>]\n<\/pre><script>Sfdump(\"sf-dump-1332720798\", {\"maxDepth\":0})<\/script>\n","response_headers":"<pre class=sf-dump id=sf-dump-1323528664 data-indent-pad=\"  \"><span class=sf-dump-note>array:5<\/span> [<samp data-depth=1 class=sf-dump-expanded>\n  \"<span class=sf-dump-key>content-type<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"24 characters\">text\/html; charset=UTF-8<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>cache-control<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"17 characters\">no-cache, private<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>date<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"29 characters\">Mon, 12 Jul 2021 09:25:13 GMT<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>set-cookie<\/span>\" => <span class=sf-dump-note>array:2<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"416 characters\">XSRF-TOKEN=eyJpdiI6IjZlQldMVU5MYStOb0V3M3YrcWplQ0E9PSIsInZhbHVlIjoiaU44Nkwxb21SekdmL0d5YkwyOGtZaDlSbWlWbGJZUUZESFhVQlRaUTY2b203aU5xUGJpOGFtbFNBRzVSdmZwSjlIVHNIanl2UEx6NkhyM2M3c0J2aXVGeEFjQVEwZTh3YmkwTFRSTzczMEppRk1lSDZ4WHVRMUo2b2pzREhWNXYiLCJtYWMiOiJmMmYzOWJmNDc1NWQ0NjcyNjJhZmM0MzJiYWI2MWI3ZjI3ZjM2NDMyZjE0YmI2OTA0M2M4N2Y3NGRlYjQyYTIyIn0%3D; expires=Mon, 12-Jul-2021 11:25:13 GMT; Max-Age=7200; path=\/; samesite=lax<\/span>\"\n    <span class=sf-dump-index>1<\/span> => \"<span class=sf-dump-str title=\"431 characters\">laravel_session=eyJpdiI6IjhGU0pQSm1zVkJUa2F4VmsxbjB0WHc9PSIsInZhbHVlIjoiWEU4bGR2VFduQ1lLcGVHM0VvL29Ja3ZIR0tQMEMwVmt5ODFacllVeENTNlMydjlDUFRMNDBZSVVidGpWZytuRVAzTUVqV3d4KzhmZ29ETWhxUXhkRUs5L0Z0bXFnZVFSbTFWKzUwT0wyWVNDMnJHYlJMR2xJRDNCWGJ5dXZiV2QiLCJtYWMiOiI4Y2VlZDc0ZTllMjgyYzllYWE1ZjYwNjZiYmJhNGZiYWI1ODExMjZhNWE5Y2E5MGNiNzBmNDRiNDJhYzBkZTlmIn0%3D; expires=Mon, 12-Jul-2021 11:25:13 GMT; Max-Age=7200; path=\/; httponly; samesite=lax<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>Set-Cookie<\/span>\" => <span class=sf-dump-note>array:2<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    <span class=sf-dump-index>0<\/span> => \"<span class=sf-dump-str title=\"388 characters\">XSRF-TOKEN=eyJpdiI6IjZlQldMVU5MYStOb0V3M3YrcWplQ0E9PSIsInZhbHVlIjoiaU44Nkwxb21SekdmL0d5YkwyOGtZaDlSbWlWbGJZUUZESFhVQlRaUTY2b203aU5xUGJpOGFtbFNBRzVSdmZwSjlIVHNIanl2UEx6NkhyM2M3c0J2aXVGeEFjQVEwZTh3YmkwTFRSTzczMEppRk1lSDZ4WHVRMUo2b2pzREhWNXYiLCJtYWMiOiJmMmYzOWJmNDc1NWQ0NjcyNjJhZmM0MzJiYWI2MWI3ZjI3ZjM2NDMyZjE0YmI2OTA0M2M4N2Y3NGRlYjQyYTIyIn0%3D; expires=Mon, 12-Jul-2021 11:25:13 GMT; path=\/<\/span>\"\n    <span class=sf-dump-index>1<\/span> => \"<span class=sf-dump-str title=\"403 characters\">laravel_session=eyJpdiI6IjhGU0pQSm1zVkJUa2F4VmsxbjB0WHc9PSIsInZhbHVlIjoiWEU4bGR2VFduQ1lLcGVHM0VvL29Ja3ZIR0tQMEMwVmt5ODFacllVeENTNlMydjlDUFRMNDBZSVVidGpWZytuRVAzTUVqV3d4KzhmZ29ETWhxUXhkRUs5L0Z0bXFnZVFSbTFWKzUwT0wyWVNDMnJHYlJMR2xJRDNCWGJ5dXZiV2QiLCJtYWMiOiI4Y2VlZDc0ZTllMjgyYzllYWE1ZjYwNjZiYmJhNGZiYWI1ODExMjZhNWE5Y2E5MGNiNzBmNDRiNDJhYzBkZTlmIn0%3D; expires=Mon, 12-Jul-2021 11:25:13 GMT; path=\/; httponly<\/span>\"\n  <\/samp>]\n<\/samp>]\n<\/pre><script>Sfdump(\"sf-dump-1323528664\", {\"maxDepth\":0})<\/script>\n","session_attributes":"<pre class=sf-dump id=sf-dump-376008494 data-indent-pad=\"  \"><span class=sf-dump-note>array:6<\/span> [<samp data-depth=1 class=sf-dump-expanded>\n  \"<span class=sf-dump-key>_token<\/span>\" => \"<span class=sf-dump-str title=\"40 characters\">Mh8JF7UkbJFh6oFwaJy0b7yXGzBzjiC7cRDvL2su<\/span>\"\n  \"<span class=sf-dump-key>url<\/span>\" => []\n  \"<span class=sf-dump-key>_previous<\/span>\" => <span class=sf-dump-note>array:1<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    \"<span class=sf-dump-key>url<\/span>\" => \"<span class=sf-dump-str title=\"44 characters\">http:\/\/rased.test\/customer\/reports\/plate\/get<\/span>\"\n  <\/samp>]\n  \"<span class=sf-dump-key>_flash<\/span>\" => <span class=sf-dump-note>array:2<\/span> [<samp data-depth=2 class=sf-dump-compact>\n    \"<span class=sf-dump-key>old<\/span>\" => []\n    \"<span class=sf-dump-key>new<\/span>\" => []\n  <\/samp>]\n  \"<span class=sf-dump-key>login_web_59ba36addc2b2f9401580f014c7f58ea4e30989d<\/span>\" => <span class=sf-dump-num>3<\/span>\n  \"<span class=sf-dump-key>PHPDEBUGBAR_STACK_DATA<\/span>\" => []\n<\/samp>]\n<\/pre><script>Sfdump(\"sf-dump-376008494\", {\"maxDepth\":0})<\/script>\n"}}, "Xf35a2bdaf2b912d39edf204f33ead559");
+
+</script>
+</body>
+
+<!-- end::Body -->
+</html>
