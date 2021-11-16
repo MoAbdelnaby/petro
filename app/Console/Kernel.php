@@ -39,6 +39,7 @@ class Kernel extends ConsoleKernel
          $schedule->command('welcome:send')->everyMinute()->timezone('Asia/Riyadh');
          $schedule->command('reminder:send')->daily()->timezone('Asia/Riyadh');
          $schedule->command('profile:handle')->dailyAt('01:00')->timezone('Asia/Riyadh');
+         $schedule->command('carplate:images-handle')->dailyAt('01:00')->timezone('Asia/Riyadh');
          $schedule->command('queue:work --tries=3')->everyMinute()->withoutOverlapping();
     }
 

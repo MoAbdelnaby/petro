@@ -49,9 +49,6 @@ Route::get('handle-pending-plates', function (){
     \Illuminate\Support\Facades\Artisan::call('carplate:images-handle');
 });
 
-Route::get('handle-export-db', function (){
-    \Illuminate\Support\Facades\Artisan::call('backup:run');
-});
 
 Route::get('export-files-models', function (){
     \Illuminate\Support\Facades\Artisan::call('files:export');
@@ -97,9 +94,10 @@ Route::get('azure-images-upload', function (){
     \Illuminate\Support\Facades\Artisan::call('place-images:upload');
 });
 
-Route::get('restart-workers', function (){
-    \Illuminate\Support\Facades\Artisan::call('queue:restart');
-});
+//
+//Route::get('restart-workers', function (){
+//    \Illuminate\Support\Facades\Artisan::call('queue:restart');
+//});
 
 
 Route::group(['prefix'=>'api/exports'], function () {
