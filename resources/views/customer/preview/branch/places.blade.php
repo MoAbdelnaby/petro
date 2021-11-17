@@ -373,7 +373,7 @@
                                                             </div>
                                                             <div class="p-2 w-50 text-center">
                                                                 <h2>{{__('app.gym.DurationWork')}}</h2>
-                                                                <h3>{{$area['areaavildura']}}</h3>
+                                                                <h3>{{$area['areabusydura']}}</h3>
                                                                 <p>{{__('app.gym.hours')}}</p>
                                                             </div>
                                                         </div>
