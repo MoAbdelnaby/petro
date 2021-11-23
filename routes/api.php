@@ -39,6 +39,7 @@ Route::group(['middleware' => 'api','namespace' => 'Api','prefix' => 'auth'], fu
         Route::post('vehicles-log', 'ApiModelController@getVehicles');
         Route::post('send_template', 'TemplateMessageController@SendTemplateToUser');
 
+        Route::post('BranchNetwork','ApiModelController@branchNetwork');
     });
 
 

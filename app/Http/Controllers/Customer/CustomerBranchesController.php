@@ -122,7 +122,6 @@ class CustomerBranchesController extends Controller
             'models' => 'required|array|min:2',
             'models.*' => 'required|numeric|in:3,4'
         ]);
-
         $data = Arr::except($request_data, ['region_id', 'photo']);
 
         try {
@@ -130,7 +129,7 @@ class CustomerBranchesController extends Controller
             DB::beginTransaction();
 
             if (is_numeric($request->region_id)) {
-                $reg = Region::where($request->region_id)->where('user_id', parentID());
+                $reg = Region::where('id',$request->region_id)->where('user_id', parentID())->first();
                 if (!$reg) {
                     return redirect()->back()->with('danger', 'Region Not Found !');
                 }
@@ -169,7 +168,7 @@ class CustomerBranchesController extends Controller
 
                 $branch->areas()->firstOrCreate([
                     'area' => $i,
-                    'code' => $branch->code,
+                    'branch_code' => $branch->code,
                 ], [
                     'status' => 0
                 ]);

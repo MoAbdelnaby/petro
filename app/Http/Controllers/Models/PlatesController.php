@@ -261,7 +261,6 @@ class PlatesController extends Controller
                 'status' => false,
                 'user_id' => parentID(),
             ]);
-
             if ($file->status && \Storage::disk('public')->exists($file->url)) {
 
                 $headers = array(

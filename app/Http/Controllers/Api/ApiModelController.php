@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\BranchNetWork;
 use App\Http\Repositories\Eloquent\ApiRepo;
 use App\Http\Requests\ApiModelRequest;
 use App\Http\Requests\CarCountRequest;
@@ -312,5 +313,22 @@ class ApiModelController extends Controller
         return response()->json(['success' => false, 'message' => 'Station Code Not Found'], 200);
     }
 
+    public function branchNetwork(Request $request) {
+        return response()->json($request->all());
+        try {
+            $create = BranchNetWork::create([
+                'user_id' => Auth::id(),
+                'branch_id' => $request->branch_id,
+                'status' => 1
+            ]);
+            if ($create) {
+
+            }else {
+
+            }
+        }catch (\Exception $e) {
+            return response()->json(['data'=> [], 'message' => $e->getMessage(),$e->getCode()],$e->getCode());
+        }
+    }
 
 }
