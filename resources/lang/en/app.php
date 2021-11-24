@@ -2,6 +2,7 @@
 return [
     'select_model' => 'Select Model',
     'config' => 'Config',
+    'status' => 'Status',
     'new' => 'New',
     'home' => 'Home',
     'region' => 'Region',
@@ -1101,6 +1102,10 @@ return [
             'show' => [
                 'action' => 'Branch history',
                 'title' => ':branch internet speeds log',
+            ],
+            'registerBranch' => [
+                'page_title' => 'Register Branch',
+                'title' => 'Register your current branch'
             ],
             'unit' => 'MB',
         ],

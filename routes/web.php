@@ -261,4 +261,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('service', 'ServiceController');
     Route::get('connection-speed', 'Models\ConnectionSpeedController@index')->name('connection-speed.index');
     Route::get('branches/{branch}/connection-speeds', 'Models\ConnectionSpeedController@show')->name('branch.connection-speeds');
+    Route::get('branches/register', 'Models\ConnectionSpeedController@registerBranch')->name('branch.register');
 });

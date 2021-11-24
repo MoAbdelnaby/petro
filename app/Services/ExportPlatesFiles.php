@@ -26,6 +26,7 @@ class ExportPlatesFiles
 
 
             $query = Carprofile::selectRaw('carprofiles.*')
+                ->where('plate_status', 'success')
                 ->where('status', 'completed')
                 ->where('branch_id', $branchid);
 
@@ -39,7 +40,7 @@ class ExportPlatesFiles
 
             $result = [];
             $query->chunk(500, function ($plates) use (&$result) {
-                $result[] = $plates->toArray();
+                $result = array_merge($result,$plates->toArray());
             });
 
             $path = "branches/$file->branch_id/files/plates";
@@ -53,14 +54,14 @@ class ExportPlatesFiles
             $check = false;
             if ($type == 'pdf') {
                 if ($result != []) {
-                    $list = $result[0];
+                    $list = $result;
 
                     $check = PDF::loadView('customer.preview.plates.platespdf', compact('list'))
                         ->save('storage/app/public/' . $file_path);
                 }
             } else {
                 if ($result != []) {
-                    $check = Excel::store(new PlatesExcelExport($result[0]), 'public/' . $file_path);
+                    $check = Excel::store(new PlatesExcelExport($result), 'public/' . $file_path);
                 }
             }
 

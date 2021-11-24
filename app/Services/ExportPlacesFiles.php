@@ -45,7 +45,7 @@ class ExportPlacesFiles
 
             $result = [];
             $modelrecords->chunk(500, function ($places) use (&$result) {
-                $result = $places->toArray();
+                $result =  array_merge($result,$places->toArray());
             });
 
             $path = "branches/$file->branch_id/files/plates";
