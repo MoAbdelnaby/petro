@@ -33,8 +33,15 @@ class ConnectionSpeedController extends Controller
     {
         ConnectionSpeed::create([
             'user_id' => auth()->id(),
-            'branch_id' => session('branch_id'),
+            'branch_id' => \request('branch_id'),
             'internet_speed' => \request('internet_speed')
         ]);
+    }
+
+    public function registerBranch()
+    {
+        $branches = Branch::all();
+
+        return view('customer.speeds.registerBranch', compact( 'branches'));
     }
 }

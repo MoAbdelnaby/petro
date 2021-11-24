@@ -124,6 +124,8 @@
             <th>{{ __('app.Arabic_Plate') }}</th>
             <th>{{ __('app.English_Plate') }}</th>
             <th>{{ __('app.screenshot') }}</th>
+            <th>{{ __('app.status') }}</th>
+            <th>{{ __('app.Welcome_Message') }}</th>
         </tr>
         @foreach($list as $item)
             <tr>
@@ -141,6 +143,9 @@
                         </a>
                     @endif
                 </td>
+                <td>{{$item['plate_status']}}</td>
+                <td>{{isset($item['welcome']) ? 'sent' : 'failed'}}</td>
+
             </tr>
         @endforeach
     </table>

@@ -2,6 +2,7 @@
 
 return array(
     'ALL_Days' => 'كل الايام',
+    'status' => 'الحاله',
     'AVG_Employee_Costs' => 'تكاليف الموظف AVG',
     'Actions' => 'إجراءات',
     'Actions_in_Users' => 'الإجراءات في المستخدمين',
@@ -607,6 +608,10 @@ return array(
             'show' => [
                 'action' => 'سجل الفرع',
                 'title' => 'سجل سرعات الأنترنت لفرع :branch',
+            ],
+            'registerBranch' => [
+                'page_title' => 'تسجيل الفرع',
+                'title' => 'أختر فرعك الحالي'
             ],
             'unit' => 'ميجا بايت',
         ],

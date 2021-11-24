@@ -33,23 +33,23 @@
                                </span>
                     @enderror
                 </div>
-                <div class="md-form">
-                    <select id="branch" name="branch_id" class="form-control @error('branch_id') is-invalid @enderror">
-                        @foreach($branches as $branch)
-                            <option value="">select branch</option>
-                            <option value="{{ $branch->id }}">
-                                {{ $branch->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('branch_id')
-                    <span class="invalid-feedback my-2" role="alert">
-                                         <strong>{{ $message }}</strong>
-                                    </span>
-                    @enderror
-                </div>
+            {{--                <div class="md-form">--}}
+            {{--                    <select id="branch" name="branch_id" class="form-control @error('branch_id') is-invalid @enderror">--}}
+            {{--                        @foreach($branches as $branch)--}}
+            {{--                            <option value="">select branch</option>--}}
+            {{--                            <option value="{{ $branch->id }}">--}}
+            {{--                                {{ $branch->name }}--}}
+            {{--                            </option>--}}
+            {{--                        @endforeach--}}
+            {{--                    </select>--}}
+            {{--                    @error('branch_id')--}}
+            {{--                    <span class="invalid-feedback my-2" role="alert">--}}
+            {{--                                         <strong>{{ $message }}</strong>--}}
+            {{--                                    </span>--}}
+            {{--                    @enderror--}}
+            {{--                </div>--}}
 
-                <!-- Sign in button -->
+            <!-- Sign in button -->
                 <button  id="loginButton" onclick="submitLoginForm()"  class="btn btn-outline-info btn-rounded btn-block  z-depth-0 my-4 waves-effect mt-2" type="submit">{{__('app.auth.login')}}
                     <span style="display: none;"
                           class=" mt-1 mr-1 spinner-border spinner-border-sm login-spiner" role="status"
