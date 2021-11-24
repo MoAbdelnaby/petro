@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBranchNetWorksTable extends Migration
+class CreateBranchStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateBranchNetWorksTable extends Migration
      */
     public function up()
     {
-        Schema::create('branch_net_works', function (Blueprint $table) {
+        Schema::create('branch_status', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("branch_code");
-            $table->unsignedBigInteger("user_id");
-            $table->text('error')->nullable();
+            $table->text("branch_name");
+            $table->text("last_error")->nullable();
+            $table->text("last_connected")->nullable();
+            $table->string("status")->nullable();
             $table->timestamps();
-//            $table->foreign('branch_code')->references('code')->on('branches');
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -31,6 +31,6 @@ class CreateBranchNetWorksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branch_net_works');
+        Schema::dropIfExists('branch_status');
     }
 }

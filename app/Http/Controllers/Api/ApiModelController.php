@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\BranchNetWork;
+use App\BranchStatus;
 use App\Http\Repositories\Eloquent\ApiRepo;
 use App\Http\Requests\ApiModelRequest;
 use App\Http\Requests\CarCountRequest;
@@ -314,17 +315,38 @@ class ApiModelController extends Controller
     }
 
     public function branchNetwork(Request $request) {
-        return response()->json($request->all());
         try {
-            $create = BranchNetWork::create([
-                'user_id' => Auth::id(),
-                'branch_id' => $request->branch_id,
-                'status' => 1
-            ]);
-            if ($create) {
-
-            }else {
-
+            $json = array();
+            /* get branch */
+            $branch = Branch::where("code",$request->branch_code)->first();
+            /* end of get branch */
+            if ($branch) {
+                if ($branch->active == 1) {
+                    $create = BranchNetWork::create([
+                        'user_id' => Auth::id(),
+                        'branch_code' => $request->branch_code,
+                        'error' => json_encode($request->last_error),
+                        'status' => $request->status,
+                    ]);
+                    /* last of error */
+                    $branchStatus = BranchStatus::where('branch_code',$request->branch_code)->get();
+                    /* End */
+                    if ($create) {
+                        /* response successfully */
+                        $json['status'] = 'success';
+                        $json['message'] = 'store branch status successfully';
+                        $json['code'] = 200;
+                    }else {
+                        $json['status'] = 'field';
+                        $json['message'] = 500;
+                        $json['code'] = 'issue of creation branch status';
+                    }
+                    return response()->json(['data' => $json],$json['code']);
+                } else {
+                    return response()->json(['data' => [], 'message' => 'this Branch is inActive', 'code' => 200],200);
+                }
+            } else {
+                return response()->json(['data' => [], 'message' => 'Branch Not Found', 'code' => 404],404);
             }
         }catch (\Exception $e) {
             return response()->json(['data'=> [], 'message' => $e->getMessage(),$e->getCode()],$e->getCode());

@@ -9,8 +9,9 @@ class BranchNetWork extends Model
     protected $table = "branch_net_works";
 
     protected $fillable = [
-        'branch_id',
+        'branch_code',
         'user_id',
-        'status',
+        'error',
+        'status'
     ];
 }
