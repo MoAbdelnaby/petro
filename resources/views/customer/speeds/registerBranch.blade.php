@@ -20,7 +20,7 @@
         <div class="container-fluid">
             <h3>{{__('app.customers.speed.registerBranch.title')}}</h3>
             <hr />
-            <div class="md-form col-md-4">
+            <div class="branch-select md-form col-md-4">
                 <select id="branch" name="branch_id" class="form-control @error('branch_id') is-invalid @enderror">
                     <option value="">select branch</option>
                     @foreach($branches as $branch)
@@ -41,8 +41,8 @@
 
 @section('scripts')
     <script>
-        var imageAddr = "/images/to-download.jpg";
-        var downloadSize = 2936012.8; //bytes
+        var imageAddr = "/images/testimg.jpg";
+        var downloadSize = 41029632 ; //bytes4,997,120
 
         function ShowProgressMessage(msg) {
             if (console) {
@@ -92,7 +92,7 @@
 
             function showResults() {
                 var duration = (endTime - startTime) / 1000;
-                var bitsLoaded = downloadSize * 8;
+                var bitsLoaded = downloadSize;
                 var speedBps = (bitsLoaded / duration).toFixed(2);
                 var speedKbps = (speedBps / 1024).toFixed(2);
                 var speedMbps = (speedKbps / 1024).toFixed(2);
@@ -112,7 +112,10 @@
 
         $(document).ready(function () {
             $('#branch').change(function () {
+                $('.branch-select').append('<div class="loading-view"><span></span></div>');
                 InitiateSpeedDetection();
+                // $('.loading-view').delay(1000).fadeOut();
+                // $('.loading-view').remove();
             })
 
             setInterval(function(){
