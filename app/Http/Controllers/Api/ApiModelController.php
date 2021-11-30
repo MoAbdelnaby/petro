@@ -315,6 +315,12 @@ class ApiModelController extends Controller
     }
 
     public function branchNetwork(Request $request) {
+        $this->validate($request, [
+            'branch_code' => 'required',
+            'last_error' => 'required',
+            'status' => 'required',
+        ]);
+        
         try {
             $json = array();
             /* get branch */
@@ -348,8 +354,12 @@ class ApiModelController extends Controller
             } else {
                 return response()->json(['data' => [], 'message' => 'Branch Not Found', 'code' => 404],404);
             }
-        }catch (\Exception $e) {
-            return response()->json(['data'=> [], 'message' => $e->getMessage(),$e->getCode()],$e->getCode());
+        } catch (\Exception $e) {
+            return response()->json([
+                'data'=> [], 
+                'message' => $e->getMessage(),
+                'code' => 500
+            ], 500);
         }
     }
 
