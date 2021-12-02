@@ -30,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
     //        if (env('APP_ENV') === 'production') {
     //            $this->app['request']->server->set('HTTPS', true);
     //        }
+
+	try {
         view()->composer('*', function ($view) {
             if (Auth::check()) {
 //                $oldRequest = PackageRequest::with('package')->onlyTrashed()->where('active',1)->where('user_id', Auth::user()->id)->get();
@@ -41,5 +43,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
             View::share('userSettings', UserSetting::where('user_id', 3)->first());
+	}
+	catch (\Exception $e) {
+	    //
+	}
     }
 }
