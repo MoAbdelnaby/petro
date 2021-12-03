@@ -40,6 +40,9 @@ class ConnectionSpeedController extends Controller
 
     public function registerBranch()
     {
+        if (auth()->user()->speedtest == 0) {
+            return redirect()->back()->with('danger', 'you are not authorized to see this page');
+        }
         $branches = Branch::all();
 
         return view('customer.speeds.registerBranch', compact( 'branches'));

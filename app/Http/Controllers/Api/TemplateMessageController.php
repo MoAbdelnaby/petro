@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Carprofile;
 use App\Models\Customer;
 use App\Models\Invoice;
+use App\Models\MessageLog;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -81,6 +84,8 @@ class TemplateMessageController extends Controller
                 'invoice' => $filepath,
                 'distance' => $request->distance
             ]);
+
+
         }
 
         try {
@@ -94,9 +99,31 @@ class TemplateMessageController extends Controller
                 ]);
 
                 if($invoice['success'] === false ) {
+                    MessageLog::create([
+                        'PlateNumber' => $PlateNumber,
+                        'type'=> 'invoice',
+                        'message'=> str_replace(['{{1}}','{{2}}'],$request->distance,NOTIFY),
+                        'phone'=> $phone,
+                        'invoiceUrl'=> $filepath,
+                        'status'=>'failed',
+                        'error_reason'=>'twillo error'
+                    ]);
                     return response()->json(['success'=>false,'message' => 'SomeThing went wrong !'], 500);
                 }
             }
+
+            MessageLog::create([
+                'PlateNumber' => $PlateNumber,
+                'type'=> 'invoice',
+                'message'=> str_replace(['{{1}}','{{2}}'],$request->distance,NOTIFY),
+                'phone'=> $phone,
+                'invoiceUrl'=> $filepath
+            ]);
+
+            $latest = Carprofile::where('plate_en',$PlateNumber)->whereDate('created_at', Carbon::today())->latest()->first();
+            $latest->update([
+                'invoice'=>Carbon::now()
+            ]);
 
             return response()->json(['success'=>true,'message' => 'Message Sent Successfully'], 200);
         } catch (\Exception $exception){
