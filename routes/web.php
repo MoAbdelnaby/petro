@@ -101,6 +101,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('customerUsers/bulkDelete', 'UserController@forceDelete')->name('customerUsers.bulkDelete');
 
         Route::resource('customerBranches', 'CustomerBranchesController');
+        Route::get('customerBranches/services/{id}', 'CustomerBranchesController@services')->name('customerBranches.services');
+        Route::get('customerBranches/services/{id}/create', 'CustomerBranchesController@createServices')->name('customerBranches.services.create');
         Route::post('customerBranches/bulkRestore', 'CustomerBranchesController@restore')->name('branches.bulkRestore');
         Route::post('customerBranches/bulkDelete', 'CustomerBranchesController@forceDelete')->name('branches.bulkDelete');
         Route::get('customerBranches/change/{id}', 'CustomerBranchesController@changeActive')->name('branches.change_active');
