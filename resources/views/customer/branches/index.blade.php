@@ -187,14 +187,10 @@
                                                                 </td>
                                                                 <td>
                                                                     @if (auth()->user()->type == 'customer')
-
-
                                                                         <a class="btn btn-sm btn-info"
                                                                             href="{{ route('customerBranches.services', [$item->id]) }}">
-                                                                            Show services
+                                                                            services
                                                                         </a>
-
-
 
                                                                         <a class="btn btn-sm btn-info"
                                                                             href="{{ route('customerBranches.show', [$item->id]) }}">{{ __('app.customers.branches.show') }}</a>
@@ -238,6 +234,7 @@
                                                                                 {{ __('app.region') }}</span> :
                                                                             {{ $item->region->name ?? '' }}</small></h5>
                                                                     <h5 class="d-block">
+
                                                                         <a
                                                                             href="{{ route('branches.change_active', [$item->id]) }}">
                                                                             @if ($item->active == 1)
@@ -258,7 +255,12 @@
                                                                 <div
                                                                     class="ratting-item d-flex align-items-center justify-content-center p-0 m-0 pb-2">
                                                                     @if (auth()->user()->type == 'customer')
-                                                                        <a class="btn btn-info"
+                                                                        <a class="btn  btn-info"
+                                                                            href="{{ route('customerBranches.services', [$item->id]) }}">
+                                                                            services
+                                                                        </a>
+
+                                                                        <a class="btn  btn-info"
                                                                             href="{{ route('customerBranches.show', [$item->id]) }}">{{ __('app.customers.branches.show') }}</a>
                                                                         <a class="btn btn-primary mx-1"
                                                                             href="{{ route('customerBranches.edit', [$item->id]) }}">{{ __('app.customers.branches.edit') }}</a>
