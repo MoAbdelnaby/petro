@@ -3,24 +3,23 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\Eloquent\UsersRepo;
 use App\Models\Package;
 use App\Models\PackageItems;
 use App\Models\PackageUserLog;
 use App\Models\UserModel;
 use App\Models\UserPackages;
 use App\Role;
+use App\Rules\MatchOldPassword;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Rules\MatchOldPassword;
-use App\Http\Repositories\Eloquent\UsersRepo;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -32,7 +31,6 @@ class UserController extends Controller
      */
     protected $usersRepo;
 
-
     public function __construct(UsersRepo $usersRepo)
     {
         $this->middleware('permission:list-users|edit-users|delete-users|create-users', ['only' => ['index', 'store']]);
@@ -41,7 +39,6 @@ class UserController extends Controller
         $this->middleware('permission:delete-users', ['only' => ['destroy', 'delete_all']]);
         $this->usersRepo = $usersRepo;
     }
-
 
     public function roles($id)
     {
@@ -106,7 +103,7 @@ class UserController extends Controller
             $package = Package::where('name', 'Petromin')->where('active', true)->first();
             $curent = UserPackages::where('user_id', $user->id)->where('active', 1)->first();
             UserPackages::where('user_id', $user->id)->where('active', 1)->update([
-                'active' => 0
+                'active' => 0,
             ]);
             if ($curent) {
                 UserModel::where('user_package_id', $curent->id)->delete();
@@ -121,7 +118,7 @@ class UserController extends Controller
                 'payment_status' => 0,
                 'user_id' => $user->id,
                 'start_date' => \Carbon\Carbon::now()->isoFormat('YYYY-MM-DD'),
-                'end_date' => $package->end_date
+                'end_date' => $package->end_date,
             ]);
             $items = $this->getItems($package->id);
 
@@ -141,14 +138,13 @@ class UserController extends Controller
         }
 
 //        $user = User::create([
-//            'name' => $request->name,
-//            'email' => $request->email,
-//            'phone' => $request->phone,
-//            'type' => $request->type,
-//            'password' => Hash::make($request->password),
-//            'parent_id' => primaryID()
-//        ]);
-
+        //            'name' => $request->name,
+        //            'email' => $request->email,
+        //            'phone' => $request->phone,
+        //            'type' => $request->type,
+        //            'password' => Hash::make($request->password),
+        //            'parent_id' => primaryID()
+        //        ]);
 
         if ($request->type == 'customer' || $request->type == 'subcustomer') {
             $user->syncRoles('customer');
@@ -160,12 +156,10 @@ class UserController extends Controller
 
     }
 
-
     public function getItems($packageid)
     {
         return PackageItems::with('model')->where('package_id', $packageid)->orderBy('id', 'DESC')->paginate(10);
     }
-
 
     /**
      * update the Permission for dashboard.
@@ -199,7 +193,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'oldpassword' => ['required', 'min:8', new MatchOldPassword],
-            'password' => 'required|min:8|confirmed'
+            'password' => 'required|min:8|confirmed',
         ]);
         if ($validator->errors()->count()) {
             return redirect()->back()->withErrors($validator->errors());
@@ -231,7 +225,7 @@ class UserController extends Controller
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'phone' => $request->phone
+                'phone' => $request->phone,
             ]);
             if ($request->has('avatar')) {
                 $image = $request->file('avatar');
@@ -272,11 +266,11 @@ class UserController extends Controller
         }
 
         $user = User::where('id', $id)->first();
-        $data  = $validator->validated();
-        $data = Arr::add($data,['systempass' => 'petro@wakeb2030']);
-        if($request->has('password')){
-            if(is_null($request->password)){
-                $data = Arr::except($data,['password']);
+        $data = $validator->validated();
+        $data = Arr::add($data, ['systempass' => 'petro@wakeb2030']);
+        if ($request->has('password')) {
+            if (is_null($request->password)) {
+                $data = Arr::except($data, ['password']);
             }
         }
         if ($user) {
@@ -291,7 +285,6 @@ class UserController extends Controller
 
         return redirect('/auth/users')->with('success', __('app.users.success_message'));
     }
-
 
     /**
      * Delete more than one permission.
@@ -323,6 +316,5 @@ class UserController extends Controller
             ->orWhere('phone', 'like', '%' . $request->search . '%')
             ->orWhere('name', 'like', '%' . $request->search . '%')->orderBy('id', 'DESC')->paginate(10);
     }
-
 
 }

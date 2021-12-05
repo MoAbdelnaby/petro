@@ -3,6 +3,7 @@
 return array(
     'ALL_Days' => 'كل الايام',
     'status' => 'الحاله',
+    'test_speed'=>'قياس سرعه الانترنت',
     'AVG_Employee_Costs' => 'تكاليف الموظف AVG',
     'Actions' => 'إجراءات',
     'Actions_in_Users' => 'الإجراءات في المستخدمين',

@@ -42,6 +42,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 
+
 <body class="sidebar-main">
 
     @include('layouts.dashboard.partials._page-loader')

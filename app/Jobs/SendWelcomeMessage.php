@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Carprofile;
 use App\Models\Customer;
 use App\Models\FailedMessage;
+use App\Models\MessageLog;
 use App\Services\CustomerPhone;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -67,7 +68,7 @@ class SendWelcomeMessage implements ShouldQueue
                         $sent = true;
                     }
                 }
-            }
+
             if ($sent === false) {
                 FailedMessage::updateOrCreate([
                     'plateNumber' => $this->plate,
@@ -76,6 +77,15 @@ class SendWelcomeMessage implements ShouldQueue
                     'branch_id' => $this->branch_id,
                     'status' => 'twillo'
                 ]);
+                MessageLog::create([
+                    'PlateNumber' => $this->plate,
+                    'type'=> 'welcome',
+                    'branch_id'=> $this->branch_id,
+                    'message'=> WELCOME,
+                    'phone'=> $phone,
+                    'status'=>'failed',
+                    'error_reason'=>'Twillo Error'
+                ]);
             } else {
                 $carprofile = Carprofile::find($this->rowid);
                 if ($carprofile) {
@@ -83,7 +93,16 @@ class SendWelcomeMessage implements ShouldQueue
                         'welcome' => Carbon::now(),
                     ]);
                 }
+                MessageLog::create([
+                    'PlateNumber' => $this->plate,
+                    'type'=> 'welcome',
+                    'message'=> WELCOME,
+                    'phone'=> $phone,
+                    'branch_id'=> $this->branch_id
+                ]);
             }
+
+         }
 
 
         } else {
@@ -93,6 +112,14 @@ class SendWelcomeMessage implements ShouldQueue
             ], [
                 'branch_id' => $this->branch_id,
                 'status' => 'noNumber'
+            ]);
+            MessageLog::create([
+                'PlateNumber' => $this->plate,
+                'type'=> 'welcome',
+                'branch_id'=> $this->branch_id,
+                'message'=> WELCOME,
+                'status'=>'failed',
+                'error_reason'=>'No Number'
             ]);
         }
 

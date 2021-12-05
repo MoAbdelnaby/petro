@@ -4,6 +4,7 @@ return [
     'config' => 'Config',
     'status' => 'Status',
     'new' => 'New',
+    'test_speed'=>'measure internet speed',
     'home' => 'Home',
     'region' => 'Region',
     'action_message' => 'Action Successfully',
@@ -1493,5 +1494,12 @@ return [
         'english_description' => 'english description',
         'action' => 'action',
     ],
+
+    'branchStatus' => 'branch Status',
+    'branch_name' => 'Branch Name',
+    'branch_status' => 'Branch Status',
+    'lastError' => 'last Error',
+    'user_name' => 'User Name',
+    'createdIn' => 'Created In',
 
 ];
