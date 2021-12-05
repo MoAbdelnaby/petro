@@ -48,19 +48,22 @@
                                                 <a class="nav-link active" id="v-pills-reminder-tab" data-toggle="pill"
                                                    href="#v-pills-reminder"
                                                    role="tab" aria-controls="v-pills-reminder" aria-selected="true">{{ __('app.Reminder') }}</a>
+                                                <a class="nav-link" id="v-pills-branch-tab" data-toggle="pill"
+                                                   href="#v-pills-branch"
+                                                   role="tab" aria-controls="v-pills-reminder" aria-selected="true">{{ __('app.branchSetting') }}</a>
                                                 {{--                      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"--}}
                                                 {{--                        aria-controls="v-pills-profile" aria-selected="false">Profile</a>--}}
 
                                             </div>
                                         </div>
                                         <div class="col-10">
-                                            <div class="tab-content" id="v-pills-tabContent">
-                                                <div class="tab-pane fade show active" id="v-pills-reminder"
+                                            <form id="reminderForm" method="post" novalidate action="{{route('setting.reminder_post')}}" class="reminder-form">
+                                                @csrf
+                                                <div class="tab-content" id="v-pills-tabContent">
+                                                    <div class="tab-pane fade show active" id="v-pills-reminder"
                                                      role="tabpanel"
                                                      aria-labelledby="v-pills-reminder-tab">
                                                 <!-- {{--@include('settings.reminder-tab)--}} -->
-                                                    <form id="reminderForm" method="post" novalidate action="{{route('setting.reminder_post')}}" class="reminder-form">
-                                                        @csrf
                                                         <div class="container">
                                                             <div class="row">
                                                                 <div class="form-group col-12 col-md-4">
@@ -73,24 +76,36 @@
                                                                         {{ __('app.enter_a_valid_number_of_days') }}
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-12 col-md-4 text-center mt-4">
-                                                                    <button type="submit"
-                                                                            class="btn btn-primary submit-btn waves-effect waves-light px-4 py-2"
-                                                                            style="width: 200px;">{{ __('app.Save') }}
-                                                                    </button>
-                                                                </div>
                                                             </div>
                                                         </div>
-
-
-                                                    </form>
-
-                                                </div>
-                                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                                                     aria-labelledby="v-pills-profile-tab">...
-                                                </div>
-
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-branch">
+                                                        <div class="row">
+                                                            <div class="col-12 form-group">
+                                                                <label for="">{{ __('app.selectType') }}</label>
+                                                                <select name="branch_type"  class="form-control" id="picType">
+                                                                    <option value=""></option>
+                                                                    <option value="hours">Hours</option>
+                                                                    <option value="minute">Minute</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-12 form-group">
+                                                                <label for="">{{ __('app.duration') }}</label>
+                                                                <div id="durationDiv"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-4 text-center mt-4">
+                                                        <button type="submit"
+                                                                class="btn btn-primary submit-btn waves-effect waves-light px-4 py-2"
+                                                                style="width: 200px;">{{ __('app.Save') }}
+                                                        </button>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                                                         aria-labelledby="v-pills-profile-tab">...
+                                                    </div>
                                             </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -109,6 +124,28 @@
 
 @push("js")
     <script>
+        $(document).on("change", "#picType", function () {
+            $('#durationSelect').remove();
+            let values = []
+            if ($(this).val() == 'minute') {
+                for (let i = 1; i <= 60; i++) {
+                    values.push(i)
+                }
+            } else {
+                for (let i = 1; i <= 24; i++) {
+                    values.push(i)
+                }
+            }
+            var selection = "";
+            selection = "<select class='form-control' id='durationSelect' name='branch_duration'>";
+            for (var j = 1; j <= values.length; j++) {
+                selection += "<option value='"+j+"'>"+j+"<option>"
+            }
+            selection += "</select>";
+
+
+            $("#durationDiv").append(selection);
+        })
         $(document).ready(function () {
             // $("#kilometer").on("focus", function () {
             //     if ($("#kilometer.is-invalid")[0]) {
