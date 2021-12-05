@@ -101,6 +101,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('customerUsers/bulkDelete', 'UserController@forceDelete')->name('customerUsers.bulkDelete');
 
         Route::resource('customerBranches', 'CustomerBranchesController');
+        Route::get('customerBranches/services/{id}', 'CustomerBranchesController@services')->name('customerBranches.services');
+        Route::get('customerBranches/services/{id}/create', 'CustomerBranchesController@createServices')->name('customerBranches.services.create');
         Route::post('customerBranches/bulkRestore', 'CustomerBranchesController@restore')->name('branches.bulkRestore');
         Route::post('customerBranches/bulkDelete', 'CustomerBranchesController@forceDelete')->name('branches.bulkDelete');
         Route::get('customerBranches/change/{id}', 'CustomerBranchesController@changeActive')->name('branches.change_active');
@@ -130,6 +132,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('customerUsers/assignUserToBranch', 'UserController@assignUserToBranch')->name('customerUsers.assignUserToBranch');
         Route::get('myModels', 'UserController@myModels')->name('myModels');
         Route::get('myBranches', 'UserController@myBranches')->name('myBranches');
+        Route::get('branches-status','BranchModelsController@BranchesStatus')->name('branches_status');
+        Route::get('branches-log/{id}','BranchModelsController@getLogs');
         Route::get('customerPackages/assignuser/{id}', 'CustomerPackagesController@assignuser')->name('customerPackages.assignuser');
         Route::post('customerPackages/assignuser/{id}/create', 'CustomerPackagesController@assignuserpost')->name('customerPackages.assignuserpost');
         Route::post('customerPackages/requestPackage', 'CustomerPackagesController@requestPackage')->name('customerPackages.requestPackage');

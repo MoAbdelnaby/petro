@@ -11,7 +11,7 @@
 
 @section('content')
     <div id="content-page" class="content-page">
-        <a href="{{ route('service.create') }}" class="pull-right m-5 btn btn-primary">
+        <a href="{{ route('service.create') }}" class="mb-5 ml-3 btn btn-primary">
             {{ __('app.service.create') }}
         </a>
         <div class="container-fluid">

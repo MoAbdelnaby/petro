@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Service;
 use Illuminate\Http\Request;
 use Storage;
@@ -15,7 +16,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::where('user_id', auth()->id())->get();
+        $services = Service::with('branch')->where('user_id', auth()->id())->get();
 
         return view('customer.service.index', [
             'services' => $services,
@@ -29,7 +30,8 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('customer.service.create');
+        $branches = Branch::where('user_id', auth()->id())->get();
+        return view('customer.service.create', compact('branches'));
     }
 
     /**
@@ -46,6 +48,7 @@ class ServiceController extends Controller
             'description_ar' => 'required|string',
             'description_en' => 'required|string',
             'image' => 'mimes:jpg,jpeg,png',
+            'branch_id' => 'required|exists:branches,id',
         ]);
 
         $data['user_id'] = auth()->id();
@@ -55,7 +58,12 @@ class ServiceController extends Controller
 
         Service::create($data);
 
-        return redirect()->route('service.index')->with('success', 'Service has been created successfully');
+        if ($request->has('redirect')) {
+            return redirect($request->redirect)->with('success', 'Service has been created successfully');
+        } else {
+            return redirect()->route('service.index')->with('success', 'Service has been created successfully');
+        }
+
     }
 
     /**
@@ -83,8 +91,11 @@ class ServiceController extends Controller
             return back()->with('danger', 'Service not found');
         }
 
+        $branches = Branch::where('user_id', auth()->id())->get();
+
         return view('customer.service.edit', [
             'service' => $service,
+            'branches' => $branches,
         ]);
     }
 
@@ -102,7 +113,7 @@ class ServiceController extends Controller
             'name_en' => 'required|string|max:255',
             'description_ar' => 'required|string',
             'description_en' => 'required|string',
-            'image' => 'mimes:jpg,jpeg,png',
+            'branch_id' => 'required|exists:branches,id',
         ]);
 
         try {
@@ -117,8 +128,12 @@ class ServiceController extends Controller
         }
 
         $service->update($data);
+        if ($request->has('redirect')) {
+            return redirect($request->redirect)->with('success', 'Service has been updated successfully');
+        } else {
+            return redirect()->route('service.index')->with('success', 'Service has been updated successfully');
+        }
 
-        return redirect()->route('service.index')->with('success', 'Service has been updated successfully');
     }
 
     /**

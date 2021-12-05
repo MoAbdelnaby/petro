@@ -21,6 +21,7 @@ use App\Http\Resources\VehiclesResource;
 use App\Models\AreaStatus;
 use App\Models\Branch;
 use App\Models\Carprofile;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -320,9 +321,10 @@ class ApiModelController extends Controller
             'last_error' => 'required',
             'status' => 'required',
         ]);
-        
+
         try {
             $json = array();
+            $branchStatusArr = array();
             /* get branch */
             $branch = Branch::where("code",$request->branch_code)->first();
             /* end of get branch */
@@ -335,7 +337,18 @@ class ApiModelController extends Controller
                         'status' => $request->status,
                     ]);
                     /* last of error */
-                    $branchStatus = BranchStatus::where('branch_code',$request->branch_code)->get();
+                    $branchStatus = BranchStatus::where('branch_code',$request->branch_code)->first();
+                    $branchStatusArr['status'] = 'online';
+                    $branchStatusArr['created_at'] = Carbon::now();
+                    $branchStatusArr['last_error'] = json_encode($request->last_error);
+                    $branchStatusArr['last_connected'] = null;
+                    $branchStatusArr['branch_code'] = $request->branch_code;
+                    $branchStatusArr['branch_name'] = $branch->name;
+                    if ($branchStatus) {
+                        $branchStatus->update($branchStatusArr);
+                    } else {
+                        BranchStatus::create($branchStatusArr);
+                    }
                     /* End */
                     if ($create) {
                         /* response successfully */
@@ -356,7 +369,7 @@ class ApiModelController extends Controller
             }
         } catch (\Exception $e) {
             return response()->json([
-                'data'=> [], 
+                'data'=> [],
                 'message' => $e->getMessage(),
                 'code' => 500
             ], 500);

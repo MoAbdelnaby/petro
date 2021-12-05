@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\BranchError;
+use App\BranchNetWork;
+use App\BranchStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\BranchModelsRepo;
+use App\Models\Branch;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\UserModel;
@@ -247,6 +251,18 @@ class BranchModelsController extends Controller
     public function destroy(Request $request)
     {
         return $this->repo->delete($request->id);
+    }
+
+    public function BranchesStatus() {
+        /* get branches by table view last_branch_error */
+        $branches = BranchStatus::with('branch')->paginate(25);
+        return view("customer.branches_status.index",compact('branches'));
+    }
+
+    public function getLogs($code) {
+        $branchName = Branch::where('code',$code)->first()->name;
+        $logs = BranchNetWork::with('user')->where("branch_code","=",$code)->paginate(25);
+        return view("customer.branches_status.logs",compact('logs','branchName'));
     }
 
 }
