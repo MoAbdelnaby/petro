@@ -319,6 +319,19 @@ if (!function_exists('unKnownError')) {
     }
 }
 
+define(
+    'WELCOME', "أهلاً بك في *بترومين اكسبرس*، سعداء بخدمتك، ونأمل أن تكون تجربتك سعيدة.
+
+Welcome to *Petromin Express*. We are happy to serve you and hope your experience is pleasant.");
+
+define('NOTIFY',"شكرًا لاختيارك *بترومين اكسبرس*، سُعدنا بخدمتك.
+تغيير الزيت القادم سيكون على {{1}} كم.
+للاطلاع على فاتورتك، اضغط الرقم *1* أو اكتب *فاتورة*.
+
+Thank you for choosing *Petromin Express*. We are glad to serve you.
+Your next oil change will be on {{2}} km.
+To view your invoice, please press *1* or type *Invoice*.");
+
 
 const COUNTRY_CODE = [
     "AF" => "Afghanistan",

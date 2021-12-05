@@ -4,6 +4,7 @@ return [
     'config' => 'Config',
     'status' => 'Status',
     'new' => 'New',
+    'test_speed'=>'measure internet speed',
     'home' => 'Home',
     'region' => 'Region',
     'action_message' => 'Action Successfully',

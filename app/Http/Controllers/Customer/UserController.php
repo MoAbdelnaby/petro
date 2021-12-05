@@ -105,19 +105,25 @@ class UserController extends Controller
             'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/',
             'phone' => 'nullable|string|min:11|max:13|unique:users,phone|regex:/^[0-9\-\(\)\/\+\s]*$/',
             'password' => 'required|min:8|confirmed',
+            'speedtest' => 'nullable',
         ]);
         if ($validator->errors()->count()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-
-        $user = User::create([
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'type' => 'subcustomer',
             'password' => $request->password,
             'parent_id' => parentID()
-        ]);
+        ];
+
+        if ($request->has('speedtest') && $request->speedtest == 'on') {
+            $data['speedtest'] =  1;
+        }
+
+        $user = User::create($data);
         $user->syncRoles('customer');
 
 //        dd($user);
@@ -162,6 +168,12 @@ class UserController extends Controller
 
         $user = User::where('id', $id)->first();
         $data  = $validator->validated();
+        if ($request->has('speedtest') && $request->speedtest == 'on') {
+            $data['speedtest'] =  1;
+        }else{
+            $data['speedtest'] =  0;
+        }
+
         if($request->has('password')){
             if(is_null($request->password)){
                 $data = Arr::except($data,['password']);

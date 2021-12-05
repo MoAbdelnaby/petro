@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\BranchRepo;
-use App\Models\ModelFeature;
 use App\Models\Branch;
 use App\Models\Region;
 use App\Models\UserModelBranch;
+use App\Models\UserPackages;
+use App\Service;
 use App\User;
 use App\userSetting;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Validator;
-use App\Models\UserPackages;
 
 class CustomerBranchesController extends Controller
 {
@@ -78,7 +78,6 @@ class CustomerBranchesController extends Controller
         }
     }
 
-
     public function index()
     {
         $items = $this->repo->getactiveBranches();
@@ -90,7 +89,6 @@ class CustomerBranchesController extends Controller
         return view('customer.branches.index', compact('items', 'userSettings', 'trashs'));
     }
 
-
     /**
      * Create the Package for dashboard.
      *
@@ -101,7 +99,6 @@ class CustomerBranchesController extends Controller
         $regions = Region::with('branches')->where('user_id', parentID())->where('active', true)->get();
         return view('customer.branches.create', compact('regions'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -120,7 +117,7 @@ class CustomerBranchesController extends Controller
             'left' => 'sometimes|required',
             'area_count' => 'required|numeric|min:1|max:9',
             'models' => 'required|array|min:2',
-            'models.*' => 'required|numeric|in:3,4'
+            'models.*' => 'required|numeric|in:3,4',
         ]);
         $data = Arr::except($request_data, ['region_id', 'photo']);
 
@@ -129,7 +126,7 @@ class CustomerBranchesController extends Controller
             DB::beginTransaction();
 
             if (is_numeric($request->region_id)) {
-                $reg = Region::where('id',$request->region_id)->where('user_id', parentID())->first();
+                $reg = Region::where('id', $request->region_id)->where('user_id', parentID())->first();
                 if (!$reg) {
                     return redirect()->back()->with('danger', 'Region Not Found !');
                 }
@@ -141,7 +138,7 @@ class CustomerBranchesController extends Controller
                 }
                 $reg = Region::create([
                     'name' => $request->region_id,
-                    'user_id' => auth()->user()->id
+                    'user_id' => auth()->user()->id,
 
                 ]);
                 $data['region_id'] = $reg->id;
@@ -160,7 +157,7 @@ class CustomerBranchesController extends Controller
             collect($request->models)->each(function ($item) use ($branch) {
                 UserModelBranch::create([
                     'branch_id' => $branch->id,
-                    'user_model_id' => $item
+                    'user_model_id' => $item,
                 ]);
             });
 
@@ -170,7 +167,7 @@ class CustomerBranchesController extends Controller
                     'area' => $i,
                     'branch_code' => $branch->code,
                 ], [
-                    'status' => 0
+                    'status' => 0,
                 ]);
             }
 
@@ -213,7 +210,7 @@ class CustomerBranchesController extends Controller
             'top' => 'required',
             'left' => 'required',
             'area_count' => 'required|numeric|min:1|max:9',
-            'code' => 'required|unique:branches,code,' . $id
+            'code' => 'required|unique:branches,code,' . $id,
         ]);
         if ($validator->errors()->count()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
@@ -238,7 +235,7 @@ class CustomerBranchesController extends Controller
                 }
                 $reg = Region::create([
                     'name' => $request->region_id,
-                    'user_id' => auth()->user()->id
+                    'user_id' => auth()->user()->id,
                 ]);
                 $data['region_id'] = $reg->id;
             }
@@ -273,7 +270,7 @@ class CustomerBranchesController extends Controller
                             'area' => $i,
                             'code' => $branch->code,
                         ], [
-                            'status' => 0
+                            'status' => 0,
                         ]);
                     }
                 }
@@ -338,6 +335,22 @@ class CustomerBranchesController extends Controller
         $item->save();
         return redirect()->back();
 
+    }
+
+    public function services($id, Request $request)
+    {
+        // return $uri = $request->back();
+        $services = Service::where('branch_id', $id)->get();
+        if (Auth::check()) {
+            $userSettings = UserSetting::where('user_id', Auth::user()->id)->first();
+        }
+        return view('customer.branches.services', compact('services', 'id', 'userSettings'));
+    }
+
+    public function createServices($id)
+    {
+        $branches = [];
+        return view('customer.service.create', compact('id', 'branches'));
     }
 
 }
