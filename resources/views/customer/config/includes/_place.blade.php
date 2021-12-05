@@ -143,6 +143,60 @@
                                             </li>
                                         </ul>
                                     </li>
+
+                                    <li class="dropdown-submenu config_value_parent">
+                                        <a tabindex="-1" class=" test chart-6" href="#">
+                                            <img src="{{ asset('assets/images/chart-type/Pyramid-Chart.svg')}}"
+                                                 alt="Line Chart" title="Line Chart">
+                                        </a>
+                                        <small class="drop-icon dropdown-item"></small>
+                                        <ul class="dropdown-menu main-dropdown child config_value" data-type="trend_line">
+                                            <li>
+                                                <a tabindex="-1" class="dropdown-item removeDefault" data-type="home"
+                                                   href="#">
+                                                    {{ __('app.Show_in_home_page') }}
+                                                    <i class="fal fa-check show-icon"
+                                                       @if(in_array('home',array_values($config['chart']['trend_line']??[]))) style="display: inline"
+                                                       data-active="1" @else data-active="0" @endif></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a tabindex="-1" class="dropdown-item removeDefault" data-type="report" href="#">
+                                                    {{ __('app.Show_in_Report') }}
+                                                    <i class="fal fa-check show-icon"
+                                                       @if(in_array('report',array_values($config['chart']['trend_line']??[]))) style="display: inline"
+                                                       data-active="1" @else data-active="0" @endif></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+{{--                                    <li class="dropdown-submenu config_value_parent">--}}
+{{--                                        <a tabindex="-1" class=" test chart-7" href="#">--}}
+{{--                                            <img src="{{ asset('assets/images/chart-type/Pyramid-Chart.svg')}}"--}}
+{{--                                                 alt="Line Chart" title="Line Chart">--}}
+{{--                                        </a>--}}
+{{--                                        <small class="drop-icon dropdown-item"></small>--}}
+{{--                                        <ul class="dropdown-menu main-dropdown child config_value" data-type="smooth_line">--}}
+{{--                                            <li>--}}
+{{--                                                <a tabindex="-1" class="dropdown-item removeDefault" data-type="home"--}}
+{{--                                                   href="#">--}}
+{{--                                                    {{ __('app.Show_in_home_page') }}--}}
+{{--                                                    <i class="fal fa-check show-icon"--}}
+{{--                                                       @if(in_array('home',array_values($config['chart']['smooth_line']??[]))) style="display: inline"--}}
+{{--                                                       data-active="1" @else data-active="0" @endif></i>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li>--}}
+{{--                                                <a tabindex="-1" class="dropdown-item removeDefault" data-type="report" href="#">--}}
+{{--                                                    {{ __('app.Show_in_Report') }}--}}
+{{--                                                    <i class="fal fa-check show-icon"--}}
+{{--                                                       @if(in_array('report',array_values($config['chart']['smooth_line']??[]))) style="display: inline"--}}
+{{--                                                       data-active="1" @else data-active="0" @endif></i>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
                                 </ul>
                             </div>
                         </div>

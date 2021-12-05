@@ -330,16 +330,14 @@ function comparisonPlaceSideBar(divId, data) {
         series.name = "Work Duration (Hours)";
         series.columns.template.fillOpacity = 0.5;
         series.columns.template.strokeOpacity = 0;
-        series.tooltipText =
-            "Work Duration in {categoryY}: {valueX.value} Hours";
+        series.tooltipText = "Work Duration in {categoryY}: {valueX.value} Hours";
 
         var lineSeries = chart.series.push(new am4charts.LineSeries());
         lineSeries.dataFields.categoryY = "branch";
         lineSeries.dataFields.valueX = "empty";
         lineSeries.name = "Empty Duration (Hours)";
         lineSeries.strokeWidth = 3;
-        lineSeries.tooltipText =
-            "Empty Duration in {categoryY}: {valueX.value} Hours";
+        lineSeries.tooltipText = "Empty Duration in {categoryY}: {valueX.value} Hours";
 
         var circleBullet = lineSeries.bullets.push(
             new am4charts.CircleBullet()
@@ -661,10 +659,8 @@ function comparisonPlaceDynamicBar(divId, data, start, end) {
 
         var mos = getMonths(start, end);
         var m = 0;
-        console.log(mos);
 
         label.text = lang_replace(mos[m].str, 'ar');
-        console.log(lang_replace(mos[m].str, 'ar'));
 
         var interval;
 
@@ -870,16 +866,318 @@ function comparisonPlateDynamicBar(divId, data, start, end) {
 }
 
 function lang_replace(string, flag) {
-
-    console.log(string);
     var english = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     var arabic = ['يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو', 'يوليو', 'سبتمبر', 'اكتوبر', 'نوفمبر', 'ديسمبر'];
 
     if (flag == 'ar') {
-        console.log(string);
         for (var i = 0; i < arabic.length; i++) {
             string = string.replace(english[i], arabic[i]);
         }
         return string;
     }
 }
+
+function comparisonPlaceTrendLine(divId, data) {
+    console.log(data);
+    am4core.ready(function () {
+
+        am4core.useTheme(am4themes_animated);
+
+        var chart = am4core.create(divId, am4charts.XYChart);
+
+        chart.exporting.menu = new am4core.ExportMenu();
+
+        /* Create axes */
+        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "branch";
+        categoryAxis.renderer.minGridDistance = 30;
+
+        /* Create value axis */
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+        /* Create series */
+        var columnSeries = chart.series.push(new am4charts.ColumnSeries());
+        columnSeries.name = "Work Duration (Hours)";
+        columnSeries.dataFields.valueY = "work";
+        columnSeries.dataFields.categoryX = "branch";
+        columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
+        columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
+        columnSeries.columns.template.propertyFields.stroke = "stroke";
+        columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
+        columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
+        columnSeries.tooltip.label.textAlign = "middle";
+
+        var lineSeries = chart.series.push(new am4charts.LineSeries());
+        lineSeries.name = "Empty Duration (Hours)";
+        lineSeries.dataFields.valueY = "empty";
+        lineSeries.dataFields.categoryX = "branch";
+
+        lineSeries.stroke = am4core.color("#fdd400");
+        lineSeries.strokeWidth = 3;
+        lineSeries.propertyFields.strokeDasharray = "lineDash";
+        lineSeries.tooltip.label.textAlign = "middle";
+
+        var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+        bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+        bullet.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
+        var circle = bullet.createChild(am4core.Circle);
+        circle.radius = 4;
+        circle.fill = am4core.color("#fff");
+        circle.strokeWidth = 3;
+
+        chart.data = data;
+
+    });
+}
+
+function comparisonPlateTrendLine(divId, data) {
+    console.log(data)
+    am4core.ready(function () {
+
+        am4core.useTheme(am4themes_animated);
+
+        var chart = am4core.create(divId, am4charts.XYChart);
+
+        chart.exporting.menu = new am4core.ExportMenu();
+
+        /* Create axes */
+        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "branch";
+        categoryAxis.renderer.minGridDistance = 30;
+
+        /* Create value axis */
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+        /* Create series */
+        var columnSeries = chart.series.push(new am4charts.ColumnSeries());
+        columnSeries.name = "Work Duration (Hours)";
+        columnSeries.dataFields.valueY = "count";
+        columnSeries.dataFields.categoryX = "branch";
+        columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
+        columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
+        columnSeries.columns.template.propertyFields.stroke = "stroke";
+        columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
+        columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
+        columnSeries.tooltip.label.textAlign = "middle";
+
+        var lineSeries = chart.series.push(new am4charts.LineSeries());
+        lineSeries.name = "Empty Duration (Hours)";
+        lineSeries.dataFields.valueY = "count";
+        lineSeries.dataFields.categoryX = "branch";
+
+        lineSeries.stroke = am4core.color("#fdd400");
+        lineSeries.strokeWidth = 3;
+        lineSeries.propertyFields.strokeDasharray = "lineDash";
+        lineSeries.tooltip.label.textAlign = "middle";
+
+        var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+        bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+        bullet.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
+        var circle = bullet.createChild(am4core.Circle);
+        circle.radius = 4;
+        circle.fill = am4core.color("#fff");
+        circle.strokeWidth = 3;
+
+        chart.data = data;
+
+    });
+}
+
+function comparisonPlaceSmooth(divId) {
+    am4core.ready(function () {
+
+        am4core.useTheme(am4themes_animated);
+
+        var chart = am4core.create(divId, am4charts.XYChart);
+
+        chart.data = generateChartData();
+
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "visits";
+        series.dataFields.dateX = "date";
+        series.strokeWidth = 1;
+        series.minBulletDistance = 10;
+        series.tooltipText = "{valueY}";
+        series.fillOpacity = 0.1;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.getFillFromObject = false;
+        series.tooltip.background.fill = series.fill;
+
+        var seriesRange = dateAxis.createSeriesRange(series);
+        seriesRange.contents.strokeDasharray = "2,3";
+        seriesRange.contents.stroke = chart.colors.getIndex(8);
+        seriesRange.contents.strokeWidth = 1;
+
+        var pattern = new am4core.LinePattern();
+        pattern.rotation = -45;
+        pattern.stroke = seriesRange.contents.stroke;
+        pattern.width = 1000;
+        pattern.height = 1000;
+        pattern.gap = 6;
+        seriesRange.contents.fill = pattern;
+        seriesRange.contents.fillOpacity = 0.5;
+
+        // Add scrollbar
+        chart.scrollbarX = new am4core.Scrollbar();
+
+        // Cursor
+        chart.cursor = new am4charts.XYCursor();
+
+        function generateChartData() {
+            var chartData = [];
+            var firstDate = new Date();
+            firstDate.setDate(firstDate.getDate() - 200);
+            var visits = 1200;
+            for (var i = 0; i < 200; i++) {
+                // we create date objects here. In your data, you can have date strings
+                // and then set format of your dates using chart.dataDateFormat property,
+                // however when possible, use date objects, as this will speed up chart rendering.
+                var newDate = new Date(firstDate);
+                newDate.setDate(newDate.getDate() + i);
+
+                visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+
+                chartData.push({
+                    date: newDate,
+                    visits: visits
+                });
+            }
+            return chartData;
+        }
+
+        // add range
+        var range = dateAxis.axisRanges.push(new am4charts.DateAxisDataItem());
+        range.grid.stroke = chart.colors.getIndex(0);
+        range.grid.strokeOpacity = 1;
+        range.bullet = new am4core.ResizeButton();
+        range.bullet.background.fill = chart.colors.getIndex(0);
+        range.bullet.background.states.copyFrom(chart.zoomOutButton.background.states);
+        range.bullet.minX = 0;
+        range.bullet.adapter.add("minY", function (minY, target) {
+            target.maxY = chart.plotContainer.maxHeight;
+            target.maxX = chart.plotContainer.maxWidth;
+            return chart.plotContainer.maxHeight;
+        })
+
+        range.bullet.events.on("dragged", function () {
+            range.value = dateAxis.xToValue(range.bullet.pixelX);
+            seriesRange.value = range.value;
+        })
+
+
+        var firstTime = chart.data[0].date.getTime();
+        var lastTime = chart.data[chart.data.length - 1].date.getTime();
+        var date = new Date(firstTime + (lastTime - firstTime) / 2);
+
+        range.date = date;
+
+        seriesRange.date = date;
+        seriesRange.endDate = chart.data[chart.data.length - 1].date;
+
+    }); // end am4core.ready()
+}
+
+function comparisonPlateSmooth(divId) {
+    am4core.ready(function () {
+
+        am4core.useTheme(am4themes_animated);
+
+        var chart = am4core.create(divId, am4charts.XYChart);
+
+        chart.data = generateChartData();
+
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "visits";
+        series.dataFields.dateX = "date";
+        series.strokeWidth = 1;
+        series.minBulletDistance = 10;
+        series.tooltipText = "{valueY}";
+        series.fillOpacity = 0.1;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.getFillFromObject = false;
+        series.tooltip.background.fill = series.fill;
+
+        var seriesRange = dateAxis.createSeriesRange(series);
+        seriesRange.contents.strokeDasharray = "2,3";
+        seriesRange.contents.stroke = chart.colors.getIndex(8);
+        seriesRange.contents.strokeWidth = 1;
+
+        var pattern = new am4core.LinePattern();
+        pattern.rotation = -45;
+        pattern.stroke = seriesRange.contents.stroke;
+        pattern.width = 1000;
+        pattern.height = 1000;
+        pattern.gap = 6;
+        seriesRange.contents.fill = pattern;
+        seriesRange.contents.fillOpacity = 0.5;
+
+        // Add scrollbar
+        chart.scrollbarX = new am4core.Scrollbar();
+
+        // Cursor
+        chart.cursor = new am4charts.XYCursor();
+
+        function generateChartData() {
+            var chartData = [];
+            var firstDate = new Date();
+            firstDate.setDate(firstDate.getDate() - 200);
+            var visits = 1200;
+            for (var i = 0; i < 200; i++) {
+                // we create date objects here. In your data, you can have date strings
+                // and then set format of your dates using chart.dataDateFormat property,
+                // however when possible, use date objects, as this will speed up chart rendering.
+                var newDate = new Date(firstDate);
+                newDate.setDate(newDate.getDate() + i);
+
+                visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+
+                chartData.push({
+                    date: newDate,
+                    visits: visits
+                });
+            }
+            return chartData;
+        }
+
+        // add range
+        var range = dateAxis.axisRanges.push(new am4charts.DateAxisDataItem());
+        range.grid.stroke = chart.colors.getIndex(0);
+        range.grid.strokeOpacity = 1;
+        range.bullet = new am4core.ResizeButton();
+        range.bullet.background.fill = chart.colors.getIndex(0);
+        range.bullet.background.states.copyFrom(chart.zoomOutButton.background.states);
+        range.bullet.minX = 0;
+        range.bullet.adapter.add("minY", function (minY, target) {
+            target.maxY = chart.plotContainer.maxHeight;
+            target.maxX = chart.plotContainer.maxWidth;
+            return chart.plotContainer.maxHeight;
+        })
+
+        range.bullet.events.on("dragged", function () {
+            range.value = dateAxis.xToValue(range.bullet.pixelX);
+            seriesRange.value = range.value;
+        })
+
+
+        var firstTime = chart.data[0].date.getTime();
+        var lastTime = chart.data[chart.data.length - 1].date.getTime();
+        var date = new Date(firstTime + (lastTime - firstTime) / 2);
+
+        range.date = date;
+
+        seriesRange.date = date;
+        seriesRange.endDate = chart.data[chart.data.length - 1].date;
+
+
+    }); // end am4core.ready()
+}
+
+

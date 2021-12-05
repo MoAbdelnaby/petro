@@ -165,6 +165,14 @@
                                             <div id="BranchPLaceSideBar" class="chartDiv" style="min-height: 450px"></div>
                                         </div>
 
+                                        <div class="pt-4 mb-5" id="BranchPLaceTrendLineCon" style="display: none">
+                                            <div id="BranchPLaceTrendLine" class="chartDiv" style="min-height: 450px"></div>
+                                        </div>
+
+{{--                                        <div class="pt-4 mb-5" id="BranchPLaceSmoothCon" style="display: none">--}}
+{{--                                            <div id="BranchPLaceSmooth" class="chartDiv" style="min-height: 450px"></div>--}}
+{{--                                        </div>--}}
+
                                         <div class="pt-4 mb-5" id="BranchPLaceLineCon" style="display: none">
                                             <div id="BranchPLaceLine" class="chartDiv" style="min-height: 450px"></div>
                                         </div>
@@ -296,6 +304,33 @@
              @endif
         @endif
         /**************** End Circle Chart ***************/
+
+        /************* Start Range Slider Chart ****************/
+
+        @if(in_array($key_name ,array_values($config['chart']['trend_line']??[])))
+            @if(count($charts))
+                $("#BranchPLaceTrendLineCon").show();
+                @if($filter_type == 'comparison')
+                    comparisonPlaceTrendLine('BranchPLaceTrendLine', @json($charts['bar']));
+                    @else
+                    branchPlaceTrendLine('BranchPLaceTrendLine', @json($charts['bar']));
+                @endif
+            @endif
+        @endif
+        /**************** End Range Slider Chart****************/
+
+        /************* Start Smooth Chart ****************/
+        @if(in_array($key_name ,array_values($config['chart']['smooth']??[])))
+            @if(count($charts))
+            $("#BranchPLaceSmoothCon").show();
+            @if($filter_type == 'comparison')
+                comparisonPlaceSmooth('BranchPLaceSmooth', @json($charts['bar']));
+            @else
+                branchPlaceSmooth('BranchPLaceSmooth', @json($charts['bar']));
+            @endif
+             @endif
+        @endif
+        /**************** End Smooth Chart****************/
 
         $(".download").on('click',function (e){
             $("#download_form").submit();

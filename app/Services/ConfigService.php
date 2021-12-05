@@ -12,7 +12,6 @@ class ConfigService
      */
     public static function get($model = 'all'): array
     {
-
         if ($model != 'all') {
             return self::modelQuery($model);
         }
