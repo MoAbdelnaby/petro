@@ -18,7 +18,7 @@ class CreateMessageLogsTable extends Migration
             $table->enum('type',['welcome','invoice'])->default('welcome');
             $table->text('message');
             $table->string('plateNumber');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('invoiceUrl')->nullable();
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->enum('status',['failed','sent'])->default('sent');
