@@ -15,12 +15,13 @@ class CreateInvoiceLogsTable extends Migration
     {
         Schema::create('invoice_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice');
-            $table->mediumText('template_id');
+            $table->mediumText('invoice');
+            $table->string('template_id');
             $table->string('distance');
             $table->string('phone');
             $table->string('PlateNumber');
             $table->string('branch_code')->nullable();
+            $table->string('storage')->nullable();
             $table->timestamps();
         });
     }

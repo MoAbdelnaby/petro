@@ -473,6 +473,7 @@
 
                                                             <th class="th-sm">{{ __('app.Status') }}</th>
                                                             <th class="th-sm">{{ __('app.Welcome_Message') }}</th>
+                                                            <th class="th-sm">{{ __('app.Invoice') }}</th>
                                                             <th class="th-sm">{{ __('app.action') }}
                                                             </th>
                                                         </tr>
@@ -514,8 +515,15 @@
                                                                         <a class="" data-toggle="popover" data-trigger="hover" data-content="{{$item->failMessage->status}}">
                                                                             <i class="fas fa-comment-slash text-danger"></i>
                                                                         </a>
-
                                                                         @endif
+                                                                </td>
+
+                                                                <td>
+                                                                    @if(!is_null($item->invoice))
+                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">
+                                                                            <i class="fas fa-file-pdf text-success "></i>
+                                                                        </a>
+                                                                    @endif
                                                                 </td>
 
                                                                 <td class="open action-col position-relative action_drop">
