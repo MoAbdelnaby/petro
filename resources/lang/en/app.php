@@ -1494,4 +1494,11 @@ return [
         'action' => 'action',
     ],
 
+    'branchStatus' => 'branch Status',
+    'branch_name' => 'Branch Name',
+    'branch_status' => 'Branch Status',
+    'lastError' => 'last Error',
+    'user_name' => 'User Name',
+    'createdIn' => 'Created In',
+
 ];

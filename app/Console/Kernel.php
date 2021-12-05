@@ -45,7 +45,7 @@ class Kernel extends ConsoleKernel
          $schedule->command('plate-images:upload')->everyMinute()->timezone('Asia/Riyadh');
          $schedule->command('place-images:upload')->everyMinute()->timezone('Asia/Riyadh');
 
-         $schedule->command('branch-status-api')->everyMinute();
+         $schedule->command('branch-status-api')->everyFifteenMinutes();
     }
 
     /**

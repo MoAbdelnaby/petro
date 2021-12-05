@@ -273,6 +273,20 @@
                         </div>
                     </div>
 
+                    <div
+                        class="row justify-content-center  p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/branches-status' ? 'active' : '' }} ">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ route('branches_status') }}" class="iq-waves-effect">
+                                    <i class="fas fa-building fa-2x"></i>
+                                </a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ route('branches_status') }}"
+                                   class="iq-waves-effect menutext">{{ __('app.branchStatus') }}</a>
+                            </div>
+                        </div>
+                    </div>
 
                 @else
 

@@ -130,6 +130,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('customerUsers/assignUserToBranch', 'UserController@assignUserToBranch')->name('customerUsers.assignUserToBranch');
         Route::get('myModels', 'UserController@myModels')->name('myModels');
         Route::get('myBranches', 'UserController@myBranches')->name('myBranches');
+        Route::get('branches-status','BranchModelsController@BranchesStatus')->name('branches_status');
+        Route::get('branches-log/{id}','BranchModelsController@getLogs');
         Route::get('customerPackages/assignuser/{id}', 'CustomerPackagesController@assignuser')->name('customerPackages.assignuser');
         Route::post('customerPackages/assignuser/{id}/create', 'CustomerPackagesController@assignuserpost')->name('customerPackages.assignuserpost');
         Route::post('customerPackages/requestPackage', 'CustomerPackagesController@requestPackage')->name('customerPackages.requestPackage');

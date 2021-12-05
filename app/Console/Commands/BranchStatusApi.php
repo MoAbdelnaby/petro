@@ -55,8 +55,7 @@ class BranchStatusApi extends Command
         // check if online before 15 min
         foreach ($branches as $key => $branch) {
             $branchStatus =  BranchStatus::where('branch_code',$branch->branch_code)->first();
-//            Log::info(['created_at' => ($branch->created_at >= $today->subMinutes("15"))]);
-            if ( $now->subMinutes(15) <= $branch->created_at) {
+            if ( $now->subMinutes(15) < $branch->created_at) {
                 $data['status'] = 'online';
                 $data['last_error'] = $branch->error;
             } else {
@@ -66,12 +65,15 @@ class BranchStatusApi extends Command
             }
             $data['branch_code'] = $branch->branch_code;
             $data['branch_name'] = $branch->name;
-            $res[] = BranchStatus::updateOrCreate($data);
+            if ($branchStatus) {
+                $res[] = $branchStatus->update($data);
+            } else {
+                $res[] = BranchStatus::create($data);
+            }
 //            if ($branchStatus)
 //            else
 //                $res[] = BranchStatus::create($data);
         }
-        info(['inserted' => $res]);
         return $res;
     }
 }

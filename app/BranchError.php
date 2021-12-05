@@ -5,13 +5,11 @@ namespace App;
 use App\Models\Branch;
 use Illuminate\Database\Eloquent\Model;
 
-class BranchStatus extends Model
+class BranchError extends Model
 {
-    protected $table = "branch_status";
-    protected $fillable = ['branch_code','branch_name','last_error','last_connected','status'];
+    protected $table = "last_error_branch_views";
 
     public function branch() {
         return $this->belongsTo(Branch::Class,"branch_code","code");
     }
-
 }
