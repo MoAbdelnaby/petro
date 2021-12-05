@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendInvoiceMessage;
 use App\Models\Carprofile;
 use App\Models\Customer;
 use App\Models\Invoice;
+use App\Models\InvoiceLog;
 use App\Models\MessageLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -36,8 +38,6 @@ class TemplateMessageController extends Controller
         if ($validator->errors()->count()) {
             return response()->json(['errors' => $validator->errors()], 500);
         }
-        $phone = phoneHandeler($request->phone);
-        $PlateNumber = str_replace(' ', '', $request->PlateNumber);
 
         if ($request->invoice && $request->has('invoice')) {
             $file = $request->invoice;
@@ -55,75 +55,108 @@ class TemplateMessageController extends Controller
                     return response()->json(['message' => 'Not a PDF File'], 400);
                 }
 
-                $filename =  'invoice' . time() . '.pdf';
-
-                $filepath = 'invoices/' . $filename;
-
-                if (!is_dir(storage_path("/app/public/invoices"))) {
-                    \File::makeDirectory(storage_path("/app/public/invoices"), 777);
-                }
-
-                Storage::disk('public')->put($filepath, $base64data);
-
-                $newpath = storage_path("/app/public/" . $filepath);
-
-
-
-            }
-
-            Customer::updateOrCreate([
-                'PlateNumber' => $PlateNumber,
-            ],
-                [
-                    'CustomerPhoneNumber' => 'whatsapp:+' . $phone,
-                ]);
-
-            Invoice::create([
-                'PlateNumber' => $PlateNumber,
-                'CustomerPhoneNumber' => 'whatsapp:+' . $phone,
-                'invoice' => $filepath,
-                'distance' => $request->distance
-            ]);
-
-
         }
+    }
+//        $phone = phoneHandeler($request->phone);
+//        $PlateNumber = str_replace(' ', '', $request->PlateNumber);
+//
+//        if ($request->invoice && $request->has('invoice')) {
+//            $file = $request->invoice;
+//
+//            if (!empty($file)) {
+//                if (strpos($file, ',') !== false) {
+//                    @list($encode, $file) = explode(',', $file);
+//                }
+//                $base64data = base64_decode($file, true);
+//
+//                $f = finfo_open();
+//                $mime_type = finfo_buffer($f, $base64data, FILEINFO_MIME_TYPE);
+//
+//                if ($mime_type!= "application/pdf") {
+//                    return response()->json(['message' => 'Not a PDF File'], 400);
+//                }
+//
+//                $filename =  'invoice' . time() . '.pdf';
+//
+//                $filepath = 'invoices/' . $filename;
+//
+//                if (!is_dir(storage_path("/app/public/invoices"))) {
+//                    \File::makeDirectory(storage_path("/app/public/invoices"), 777);
+//                }
+//
+//                Storage::disk('public')->put($filepath, $base64data);
+//
+//                $newpath = storage_path("/app/public/" . $filepath);
+//
+//
+//
+//            }
+//
+//            Customer::updateOrCreate([
+//                'PlateNumber' => $PlateNumber,
+//            ],
+//                [
+//                    'CustomerPhoneNumber' => 'whatsapp:+' . $phone,
+//                ]);
+//
+//            Invoice::create([
+//                'PlateNumber' => $PlateNumber,
+//                'CustomerPhoneNumber' => 'whatsapp:+' . $phone,
+//                'invoice' => $filepath,
+//                'distance' => $request->distance
+//            ]);
+//
+//
+//        }
 
         try {
-
-            if ($request->has('template_id') && $request->template_id == '1') {
-                $invoice =   Http::post('https://whatsapp-wakeb.azurewebsites.net/api/petro_template', [
-                    'template_id' => '1',
-                    'phone' => 'whatsapp:+' . $phone,
-                    'invoice' => url('storage/'.$filepath),
-                    'distance' => $request->distance
-                ]);
-
-                if($invoice['success'] === false ) {
-                    MessageLog::create([
-                        'PlateNumber' => $PlateNumber,
-                        'type'=> 'invoice',
-                        'message'=> str_replace(['{{1}}','{{2}}'],$request->distance,NOTIFY),
-                        'phone'=> $phone,
-                        'invoiceUrl'=> $filepath,
-                        'status'=>'failed',
-                        'error_reason'=>'twillo error'
-                    ]);
-                    return response()->json(['success'=>false,'message' => 'SomeThing went wrong !'], 500);
-                }
-            }
-
-            MessageLog::create([
-                'PlateNumber' => $PlateNumber,
-                'type'=> 'invoice',
-                'message'=> str_replace(['{{1}}','{{2}}'],$request->distance,NOTIFY),
-                'phone'=> $phone,
-                'invoiceUrl'=> $filepath
+           $invoice = InvoiceLog::create([
+                'PlateNumber' => $request->PlateNumber,
+                'invoice' => $request->invoice,
+                'distance' => $request->distance,
+                'phone' => $request->phone,
+                'template_id' => $request->template_id
             ]);
+            dispatch(new SendInvoiceMessage($invoice->id));
+//
 
-            $latest = Carprofile::where('plate_en',$PlateNumber)->whereDate('created_at', Carbon::today())->latest()->first();
-            $latest->update([
-                'invoice'=>Carbon::now()
-            ]);
+//            if ($request->has('template_id') && $request->template_id == '1') {
+//                $invoice =   Http::post('https://whatsapp-wakeb.azurewebsites.net/api/petro_template', [
+//                    'template_id' => '1',
+//                    'phone' => 'whatsapp:+' . $phone,
+//                    'invoice' => url('storage/'.$filepath),
+//                    'distance' => $request->distance
+//                ]);
+//
+//                if($invoice['success'] === false ) {
+//                    MessageLog::create([
+//                        'PlateNumber' => $PlateNumber,
+//                        'type'=> 'invoice',
+//                        'message'=> str_replace(['{{1}}','{{2}}'],$request->distance,NOTIFY),
+//                        'phone'=> $phone,
+//                        'invoiceUrl'=> $filepath,
+//                        'status'=>'failed',
+//                        'error_reason'=>'twillo error'
+//                    ]);
+//                    return response()->json(['success'=>false,'message' => 'SomeThing went wrong !'], 500);
+//                }
+//            }
+//
+//            MessageLog::create([
+//                'PlateNumber' => $PlateNumber,
+//                'type'=> 'invoice',
+//                'message'=> str_replace(['{{1}}','{{2}}'],$request->distance,NOTIFY),
+//                'phone'=> $phone,
+//                'invoiceUrl'=> $filepath
+//            ]);
+//
+//            $latest = Carprofile::where('plate_en',$PlateNumber)->whereDate('created_at', Carbon::today())->latest()->first();
+//            $latest->update([
+//                'invoice'=>Carbon::now()
+//            ]);
+
+
+            // update message log ('storage','invoiceurl')
 
             return response()->json(['success'=>true,'message' => 'Message Sent Successfully'], 200);
         } catch (\Exception $exception){
