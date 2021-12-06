@@ -4,11 +4,15 @@ namespace App\Console\Commands;
 
 use App\BranchNetWork;
 use App\BranchStatus;
+use App\Mail\mailUserBranch;
 use App\Models\Branch;
+use App\Models\BranchSetting;
+use App\Models\UserModelBranch;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class BranchStatusApi extends Command
 {
@@ -45,6 +49,7 @@ class BranchStatusApi extends Command
     {
         $res = array();
         $data = array();
+        $minutes = 0;
 //        get last branches
         $now = Carbon::now();
         $branches = DB::table("last_error_branch_views as branchError")
@@ -55,13 +60,38 @@ class BranchStatusApi extends Command
         // check if online before 15 min
         foreach ($branches as $key => $branch) {
             $branchStatus =  BranchStatus::where('branch_code',$branch->branch_code)->first();
-            if ( $now->subMinutes(15) < $branch->created_at) {
+            if ( $now->subMinutes(1) < $branch->created_at) {
                 $data['status'] = 'online';
                 $data['last_error'] = $branch->error;
             } else {
                 $data['status'] = 'offline';
                 $data['last_error'] = null;
                 $data['last_connected'] = $now->diffForHumans($branch->created_at,true);
+
+//                send mail for employees
+                /*
+                * get users email
+                */
+                /*user branch */
+                $usersArr = array();
+                $users = DB::table("branches_users")
+                    ->join("users","branches_users.user_id","=","users.id")
+                    ->where("branches_users.branch_id","=",$branch->id)
+                    ->select("users.id as id","users.name","users.email")
+                    ->get();
+                if (count($users) > 0)
+                    /* setting of branch time */
+                    $branchSetting = BranchSetting::find(1);
+                    if ($branchSetting->type == 'hours') {
+                        $minutes = $branchSetting->duration * 60;
+                    } else {
+                        $minutes = $branchSetting->duration;
+                    }
+                    foreach ($users as $key => $user) {
+                        if ( $now->subMinutes($minutes) < $branch->created_at) {
+                            Mail::to($user->email)->send(new mailUserBranch($branch));
+                        }
+                    }
             }
             $data['branch_code'] = $branch->branch_code;
             $data['branch_name'] = $branch->name;
