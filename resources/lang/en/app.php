@@ -1502,5 +1502,6 @@ return [
     'lastError' => 'last Error',
     'user_name' => 'User Name',
     'createdIn' => 'Created In',
+    'last_connected' => 'Last Connected'
 
 ];

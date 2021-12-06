@@ -1473,4 +1473,13 @@ return array(
         'english_description' => 'الوصف باللغه الانجليزيه',
         'action' => 'اجراء',
     ],
+
+    'branchStatus' => 'حالة الفرع',
+    'branch_name' => 'اسم الفرع',
+    'branch_status' => 'حالة الفرع',
+    'lastError' => 'اخر خطاء',
+    'user_name' => 'اسم المستخدم',
+    'createdIn' => 'انشاء في',
+    'last_connected' => 'اخر اتصال'
+
 );

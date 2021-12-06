@@ -54,7 +54,7 @@ class BranchStatusApi extends Command
         $now = Carbon::now();
         $branches = DB::table("last_error_branch_views as branchError")
             ->join("branches as branch","branchError.branch_code","=","branch.code")
-            ->select("branch.id as id","branch.name as name","branchError.*")
+            ->select("branch.id as br_id","branch.name as name","branchError.*")
             ->get();
 
         // check if online before 15 min
@@ -74,12 +74,14 @@ class BranchStatusApi extends Command
                 */
                 /*user branch */
                 $usersArr = array();
-                $users = DB::table("branches_users")
-                    ->join("users","branches_users.user_id","=","users.id")
-                    ->where("branches_users.branch_id","=",$branch->id)
-                    ->select("users.id as id","users.name","users.email")
-                    ->get();
-                if (count($users) > 0)
+                // $users = DB::table("branches_users")
+                //     ->join("users","branches_users.user_id","=","users.id")
+                //     ->where("branches_users.branch_id","=",$branch->id)
+                //     ->select("users.id as id","users.name","users.email")
+                //     ->get();
+                $current = Branch::with('users')->find($branch->br_id);
+                $users=$current->users;
+                if (count($users) > 0) {
                     /* setting of branch time */
                     $branchSetting = BranchSetting::find(1);
                     if ($branchSetting->type == 'hours') {
@@ -92,6 +94,8 @@ class BranchStatusApi extends Command
                             Mail::to($user->email)->send(new mailUserBranch($branch));
                         }
                     }
+                }
+
             }
             $data['branch_code'] = $branch->branch_code;
             $data['branch_name'] = $branch->name;
