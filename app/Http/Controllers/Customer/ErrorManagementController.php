@@ -22,10 +22,8 @@ class ErrorManagementController extends Controller
 
             $branches = DB::table('branches')
                 ->select('branches.*')
-                ->join('view_top_branch_plate', 'branches.id', '=', 'view_top_branch_plate.branch_id')
                 ->where('active', true)
                 ->where('user_id', parentID())
-                ->orderBy('view_top_branch_plate.count', 'DESC')
                 ->get();
 
             $userSettings = UserSetting::where('user_id', auth()->id())->first();

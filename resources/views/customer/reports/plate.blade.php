@@ -153,6 +153,14 @@
                                                 <div id="BranchPlateSideBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
 
+                                            <div class="pt-4 mb-5" id="BranchPLateTrendLineCon" style="display: none">
+                                                <div id="BranchPLateTrendLine" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
+
+{{--                                            <div class="pt-4 mb-5" id="BranchPLateSmoothCon" style="display: none">--}}
+{{--                                                <div id="BranchPLateSmooth" class="chartDiv" style="min-height: 450px"></div>--}}
+{{--                                            </div>--}}
+
                                             <div class="pt-4 mb-5"  id="BranchPlateLineCon" style="display: none">
                                                 <div id="BranchPlateLine" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
@@ -248,7 +256,7 @@
                     @if(diffMonth($charts['dynamic_bar']['start_at'],$charts['dynamic_bar']['end_at']) > 1)
                         comparisonPlateDynamicBar('BranchPlateDynamicBar', @json($charts['dynamic_bar']['data']),"{{$charts['dynamic_bar']['start_at']}}","{{$charts['dynamic_bar']['end_at']}}");
                     @else
-                        $("#BranchPLaceDynamicBar").hide();
+                        $("#BranchPLateDynamicBar").hide();
                     @endif
                 @endif
             @endif
@@ -280,6 +288,33 @@
             @endif
         @endif
         /*************** End Line Chart *****************/
+
+        /************* TrendLineChart ****************/
+        @if(in_array($key_name ,array_values($config['chart']['trend_line']??[])))
+            @if(count($charts))
+                $("#BranchPLateTrendLineCon").show();
+                @if($filter_type == 'comparison')
+                    comparisonPlateTrendLine('BranchPLateTrendLine', @json($charts['data']??[]));
+                @else
+                    branchPlateTrendLine('BranchPLateTrendLine', @json($charts['data']??[]));
+                @endif
+            @endif
+        @endif
+
+        /**************** TrendLine Chart****************/
+
+        /************* Start Smooth Chart ****************/
+        @if(in_array($key_name ,array_values($config['chart']['smooth']??[])))
+            @if(count($charts))
+                $("#BranchPLateSmoothCon").show();
+                @if($filter_type == 'comparison')
+                    comparisonPlateSmooth('BranchPLateSmooth', @json($charts['data']));
+                @else
+                 branchPlateSmooth('BranchPLateSmooth', @json($charts['data  ']));
+                @endif
+            @endif
+        @endif
+        /**************** End Smooth Chart****************/
 
         $(".download").on('click',function (e){
             $("#download_form").submit();

@@ -193,7 +193,7 @@ return [
     'Heatmap_locations' => 'Heatmap locations',
     'None' => 'None',
     'All_Years' => 'All Years',
-    'ExportExcel' => 'ExportExcel',
+    'ExportExcel' => 'Export Excel',
     'Locations' => 'Locations',
     'Heatmap_Charts' => 'Heatmap Charts',
     'Top_Activity' => 'Top Activity',
@@ -1495,13 +1495,15 @@ return [
         'english_description' => 'english description',
         'action' => 'action',
     ],
-
     'branchStatus' => 'branch Status',
     'branch_name' => 'Branch Name',
     'branch_status' => 'Branch Status',
     'lastError' => 'last Error',
     'user_name' => 'User Name',
     'createdIn' => 'Created In',
+    'branch_message' => 'Branch Message',
+    'exported_file' => 'Exported Files',
+    'ExportPdf' => 'Export Pdf',
+    'view' => 'View',
     'last_connected' => 'Last Connected'
-
 ];

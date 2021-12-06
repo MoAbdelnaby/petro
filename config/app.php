@@ -169,8 +169,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Spatie\Permission\PermissionServiceProvider::class,
-        Barryvdh\Snappy\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -235,12 +233,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
-        'SPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

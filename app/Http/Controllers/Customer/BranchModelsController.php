@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\BranchError;
 use App\BranchNetWork;
 use App\BranchStatus;
 use App\Http\Controllers\Controller;
@@ -26,7 +25,7 @@ class BranchModelsController extends Controller
      *
      * @return void
      */
-    public function __construct(BranchModelsRepo $repo)
+    public function __construct(BranchFileschModelsRepo $repo)
     {
         $this->middleware('permission:list-branchmodels|edit-branchmodels|delete-branchmodels|create-branchmodels', ['only' => ['index', 'store']]);
         $this->middleware('permission:create-branchmodels', ['only' => ['create', 'store']]);
@@ -146,7 +145,7 @@ class BranchModelsController extends Controller
             'user_model_id' => 'required|exists:users_models,id',
             'branch_id' => 'required|array|min:1',
             'branch_id.*' => 'required|exists:branches,id',
-        ],[
+        ], [
             'branch_id' => 'Branch Field is required',
             'branch_id.*' => 'Branch Field is required',
         ]);
@@ -253,10 +252,11 @@ class BranchModelsController extends Controller
         return $this->repo->delete($request->id);
     }
 
-    public function BranchesStatus() {
+    public function BranchesStatus()
+    {
         /* get branches by table view last_branch_error */
         $branches = BranchStatus::with('branch')->paginate(25);
-        return view("customer.branches_status.index",compact('branches'));
+        return view("customer.branches_status.index", compact('branches'));
     }
 
     public function getLogs($code) {

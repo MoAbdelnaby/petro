@@ -23,7 +23,7 @@ class CreateBranchFilesTable extends Migration
             $table->string('type')->nullable();
             $table->string('model_type')->nullable();
             $table->boolean('status')->default(false);
-            $table->foreignId('user_model_branch_id')->constrained('user_model_branches')->onDelete('cascade');
+            $table->foreignId('user_model_branch_id')->nullable()->constrained('user_model_branches')->onDelete('cascade');
             $table->foreignId('branch_id')->constrained('branches')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

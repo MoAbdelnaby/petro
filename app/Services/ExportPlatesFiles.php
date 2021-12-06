@@ -5,12 +5,12 @@ namespace App\Services;
 
 use App\Exports\PlatesExcelExport;
 use App\Models\Carprofile;
+use Excel;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Excel;
 use PDF;
 
-class ExportPlatesFiles
+class ExportPlatesFiles implements IExportFile
 {
     /**
      * @param $file
@@ -23,7 +23,6 @@ class ExportPlatesFiles
             $type = $file->type;
             $start = date('Y-m-d h:i:s', strtotime($file->start . ' 00:00:00'));
             $end = date('Y-m-d h:i:s', strtotime($file->end . ' 00:00:00'));
-
 
             $query = Carprofile::selectRaw('carprofiles.*')
                 ->where('plate_status', 'success')
@@ -40,29 +39,21 @@ class ExportPlatesFiles
 
             $result = [];
             $query->chunk(500, function ($plates) use (&$result) {
-                $result = array_merge($result,$plates->toArray());
+                $result = array_merge($result, $plates->toArray());
             });
 
             $path = "branches/$file->branch_id/files/plates";
 
             $file_path = $path . '/' . $file->name;
 
-            $headers = array(
-                "Content-Type: application/{$type}",
-            );
-
             $check = false;
             if ($type == 'pdf') {
-                if ($result != []) {
-                    $list = $result;
+                $list = $result;
+                $check = PDF::loadView('customer.preview.plates.platespdf', compact('list'))
+                    ->save('storage/app/public/' . $file_path);
 
-                    $check = PDF::loadView('customer.preview.plates.platespdf', compact('list'))
-                        ->save('storage/app/public/' . $file_path);
-                }
-            } else {
-                if ($result != []) {
-                    $check = Excel::store(new PlatesExcelExport($result), 'public/' . $file_path);
-                }
+            } elseif ($type == 'xls') {
+                $check = Excel::store(new PlatesExcelExport($result), 'public/' . $file_path);
             }
 
             if ($check) {
@@ -74,9 +65,10 @@ class ExportPlatesFiles
 
             return true;
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Log::error($e->getMessage() . $e->getLine());
         }
+        return true;
     }
 
 }

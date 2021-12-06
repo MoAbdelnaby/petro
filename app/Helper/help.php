@@ -29,16 +29,16 @@ if (!function_exists('phoneHandeler')) {
 
     function phoneHandeler(string $phoneNumber)
     {
-        $phone = str_replace('+','',$phoneNumber);
-        $phone = str_replace('-','',$phone);
-        $phone = str_replace(' ','',$phone);
+        $phone = str_replace('+', '', $phoneNumber);
+        $phone = str_replace('-', '', $phone);
+        $phone = str_replace(' ', '', $phone);
         $chekk00 = Str::startsWith($phone, '00');
-        if($chekk00){
-            $phone = Str::replaceFirst('00','',$phone);
+        if ($chekk00) {
+            $phone = Str::replaceFirst('00', '', $phone);
         }
         $chekk0 = Str::startsWith($phone, '0');
-        if($chekk0){
-            $phone = Str::replaceFirst('0','966',$phone);
+        if ($chekk0) {
+            $phone = Str::replaceFirst('0', '966', $phone);
         }
         return $phone;
     }
@@ -48,11 +48,11 @@ if (!function_exists('phoneHandeler')) {
 if (!function_exists('utf8_strrev')) {
     function utf8_strrev($str = null)
     {
-        if($str){
+        if ($str) {
             preg_match_all('/./us', $str, $ar);
             return join('', array_reverse($ar[0]));
         }
-        return  null;
+        return null;
 
     }
 }
@@ -145,7 +145,7 @@ if (!function_exists('convert2EnglishNum')) {
     {
         $newNumbers = range(0, 9);
         $arabic = array('٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩');
-        return $string ? str_replace( $arabic, $newNumbers, $string) : null;
+        return $string ? str_replace($arabic, $newNumbers, $string) : null;
     } // convert2ArabicNum
 }
 
@@ -163,17 +163,16 @@ if (!function_exists('resolveDark')) {
 
 if (!function_exists('getScreenshotUrl')) {
 
-     function getScreenshotUrl($screenshot,$driver)
+    function getScreenshotUrl($screenshot, $driver)
     {
         if ($driver == 'azure') {
-            return config('app.azure_storage').config('app.azure_container')."/storage".$screenshot;
+            return config('app.azure_storage') . config('app.azure_container') . "/storage" . $screenshot;
 
         } else {
-            return url('/storage'. $screenshot);
+            return url('/storage' . $screenshot);
         }
     }
 }
-
 
 
 /**
@@ -280,11 +279,11 @@ if (!function_exists('diffMonth')) {
 
     function diffMonth($from, $to)
     {
-        $from_array = explode('-',$from);
-        $to_array = explode('-',$to);
+        $from_array = explode('-', $from);
+        $to_array = explode('-', $to);
 
-        $from_correct = $from_array[2] .'-'. $from_array[0]  .'-'.  $from_array[1];
-        $to_correct = $to_array[2]  .'-'.  $to_array[0]  .'-'.  $to_array[1];
+        $from_correct = $from_array[2] . '-' . $from_array[0] . '-' . $from_array[1];
+        $to_correct = $to_array[2] . '-' . $to_array[0] . '-' . $to_array[1];
 
         $fromYear = date("Y", strtotime($from_correct));
         $fromMonth = date("m", strtotime($from_correct));
@@ -324,7 +323,7 @@ define(
 
 Welcome to *Petromin Express*. We are happy to serve you and hope your experience is pleasant.");
 
-define('NOTIFY',"شكرًا لاختيارك *بترومين اكسبرس*، سُعدنا بخدمتك.
+define('NOTIFY', "شكرًا لاختيارك *بترومين اكسبرس*، سُعدنا بخدمتك.
 تغيير الزيت القادم سيكون على {{1}} كم.
 للاطلاع على فاتورتك، اضغط الرقم *1* أو اكتب *فاتورة*.
 

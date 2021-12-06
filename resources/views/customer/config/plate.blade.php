@@ -149,6 +149,15 @@
                     var div = $(this).closest('.iq-card ').find('.chartDiv');
                     div.attr("id", Date.now())
                     chart5(div.attr('id'));
+                } else if ($(this).hasClass('chart-6')) {
+                    var div = $(this).closest('.iq-card ').find('.chartDiv');
+                    div.attr("id", Date.now())
+                    chart6(div.attr('id'));
+                }
+                else if ($(this).hasClass('chart-7')) {
+                    var div = $(this).closest('.iq-card ').find('.chartDiv');
+                    div.attr("id", Date.now())
+                    chart7(div.attr('id'));
                 }
 
             });
@@ -1991,6 +2000,183 @@
                             playButton.isActive = true; // this starts interval
                         }, 2000)
                     })
+
+                }); // end am4core.ready()
+            }
+
+            function chart6(divId){
+                am4core.ready(function() {
+                    am4core.useTheme(am4themes_animated);
+
+                    var chart = am4core.create(divId, am4charts.XYChart);
+
+                    chart.exporting.menu = new am4core.ExportMenu();
+
+                    var data = [ {
+                        "year": "2009",
+                        "income": 23.5,
+                        "expenses": 21.1
+                    }, {
+                        "year": "2010",
+                        "income": 26.2,
+                        "expenses": 30.5
+                    }, {
+                        "year": "2011",
+                        "income": 30.1,
+                        "expenses": 34.9
+                    }, {
+                        "year": "2012",
+                        "income": 29.5,
+                        "expenses": 31.1
+                    }, {
+                        "year": "2013",
+                        "income": 30.6,
+                        "expenses": 28.2,
+                        "lineDash": "5,5",
+                    }, {
+                        "year": "2014",
+                        "income": 34.1,
+                        "expenses": 32.9,
+                        "strokeWidth": 1,
+                        "columnDash": "5,5",
+                        "fillOpacity": 0.2,
+                        "additional": "(projection)"
+                    } ];
+
+                    /* Create axes */
+                    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+                    categoryAxis.dataFields.category = "year";
+                    categoryAxis.renderer.minGridDistance = 30;
+
+                    /* Create value axis */
+                    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+                    /* Create series */
+                    var columnSeries = chart.series.push(new am4charts.ColumnSeries());
+                    columnSeries.name = "Income";
+                    columnSeries.dataFields.valueY = "income";
+                    columnSeries.dataFields.categoryX = "year";
+
+                    columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
+                    columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
+                    columnSeries.columns.template.propertyFields.stroke = "stroke";
+                    columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
+                    columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
+                    columnSeries.tooltip.label.textAlign = "middle";
+
+                    var lineSeries = chart.series.push(new am4charts.LineSeries());
+                    lineSeries.name = "Expenses";
+                    lineSeries.dataFields.valueY = "expenses";
+                    lineSeries.dataFields.categoryX = "year";
+
+                    lineSeries.stroke = am4core.color("#fdd400");
+                    lineSeries.strokeWidth = 3;
+                    lineSeries.propertyFields.strokeDasharray = "lineDash";
+                    lineSeries.tooltip.label.textAlign = "middle";
+
+                    var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+                    bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+                    bullet.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
+                    var circle = bullet.createChild(am4core.Circle);
+                    circle.radius = 4;
+                    circle.fill = am4core.color("#fff");
+                    circle.strokeWidth = 3;
+
+                    chart.data = data;
+
+                }); // end am4core.ready()
+            }
+
+            function chart7(divId){
+                am4core.ready(function() {
+
+                    am4core.useTheme(am4themes_animated);
+
+                    var chart = am4core.create(divId, am4charts.XYChart);
+
+                    chart.data = generateChartData();
+
+                    var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+
+                    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+                    var series = chart.series.push(new am4charts.LineSeries());
+                    series.dataFields.valueY = "visits";
+                    series.dataFields.dateX = "date";
+                    series.strokeWidth = 1;
+                    series.minBulletDistance = 10;
+                    series.tooltipText = "{valueY}";
+                    series.fillOpacity = 0.1;
+                    series.tooltip.pointerOrientation = "vertical";
+                    series.tooltip.getFillFromObject = false;
+                    series.tooltip.background.fill = series.fill;
+
+                    var seriesRange = dateAxis.createSeriesRange(series);
+                    seriesRange.contents.strokeDasharray = "2,3";
+                    seriesRange.contents.stroke = chart.colors.getIndex(8);
+                    seriesRange.contents.strokeWidth = 1;
+
+                    var pattern = new am4core.LinePattern();
+                    pattern.rotation = -45;
+                    pattern.stroke = seriesRange.contents.stroke;
+                    pattern.width = 1000;
+                    pattern.height = 1000;
+                    pattern.gap = 6;
+                    seriesRange.contents.fill = pattern;
+                    seriesRange.contents.fillOpacity = 0.5;
+
+                    chart.scrollbarX = new am4core.Scrollbar();
+
+                    chart.cursor = new am4charts.XYCursor();
+
+                    function generateChartData() {
+                        var chartData = [];
+                        var firstDate = new Date();
+                        firstDate.setDate(firstDate.getDate() - 200);
+                        var visits = 1200;
+                        for (var i = 0; i < 200; i++) {
+                            // we create date objects here. In your data, you can have date strings
+                            // and then set format of your dates using chart.dataDateFormat property,
+                            // however when possible, use date objects, as this will speed up chart rendering.
+                            var newDate = new Date(firstDate);
+                            newDate.setDate(newDate.getDate() + i);
+
+                            visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+
+                            chartData.push({
+                                date: newDate,
+                                visits: visits
+                            });
+                        }
+                        return chartData;
+                    }
+
+                    var range = dateAxis.axisRanges.push(new am4charts.DateAxisDataItem());
+                    range.grid.stroke = chart.colors.getIndex(0);
+                    range.grid.strokeOpacity = 1;
+                    range.bullet = new am4core.ResizeButton();
+                    range.bullet.background.fill = chart.colors.getIndex(0);
+                    range.bullet.background.states.copyFrom(chart.zoomOutButton.background.states);
+                    range.bullet.minX = 0;
+                    range.bullet.adapter.add("minY", function(minY, target) {
+                        target.maxY = chart.plotContainer.maxHeight;
+                        target.maxX = chart.plotContainer.maxWidth;
+                        return chart.plotContainer.maxHeight;
+                    })
+
+                    range.bullet.events.on("dragged", function() {
+                        range.value = dateAxis.xToValue(range.bullet.pixelX);
+                        seriesRange.value = range.value;
+                    })
+
+                    var firstTime = chart.data[0].date.getTime();
+                    var lastTime = chart.data[chart.data.length - 1].date.getTime();
+                    var date = new Date(firstTime + (lastTime - firstTime) / 2);
+
+                    range.date = date;
+
+                    seriesRange.date = date;
+                    seriesRange.endDate = chart.data[chart.data.length - 1].date;
 
                 }); // end am4core.ready()
             }

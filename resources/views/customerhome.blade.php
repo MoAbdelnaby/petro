@@ -105,6 +105,9 @@
                             <div class="mb-5 bg-gray">
                                 <div id="comparisonPlaceBar" class="chartDiv" style="min-height: 450px"></div>
                             </div>
+                            <div class="pt-4 bg-gray" id="comparisonPlaceTrendLineCon">
+                                <div id="comparisonPlaceTrendLine" class="chartDiv" style="min-height: 450px"></div>
+                            </div>
                             <div class="row m-0 p-0 bg-gray">
                                 <div class="col-lg-6 mb-5 "  id="comparisonPlaceWorkCon">
                                     <div class="pt-4 " >
@@ -141,6 +144,9 @@
                             </div>
                             <div class="pt-4 bg-gray">
                                 <div id="comparisonPlateBar" class="chartDiv" style="min-height: 450px"></div>
+                            </div>
+                            <div class="pt-4 bg-gray" id="comparisonPlateTrendLineCon">
+                                <div id="comparisonPlateTrendLine" class="chartDiv" style="min-height: 450px"></div>
                             </div>
                             <div class="pt-4 mb-5 bg-gray" id="comparisonPlateCircleCon">
                                 <div id="comparisonPlateCircle" class="chartDiv" style="min-height: 450px"></div>
@@ -315,10 +321,18 @@
             /*************** End Table *********/
 
             /************** Start Bar Chart ******************/
+            @if(!in_array($key_name ,array_values($config['place']['chart']['trend_line']??[])))
+                $("#comparisonPlaceTrendLineCon").hide();
+            @else
+             comparisonPlaceTrendLine('comparisonPlaceTrendLine', @json($charts['place']['bar']));
+            @endif
+            /************** End Bar Chart ******************/
+
+            /************** Start Bar Chart ******************/
             @if(!in_array($key_name ,array_values($config['place']['chart']['bar'])))
                 $("#comparisonPlaceBarCon").hide();
             @else
-                comparisonPlaceBar('comparisonPlaceBar', @json($charts['place']['bar']));
+             comparisonPlaceBar('comparisonPlaceBar', @json($charts['place']['bar']));
             @endif
             /************** End Bar Chart ******************/
 
@@ -327,7 +341,6 @@
                 $("#comparisonPlaceWorkCon").hide();
                 $("#comparisonPlaceEmptyCon").hide();
             @else
-            {{--console.log(@json($charts['place']['circle']['work']))--}}
                 branchPlaceCircleWork('comparisonPlaceWork',@json($charts['place']['circle']['work']));
                 branchPlaceCircleEmpty('comparisonPlaceEmpty', @json($charts['place']['circle']['empty']));
             @endif
@@ -404,6 +417,14 @@
                 comparisonPlateSideBar('comparisonPlateSideBar', @json($charts['plate']['data']));
             @endif
             /*************** End SideBar Chart*********/
+
+            /************** Start TrendLine ******************/
+            @if(!in_array($key_name ,array_values($config['plate']['chart']['trend_line']??[])))
+                $("#comparisonPlateTrendLineCon").hide();
+            @else
+                comparisonPlateTrendLine('comparisonPlateTrendLine', @json($charts['plate']['data']));
+            @endif
+            /*************** End TrendLineChart*********/
 
            /************* Start table **********/
             @if(!in_array($key_name ,Arr::flatten(array_values($config['plate']['table']))))

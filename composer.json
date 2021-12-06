@@ -10,14 +10,11 @@
     "require": {
         "php": "^7.2.5",
         "ext-json": "*",
-        "barryvdh/laravel-dompdf": "^0.8.7",
-        "barryvdh/laravel-snappy": "^0.4.8",
+        "barryvdh/laravel-dompdf": "^0.9.0",
         "doctrine/dbal": "^2.12.1",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
-        "h4cc/wkhtmltoimage-amd64": "0.12.x",
-        "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "intervention/image": "^2.5",
         "joedixon/laravel-translation": "^1.1",
         "laravel/framework": "^7.0",
@@ -29,8 +26,7 @@
         "spatie/laravel-backup": "^6.15",
         "spatie/laravel-permission": "^3.12",
         "steffjenl/laravel-azure-blob-storage": "^1.0",
-        "tymon/jwt-auth": "^1.0",
-        "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3"
+        "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
