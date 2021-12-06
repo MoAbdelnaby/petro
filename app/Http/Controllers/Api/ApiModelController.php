@@ -335,6 +335,7 @@ class ApiModelController extends Controller
                         'branch_code' => $request->branch_code,
                         'error' => json_encode($request->last_error),
                         'status' => $request->status,
+                        'sending' => 0,
                     ]);
                     /* last of error */
                     $branchStatus = BranchStatus::where('branch_code',$request->branch_code)->first();

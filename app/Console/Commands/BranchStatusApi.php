@@ -89,9 +89,12 @@ class BranchStatusApi extends Command
                     } else {
                         $minutes = $branchSetting->duration;
                     }
-                    foreach ($users as $key => $user) {
-                        if ( $now->subMinutes($minutes) < $branch->created_at) {
-                            Mail::to($user->email)->send(new mailUserBranch($branch));
+                    if ( $now->subMinutes($minutes) < $branch->created_at && $branch->sending == 0) {
+                        foreach ($users as $key => $user) {
+                            $send = Mail::to($user->email)->send(new mailUserBranch($branch));
+                            $updateBranchView = DB::table("last_error_branch_views")
+                                ->when("branch_code",$branch->branch_code)
+                                ->update(['sending',1]);
                         }
                     }
                 }
