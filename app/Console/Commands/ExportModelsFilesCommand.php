@@ -8,6 +8,8 @@ use App\Models\BranchFiles;
 use App\Models\PlaceMaintenance;
 use App\Models\UserModelBranch;
 use App\Services\AreaDurationTotal;
+use App\Services\ExportBranchMessage;
+use App\Services\ExportFileFactory;
 use App\Services\ExportModelsFiles;
 use App\Services\ExportPlacesFiles;
 use App\Services\ExportPlatesFiles;
@@ -55,15 +57,11 @@ class ExportModelsFilesCommand extends Command
 
             $files = BranchFiles::where('status', 0)->whereNull('url')->get();
 
-            $exportPlaceFile  = new ExportPlacesFiles();
-            $exportPlatesFile = new ExportPlatesFiles();
+            $factory= new ExportFileFactory();
 
             foreach ($files as $file) {
-                if ($file->model_type == 'place') {
-                    $exportPlaceFile->export($file);
-                }
-                elseif ($file->model_type == 'plate') {
-                    $exportPlatesFile->export($file);
+                if($object = $factory->handle($file->model_type)){
+                    $object->export($file);
                 }
             }
 
@@ -72,7 +70,6 @@ class ExportModelsFilesCommand extends Command
             $time = $start->floatDiffInSeconds(now());
 
             $this->comment("Processed in " . round($time, 3) . " seconds");
-
 
         } catch (\Exception $e) {
             Log::error($e->getMessage() . $e->getLine());

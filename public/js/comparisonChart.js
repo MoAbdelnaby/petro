@@ -950,7 +950,7 @@ function comparisonPlateTrendLine(divId, data) {
 
         /* Create series */
         var columnSeries = chart.series.push(new am4charts.ColumnSeries());
-        columnSeries.name = "Work Duration (Hours)";
+        columnSeries.name = "Car Count";
         columnSeries.dataFields.valueY = "count";
         columnSeries.dataFields.categoryX = "branch";
         columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
@@ -961,7 +961,7 @@ function comparisonPlateTrendLine(divId, data) {
         columnSeries.tooltip.label.textAlign = "middle";
 
         var lineSeries = chart.series.push(new am4charts.LineSeries());
-        lineSeries.name = "Empty Duration (Hours)";
+        lineSeries.name = "Car Count";
         lineSeries.dataFields.valueY = "count";
         lineSeries.dataFields.categoryX = "branch";
 

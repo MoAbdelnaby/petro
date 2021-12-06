@@ -132,8 +132,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('customerUsers/assignUserToBranch', 'UserController@assignUserToBranch')->name('customerUsers.assignUserToBranch');
         Route::get('myModels', 'UserController@myModels')->name('myModels');
         Route::get('myBranches', 'UserController@myBranches')->name('myBranches');
-        Route::get('branches-status','BranchModelsController@BranchesStatus')->name('branches_status');
-        Route::get('branches-log/{id}','BranchModelsController@getLogs');
+        Route::get('branches-status', 'BranchModelsController@BranchesStatus')->name('branches_status');
+        Route::get('branches-log/{id}', 'BranchModelsController@getLogs');
         Route::get('customerPackages/assignuser/{id}', 'CustomerPackagesController@assignuser')->name('customerPackages.assignuser');
         Route::post('customerPackages/assignuser/{id}/create', 'CustomerPackagesController@assignuserpost')->name('customerPackages.assignuserpost');
         Route::post('customerPackages/requestPackage', 'CustomerPackagesController@requestPackage')->name('customerPackages.requestPackage');
@@ -266,4 +266,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('connection-speed', 'Models\ConnectionSpeedController@index')->name('connection-speed.index');
     Route::get('branches/{branch}/connection-speeds', 'Models\ConnectionSpeedController@show')->name('branch.connection-speeds');
     Route::get('branches/register', 'Models\ConnectionSpeedController@registerBranch')->name('branch.register');
+    Route::get('branches/message-log', 'Customer\BranchMessageController@index')->name('branch.message_log');
+    Route::post('branches/export', 'Customer\BranchMessageController@export')->name('branch.export');
+    Route::get('branches/message-exported', 'Customer\BranchMessageController@exportedFile')->name('branch.exported_file');
 });

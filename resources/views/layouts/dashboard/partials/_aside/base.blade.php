@@ -239,7 +239,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="border-bottom clearfix"></div>
 
+                    <div
+                        class="row justify-content-center  p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/branches/message-log' ? 'active' : '' }} ">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ route('branch.message_log') }}" class="iq-waves-effect">
+                                    <i class="fa fa-envelope-open fa-2x"></i>
+                                </a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ route('branch.message_log') }}"
+                                   class="iq-waves-effect menutext">{{ __('app.branch_message') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-bottom clearfix"></div>
 
                     <div
                         class="row justify-content-center  p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/services' ? 'active' : '' }} ">
@@ -258,8 +274,7 @@
 
                     <div class="border-bottom clearfix"></div>
 
-                    <div
-                        class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/settings/translations' ? 'active' : '' }}">
+                    <div class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/settings/translations' ? 'active' : '' }}">
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ url('settings/translations') }}" class="iq-waves-effect"><img
@@ -272,6 +287,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="border-bottom clearfix"></div>
 
                     <div
                         class="row justify-content-center  p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/branches-status' ? 'active' : '' }} ">
@@ -287,12 +303,9 @@
                             </div>
                         </div>
                     </div>
-
                 @else
 
                     @if (auth()->user()->type == 'subcustomer')
-
-
                         <div class="row justify-content-center p-0 m-0 py-3 item-menu">
                             <div class="col-12 justify-content-center">
                                 <div class="iq-product-cover d-flex justify-content-center">
