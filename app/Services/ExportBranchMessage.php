@@ -42,7 +42,6 @@ class ExportBranchMessage implements IExportFile
                 $result = array_merge($result, $item->toArray());
             });
 
-
             $path = "branches/$file->branch_id/files/messages";
 
             $file_path = $path . '/' . $file->name;
@@ -51,7 +50,7 @@ class ExportBranchMessage implements IExportFile
 
             if ($type == 'pdf') {
                 $list['data'] = $result;
-                $list['title'] = "Brach " . $file->branch_name . " Message";
+                $list['title'] = "Brach " . $result[0]->branch_name . " Message";
                 $list['start'] = $file->start ?? 'First Date';
                 $list['end'] = $file->end ?? 'Last Date';
                 $check = PDF::loadView('customer.branch_messages.files.pdf', compact('list'))

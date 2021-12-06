@@ -40,7 +40,7 @@
         }
 
         .styled-table tbody tr.active-row {
-            font-weight: bold;
+            font-weight:    bold;
             color: #009879;
         }
 
@@ -77,7 +77,6 @@
             <th class="th-sm">#</th>
             <th class="th-sm">{{__('app.type')}}</th>
             <th class="th-sm">{{__('app.branch')}}</th>
-            <th class="th-sm">{{__('app.message')}}</th>
             <th class="th-sm">{{__('app.gym.plate_no')}}</th>
             <th class="th-sm">{{__('app.auth.phone')}}</th>
             <th class="th-sm">{{__('app.Invoice')}}</th>
@@ -87,13 +86,12 @@
         <tbody>
         @foreach($list['data'] as $index=>$item)
             <tr>
-                <th scope="row" style='min-width: 50px'>{{++$index}}</th>
-                <th scope="row" style='min-width: 50px'>{{$item->type}}</th>
-                <th scope="row" style='min-width: 50px'>{{$item->branch_name}}</th>
-                <th scope="row" style='min-width: 50px'>{{$item->message}}</th>
-                <th scope="row" style='min-width: 50px'>{{$item->plateNumber}}</th>
-                <th scope="row" style='min-width: 50px'>{{$item->phone}}</th>
-                <th scope="row" style='min-width: 50px'>
+                <th scope="row">{{++$index}}</th>
+                <th scope="row">{{$item->type}}</th>
+                <th scope="row">{{$item->branch_name}}</th>
+                <th scope="row">{{$item->plateNumber}}</th>
+                <th scope="row">{{$item->phone}}</th>
+                <th scope="row">
                     @if($item->invoiceUrl && Storage::disk('public')->exists($item->invoiceUrl))
                         <a href="{{Storage::disk('public')->url($item->invoiceUrl)}}" class="btn">
                             View
@@ -102,7 +100,7 @@
                         ---
                     @endif
                 </th>
-                <th scope="row" style='min-width: 50px'>{{$item->created_at}}</th>
+                <th scope="row" style='min-width: 70px'>{{$item->created_at}}</th>
             </tr>
         @endforeach
         </tbody>

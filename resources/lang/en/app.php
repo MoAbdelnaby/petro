@@ -1501,13 +1501,9 @@ return [
     'lastError' => 'last Error',
     'user_name' => 'User Name',
     'createdIn' => 'Created In',
-<<<<<<< HEAD
     'branch_message' => 'Branch Message',
     'exported_file' => 'Exported Files',
     'ExportPdf' => 'Export Pdf',
     'view' => 'View',
-=======
     'last_connected' => 'Last Connected'
-
->>>>>>> 75069e2c4fb3d27792c9463b0488f3dac4815c9c
 ];
