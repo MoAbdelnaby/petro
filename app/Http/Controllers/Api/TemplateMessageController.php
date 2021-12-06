@@ -164,5 +164,25 @@ class TemplateMessageController extends Controller
         }
 
     }
+    public function downloadInvoice(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'plateNumber' => 'nullable|string',
+            'carprofile_id' => 'required|string',
+        ]);
 
+        if ($validator->errors()->count()) {
+            return response()->json(['errors' => $validator->errors()], 500);
+        }
+
+        $data = MessageLog::where('carprofile_id',$request->carprofile_id)->first();
+        if(!$data){
+            return response()->json(['success'=>false,'message' => 'No invoice found'], 500);
+        }
+
+        $path = config('app.azure_storage') . config('app.azure_container') . $data->invoiceUrl;
+
+        return response()->json(['invoice'=>$path,'name'=>basename($path),'rowid'=>$request->carprofile_id]);
+
+
+    }
 }

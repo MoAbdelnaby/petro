@@ -22,6 +22,7 @@ class CreateMessageLogsTable extends Migration
             $table->string('invoiceUrl')->nullable();
             $table->string('storage')->nullable();
             $table->unsignedBigInteger('branch_id')->nullable();
+            $table->unsignedBigInteger('carprofile_id')->nullable();
             $table->enum('status',['failed','sent'])->default('sent');
             $table->string('error_reason')->nullable();
             $table->timestamps();

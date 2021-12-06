@@ -168,6 +168,7 @@ return array(
     'Places' => 'اماكن',
     'Places_Maintenance_records' => 'سجلات صيانة الأماكن',
     'Plate' => 'لوحة',
+    'invoice_review' => 'مراجعة الفاتوره',
     'Plate_Ar' => 'لوحة Ar',
     'Plate_Color' => 'لون اللوحة',
     'Plate_Country' => 'بلد اللوحة',

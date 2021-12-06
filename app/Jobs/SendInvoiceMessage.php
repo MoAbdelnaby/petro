@@ -60,7 +60,7 @@ class SendInvoiceMessage implements ShouldQueue
             $filename = 'invoice' . time() . '.pdf';
             $filepath = $path . $filename;
             Storage::disk('azure')->put($filepath, $base64data);
-            $azurepath = config('app.azure_storage') . config('app.azure_container') . "/storage" . $filepath;
+            $azurepath = config('app.azure_storage') . config('app.azure_container') . $filepath;
             $invoice->update([
                 'storage' => 'azure'
             ]);
@@ -79,6 +79,7 @@ class SendInvoiceMessage implements ShouldQueue
                     'message' => str_replace(['{{1}}', '{{2}}'], $invoice->distance, NOTIFY),
                     'phone' => $phone,
                     'branch_id' => $carprofile->branch_id ?? null,
+                    'carprofile_id' => $carprofile->id ?? null,
                     'invoiceUrl' => $filepath,
                     'status' => 'failed',
                     'error_reason' => 'twillo error'
@@ -91,6 +92,7 @@ class SendInvoiceMessage implements ShouldQueue
                 'message' => str_replace(['{{1}}', '{{2}}'], $invoice->distance, NOTIFY),
                 'phone' => $phone,
                 'branch_id' => $carprofile->branch_id ?? null,
+                'carprofile_id' => $carprofile->id ?? null,
                 'invoiceUrl' => $filepath
             ]);
 

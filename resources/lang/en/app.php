@@ -25,6 +25,7 @@ return [
     'English' => 'English',
     'Spanish' => 'Spanish',
     'German' => 'German',
+    'invoice_review' =>'Invoice Preview',
     'copyrights' => 'Copyright 2020 wakeb All Rights Reserved.',
     'Dark' => 'Dark Mode',
     'Default' => 'Light',

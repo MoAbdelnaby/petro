@@ -112,6 +112,10 @@ Route::get('branch/{code}/status', 'Api\AreaStatusController@status');
 
 Route::get('getphone', 'Api\AreaStatusController@handle');
 
+Route::post('invoices/download', 'Api\TemplateMessageController@downloadInvoice');
+
+
+
 //Route::get('testaaa',function (){
 //    $invoice ='9451VSJ';
 //    $plate_en = implode(' ',str_split($invoice));
