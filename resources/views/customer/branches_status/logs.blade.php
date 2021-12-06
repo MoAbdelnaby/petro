@@ -30,7 +30,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <div id="logChart"></div>
+                                    {{-- Charts of branches log --}}
+{{--                                    <div id="logChart"></div>--}}
                                 </div>
                                 <div class="col-12">
                                     <table class="table table-bordered text-center">
