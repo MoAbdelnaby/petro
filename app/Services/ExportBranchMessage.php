@@ -69,7 +69,6 @@ class ExportBranchMessage implements IExportFile
                 $file->save();
             }
         } catch (\Exception $e) {
-            dd($e);
             Log::error($e->getMessage() . $e->getLine());
 
         }

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ConfigSeeder::class);
         $this->call(MoveImagesToStorageSeeder::class);
         $this->call(MovePlaceImagesToStorageSeeder::class);
+        $this->call(branchSettingSeeder::class);
 
     }
 }

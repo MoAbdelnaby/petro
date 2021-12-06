@@ -25,6 +25,7 @@ return [
     'English' => 'English',
     'Spanish' => 'Spanish',
     'German' => 'German',
+    'invoice_review' =>'Invoice Preview',
     'copyrights' => 'Copyright 2020 wakeb All Rights Reserved.',
     'Dark' => 'Dark Mode',
     'Default' => 'Light',
@@ -1500,8 +1501,13 @@ return [
     'lastError' => 'last Error',
     'user_name' => 'User Name',
     'createdIn' => 'Created In',
+<<<<<<< HEAD
     'branch_message' => 'Branch Message',
     'exported_file' => 'Exported Files',
     'ExportPdf' => 'Export Pdf',
     'view' => 'View',
+=======
+    'last_connected' => 'Last Connected'
+
+>>>>>>> 75069e2c4fb3d27792c9463b0488f3dac4815c9c
 ];

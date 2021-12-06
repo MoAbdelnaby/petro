@@ -259,11 +259,16 @@ class BranchModelsController extends Controller
         return view("customer.branches_status.index", compact('branches'));
     }
 
-    public function getLogs($code)
-    {
-        $branchName = Branch::where('code', $code)->first()->name;
-        $logs = BranchNetWork::with('user')->where("branch_code", "=", $code)->paginate(25);
-        return view("customer.branches_status.logs", compact('logs', 'branchName'));
+    public function getLogs($code) {
+        $logChart = array();
+        $branchName = Branch::where('code',$code)->first()->name;
+        $logs = BranchNetWork::with('user')->where("branch_code","=",$code)->paginate(25);
+        foreach (BranchNetWork::where('branch_code','=',$code)->get() as $key => $bStatus) {
+            $logChart[$key]['created_at'] = $bStatus->created_at->format("Y-m-d h:i a");
+            $logChart[$key]['status'] = ($bStatus->status == 'online') ? 1 : 0;
+        }
+//        return response()->json($logChart);
+        return view("customer.branches_status.logs",compact('logs','branchName','logChart'));
     }
 
 }

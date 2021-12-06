@@ -473,6 +473,7 @@
 
                                                             <th class="th-sm">{{ __('app.Status') }}</th>
                                                             <th class="th-sm">{{ __('app.Welcome_Message') }}</th>
+                                                            <th class="th-sm">{{ __('app.Invoice') }}</th>
                                                             <th class="th-sm">{{ __('app.action') }}
                                                             </th>
                                                         </tr>
@@ -514,8 +515,15 @@
                                                                         <a class="" data-toggle="popover" data-trigger="hover" data-content="{{$item->failMessage->status}}">
                                                                             <i class="fas fa-comment-slash text-danger"></i>
                                                                         </a>
-
                                                                         @endif
+                                                                </td>
+
+                                                                <td>
+                                                                    @if(!is_null($item->invoice))
+                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">
+                                                                            <i class="fas fa-file-pdf text-success "></i>
+                                                                        </a>
+                                                                    @endif
                                                                 </td>
 
                                                                 <td class="open action-col position-relative action_drop">
@@ -559,6 +567,11 @@
                                                                                data-item_status="{{$item->plate_status}}">
                                                                                 {{ __('app.Report_Error') }}
                                                                                 <i class="fas fa-exclamation-triangle"></i>
+                                                                            </a>
+
+                                                                            <a href="#" class="text-info fw-normal" id="download-{{$item->id}}" download
+                                                                               onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)">
+                                                                                {{ __('app.invoice_review') }}
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -848,6 +861,45 @@
 
 
             });
+        }
+
+        function reviewPdf(plate,itemid, e) {
+                    e.preventDefault();
+                    var plateNumber = plate;
+                    var carprofile_id = itemid;
+                    $.ajax({
+                        url: `${app_url}/api/invoices/download`,
+                        method: "POST",
+                        data: {
+                            plateNumber: plateNumber,
+                            carprofile_id: carprofile_id,
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (response) {
+                            var tmpLink = document.createElement('a');
+                            tmpLink.download = response.name; // set the name of the download file
+                            tmpLink.href = response.invoice;
+                            // temporarily add link to body and initiate the download
+                            document.body.appendChild(tmpLink);
+                            $(tmpLink).attr('target','_plank')
+                            tmpLink.click();
+                            document.body.removeChild( tmpLink );
+
+                            // Toast.fire({
+                            //     icon: 'success',
+                            //     title: 'file downloaded successfully'
+                            // })
+                        },
+                        error: function (data) {
+                            var message = data.responseJSON.message;
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: message
+                            })
+                        }
+
+                    });
         }
 
         $(document).ready(function () {

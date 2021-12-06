@@ -168,6 +168,7 @@ return array(
     'Places' => 'اماكن',
     'Places_Maintenance_records' => 'سجلات صيانة الأماكن',
     'Plate' => 'لوحة',
+    'invoice_review' => 'مراجعة الفاتوره',
     'Plate_Ar' => 'لوحة Ar',
     'Plate_Color' => 'لون اللوحة',
     'Plate_Country' => 'بلد اللوحة',
@@ -1472,4 +1473,13 @@ return array(
         'english_description' => 'الوصف باللغه الانجليزيه',
         'action' => 'اجراء',
     ],
+
+    'branchStatus' => 'حالة الفرع',
+    'branch_name' => 'اسم الفرع',
+    'branch_status' => 'حالة الفرع',
+    'lastError' => 'اخر خطاء',
+    'user_name' => 'اسم المستخدم',
+    'createdIn' => 'انشاء في',
+    'last_connected' => 'اخر اتصال'
+
 );

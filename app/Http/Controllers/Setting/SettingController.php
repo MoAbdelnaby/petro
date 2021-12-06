@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Setting;
 
 use App\Http\Controllers\Controller;
+use App\Models\BranchSetting;
 use App\Models\Reminder;
 use App\Setting;
 use Illuminate\Http\Request;
@@ -83,9 +84,20 @@ class SettingController extends Controller
 
         Reminder::updateOrCreate(['day' => $request->day]);
 
+        if ($request->branch_type) {
+            $branchSetting = BranchSetting::find(1);
+            $branchSetting->type = $request->branch_type;
+            $branchSetting->duration = $request->branch_duration;
+            $branchSetting->update();
+        }
+
         session()->flash('success', __('app.settings.success_message'));
 
         return redirect()->route('setting.reminder');
+    }
+
+    public function testingUser(Request $request,$branchId) {
+        dd($branchId);
     }
 
 }
