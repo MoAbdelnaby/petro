@@ -20,6 +20,8 @@
                         </thead>
                         <tbody>
                         @foreach($logs as $log)
+                            @continue (!$log->branch)
+
                             <tr class="item{{$log->id}}">
                                 <td>{{$log->branch->name}}</td>
                                 <td>{{$log->internet_speed}} {{ __('app.customers.speed.unit') }}</td>

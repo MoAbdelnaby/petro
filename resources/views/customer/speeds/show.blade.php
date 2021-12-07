@@ -23,7 +23,7 @@
                         @foreach($logs as $log)
                             <tr class="item{{$log->id}}">
                                 <td>{{$log->internet_speed}} {{ __('app.customers.speed.unit') }}</td>
-                                <td>{{$log->created_at->format('d-m-Y')}}</td>
+                                <td>{{$log->created_at->format('d-m-Y h:i A')}}</td>
                             </tr>
                         @endforeach
                         </tbody>

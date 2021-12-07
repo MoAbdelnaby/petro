@@ -11,6 +11,7 @@ return array(
     'Activity_location' => 'موقع النشاط',
     'All_Branches' => 'كل الفروع',
     'All_Months' => 'كل الشهور',
+    'Select_Branch'=>'اختر فرع',
     'All_Years' => 'كل الاعوام',
     'All_notification' => 'كل الإخطار',
     'Amount' => 'كمية',

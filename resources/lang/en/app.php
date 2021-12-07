@@ -49,6 +49,7 @@ return [
     'end' => 'End',
     'size' => 'Size',
     'branch' => 'Branch',
+    'Select_Branch'=> 'Select Branch',
     'activities' => 'Activities',
     'Export_Tools' => 'Export Tools',
     'apps' => 'Apps',
