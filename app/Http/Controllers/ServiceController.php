@@ -48,7 +48,7 @@ class ServiceController extends Controller
             'name_en' => 'required|string|max:255',
             'description_ar' => 'required|string',
             'description_en' => 'required|string',
-            'image' => 'mimes:jpg,jpeg,png',
+            'image' => 'nullable|mimes:jpg,jpeg,png',
             'branch_id' => 'required|exists:branches,id',
         ]);
 
