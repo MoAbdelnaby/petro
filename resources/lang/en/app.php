@@ -34,6 +34,8 @@ return [
     'Dark' => 'Dark Mode',
     'Default' => 'Light',
     'TO' => 'TO',
+    'overall' => 'Overall',
+    'Today' => 'Today',
     'active' => 'Active',
     'deactivate' => 'Deactivate',
     'back' => 'Back',

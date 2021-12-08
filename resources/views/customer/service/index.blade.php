@@ -51,10 +51,10 @@
                                                     <td>{{ $item->name_en }}</td>
                                                     <td>{{ $item->description_ar }}</td>
                                                     <td>{{ $item->description_en }}</td>
-                                                    <td>
+                                                    <td style="min-width:200px">
                                                         <a href="{{ route('service.edit', $item->id) }}"
                                                            class="btn btn-primary m-1">{{ __('app.Edit') }}</a>
-                                                        <form onsubmit="return confirm('Are you sure ?')" class="m-1"
+                                                        <form onsubmit="return confirm('Are you sure ?')" class="d-inline"
                                                               action="{{ route('service.destroy', $item->id) }}" method="post">
                                                             @csrf
                                                             @method('DELETE')

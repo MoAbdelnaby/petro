@@ -7,6 +7,8 @@ return array(
     'Branch_Status_Header' => 'حالة الافرع',
     'ALL_Days' => 'كل الايام',
     'status' => 'الحاله',
+    'overall' => 'الكل',
+    'Today' => 'اليوم',
     'test_speed'=>'قياس سرعه الانترنت',
     'AVG_Employee_Costs' => 'تكاليف الموظف AVG',
     'Actions' => 'إجراءات',
