@@ -25,7 +25,7 @@ class BranchModelsController extends Controller
      *
      * @return void
      */
-    public function __construct(BranchFileschModelsRepo $repo)
+    public function __construct(BranchModelsRepo $repo)
     {
         $this->middleware('permission:list-branchmodels|edit-branchmodels|delete-branchmodels|create-branchmodels', ['only' => ['index', 'store']]);
         $this->middleware('permission:create-branchmodels', ['only' => ['create', 'store']]);
