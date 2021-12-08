@@ -167,7 +167,7 @@
                                             <th class="th-sm">#</th>
                                             <th class="th-sm">{{__('app.type')}}</th>
                                             <th class="th-sm">{{__('app.branch')}}</th>
-                                            <th class="th-sm">{{__('app.message')}}</th>
+{{--                                            <th class="th-sm">{{__('app.message')}}</th>--}}
                                             <th class="th-sm">{{__('app.gym.plate_no')}}</th>
                                             <th class="th-sm">{{__('app.auth.phone')}}</th>
                                             <th class="th-sm">{{__('app.Invoice')}}</th>
@@ -175,12 +175,13 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        @if(count($data) > 0)
                                         @foreach($data as $index=>$item)
                                             <tr>
                                                 <td>{{++$index}}</td>
                                                 <td>{{$item->type}}</td>
-                                                <td>{{$item->branch->name}}</td>
-                                                <td>{{$item->message}}</td>
+                                                <td>{{$item->branch->name ?? ''}}</td>
+{{--                                                <td>{{$item->message}}</td>--}}
                                                 <td>{{$item->plateNumber}}</td>
                                                 <td>{{$item->phone}}</td>
                                                 <td>
@@ -194,6 +195,7 @@
                                                 <td>{{optional($item->created_at)->format('d-M-Y')}}</td>
                                             </tr>
                                         @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

@@ -57,12 +57,14 @@
                                             </div>
                                         </div>
                                         <div class="col-10">
-                                            <form id="reminderForm" method="post" novalidate action="{{route('setting.reminder_post')}}" class="reminder-form">
-                                                @csrf
+
                                                 <div class="tab-content" id="v-pills-tabContent">
+
                                                     <div class="tab-pane fade show active" id="v-pills-reminder"
                                                      role="tabpanel"
                                                      aria-labelledby="v-pills-reminder-tab">
+                                                        <form id="reminderForm" method="post" novalidate action="{{route('setting.reminder_post')}}" class="reminder-form">
+                                                        @csrf
                                                 <!-- {{--@include('settings.reminder-tab)--}} -->
                                                         <div class="container">
                                                             <div class="row">
@@ -78,8 +80,20 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    <div class="col-12 col-md-4 text-center mt-4">
+                                                        <button type="submit"
+                                                                class="btn btn-primary submit-btn waves-effect waves-light px-4 py-2"
+                                                                style="width: 200px;">{{ __('app.Save') }}
+                                                        </button>
                                                     </div>
+
+                                                    </form>
+                                                    </div>
+
+
                                                     <div class="tab-pane fade" id="v-pills-branch">
+                                                    <form id="branchMailsetting" method="post" novalidate action="{{route('setting.branchmail')}}" class="reminder-form">
+                                                        @csrf
                                                         <div class="row">
                                                             <div class="col-12 form-group">
                                                                 <label for="">{{ __('app.selectType') }}</label>
@@ -96,13 +110,15 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-12 col-md-4 text-center mt-4">
+                                                            <button type="submit"
+                                                                    class="btn btn-primary submitmail-btn waves-effect waves-light px-4 py-2"
+                                                                    style="width: 200px;">{{ __('app.Save') }}
+                                                            </button>
+                                                        </div>
+                                                    </form>
                                                     </div>
-                                                    <div class="col-12 col-md-4 text-center mt-4">
-                                                        <button type="submit"
-                                                                class="btn btn-primary submit-btn waves-effect waves-light px-4 py-2"
-                                                                style="width: 200px;">{{ __('app.Save') }}
-                                                        </button>
-                                                    </div>
+
                                                     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
                                                          aria-labelledby="v-pills-profile-tab">...
                                                     </div>
@@ -209,6 +225,10 @@
 
                $("#reminderForm").submit();
 
+            })
+
+            $(".submitmail-btn").on("click", (e) => {
+                $("#branchMailsetting").submit();
             })
 
         });
