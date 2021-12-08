@@ -31,7 +31,8 @@ class ServiceController extends Controller
     public function create()
     {
         $branches = Branch::where('user_id', auth()->id())->get();
-        return view('customer.service.create', compact('branches'));
+        $id = null;
+        return view('customer.service.create', compact('branches','id'));
     }
 
     /**

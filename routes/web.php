@@ -152,6 +152,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('setting_save', 'SettingController@settingSave');
         Route::get('reminder', 'SettingController@getReminder')->name('setting.reminder');
         Route::post('reminder/post', 'SettingController@saveReminder')->name('setting.reminder_post');
+        Route::post('branch/mail', 'SettingController@branchmailSetting')->name('setting.branchmail');
     });
 
     //door module

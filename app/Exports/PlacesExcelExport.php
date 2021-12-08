@@ -16,6 +16,6 @@ class PlacesExcelExport implements FromView
 
     public function view(): View
     {
-        return view('customer.branch_messages.files.excel', ["list" => $this->data]);
+        return view('customer.preview.places.excel', ["list" => $this->data]);
     }
 }

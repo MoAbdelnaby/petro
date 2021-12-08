@@ -7,7 +7,7 @@ use App\Models\BranchSetting;
 use App\Models\Reminder;
 use App\Setting;
 use Illuminate\Http\Request;
-
+use DB;
 class SettingController extends Controller
 {
     public function __construct()
@@ -80,16 +80,33 @@ class SettingController extends Controller
 
     public function saveReminder(Request $request)
     {
-        $request->validate(['day' => 'required|numeric']);
 
-        Reminder::updateOrCreate(['day' => $request->day]);
+        // pause to work
 
-        if ($request->branch_type) {
-            $branchSetting = BranchSetting::find(1);
-            $branchSetting->type = $request->branch_type;
-            $branchSetting->duration = $request->branch_duration;
-            $branchSetting->update();
-        }
+//        $request->validate(['day' => 'required|numeric']);
+//
+//        Reminder::updateOrCreate(['day' => $request->day]);
+//
+//        if ($request->branch_type) {
+//            $branchSetting = BranchSetting::find(1);
+//            $branchSetting->type = $request->branch_type;
+//            $branchSetting->duration = $request->branch_duration;
+//            $branchSetting->update();
+//        }
+
+        session()->flash('success', __('app.settings.success_message'));
+
+        return redirect()->route('setting.reminder');
+    }
+
+    public function branchmailSetting(Request $request) {
+
+            DB::table('branch_settings')->updateOrInsert([
+                'id' => 1
+            ],[
+                'type'=>$request->branch_type,
+                'duration'=>$request->branch_duration
+            ]);
 
         session()->flash('success', __('app.settings.success_message'));
 
@@ -97,7 +114,7 @@ class SettingController extends Controller
     }
 
     public function testingUser(Request $request,$branchId) {
-        dd($branchId);
+//        dd($branchId);
     }
 
 }
