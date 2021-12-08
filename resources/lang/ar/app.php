@@ -1,6 +1,10 @@
 <?php
 
 return array(
+    'branchSetting' => 'بريد حالة الافرع',
+    'duration' => 'الفترة',
+    'selectType' => 'اختر نوع الوقت',
+    'Branch_Status_Header' => 'حالة الافرع',
     'ALL_Days' => 'كل الايام',
     'status' => 'الحاله',
     'test_speed'=>'قياس سرعه الانترنت',

@@ -90,8 +90,10 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col-12 form-group">
-                                                                <label for="">{{ __('app.duration') }}</label>
-                                                                <div id="durationDiv"></div>
+
+                                                                <div id="durationDiv">
+                                                                    <label style="display: none" for="">{{ __('app.duration') }}</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -125,26 +127,33 @@
 @push("js")
     <script>
         $(document).on("change", "#picType", function () {
-            $('#durationSelect').remove();
-            let values = []
-            if ($(this).val() == 'minute') {
-                for (let i = 1; i <= 60; i++) {
-                    values.push(i)
+            if($('#picType').val()){
+                $('#durationSelect').remove();
+                let values = []
+                if ($(this).val() == 'minute') {
+                    for (let i = 1; i <= 60; i++) {
+                        values.push(i)
+                    }
+                } else {
+                    for (let i = 1; i <= 24; i++) {
+                        values.push(i)
+                    }
                 }
-            } else {
-                for (let i = 1; i <= 24; i++) {
-                    values.push(i)
+                var selection = "";
+                selection = "<select class='form-control' id='durationSelect' name='branch_duration'>";
+                for (var j = 1; j <= values.length; j++) {
+                    selection += "<option value='"+j+"'>"+j+"<option>"
                 }
-            }
-            var selection = "";
-            selection = "<select class='form-control' id='durationSelect' name='branch_duration'>";
-            for (var j = 1; j <= values.length; j++) {
-                selection += "<option value='"+j+"'>"+j+"<option>"
-            }
-            selection += "</select>";
+                selection += "</select>";
 
+                $("#durationDiv").append(selection);
+                $("#durationDiv label").show();
+            }
+            else{
+                $("#durationDiv #durationSelect").remove();
+                $("#durationDiv label").hide();
+            }
 
-            $("#durationDiv").append(selection);
         })
         $(document).ready(function () {
             // $("#kilometer").on("focus", function () {

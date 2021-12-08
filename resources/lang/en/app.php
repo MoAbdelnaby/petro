@@ -1,5 +1,9 @@
 <?php
 return [
+    'branchSetting' => 'Branch Status Mail',
+    'duration' => 'Duration',
+    'selectType' => 'Select Duration Type',
+    'Branch_Status_Header' => 'Branch Statuses',
     'select_model' => 'Select Model',
     'config' => 'Config',
     'status' => 'Status',

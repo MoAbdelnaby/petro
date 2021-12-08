@@ -24,6 +24,9 @@
 
                 <div class="col-lg-12">
                     <div class="card">
+                        <div class="card-header">
+                            <h5>{{ __('app.Branch_Status_Header') }}</h5>
+                        </div>
                         <div class="card-body">
                             <div class="row">
                                 <table class="table table-bordered text-center">
