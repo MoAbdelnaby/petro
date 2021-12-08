@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.index')
+@extends('layouts.dashboard.speedTest')
 @section('page_title')
     {{__('app.customers.speed.registerBranch.page_title')}}
 @endsection
@@ -20,13 +20,13 @@
         <h3>{{__('app.customers.speed.registerBranch.title')}}</h3>
 
         <div class="container-fluid text-center" style="padding-top: 100px;">
-            <h1 id="fooVal"><b></b></h1>
-            <canvas id="foo"></canvas>
-
 
             <div class="row text-center">
-                <div class="col-4"></div>
-                <div class="col-4">
+                <div class="col-6">
+                    <h1 id="fooVal"><b></b></h1>
+                    <canvas id="foo"></canvas>
+                </div>
+                <div class="col-6">
                     <select id="branch" name="branch_id" class="form-control col-8 m-auto @error('branch_id') is-invalid @enderror">
                         <option value="">{{ __('app.Select_Branch') }}</option>
                         @foreach($branches as $branch)
@@ -91,7 +91,7 @@
         // } else if (window.attachEvent) {
         //     window.attachEvent('onload', InitiateSpeedDetection);
         // }
-        $('#fooVal b').text("0 Mbps");
+        $('#fooVal b').html("0  <small>/ Mbps</small>");
 
         function MeasureConnectionSpeed() {
             var startTime, endTime;
