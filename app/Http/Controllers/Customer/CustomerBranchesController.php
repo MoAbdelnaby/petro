@@ -330,6 +330,15 @@ class CustomerBranchesController extends Controller
 
     //    change active
 
+    public function changeActive($id)
+    {
+        $item = $this->repo->findOrFail($id);
+        $item->active = !$item->active;
+        $item->save();
+        return redirect()->back();
+
+    }
+
     public function services($id, Request $request)
     {
         // return $uri = $request->back();
@@ -340,13 +349,10 @@ class CustomerBranchesController extends Controller
         return view('customer.branches.services', compact('services', 'id', 'userSettings'));
     }
 
-    public function changeActive($id)
+    public function createServices($id)
     {
-        $item = $this->repo->findOrFail($id);
-        $item->active = !$item->active;
-        $item->save();
-        return redirect()->back();
-
+        $branches = [];
+        return view('customer.service.create', compact('id', 'branches'));
     }
 
 }
