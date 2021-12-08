@@ -180,7 +180,7 @@
                                             <tr>
                                                 <td>{{++$index}}</td>
                                                 <td>{{$item->type}}</td>
-                                                <td>{{$item->branch->name ?? ''}}</td>
+                                                <td>{{$item->branch ? $item->branch->name :''}}</td>
 {{--                                                <td>{{$item->message}}</td>--}}
                                                 <td>{{$item->plateNumber}}</td>
                                                 <td>{{$item->phone}}</td>

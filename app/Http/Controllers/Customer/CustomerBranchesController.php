@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\Region;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
+use App\Service;
 use App\User;
 use App\userSetting;
 use Illuminate\Http\Request;

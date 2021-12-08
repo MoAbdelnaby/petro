@@ -3,6 +3,7 @@
 namespace App\Services;
 
 
+use App\Exports\BranchMessageExport;
 use App\Exports\PlacesExcelExport;
 use Excel;
 use Illuminate\Support\Facades\Log;
@@ -58,7 +59,7 @@ class ExportBranchMessage implements IExportFile
                     ->save(storage_path() . '/app/public/' . $file_path);
 
             } elseif ($type == 'xls') {
-                $check = Excel::store(new PlacesExcelExport($result), 'public/' . $file_path);
+                $check = Excel::store(new BranchMessageExport($result), 'public/' . $file_path);
             }
 
             if ($check) {
