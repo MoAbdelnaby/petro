@@ -25,24 +25,37 @@ class ConnectionSpeedController extends Controller
     public function show(Branch $branch)
     {
         $logs = $branch->speedLogs;
-        $internet_speed = array_column($branch->speedLogs()->get(['internet_speed'])->toArray(),'internet_speed');
-//        dd($internet_speed);
-        $datetimes = array_column($branch->speedLogs()->get(['created_at'])->toArray(),'created_at');
-        $dates = [];
-        $times = [];
-        foreach ($datetimes as $datetime) {
-            $dates[] = Carbon::parse($datetime)->format('Y-m-d');
-            $times[] = Carbon::parse($datetime)->format("H");
+
+        $groupingByDay = [];
+        foreach ($logs as $log) {
+            if (!isset($groupingByDay[$log->created_at->format('Y-m-d')]))
+                $groupingByDay[$log->created_at->format('Y-m-d')] = [
+                    'download' => 0,
+                    'upload' => 0
+                ];
+
+            $groupingByDay[$log->created_at->format('Y-m-d')]['download'] += $log->internet_speed;
+            $groupingByDay[$log->created_at->format('Y-m-d')]['upload'] += $log->upload_speed;
+        }
+        $overall = [];
+        foreach ($groupingByDay as $day => $values) {
+            $values['download'] /= count($groupingByDay[$day]);
+            $values['upload'] /= count($groupingByDay[$day]);
+
+            $overall[] = "{date: ".strtotime($day).", open: ".($values['download']).", close: ".($values['upload'])."}";
         }
 
-        $today_internet_speed = array_column($branch->speedLogs()->whereDate('created_at' , date('Y-m-d'))->get(['internet_speed'])->toArray(),'internet_speed');
-        $datetimes = array_column($branch->speedLogs()->whereDate('created_at' , date('Y-m-d'))->get(['created_at'])->toArray(),'created_at');
-        $today_times = [];
-        foreach ($datetimes as $datetime) {
-            $today_times[] = Carbon::parse($datetime)->format("H");
-        }
 
-        return view('customer.speeds.show', compact('logs', 'branch','internet_speed', 'dates', 'times','today_times','today_internet_speed'));
+//        $today_internet_speed = array_column($branch->speedLogs()->whereDate('created_at', date('Y-m-d'))->get(['internet_speed'])->toArray(), 'internet_speed');
+//        $datetimestoday = array_column($branch->speedLogs()->whereDate('created_at', date('Y-m-d'))->get(['created_at'])->toArray(), 'created_at');
+//        $today_timesH = [];
+//        $today_timesM = [];
+//        foreach ($datetimestoday as $datetime) {
+//            $today_timesH[] = Carbon::parse($datetime)->format("H");
+//            $today_timesM[] = Carbon::parse($datetime)->format("m");
+//        }
+
+        return view('customer.speeds.show', compact('logs', 'branch', 'overall', 'groupingByDay'));
 
     }
 
@@ -62,6 +75,6 @@ class ConnectionSpeedController extends Controller
         }
         $branches = Branch::all();
 
-        return view('customer.speeds.registerBranch', compact( 'branches'));
+        return view('customer.speeds.registerBranch', compact('branches'));
     }
 }
