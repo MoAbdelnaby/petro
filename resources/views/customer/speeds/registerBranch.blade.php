@@ -68,7 +68,7 @@
             staticLabels: {
                 font: "10px sans-serif",  // Specifies font
                 labels: [0, 25, 50, 75],  // Print labels at these values
-                color: "#000000",  // Optional: Label text color
+                color: "#1F9FD8",  // Optional: Label text color
                 fractionDigits: 0  // Optional: Numerical precision. 0=round off.
             },
 
@@ -91,7 +91,7 @@
         // } else if (window.attachEvent) {
         //     window.attachEvent('onload', InitiateSpeedDetection);
         // }
-        $('#fooVal b').text(0);
+        $('#fooVal b').text("0 Mbps");
 
         function MeasureConnectionSpeed() {
             var startTime, endTime;
@@ -128,14 +128,13 @@
                         duration: 5000,
                         easing: 'swing',
                         step: function () {
-                            $this.text(Math.ceil(this.Counter));
-                            console.log($('#fooVal b').text())
+                            $this.text(Math.ceil(this.Counter) + " Mbps");
                         }
                     });
                 });
                 var current = parseInt($('#fooVal b').text());
                 for (var i = current; i <= parseInt(speedMbps); i++) {
-                    $('#fooVal b').html(parseInt(i));
+                    $('#fooVal b').html(parseInt(i)+" Mbps");
                 }
 
 
