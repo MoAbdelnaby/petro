@@ -82,7 +82,7 @@ class SettingController extends Controller
     {
 
         // pause to work
-        
+
 //        $request->validate(['day' => 'required|numeric']);
 //
 //        Reminder::updateOrCreate(['day' => $request->day]);
