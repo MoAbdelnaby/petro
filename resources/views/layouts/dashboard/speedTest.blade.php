@@ -17,7 +17,7 @@
     @endif
 
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
-
+    @stack('css')
 </head>
 <body class="sidebar-main">
 
