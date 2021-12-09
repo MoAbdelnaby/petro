@@ -185,16 +185,14 @@
                     <div class="col-12 py-5">
                         <h5><i class="fas fa-check"></i> Select Branch</h5>
                         <div class="input-group">
-                            <input list="brow" id="branch" name="branch_id"
-                                   class="form-control @error('branch_id') is-invalid @enderror">
-                            <datalist id="brow">
-                                <option value="">{{ __('app.Select_Branch') }}</option>
+                            <select class="js-example-basic-single form-control" id="branch" name="branch_id"
+                                    class="form-control @error('branch_id') is-invalid @enderror">
                                 @foreach($branches as $branch)
                                     <option value="{{ $branch->id }}">
                                         {{ $branch->name }}
                                     </option>
                                 @endforeach
-                            </datalist>
+                            </select>
                             <div class="input-group-append border-radius-0">
                                 <button class="btn btn-primary " style="width: 100px"
                                         onclick="MeasureConnectionSpeed()">Start
@@ -245,6 +243,10 @@
     <script src="//www.amcharts.com/lib/4/themes/dark.js"></script>
 
     <script>
+        // In your Javascript (external .js resource or <script> tag)
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
         data = [];
         am4core.useTheme(am4themes_animated);
         am4core.useTheme(am4themes_dark);
@@ -260,7 +262,7 @@
 
         var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.renderer.grid.template.location = 0;
-        dateAxis.renderer.minGridDistance = 30;
+        dateAxis.renderer.minGridDistance = 1;
         dateAxis.dateFormats.setKey("second", "ss");
         dateAxis.periodChangeDateFormats.setKey("second", "[bold]h:mm a");
         dateAxis.periodChangeDateFormats.setKey("minute", "[bold]h:mm a");
