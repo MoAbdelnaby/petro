@@ -160,6 +160,26 @@
                 font-size: 18px;
             }
         }
+        .select2-container .select2-selection--single,
+        .select2-container--default .select2-selection--single .select2-selection__rendered,
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 35px !important;
+            line-height: 35px !important;
+        }
+        .select2-container--default .select2-selection--single {
+            border-radius: 0 !important;
+        }
+        .select2-container--default .select2-selection--single {
+            background-color: #023d5f !important;
+            border: 1px solid #03293f !important;
+            color: #cacbcb !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #cacbcb !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #cacbcb transparent transparent transparent;
+        }
     </style>
 @endpush
 @section('content')
@@ -185,14 +205,16 @@
                     <div class="col-12 py-5">
                         <h5><i class="fas fa-check"></i> Select Branch</h5>
                         <div class="input-group">
-                            <select class="js-example-basic-single form-control" id="branch" name="branch_id"
-                                    class="form-control @error('branch_id') is-invalid @enderror">
-                                @foreach($branches as $branch)
-                                    <option value="{{ $branch->id }}">
-                                        {{ $branch->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <siv class="col">
+                                <select class="js-example-basic-single form-control" id="branch" name="branch_id"
+                                        class="form-control @error('branch_id') is-invalid @enderror">
+                                    @foreach($branches as $branch)
+                                        <option value="{{ $branch->id }}">
+                                            {{ $branch->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </siv>
                             <div class="input-group-append border-radius-0">
                                 <button class="btn btn-primary " style="width: 100px"
                                         onclick="MeasureConnectionSpeed()">Start
@@ -232,6 +254,9 @@
 @endsection
 
 @section('scripts')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
