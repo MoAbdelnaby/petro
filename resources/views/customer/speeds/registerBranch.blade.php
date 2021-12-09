@@ -216,8 +216,7 @@
                                 </select>
                             </siv>
                             <div class="input-group-append border-radius-0">
-                                <button class="btn btn-primary " style="width: 100px"
-                                        onclick="MeasureConnectionSpeed()">Start
+                                <button id="startTest" class="btn btn-primary " style="width: 100px">  <i class="fas fa-spinner fa-pulse" style="display: none"></i> Start
                                 </button>
                             </div>
                             @error('branch_id')
@@ -271,6 +270,10 @@
         // In your Javascript (external .js resource or <script> tag)
         $(document).ready(function() {
             $('.js-example-basic-single').select2();
+            $('#startTest').on('click', function(){
+                MeasureConnectionSpeed();
+                $('#startTest i.fa-spinner').show();
+            });
         });
         data = [];
         am4core.useTheme(am4themes_animated);
@@ -491,7 +494,7 @@
                     $('#downloadVal b').each(function () {
                         var $this = $(this);
                         jQuery({Counter: this.Counter}).animate({Counter: speedMbps}, {
-                            duration: 5000,
+                            duration: 1000,
                             easing: 'swing',
                             step: function () {
                                 $this.text(Math.ceil(this.Counter) + " Mbps");
@@ -546,15 +549,7 @@
 
         }
 
-        function getRandomString( sizeInMb ) {
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_+`-=[]\{}|;':,./<>?", //random data prevents gzip effect
-                iterations = sizeInMb * 1024 * 1024, //get byte count
-                result = '';
-            for( var index = 0; index < iterations; index++ ) {
-                result += chars.charAt( Math.floor( Math.random() * chars.length ) );
-            };
-            return result;
-        };
+
 
         $(document).ready(function () {
             // $('#branch').change(function () {
