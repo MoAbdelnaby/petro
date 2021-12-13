@@ -71,7 +71,7 @@
                                                     <td>{{ $item->description_en }}</td>
                                                     <td style="min-width:200px">
                                                         <a href="{{ route('service.edit', $item->id) }}" class="btn btn-primary m-1">{{ __('app.Edit') }}</a>
-                                                        <a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="delete_alert({{ $item->id }});" >{{ __('app.Delete') }}</a>
+                                                        <a class="btn btn-danger"   onclick="delete_alert({{ $item->id }});" >{{ __('app.Delete') }}</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

@@ -379,7 +379,7 @@ function searchuser() {
                                             <div class="flex align-items-center list-user-action">
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add" href="#"><i class="ri-user-add-line"></i></a>
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="/auth/users/` + item.id + `/edit"><i class="ri-pencil-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
+                                                <a class="iq-bg-primary"  onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -391,7 +391,7 @@ function searchuser() {
                                             <div class="flex align-items-center list-user-action">
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add" href="#"><i class="ri-user-add-line"></i></a>
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="/auth/users/` + item.id + `/edit"><i class="ri-pencil-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
+                                                <a class="iq-bg-primary" onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -440,7 +440,7 @@ function searchrole() {
                                             <div class="flex align-items-center list-user-action">
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add" href="#"><i class="ri-user-add-line"></i></a>
                                                 <a class="iq-bg-primary update-item" data-toggle="modal" data-target=".update-role" rel="` + item.id + `" data-placement="top" title="" data-original-title="Edit" href="#"><i class="ri-pencil-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
+                                                <a class="iq-bg-primary"   onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -489,7 +489,7 @@ function searchpermission() {
                                             <div class="flex align-items-center list-user-action">
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add" href="#"><i class="ri-user-add-line"></i></a>
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="/auth/permissions/` + item.id + `/edit"><i class="ri-pencil-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
+                                                <a class="iq-bg-primary"  onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -550,7 +550,7 @@ function searchpackage() {
                                             <div class="flex align-items-center list-user-action">
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Item" href="/saas/packages/items/` + item.id + `"><i class="ri-user-add-line"></i></a>
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="/saas/packages/` + item.id + `/edit"><i class="ri-pencil-line"></i></a>
-                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
+                                                <a class="iq-bg-primary"  onclick="delete_alert(` + item.id + `);" ><i class="ri-delete-bin-line"></i></a>
                                             </div>
                                         </td>
                                     </tr>
