@@ -193,7 +193,7 @@
                     <div class="col-12 miter-download">
                         <h1 id="downloadVal"><b></b></h1>
                         <canvas id="downloadSpeed"></canvas>
-                        <h3>Dowload Speed</h3>
+                        <h3>Download Speed</h3>
                     </div>
                     <div class="col-12 miter-upload">
                         <h1 id="uploadVal"><b></b></h1>
@@ -561,6 +561,7 @@
                 if (branch) {
                     MeasureConnectionSpeed();
                 }
+            }, 60 * 1000);
             }, 60 * 1000);
         });
 
