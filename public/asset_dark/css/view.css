@@ -557,3 +557,9 @@ g[transform="translate(144,0)"] g[stroke-opacity="0.15"]{
     stroke: #ffffff!important;
     stroke-opacity: 0.15;
 }
+
+#chartdiv, #chartdiv2 {
+    width: 100%;
+    height: 500px;
+    background: #aabcd2;;
+}

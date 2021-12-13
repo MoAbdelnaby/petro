@@ -8,7 +8,6 @@ use App\Models\Branch;
 use App\Models\Region;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
-use App\Service;
 use App\User;
 use App\userSetting;
 use Illuminate\Http\Request;
@@ -342,8 +341,10 @@ class CustomerBranchesController extends Controller
 
     public function services($id, Request $request)
     {
-        // return $uri = $request->back();
-        $services = Service::where('branch_id', $id)->get();
+        // $services = Service::where('branch_id', $id)->get();
+        $branch = Branch::with('services')->findOrFail($id);
+        $services = $branch->services;
+
         if (Auth::check()) {
             $userSettings = UserSetting::where('user_id', Auth::user()->id)->first();
         }

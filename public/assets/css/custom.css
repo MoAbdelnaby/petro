@@ -1059,3 +1059,9 @@ body{overflow-x:hidden;}
     }
 
 }
+.paginate_button.disabled, .paginate_button.disabled:hover {
+    background: #1c085c;
+    color: #ffffff!important;
+    border-color: #ffffff;
+    /* border: 0; */
+}

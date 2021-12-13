@@ -6,7 +6,6 @@ use App\Services\SeederCheck;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class Branch extends Model
 {
@@ -60,15 +59,14 @@ class Branch extends Model
     }
 
 //    protected static $logAttributes = ['name', 'photo', 'description','active','code', 'area_count','region_id'];
-//    protected static $submitEmptyLogs = false;
-//    protected static $logOnlyDirty = true;
-//    protected static $logName = 'branch';
+    //    protected static $submitEmptyLogs = false;
+    //    protected static $logOnlyDirty = true;
+    //    protected static $logName = 'branch';
 
 //    public function  getDescriptionForEvent(string $eventName): string
-//    {
-//        return "you Have {$eventName} branch";
-//    }
-
+    //    {
+    //        return "you Have {$eventName} branch";
+    //    }
 
     public function user()
     {
@@ -101,5 +99,10 @@ class Branch extends Model
     public function speedLogs()
     {
         return $this->hasMany(ConnectionSpeed::class);
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany('App\Service', 'branch_services', 'branch_id', 'service_id');
     }
 }

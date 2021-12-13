@@ -24,62 +24,53 @@
             </div>
 
             <div class="clearfix col-12"></div>
-            <div class="related-product-block position-relative table">
-
-                <div id="PACKAGEITEMS"
-                    class="product_list row p-0 m-0 col-12 {{ $userSettings ? ($userSettings->show_items == 'large' ? 'large' : '') : '' }}">
-
-                    @foreach ($services as $item)
-
-                        <div
-                            class="product_item col-xs-12 col-sm-6 col-md-6 {{ $userSettings ? ($userSettings->show_items == 'large' ? 'col-lg-6' : 'col-lg-3') : '' }} item{{ $item->id }}">
-                            <div class="iq-card">
-                                <div class="product-miniature">
-                                    <div class="thumbnail-container text-center pb-0">
-                                        <img src="{{ $item->image ? url(Storage::disk('uploads')->url($item->image)) : (session()->has('darkMode') ? url('/images/models/dark/branch.svg') : url('/images/models/default/branch.svg')) }}"
-                                            width="auto" height="100" alt="product-image" class="img-fluid">
-
-                                    </div>
-                                    <div class="product-description text-center">
-                                        <h5>
-                                            <small>{{ $item->name_ar }}</small>
-                                        </h5>
-                                        <h5>
-                                            <small>
-                                                <span>
-                                                    <i class="fas fa-key"></i>
-                                                </span>
+            <div class="iq-card">
+                <div class="iq-card-body">
+                    <div class="related-heading mb-5">
+                        <h2>
+                            <i class="fab fa-servicestack fa-1x"></i> {{__('app.service.service')}}
+                        </h2>
+                    </div>
+                    <div class="related-product-block position-relative col-12">
+                        <div class="product_table table-responsive row p-0 m-0 col-12">
+                            <table class="table dataTable ui celled table-bordered text-center no-footer" id="DataTables_Table_0"
+                                   role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                <tr role="row">
+                                    <th>{{ __('app.service.arabic_name') }}</th>
+                                    <th>{{ __('app.service.english_name') }}</th>
+                                    <th>{{ __('app.service.arabic_description') }}</th>
+                                    <th>{{ __('app.service.english_description') }}</th>
+                                    <th>{{ __('app.service.action') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($services as $item)
+                                    <tr class="item{{ $item->id }}">
+                                        <td>{{ $item->name_ar }}</td>
+                                        <td>{{ $item->name_en }}</td>
+                                        <td>
+                                            <p >
                                                 {{ $item->description_ar }}
-                                            </small>
-                                        </h5>
-                                    </div>
-                                </div>
-
-
-                                <div class="ratting-item-div">
-                                    <div class="clearfix border-bottom mt-1 mb-1"></div>
-                                    <div class="ratting-item d-flex align-items-center justify-content-center p-0 m-0 pb-2">
-                                        @if (auth()->user()->type == 'customer')
-                                            <a class="btn btn-primary mx-1"
-                                                href="{{ route('service.edit', [$item->id]) }}">{{ __('app.customers.branches.edit') }}</a>
-                                            <a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title=""
-                                                data-original-title="Delete"
-                                                onclick="document.getElementById('delete-item-{{ $item->id }}').submit()">{{ __('app.customers.branches.delete') }}</a>
-                                            <form action="{{ route('service.destroy', $item->id) }}"
-                                                id="delete-item-{{ $item->id }}" method="post">
-                                                @method('DELETE')
+                                            </p>
+                                        </td>
+                                        <td>{{ $item->description_en }}</td>
+                                        <td style="min-width: 200px">
+                                            <a href="{{ route('service.edit', $item->id) }}"
+                                               class="btn btn-primary m-1">{{ __('app.Edit') }}</a>
+                                            <form onsubmit="return confirm('Are you sure ?')" class="d-inline"
+                                                  action="{{ route('service.destroy', $item->id) }}" method="post">
                                                 @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger ">{{ __('app.Delete') }}</button>
                                             </form>
-                                        @endif
-
-
-                                    </div>
-
-                                </div>
-
-                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                    @endforeach
+                    </div>
 
                 </div>
             </div>

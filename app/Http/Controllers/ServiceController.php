@@ -16,7 +16,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::with('branch')->where('user_id', auth()->id())->get();
+        $services = Service::with('branches')->where('user_id', auth()->id())->get();
 
         return view('customer.service.index', [
             'services' => $services,
@@ -32,7 +32,7 @@ class ServiceController extends Controller
     {
         $branches = Branch::where('user_id', auth()->id())->get();
         $id = null;
-        return view('customer.service.create', compact('branches','id'));
+        return view('customer.service.create', compact('branches', 'id'));
     }
 
     /**
@@ -43,13 +43,15 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $data = $request->validate([
             'name_ar' => 'required|string|max:255',
             'name_en' => 'required|string|max:255',
             'description_ar' => 'required|string',
             'description_en' => 'required|string',
-            'image' => 'mimes:jpg,jpeg,png',
-            'branch_id' => 'required|exists:branches,id',
+            'image' => 'nullable|mimes:jpg,jpeg,png',
+            'branch_id' => 'array',
+            'branch_id.*' => 'exists:branches,id',
         ]);
 
         $data['user_id'] = auth()->id();
@@ -57,8 +59,11 @@ class ServiceController extends Controller
             $data['image'] = Storage::disk('uploads')->put('service', $request->image);
         }
 
-        Service::create($data);
+        unset($data['branch_id']);
+        // $service = Service::with('branches')->first();
+        $service = Service::create($data);
 
+        $service->branches()->attach($request->branch_id);
         if ($request->has('redirect')) {
             return redirect($request->redirect)->with('success', 'Service has been created successfully');
         } else {
@@ -114,7 +119,8 @@ class ServiceController extends Controller
             'name_en' => 'required|string|max:255',
             'description_ar' => 'required|string',
             'description_en' => 'required|string',
-            'branch_id' => 'required|exists:branches,id',
+            'branch_id' => 'required|array',
+            'branch_id.*' => 'required|exists:branches,id',
         ]);
 
         try {
@@ -128,7 +134,12 @@ class ServiceController extends Controller
             Storage::disk('uploads')->delete($service->image);
         }
 
+        unset($data['branch_id']);
+
         $service->update($data);
+
+        $service->branches()->sync($request->branch_id);
+
         if ($request->has('redirect')) {
             return redirect($request->redirect)->with('success', 'Service has been updated successfully');
         } else {
