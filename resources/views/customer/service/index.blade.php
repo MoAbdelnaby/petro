@@ -70,17 +70,8 @@
                                                     <td>{{ $item->description_ar }}</td>
                                                     <td>{{ $item->description_en }}</td>
                                                     <td style="min-width:200px">
-                                                        <a href="{{ route('service.edit', $item->id) }}"
-                                                            class="btn btn-primary m-1">{{ __('app.Edit') }}</a>
-                                                        <form onsubmit="return confirm('Are you sure ?')"
-                                                            class="d-inline"
-                                                            action="{{ route('service.destroy', $item->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button
-                                                                class="btn btn-danger ">{{ __('app.Delete') }}</button>
-                                                        </form>
+                                                        <a href="{{ route('service.edit', $item->id) }}" class="btn btn-primary m-1">{{ __('app.Edit') }}</a>
+                                                        <a class="btn btn-danger"   onclick="delete_alert({{ $item->id }});" >{{ __('app.Delete') }}</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -124,4 +115,38 @@
             </div>
         </div>
     @endforeach
+
+
+    <!-- myModalDelete -->
+    <div id="myModalDelete" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3 class="text-danger"> <i class="far fa-question-circle"></i>  {{ __('app.Confirmation') }}</h3>
+                    <h5>{{__('app.users.delete_message')}}</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('app.users.close')}}</button>
+                    <button type="button" class="btn btn-danger" onclick="delete_option('customer/customerUsers');">{{__('app.users.delete')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+
+            $('.delete').click(function (){
+                var rel = $(this).attr('rel');
+                $('#myModalDelete form').attr('action',"customer/customerUsers/"+rel);
+            });
+
+
+        });
+    </script>
+
+@endpush

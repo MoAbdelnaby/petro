@@ -604,8 +604,16 @@ td img{
 #myModalAssign .nav-tabs .nav-link small{
     background-color: #2daae2cc;
 }
-.custom-checkbox{
+.custom-checkbox {
     font-size: 14px;
+    padding: 0;
+    position: relative;
+    margin: 5px;
+    display: block;
+}
+.custom-checkbox p{
+    padding-left: 25px;
+    margin: 0;
 }
 .custom-checkbox input:checked ~ .checkmark{
     margin-top: 3px;

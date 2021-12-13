@@ -81,7 +81,7 @@
 
                                                     <td>
                                                         <button type="submit"  class="trash_restore btn btn-sm btn-primary" style="color: white;"><i class="fas fa-recycle"></i> {{__('app.Restore')}}</button>
-                                                        <button type="submit" class="trash_delete btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" ><i class="fas fa-trash"></i> {{__('app.customers.branches.delete')}}</button>
+                                                        <button type="submit" class="trash_delete btn btn-sm btn-danger"  ><i class="fas fa-trash"></i> {{__('app.customers.branches.delete')}}</button>
                                                     </td>
                                                 </tr>
                                             @endforeach

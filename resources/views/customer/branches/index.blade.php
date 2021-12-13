@@ -77,9 +77,7 @@
                                                             <button type="submit" class="trash_restore btn btn-sm btn-primary"
                                                                 style="color: white;"><i class="fas fa-recycle"></i>
                                                                 {{ __('app.Restore') }}</button>
-                                                            <button type="submit" class="trash_delete btn btn-sm btn-danger"
-                                                                data-toggle="tooltip" data-placement="top" title=""
-                                                                data-original-title="Delete"><i class="fas fa-trash"></i>
+                                                            <button type="submit" class="trash_delete btn btn-sm btn-danger"><i class="fas fa-trash"></i>
                                                                 {{ __('app.customers.branches.delete') }}</button>
                                                         </td>
                                                     </tr>
@@ -197,10 +195,7 @@
 
                                                                         <a class="btn btn-sm btn-primary"
                                                                             href="{{ route('customerBranches.edit', [$item->id]) }}">{{ __('app.customers.branches.edit') }}</a>
-                                                                        <a class="btn btn-sm btn-danger"
-                                                                            data-toggle="tooltip" data-placement="top"
-                                                                            title="" data-original-title="Delete"
-                                                                            onclick="delete_alert({{ $item->id }});">{{ __('app.customers.branches.delete') }}</a>
+                                                                        <a class="btn btn-sm btn-danger" onclick="delete_alert({{ $item->id }});">{{ __('app.customers.branches.delete') }}</a>
                                                                     @endif
                                                                 </td>
                                                             </tr>
@@ -264,9 +259,7 @@
                                                                             href="{{ route('customerBranches.show', [$item->id]) }}">{{ __('app.customers.branches.show') }}</a>
                                                                         <a class="btn btn-primary mx-1"
                                                                             href="{{ route('customerBranches.edit', [$item->id]) }}">{{ __('app.customers.branches.edit') }}</a>
-                                                                        <a class="btn btn-danger" data-toggle="tooltip"
-                                                                            data-placement="top" title=""
-                                                                            data-original-title="Delete"
+                                                                        <a class="btn btn-danger"
                                                                             onclick="delete_alert({{ $item->id }});">{{ __('app.customers.branches.delete') }}</a>
                                                                     @endif
                                                                 </div>

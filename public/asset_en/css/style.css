@@ -2124,6 +2124,21 @@ div.dataTables_wrapper div.dataTables_paginate {
     border-color: #F02020;
     color: #F02020;
 }
+
+.ratting-item-div{
+    overflow: auto;
+}
+
+
+.ratting-item-div .ratting-item {
+    padding: 5px 10px!important;
+    width: max-content;
+    min-width: 100%;
+}
+.ratting-item-div .ratting-item a{
+    margin: 0 3px;
+}
+
 /*******************************************************/
 /*-----------------------------------------------------*/
 /*================ custom style fahd ==================*/
