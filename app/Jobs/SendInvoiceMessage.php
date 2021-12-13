@@ -69,11 +69,11 @@ class SendInvoiceMessage implements ShouldQueue
             $filepath = $path . $filename;
             Storage::disk('azure')->put($filepath, $base64data);
             $azurepath = config('app.azure_storage') . config('app.azure_container') . $filepath;
-            $invoice->update([
-                'storage' => 'azure'
-            ]);
-
-            $whatsapp = Http::post('https://whatsapp-wakeb.azurewebsites.net/api/petro_template', [
+//            $invoice->update([
+//                'storage' => 'azure'
+//            ]);
+            $whatsapp_url = $_ENV['WHATSAPP_TEMPLATE_URL'] ?? 'https://whatsapp-wakeb.azurewebsites.net/api/petro_template';
+            $whatsapp = Http::post($whatsapp_url, [
                 'template_id' => '1',
                 'phone' => 'whatsapp:+' . $phone,
                 'invoice' => $azurepath,
@@ -114,6 +114,11 @@ class SendInvoiceMessage implements ShouldQueue
                 $carprofile->update([
                     'invoice' => Carbon::now()
                 ]);
+            }
+
+            if (Storage::disk('azure')->exists($filepath))
+            {
+                $invoice->delete();
             }
 
 

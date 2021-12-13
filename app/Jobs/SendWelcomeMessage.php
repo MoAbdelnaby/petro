@@ -54,52 +54,49 @@ class SendWelcomeMessage implements ShouldQueue
         $contacts = (new CustomerPhone($this->plate))->handle();
 
 //        Log::info('phone',$contacts);
+        $whatsapp_url = $_ENV['WHATSAPP_TEMPLATE_URL'] ?? 'https://whatsapp-wakeb.azurewebsites.net/api/petro_template';
 
         if (!empty($contacts)) {
             $contacts = array_unique($contacts);
-            $sent = false;
             foreach ($contacts as $phone) {
                 if (!is_null($phone)) {
-                    $message = Http::post('https://whatsapp-wakeb.azurewebsites.net/api/petro_template', [
+                    $message = Http::post($whatsapp_url, [
                         'template_id' => '0',
                         'phone' => $phone,
                     ]);
-                    if ($message['success'] === true) {
-                        $sent = true;
-                    }
-                }
 
-            if ($sent === false) {
-                FailedMessage::updateOrCreate([
-                    'plateNumber' => $this->plate,
-                    'carprofile_id' => $this->rowid
-                ], [
-                    'branch_id' => $this->branch_id,
-                    'status' => 'twillo'
-                ]);
-                MessageLog::create([
-                    'PlateNumber' => $this->plate,
-                    'type'=> 'welcome',
-                    'branch_id'=> $this->branch_id,
-                    'message'=> WELCOME,
-                    'phone'=> $phone,
-                    'status'=>'failed',
-                    'error_reason'=>'Twillo Error'
-                ]);
-            } else {
-                $carprofile = Carprofile::find($this->rowid);
-                if ($carprofile) {
-                    $carprofile->update([
-                        'welcome' => Carbon::now(),
+                if ($message['success'] === false) {
+                    FailedMessage::updateOrCreate([
+                        'plateNumber' => $this->plate,
+                        'carprofile_id' => $this->rowid
+                    ], [
+                        'branch_id' => $this->branch_id,
+                        'status' => 'twillo'
+                    ]);
+                    MessageLog::create([
+                        'PlateNumber' => $this->plate,
+                        'type' => 'welcome',
+                        'branch_id' => $this->branch_id,
+                        'message' => WELCOME,
+                        'phone' => str_replace('whatsapp:+', '', $phone),
+                        'status' => 'failed',
+                        'error_reason' => 'Twillo Error'
+                    ]);
+                } else {
+                    $carprofile = Carprofile::find($this->rowid);
+                    if ($carprofile) {
+                        $carprofile->update([
+                            'welcome' => Carbon::now(),
+                        ]);
+                    }
+                    MessageLog::create([
+                        'PlateNumber' => $this->plate,
+                        'type' => 'welcome',
+                        'message' => WELCOME,
+                        'phone' => str_replace('whatsapp:+', '', $phone),
+                        'branch_id' => $this->branch_id
                     ]);
                 }
-                MessageLog::create([
-                    'PlateNumber' => $this->plate,
-                    'type'=> 'welcome',
-                    'message'=> WELCOME,
-                    'phone'=> $phone,
-                    'branch_id'=> $this->branch_id
-                ]);
             }
 
          }
