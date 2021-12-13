@@ -7,6 +7,9 @@
 @endsection
 
 
+@php
+$branchIds = $service->branches->pluck('id')->toArray();
+@endphp
 @section('content')
     <div id="content-page" class="content-page">
         <div class="container-fluid">
@@ -35,13 +38,10 @@
                                             {{ __('app.branch') }}
                                         </label>
 
-                                        <select name="branch_id[]" class="form-control" id="branch_id">
-                                            <option value="" selected disabled> -Please select branch-</option>
-
+                                        <select name="branch_id[]" class="form-control" id="service_branch_id_edit" multiple >
                                             @foreach ($branches as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ old('branch_id') == $item->id || $service->branch_id == $item->id ? 'selected' : '' }}>
-                                                    {{ $item->name }}</option>
+{{--                                                <option value="{{ $item->id }}" {{ old('branch_id')  == $item->id || $service->branch_id == $item->id ? 'selected' : '' }}> {{ $item->name }}</option>--}}
+                                                <option value="{{ $item->id }}" {{ in_array($item->id,$branchIds) ? 'selected' : '' }}> {{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('branch_id')
@@ -142,3 +142,14 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script rel="stylesheet" src="{{asset('assets/js/select2.min.js')}}"></script>
+    <script>
+        $(function () {
+            $("#service_branch_id_edit").select2({
+                placeholder: "Select a Branch",
+                allowClear: true
+            });
+        });
+    </script>
+@endpush
