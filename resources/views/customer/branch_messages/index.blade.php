@@ -183,7 +183,7 @@
                                                 <td>{{$item->branch ? $item->branch->name :''}}</td>
 {{--                                                <td>{{$item->message}}</td>--}}
                                                 <td>{{$item->plateNumber}}</td>
-                                                <td>{{$item->phone}}</td>
+                                                <td>{{str_replace('whatsapp:+','',$item->phone)}}</td>
                                                 <td>
                                                     @if($item->invoiceUrl)
                                                         <a href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceUrl}}"
