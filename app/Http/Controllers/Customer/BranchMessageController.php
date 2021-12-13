@@ -30,7 +30,8 @@ class BranchMessageController extends Controller
 
         $userSettings = UserSetting::where('user_id', auth()->id())->first();
 
-        $query = MessageLog::where('status', 'sent')->with('branch')
+        $query = MessageLog::where('status', 'sent')
+            ->with('branch')
             ->when(($request->branch_id != null), function ($q) {
                 return $q->where('branch_id', \request('branch_id'));
             })->latest();

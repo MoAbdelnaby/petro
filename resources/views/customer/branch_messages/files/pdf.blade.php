@@ -90,10 +90,10 @@
                 <th scope="row">{{$item->type}}</th>
                 <th scope="row">{{$item->branch_name}}</th>
                 <th scope="row">{{$item->plateNumber}}</th>
-                <th scope="row">{{$item->phone}}</th>
+                <th scope="row">{{str_replace('whatsapp:+','',$item->phone)}}</th>
                 <th scope="row">
-                    @if($item->invoiceUrl && Storage::disk('public')->exists($item->invoiceUrl))
-                        <a href="{{Storage::disk('public')->url($item->invoiceUrl)}}" class="btn">
+                    @if($item->invoiceUrl)
+                        <a href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceUrl}}" class="btn">
                             View
                         </a>
                     @else
