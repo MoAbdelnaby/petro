@@ -26,6 +26,7 @@ class TemplateMessageController extends Controller
             'phone' => 'required|string',
             'template_id' => 'required|string',
             'PlateNumber' => 'required|string',
+            'branch_code' => 'required|string',
             'distance' => 'required|string'
         ]);
 
@@ -114,6 +115,7 @@ class TemplateMessageController extends Controller
                 'PlateNumber' => $request->PlateNumber,
                 'invoice' => $request->invoice,
                 'distance' => $request->distance,
+                'branch_code' => $request->branch_code,
                 'phone' => $request->phone,
                 'template_id' => $request->template_id
             ]);
