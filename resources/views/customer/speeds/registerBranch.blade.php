@@ -588,7 +588,7 @@
             function addData(download, upload) {
                 var lastDataItem = series.dataItems[series.dataItems.length - 1];
                 var lastValue = lastDataItem ? lastDataItem.get("valueY") : 0;
-                var newValue = download/25;
+                var newValue = download;
                 var lastDate = lastDataItem ? new Date(lastDataItem.get("valueX")) : new Date();
                 var time = am5.time.add(new Date(lastDate), "minute", 1).getTime();
                 if (series.data.length > 30)
