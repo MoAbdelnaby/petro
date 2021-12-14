@@ -313,9 +313,16 @@
                 tooltip: am5.Tooltip.new(root, {})
             }));
 
-            var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-                renderer: am5xy.AxisRendererY.new(root, {})
-            }));
+            // var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+            //     renderer: am5xy.AxisRendererY.new(root, {})
+            // }));
+            let yAxis = chart.yAxes.push(
+                am5xy.ValueAxis.new(root, {
+                    min: 0,
+                    max: 100,
+                    renderer: am5xy.AxisRendererY.new(root, {}),
+                })
+            );
 
             var series = chart.series.push(am5xy.LineSeries.new(root, {
                 minBulletDistance: 1,
@@ -344,7 +351,7 @@
             });
 
             var series2 = chart.series.push(am5xy.LineSeries.new(root, {
-                minBulletDistance: 10,
+                minBulletDistance: 1,
                 name: "Upload",
                 xAxis: xAxis,
                 yAxis: yAxis,
@@ -352,7 +359,7 @@
                 valueXField: "date",
                 tooltip: am5.Tooltip.new(root, {
                     pointerOrientation: "horizontal",
-                    labelText: "{value2}"
+                    labelText: "{value2Y}"
                 })
             }));
             series2.data.setAll([]);
@@ -373,7 +380,6 @@
                 xAxis: xAxis
             }));
             cursor.lineY.set("visible", false);
-
 
             /////////////////////////////////////////////////////////////////////////////////////
             /////////////////////////////////////////////////////////////////////////////////////
@@ -580,7 +586,7 @@
                 if (branch) {
                     MeasureConnectionSpeed();
                 }
-            }, 60 * 1000);
+            }, 2 * 1000);
             /////////////////////////////////////////////////////////////////////////
             /////////////////////////////////////////////////////////////////////////
 
@@ -608,7 +614,7 @@
                 });
 
                 var lastDataItem2 = series2.dataItems[series2.dataItems.length - 1];
-                var lastValue2 = lastDataItem2 ? lastDataItem2.get("value2") : 0;
+                var lastValue2 = lastDataItem2 ? lastDataItem2.get("value2Y") : 0;
                 if (series2.data.length > 30)
                     series2.data.removeIndex(0);
                 series2.data.push({
