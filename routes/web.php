@@ -263,6 +263,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
     Route::post('connection-speed', 'Models\ConnectionSpeedController@store');
+    Route::post('uploadSpeed', 'Models\ConnectionSpeedController@uploadSpeed');
     Route::resource('service', 'ServiceController');
     Route::get('connection-speed', 'Models\ConnectionSpeedController@index')->name('connection-speed.index');
     Route::get('branches/{branch}/connection-speeds', 'Models\ConnectionSpeedController@show')->name('branch.connection-speeds');

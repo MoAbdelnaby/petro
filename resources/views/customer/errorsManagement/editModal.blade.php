@@ -26,23 +26,38 @@
                                 <div class="row">
 
 
-                                    <div class="form-group col-md-6">
-                                        <label for="en-plate" class="col-form-label">{{__('app.gym.plate_number_ar')}}</label>
+                                    <div class="form-group col-md-6 digits">
+                                        <label for="en-plate" class="col-form-label">{{__('app.gym.plate_number_ar')}} <i class="fas fa-plus-square float-right"></i></label>
                                         <input type="text" class="form-control" name="number_ar" id="en_plate" value="">
+                                        <div class="digitsSpan w-100">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="ar-plate" class="col-form-label">{{__('app.gym.plate_char_ar')}}</label>
+                                    <div class="form-group col-md-6 digits">
+                                        <label for="ar-plate" class="col-form-label">{{__('app.gym.plate_char_ar')}} <i class="fas fa-plus-square float-right"></i></label>
                                         <input type="text" class="form-control" name="plate_ar" id="ar_plate" value="">
+                                        <div class="digitsSpan w-100">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label for="en-plate" class="col-form-label">{{__('app.gym.plate_number_en')}}</label>
+                                    <div class="form-group col-md-6 digits">
+                                        <label for="en-plate" class="col-form-label">{{__('app.gym.plate_number_en')}} <i class="fas fa-plus-square float-right"></i></label>
                                         <input type="text" class="form-control"  name="number_en" id="en_plate" value="">
+                                        <div class="digitsSpan w-100">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                        </div>
+
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="ar-plate" class="col-form-label">{{__('app.gym.plate_char_en')}}</label>
+                                    <div class="form-group col-md-6 digits">
+                                        <label for="ar-plate" class="col-form-label">{{__('app.gym.plate_char_en')}} <i class="fas fa-plus-square float-right"></i></label>
                                         <input type="text" class="form-control" name="plate_en" id="ar_plate" value="">
+                                        <div class="digitsSpan w-100">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                        </div>
+
                                     </div>
                                 </div>
 

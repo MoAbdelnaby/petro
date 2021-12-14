@@ -77,4 +77,11 @@ class ConnectionSpeedController extends Controller
 
         return view('customer.speeds.registerBranch', compact('branches'));
     }
+
+    public function uploadSpeed(Request $request)
+    {
+        return response()->json([
+            'success' => true
+        ]);
+    }
 }

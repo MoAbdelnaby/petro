@@ -1073,3 +1073,57 @@ body{overflow-x:hidden;}
     border-color: #ffffff;
     /* border: 0; */
 }
+
+.digits label{
+    width: 100%;
+}
+.digits label i {
+    line-height: inherit;
+    cursor: pointer;
+    color: #0a4c77;
+}
+.digits .form-control{
+    opacity: 0;
+    z-index: 1;
+    position: absolute;
+}
+.digits .digitsSpan {
+    position: inherit;
+    bottom: 0;
+    height: 40px;
+    right: 0;
+    left: 0;
+    z-index: 9;
+}
+
+.digits .digit{
+    width: 34px;
+    height: 34px;
+    border: 1px solid #666;
+    display: inline-block;
+    text-align: center;
+}
+.digits .digitsSpan span{
+    width: 34px;
+    height: 34px;
+    display: inline-block;
+    position: relative;
+    margin-right: 6px;
+}
+.digits .digitsSpan span i{
+    position: absolute;
+    bottom: 0;
+    right: 0;color: #b90202;
+    font-size: 10px;
+    cursor: pointer;
+}
+.digits .digitsSpan .digit::after{
+    content: "-";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    display: block;
+    background: red;
+    color: white;
+
+}

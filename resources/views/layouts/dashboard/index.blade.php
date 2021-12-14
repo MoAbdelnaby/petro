@@ -99,8 +99,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+
     var app_url = "{{url('/')}}";
     $(document).ready(function (){
+        $(".digitsSpan").delegate('p.removeSpan','click',function(){
+            $(this).parent('span').remove();
+        });
         // data table function any div has class="dataTable"
         var PrevP= "{{ __('app.PrevP') }}";
         var NextP= "{{ __('app.NextP') }}";
@@ -207,6 +211,24 @@
         function goBack() {
             window.history.back();
         }
+
+
+        // .digits events
+        $('.digits label i.fa-plus-square').on('click',function(){
+            console.log("0000")
+            var digitsInputs = $(this).closest('.digits').find('.digitsSpan .digit');
+            // console.log(digitsInputs.length)
+            if(digitsInputs.length < 4){
+                $(this).closest('.digits').find('.digitsSpan').append("<span><input class='digit' maxlength='1' minlength='1'><p class='removeSpan'><i class='fas fa-minus-square'></i></p></span>");
+            }
+            else{
+                $(this).hide();
+            }
+        });
+
+
+
+
 
     });
 </script>
