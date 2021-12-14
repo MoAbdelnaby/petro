@@ -56,6 +56,7 @@ class SendWelcomeMessage implements ShouldQueue
 //        Log::info('phone',$contacts);
         $whatsapp_url = $_ENV['WHATSAPP_TEMPLATE_URL'] ?? 'https://whatsapp-wakeb.azurewebsites.net/api/petro_template';
 
+        $carprofile = Carprofile::find($this->rowid);
         if (!empty($contacts)) {
             $contacts = array_unique($contacts);
             foreach ($contacts as $phone) {
@@ -82,8 +83,11 @@ class SendWelcomeMessage implements ShouldQueue
                         'status' => 'failed',
                         'error_reason' => 'Twillo Error'
                     ]);
+                    if ($carprofile) {
+                        $carprofile->increment('tries');
+                    }
                 } else {
-                    $carprofile = Carprofile::find($this->rowid);
+
                     if ($carprofile) {
                         $carprofile->update([
                             'welcome' => Carbon::now(),
@@ -103,6 +107,9 @@ class SendWelcomeMessage implements ShouldQueue
 
 
         } else {
+            if ($carprofile) {
+                $carprofile->increment('tries');
+            }
             FailedMessage::updateOrCreate([
                 'plateNumber' => $this->plate,
                 'carprofile_id' => $this->rowid
