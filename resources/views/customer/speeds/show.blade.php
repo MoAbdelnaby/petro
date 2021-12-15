@@ -39,6 +39,7 @@
                            id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <tr role="row">
+                            <th>id</th>
                             <th>{{ __('app.customers.speed.index.downloadSpeed') }}</th>
                             <th>{{ __('app.customers.speed.index.downloadTime') }}</th>
                             <th>{{ __('app.customers.speed.index.uploadSpeed') }}</th>
@@ -49,6 +50,7 @@
                         <tbody>
                         @foreach($logs as $log)
                             <tr class="item{{$log->id}}">
+                                <td>{{ $log->id }}</td>
                                 <td>{{ number_format($log->internet_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
                                 <td>{{$log->load_time ?? 0}} {{ __('app.customers.second') }}</td>
                                 <td>{{ number_format($log->upload_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
@@ -81,7 +83,7 @@
     <!-- Chart code -->
     <script>
         var data = [
-                @foreach($logs as $log)
+                @foreach($logsChart as $log)
             {//year, month, day, hours, minutes, seconds
                 date: new Date({{ $log->created_at->format('Y') }}, {{ $log->created_at->subMonth()->format('m') }}, {{ $log->created_at->format('d') }}, {{ $log->created_at->format('H') }}, {{ $log->created_at->format('i') }}, {{ $log->created_at->format('s') }}),
                 value: {{ $log->internet_speed ?? 0 }}
@@ -170,7 +172,6 @@
                         })
                     })
                 );
-
                 //series.fills.template.setAll({ fillOpacity: 0.2, visible: true });
                 series.strokes.template.setAll({strokeWidth: 1});
 
@@ -191,7 +192,6 @@
 
                 series.data.setAll(data);
             }
-
 // Add cursor
 // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
             var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {

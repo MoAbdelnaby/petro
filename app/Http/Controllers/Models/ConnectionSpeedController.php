@@ -22,14 +22,15 @@ class ConnectionSpeedController extends Controller
             ->groupBy('branch_id')
             ->get();
 
+
         return view('customer.speeds.index', compact('logs'));
     }
 
     public function show(Branch $branch)
     {
-        $logs = $branch->speedLogs()->whereMonth('created_at', date('m'))->get();
-
-        return view('customer.speeds.show', compact('logs', 'branch'));
+        $logsChart = $branch->speedLogs()->whereMonth('created_at', date('m'))->get();
+        $logs = $branch->speedLogs()->orderBy('created_at', 'ASC')->get();
+        return view('customer.speeds.show', compact('logs', 'branch', 'logsChart'));
 
     }
 

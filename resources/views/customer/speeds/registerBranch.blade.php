@@ -300,7 +300,7 @@
             var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
                 maxDeviation: 0.5,
                 extraMin: -0.1,
-                extraMax: 0.5,
+                extraMax: 15,
                 groupData: false,
                 baseInterval: {
                     timeUnit: "min",
