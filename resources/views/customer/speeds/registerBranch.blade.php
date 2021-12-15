@@ -269,7 +269,8 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{{--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.8.0/plotly.min.js" integrity="sha512-f3qLqdhI7wNaQjMmD8wj7NiBqolsL1Xi+9ZTvojVvhcXjzDePVtdzHhO+DwD2QM2OAlRF8LCoxMr+zQLeirBGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
             integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -480,6 +481,10 @@
             var dataUpload = [0, 0];
 
             function MeasureConnectionSpeed() {
+                const branch = $('#branch').val();
+                if (branch < 0) {
+                    return;
+                }
                 gaugeDownload.set(0);
                 gaugeUpload.set(0);
                 $('#downloadVal b').html(0 + " Mbps");
@@ -570,7 +575,11 @@
                                     branch_id: $('#branch').val()
                                 })
                                     .then(() => {
-                                        addData(speedMbps, uploadSpeedMbps)
+                                        addData(speedMbps, uploadSpeedMbps);
+
+                                        setTimeout(() => {
+                                            MeasureConnectionSpeed();
+                                        }, 60*1000);
                                     });
                             })
                             .catch(err => {
@@ -580,13 +589,6 @@
 
             }
 
-
-            setInterval(function () {
-                const branch = $('#branch').val();
-                if (branch) {
-                    MeasureConnectionSpeed();
-                }
-            }, 2 * 1000);
             /////////////////////////////////////////////////////////////////////////
             /////////////////////////////////////////////////////////////////////////
 
@@ -649,6 +651,13 @@
 
             chart.appear(1000, 100);
 
+            $(document).ready(function () {
+                $('.js-example-basic-single').select2();
+                $('#startTest').on('click', function () {
+                    MeasureConnectionSpeed();
+                    $('#startTest i.fa-spinner').show();
+                });
+            });
 
         }); // end am5.ready()
 
