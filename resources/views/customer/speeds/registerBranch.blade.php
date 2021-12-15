@@ -318,7 +318,7 @@
             let yAxis = chart.yAxes.push(
                 am5xy.ValueAxis.new(root, {
                     min: 0,
-                    max: 75,
+                    max: 70,
                     renderer: am5xy.AxisRendererY.new(root, {}),
                 })
             );
@@ -423,10 +423,7 @@
             gaugeDownload.maxValue = 150; // set max gauge value
             gaugeDownload.setMinValue(0);  // Prefer setter over gauge.minValue = 0
             gaugeDownload.animationSpeed = 32; // set animation speed (32 is default value)
-
-
             // end meter
-
             var optsUpload = {
                 angle: -0.11, // The span of the gauge arc
                 lineWidth: 0.04, // The line thickness
@@ -455,15 +452,12 @@
                     subColor: '#db3381'
                 }
             };
-
             var targetUpload = document.getElementById('uploadSpeed'); // your canvas element
             var gaugeUpload = new Gauge(targetUpload).setOptions(optsUpload); // create sexy gauge!
             gaugeUpload.maxValue = 75; // set max gauge value
             gaugeUpload.setMinValue(0);  // Prefer setter over gauge.minValue = 0
             gaugeUpload.animationSpeed = 32; // set animation speed (32 is default value)
-
             // end meter
-
             var imageAddr = '{{ asset('images/to-download.jpg') }}';
             var downloadSize = 41026764; //bytes
 
@@ -540,9 +534,9 @@
                         })
                             .then(res => {
                                 endTime = (new Date()).getTime();
-                                duration = (endTime - startTime) / 1000;
+                                var duration2 = (endTime - startTime) / 1000;
                                 bitsLoaded = uploadSize * 8;
-                                speedBps = (bitsLoaded / duration).toFixed(2);
+                                speedBps = (bitsLoaded / duration2).toFixed(2);
                                 speedKbps = (speedBps / 1024).toFixed(2);
                                 uploadSpeedMbps = (speedKbps / 1024).toFixed(2);
 
@@ -569,7 +563,9 @@
 
                                 axios.post('/connection-speed', {
                                     internet_speed: speedMbps,
+                                    load_time: duration,
                                     upload_speed: uploadSpeedMbps,
+                                    uploaded_time: duration2,
                                     branch_id: $('#branch').val()
                                 })
                                     .then(() => {

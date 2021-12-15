@@ -387,6 +387,8 @@ return [
             'packagecontrol' => 'Package Control',
             'branches' => 'Branches',
             'branchmodels' => 'Assign Models To Branch',
+            'second' => 'Second',
+
 
         ],
     ],
@@ -925,6 +927,8 @@ return [
         ],
     ],
     'customers' => [
+        'second' => 'Second',
+
         'packages' => [
             'page_title' => [
                 'index' => 'Package',
@@ -948,6 +952,7 @@ return [
             'price_yearly' => 'Price yearly',
             'desc' => 'Description',
             'type' => 'type',
+
             'monthly' => 'monthly',
             'yearly' => 'Annual',
             'desc_type' => 'Select Type of Package',
@@ -1107,6 +1112,10 @@ return [
                 'speed' => 'Internet Speed',
                 'action' => 'Actions',
                 'date' => 'Date',
+                'downloadSpeed' => 'Download Speed',
+                'uploadSpeed' => 'Upload Speed',
+                'downloadTime' => 'Download Time',
+                'uploadTime' => 'Upload Time',
             ],
             'show' => [
                 'action' => 'Branch history',

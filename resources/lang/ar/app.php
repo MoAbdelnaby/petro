@@ -433,6 +433,8 @@ return array(
     'config' => 'الاعدادات',
     'copyrights' => 'جميع الحقوق محفوظة لشركة واكب',
     'customers' => array(
+        'second' => 'ثانية',
+
         'branches' => array(
             'back' => 'الرجوع',
             'branch_title' => 'كل الفروع',
@@ -445,6 +447,7 @@ return array(
             'edit' => 'تعديل',
             'files' => 'ملفات الفروع',
             'new' => 'جديد',
+
             'page_title' => array(
                 'create' => 'اضافة فرع',
                 'index' => 'الفروع',
@@ -613,6 +616,11 @@ return array(
                 'speed' => 'سرعة الأنترنت',
                 'action' => 'إعدادات',
                 'date' => 'التاريخ',
+                'downloadSpeed' => 'سرعة التنزيل',
+                'uploadSpeed' => 'سرعة التحميل',
+                'downloadTime' => 'وقت التحميل',
+                'uploadTime' => 'وقت التحميل',
+
             ],
             'show' => [
                 'action' => 'سجل الفرع',
