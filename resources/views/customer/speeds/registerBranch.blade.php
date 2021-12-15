@@ -12,7 +12,7 @@
     <style>
         #chartdiv {
             width: 100%;
-            height: 300px;
+            height: calc(100vh - 370px);
         }
 
         .select2-container {
@@ -30,8 +30,9 @@
 
         .miters .miter-download {
             background: #f6f6f6;
-            padding: 40px;
+            padding: 40px 0px;
             min-height: 50vh;
+            max-height: 50vh;
         }
 
         .miters .miter-download b,
@@ -41,9 +42,10 @@
         }
 
         .miters .miter-upload {
-            padding: 15px;
+            padding: 40px 0px;
             min-height: 50vh;
             background: #eaeaea;
+            max-height: 50vh;
         }
 
         .miters .miter-upload b,
@@ -114,19 +116,15 @@
             }
 
             .miters .miter-download {
-                background: #f6f6f6;
                 padding: 20px;
-                min-height: 50vh;
-                height: 180px;
+                min-height: 180px;
                 width: 50%;
                 float: left;
             }
 
             .miters .miter-upload {
                 padding: 20px;
-                min-height: 50vh;
-                background: #db69ac36;
-                height: 180px;
+                min-height: 180px;
                 width: 50%;
                 float: left;
             }
@@ -138,7 +136,7 @@
 
             #downloadSpeed,
             #uploadSpeed {
-                width: 100%;
+                width: 100%!important;
                 height: auto;
             }
 
@@ -202,12 +200,12 @@
                 <div class="col-4 miters px-0 text-center">
                     <div class="col-12 miter-download">
                         <h1 id="downloadVal"><b></b></h1>
-                        <canvas id="downloadSpeed"></canvas>
+                        <canvas id="downloadSpeed" style="width:100%!important"></canvas>
                         <h3>Download Speed</h3>
                     </div>
                     <div class="col-12 miter-upload">
                         <h1 id="uploadVal"><b></b></h1>
-                        <canvas id="uploadSpeed"></canvas>
+                        <canvas id="uploadSpeed" style="width:100%!important"></canvas>
                         <h3>Upload Speed</h3>
                     </div>
                 </div>
@@ -320,7 +318,7 @@
             let yAxis = chart.yAxes.push(
                 am5xy.ValueAxis.new(root, {
                     min: 0,
-                    max: 100,
+                    max: 75,
                     renderer: am5xy.AxisRendererY.new(root, {}),
                 })
             );
@@ -660,6 +658,7 @@
             });
 
         }); // end am5.ready()
+
 
 
     </script>
