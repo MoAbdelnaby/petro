@@ -1,3 +1,27 @@
+
+var mode = document.getElementsByTagName('body')[0].getAttribute('data-mode');
+if(mode == "dark"){
+    var chart1Colrs = ["#68a8c7","#68a153"];
+    var chart2Colrs = ["#68a8c7","#68a153"];
+    var chart3Colrs = ["#68a8c7","#68a153"];
+    var chart4Colrs = ["#68a8c7","#68a153"];
+    var chart5Colrs = ["#68a8c7","#68a153"];
+    var chart6Colrs = ["#68a8c7","#68a153"];
+    var chart7Colrs = ["#68a8c7","#68a153"];
+    var chart8Colrs = ["#68a8c7","#68a153"];
+}
+else{
+    var chart1Colrs = ["#1a739f","#348117"];
+    var chart2Colrs = ["#1a739f","#348117"];
+    var chart3Colrs = ["#1a739f","#348117"];
+    var chart4Colrs = ["#1a739f","#348117"];
+    var chart5Colrs = ["#1a739f","#348117"];
+    var chart6Colrs = ["#1a739f","#348117"];
+    var chart7Colrs = ["#1a739f","#348117"];
+    var chart8Colrs = ["#1a739f","#348117"];
+
+}
+
 var Jan = {"Jan": "Jan"},
     Feb = {"Feb": "Feb"},
     Mar = {"Mar": "Mar"},
@@ -81,9 +105,9 @@ function comparisonPlaceBar(id, data) {
         var chart = am4core.create(id, am4charts.XYChart);
 
         chart.colors.list = [
-            am4core.color("#29A0D8"),
+            am4core.color("#fc696e"),
             am4core.color("#EF1B2F"),
-            am4core.color("#13153E"),
+            am4core.color("#ff8904"),
         ];
         chart.colors.step = 2;
 

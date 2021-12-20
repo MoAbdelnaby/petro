@@ -54,7 +54,7 @@
                 <div class="col-sm-12" style="margin-top: -35px">
                     <div class="iq-card mt-4 mb-4">
                         <div class="iq-card-body">
-                            <div class="related-heading plates-car-cont">
+                            <div class="plates-car-cont">
                                 <div class="d-flex justify-content-between align-items-center border-bottom">
                                     <h2 class="border-bottom-0 m-2" style="text-transform: capitalize;">
                                         {{ __('app.branch_message') }}
@@ -110,17 +110,19 @@
                                     <form method="get"  id="form" action="{{route('branch.message_log')}}">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-2">
-                                                <label class="">@lang('app.Select_branch') * </label>
-                                                <select class="form-control" id="select_branch" name="branch_id">
-                                                    <option value="" selected>{{ __('app.Select_branch') }}</option>
-                                                    @foreach($branches as $branch)
-                                                        <option value="{{$branch->id}}"
-                                                        @if(request('branch_id') != null) {{request('branch_id') == $branch->id ? 'selected' : ''}} @endif>{{$branch->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="invalid-feedback name-feedback">
-                                                    <strong>{{$errors->has('branch_id')?$errors->first('branch_id'):''}}</strong>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label class="w-100">@lang('app.Select_branch') * </label>
+                                                    <select class="form-control" id="select_branch" name="branch_id">
+                                                        <option value="" selected>{{ __('app.Select_branch') }}</option>
+                                                        @foreach($branches as $branch)
+                                                            <option value="{{$branch->id}}"
+                                                            @if(request('branch_id') != null) {{request('branch_id') == $branch->id ? 'selected' : ''}} @endif>{{$branch->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="invalid-feedback name-feedback">
+                                                        <strong>{{$errors->has('branch_id')?$errors->first('branch_id'):''}}</strong>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-3">

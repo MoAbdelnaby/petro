@@ -142,9 +142,9 @@
 /*****************************************************/
 /***************** start style abdu ******************/
 /*****************************************************/
-.btn-info,.paginate_button.current {
-    background: #0b6892!important;
-    color: #ffffff!important;
+.btn-info, .paginate_button.current {
+    background: #013d58!important;
+    color: #d1d0d0!important;
     border-color: #0b6892!important;
 }
 .btn-info:hover {
@@ -563,6 +563,73 @@ g[transform="translate(144,0)"] g[stroke-opacity="0.15"]{
     height: 500px;
     background: #aabcd2;;
 }
-
-
+.related-heading .dropdown-toggle i {
+    color: #b8c2cb;
+}
+.dropdown-menu.main-dropdown .dropdown-item {
+    border-color: #394856;
+    color: #f8f8f8;
+}
+.dropdown-item .show-icon{
+    color: #f8f8f8;
+}
+.plates-car-cont .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    left: auto!important;
+    right: 10px!important;
+    top: 50% !important;
+}
+.select2-container--open .select2-dropdown--below {
+    background: #16212b;
+}
+.select2-container--default .select2-results__option[aria-selected=true],
+.select2-container--default .select2-results__option--highlighted[aria-selected]{
+    background-color: #364c61!important;
+    color: #f9f9f9;
+}
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-color: #1f3246!important;
+}
+.select2-dropdown {
+    border: 1px solid #1f3246;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1px solid #958f8f!important;
+    background: #687c93;
+    color: #111a24;
+}
+#PACKAGEITEMS .thumbnail-container img {
+    width: 80px;
+    height: 80px;
+    display: block;
+    margin: 0 auto;
+    background: #192734;
+}
+.paginate_button.disabled, .paginate_button.disabled:hover {
+    background: #15202b;
+    color: #ffffff!important;
+    border-color: #013d58;
+}
+.page-link{
+    border-color: #013d58;
+}
+.page-item.disabled .page-link {
+    color: #bbbbbb;
+    pointer-events: none;
+    cursor: auto;
+    background-color: #15202b;
+    border-color: #15202b;
+}
+.page-item.active .page-link,
+.page-link:hover{
+    background: #013d58!important;
+    color: #d1d0d0!important;
+    border-color: #0b6892!important;
+}
+.iq-card-body .bg-gray:nth-child(odd) {
+    background: #ffffff0a;
+    padding: 20px 0;
+}
+g[stroke="#000000"]{
+    stroke: #ffffff!important;
+}
 /* ****** */

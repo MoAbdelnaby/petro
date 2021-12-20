@@ -47,83 +47,98 @@
                                                  aria-orientation="vertical">
                                                 <a class="nav-link active" id="v-pills-reminder-tab" data-toggle="pill"
                                                    href="#v-pills-reminder"
-                                                   role="tab" aria-controls="v-pills-reminder" aria-selected="true">{{ __('app.Reminder') }}</a>
+                                                   role="tab" aria-controls="v-pills-reminder"
+                                                   aria-selected="true">{{ __('app.Reminder') }}</a>
                                                 <a class="nav-link" id="v-pills-branch-tab" data-toggle="pill"
                                                    href="#v-pills-branch"
-                                                   role="tab" aria-controls="v-pills-reminder" aria-selected="true">{{ __('app.branchSetting') }}</a>
+                                                   role="tab" aria-controls="v-pills-reminder"
+                                                   aria-selected="true">{{ __('app.branchSetting') }}</a>
                                                 {{--                      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"--}}
                                                 {{--                        aria-controls="v-pills-profile" aria-selected="false">Profile</a>--}}
 
                                             </div>
                                         </div>
                                         <div class="col-10">
-
-                                                <div class="tab-content" id="v-pills-tabContent">
-
-                                                    <div class="tab-pane fade show active" id="v-pills-reminder"
+                                            <div class="tab-content" id="v-pills-tabContent">
+                                                <div class="tab-pane fade show active  py-3" id="v-pills-reminder"
                                                      role="tabpanel"
                                                      aria-labelledby="v-pills-reminder-tab">
-                                                        <form id="reminderForm" method="post" novalidate action="{{route('setting.reminder_post')}}" class="reminder-form">
-                                                        @csrf
-                                                <!-- {{--@include('settings.reminder-tab)--}} -->
-                                                        <div class="container">
-                                                            <div class="row">
-                                                                <div class="form-group col-12 col-md-4">
-                                                                    <label for="days">{{ __('app.Days') }}</label>
-                                                                    <input type="number" class="form-control" id="days"
-                                                                           min="1" max="365" name="day" value="{{$reminder ? $reminder->day : ''}}"
-                                                                           aria-describedby="number of days"
-                                                                           placeholder="(1  - 365)">
-                                                                    <div class="invalid-feedback day">
-                                                                        {{ __('app.enter_a_valid_number_of_days') }}
+                                                    <form id="reminderForm" method="post" novalidate
+                                                          action="{{route('setting.reminder_post')}}"
+                                                          class="reminder-form">
+                                                    @csrf
+                                                    <!-- {{--@include('settings.reminder-tab)--}} -->
+                                                        <div class="">
+                                                            <div class="row m-0 p-0">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label for="days">{{ __('app.Days') }}</label>
+                                                                        <input type="number" class="form-control" id="days"
+                                                                               min="1" max="365" name="day"
+                                                                               value="{{$reminder ? $reminder->day : ''}}"
+                                                                               aria-describedby="number of days"
+                                                                               placeholder="(1  - 365)">
+                                                                        <div class="invalid-feedback day">
+                                                                            {{ __('app.enter_a_valid_number_of_days') }}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+
                                                             </div>
                                                         </div>
-                                                    <div class="col-12 col-md-4 text-center mt-4">
-                                                        <button type="submit"
-                                                                class="btn btn-primary submit-btn waves-effect waves-light px-4 py-2"
-                                                                style="width: 200px;">{{ __('app.Save') }}
-                                                        </button>
-                                                    </div>
-
-                                                    </form>
-                                                    </div>
-
-
-                                                    <div class="tab-pane fade" id="v-pills-branch">
-                                                    <form id="branchMailsetting" method="post" novalidate action="{{route('setting.branchmail')}}" class="reminder-form">
-                                                        @csrf
-                                                        <div class="row">
-                                                            <div class="col-12 form-group">
-                                                                <label for="">{{ __('app.selectType') }}</label>
-                                                                <select name="branch_type"  class="form-control" id="picType">
-                                                                    <option value=""></option>
-                                                                    <option value="hours">Hours</option>
-                                                                    <option value="minute">Minute</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-12 form-group">
-
-                                                                <div id="durationDiv">
-                                                                    <label style="display: none" for="">{{ __('app.duration') }}</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12 col-md-4 text-center mt-4">
+                                                        <div class="col-12  mt-3">
                                                             <button type="submit"
-                                                                    class="btn btn-primary submitmail-btn waves-effect waves-light px-4 py-2"
+                                                                    class="btn btn-primary submit-btn waves-effect waves-light px-4 py-2"
                                                                     style="width: 200px;">{{ __('app.Save') }}
                                                             </button>
                                                         </div>
                                                     </form>
+                                                </div>
+
+
+                                                <div class="tab-pane fade py-3" id="v-pills-branch">
+                                                    <div class="">
+                                                            <form id="branchMailsetting" method="post" novalidate
+                                                                  action="{{route('setting.branchmail')}}"
+                                                                  class="reminder-form">
+                                                                @csrf
+                                                                <div class="row p-0 m-0">
+                                                                    <div class="col-lg-4 col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">{{ __('app.selectType') }}</label>
+                                                                            <select name="branch_type" class="form-control"
+                                                                                    id="picType">
+                                                                                <option value=""></option>
+                                                                                <option value="hours">Hours</option>
+                                                                                <option value="minute">Minute</option>
+                                                                            </select>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="col-lg-4 col-md-6 ">
+                                                                        <div class="form-group">
+                                                                            <div id="durationDiv">
+                                                                                <label style="display: none"
+                                                                                       for="">{{ __('app.duration') }}</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row p-0 m-0">
+                                                                    <div class="col-12 mt-3">
+                                                                        <button type="submit"
+                                                                                class="btn btn-primary submitmail-btn waves-effect waves-light px-4 py-2"
+                                                                                style="width: 200px;">{{ __('app.Save') }}
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
                                                     </div>
 
-                                                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                                                         aria-labelledby="v-pills-profile-tab">...
-                                                    </div>
+                                                </div>
                                             </div>
-                                            </form>
+
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +158,7 @@
 @push("js")
     <script>
         $(document).on("change", "#picType", function () {
-            if($('#picType').val()){
+            if ($('#picType').val()) {
                 $('#durationSelect').remove();
                 let values = []
                 if ($(this).val() == 'minute') {
@@ -158,14 +173,13 @@
                 var selection = "";
                 selection = "<select class='form-control' id='durationSelect' name='branch_duration'>";
                 for (var j = 1; j <= values.length; j++) {
-                    selection += "<option value='"+j+"'>"+j+"<option>"
+                    selection += "<option value='" + j + "'>" + j + "<option>"
                 }
                 selection += "</select>";
 
                 $("#durationDiv").append(selection);
                 $("#durationDiv label").show();
-            }
-            else{
+            } else {
                 $("#durationDiv #durationSelect").remove();
                 $("#durationDiv label").hide();
             }
@@ -223,7 +237,7 @@
 
                 if (invalid) return false
 
-               $("#reminderForm").submit();
+                $("#reminderForm").submit();
 
             })
 

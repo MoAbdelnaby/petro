@@ -184,7 +184,7 @@
                                 @else
                                     <div id="PACKAGEITEMS" class="product_list row p-0 m-0 col-12 {{ $userSettings ? ($userSettings->show_items == "large" ? 'large' : '') :'' }}">
                                         @foreach($users as $user)
-                                            <div class="product_item col-sm-6 col-mg-3  {{ $userSettings ? ($userSettings->show_items == "large" ? 'col-lg-6' : 'col-lg-3') :'' }} item{{$user->id}}">
+                                            <div class="product_item col-sm-6 col-mg-3 mb-4  {{ $userSettings ? ($userSettings->show_items == "large" ? 'col-lg-6' : 'col-lg-3') :'' }} item{{$user->id}}">
                                                 <div class=" iq-card secondary-custom-card h-100" >
                                                     <div class="product-miniature" style="align-content: center;margin: auto;">
                                                         <div class="thumbnail-container text-center py-3 justify-content-center">

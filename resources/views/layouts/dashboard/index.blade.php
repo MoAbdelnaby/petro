@@ -17,6 +17,7 @@
     @endif
 <!-- Typography CSS -->
     <link rel="stylesheet" href="{{resolveLang()}}/css/typography.css">
+    <link rel="stylesheet" href="{{ asset("/asset_en/css/style.css") }}">
     <link rel="stylesheet" href="{{resolveLang()}}/css/style.css">
     <link rel="stylesheet" href="{{resolveLang()}}/css/responsive.css">
     <link rel="stylesheet" href="{{url('/css')}}/avatar.css">
@@ -38,7 +39,7 @@
     <script src=" {{url('/assets')}}/noty/noty.min.js "></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
-<body class="sidebar-main">
+<body class="sidebar-main " data-mode="{{session()->has('darkMode') ? 'dark' : ''}}">
 
 @include('layouts.dashboard.partials._page-loader')
 
@@ -99,6 +100,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+
+
+    var mode = "{{session()->has('darkMode')}}";
+
+    if(mode == 1){
+        var chart1Colrs = ["#68a8c7","#68a153"];
+        var chart2Colrs = ["#68a8c7","#68a153"];
+        var chart3Colrs = ["#68a8c7","#68a153"];
+        var chart4Colrs = ["#68a8c7","#68a153"];
+        var chart5Colrs = ["#68a8c7","#68a153"];
+        var chart6Colrs = ["#68a8c7","#68a153"];
+        var chart7Colrs = ["#68a8c7","#68a153"];
+        var chart8Colrs = ["#68a8c7","#68a153"];
+    }
+    else{
+        var chart1Colrs = ["#1a739f","#348117"];
+        var chart2Colrs = ["#1a739f","#348117"];
+        var chart3Colrs = ["#1a739f","#348117"];
+        var chart4Colrs = ["#1a739f","#348117"];
+        var chart5Colrs = ["#1a739f","#348117"];
+        var chart6Colrs = ["#1a739f","#348117"];
+        var chart7Colrs = ["#1a739f","#348117"];
+        var chart8Colrs = ["#1a739f","#348117"];
+
+    }
 
     var app_url = "{{url('/')}}";
     $(document).ready(function (){
@@ -231,10 +257,23 @@
 
 
     });
+
+
+    // $(window).load(function(){
+    //     console.log("loades")
+    //     setTimeout(function (){
+    //
+    //         document.body.innerHTML = document.body.innerHTML.replace('ALAMAL', 'الامل');
+    //
+    //     },1000);
+    // });
+
+
 </script>
 
 @yield('scripts')
 @stack('js')
+
 </body>
 
 <!-- end::Body -->

@@ -122,8 +122,8 @@
 
 
     <!-- myModalDelete -->
-    <div id="myModalDelete" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog modal-sm">
+    <div id="myModalDelete" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">{{__('app.saas.features.delete')}}</h5>
