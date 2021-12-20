@@ -63,6 +63,7 @@ class BranchStatusApi extends Command
             if ( $now->subMinutes(1) < $branch->created_at) {
                 $data['status'] = 'online';
                 $data['last_error'] = $branch->error;
+                $data['last_connected'] = $now->diffForHumans($branch->created_at,true);
             } else {
                 $data['status'] = 'offline';
                 $data['last_error'] = null;

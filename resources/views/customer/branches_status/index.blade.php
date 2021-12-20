@@ -34,7 +34,7 @@
                                     <thead class="bg-primary">
                                     <th>#</th>
                                     <th>{{__('app.branch_name')}}</th>
-{{--                                    <th>{{ __('app.lastError') }}</th>--}}
+                                    <th>{{ __('app.branch_status') }}</th>
                                     <th>{{ __('app.last_connected') }}</th>
 
                                     </thead>
@@ -43,12 +43,18 @@
                                         <tr>
                                             <td>{{ $k+1 }}</td>
                                             <td><a href="branches-log/{{$branch->branch_code}}" target="_blank">{{ $branch->branch->name }}</a></td>
-{{--                                            <td>{{ $branch->last_error }}</td>--}}
                                             <td>
                                                 @if ($branch->status == 'online')
-                                                    {{ $branch->status }}
+                                                    {{ __('app.branch_online')  }}
                                                 @else
+                                                    {{ __('app.branch_offline') }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($branch->last_connected)
                                                     {{ $branch->last_connected }}
+                                                @else
+                                                    {{ __('app.branch_lessThan15') }}
                                                 @endif
                                             </td>
                                         </tr>

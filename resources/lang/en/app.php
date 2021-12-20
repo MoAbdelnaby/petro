@@ -1521,5 +1521,8 @@ return [
     'exported_file' => 'Exported Files',
     'ExportPdf' => 'Export Pdf',
     'view' => 'View',
-    'last_connected' => 'Last Connected'
+    'last_connected' => 'Last Connected',
+    'branch_online' => 'online branch',
+    'branch_offline' => 'offline branch',
+    'branch_lessThan15' => ' Less than 15 min '
 ];

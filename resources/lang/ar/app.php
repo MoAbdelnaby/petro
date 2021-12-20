@@ -1495,6 +1495,9 @@ return array(
     'lastError' => 'اخر خطاء',
     'user_name' => 'اسم المستخدم',
     'createdIn' => 'انشاء في',
-    'last_connected' => 'اخر اتصال'
+    'last_connected' => 'اخر اتصال',
+    'branch_online' => 'الفرع متصل ب الانترنت',
+    'branch_offline' => 'الفرع غير متصل ب الانترنت',
+    'branch_lessThan15' => 'اقل من 15 دقيقه'
 
 );
