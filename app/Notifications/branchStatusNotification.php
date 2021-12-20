@@ -7,21 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AdminNotifications extends Notification
+class branchStatusNotification extends Notification
 {
     use Queueable;
 
-    protected $notificationData;
+    protected $branch;
     protected $name;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data,$userNane)
+    public function __construct($data, $userName)
     {
-        $this->notificationData = $data;
-        $this->name = $userNane;
+        $this->branch = $data;
+        $this->name = $userName;
     }
 
     /**
@@ -58,13 +58,12 @@ class AdminNotifications extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'user_name' => $this->notificationData['name'],
-            'user_phone' => $this->notificationData['phone'],
-            'user_type' => $this->notificationData['type'],
+            'branch_name' => $this->branch['branch_name'],
+            'branch_code' => $this->branch['branch_code'],
+            'created_at' => $this->branch['created_at'],
             'created_by' => $this->name,
-            'message' => 'add_user_notification_message',
-
-            'come_from' => 'user_model',
+            'message' => 'branch_from_api_notification_message',
+            'come_from' => 'status_of_branch',
         ];
     }
 }

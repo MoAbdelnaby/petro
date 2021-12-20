@@ -8,6 +8,8 @@ use App\Mail\mailUserBranch;
 use App\Models\Branch;
 use App\Models\BranchSetting;
 use App\Models\UserModelBranch;
+use App\Notifications\branchConnectionNotification;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -90,7 +92,14 @@ class BranchStatusApi extends Command
                     } else {
                         $minutes = $branchSetting->duration;
                     }
-                    if ( $now->subMinutes($minutes) < $branch->created_at && $branch->sending == 0) {
+//                    if ( $now->subMinutes($minutes) < $branch->created_at && $branch->sending == 0) {
+                    info($now->subMinutes($minutes));
+                    if ( $now->subMinutes($minutes) < $branch->created_at) {
+                        /* Send notify to admins */
+//                        foreach (User::where('type','admin')->get() as $admin) {
+//                            $admin->notify(new branchConnectionNotification($branch,$minutes));
+//                        }
+                        /* End notify */
                         foreach ($users as $key => $user) {
                             $send = Mail::to($user->email)->send(new mailUserBranch($branch));
                             $updateBranchView = DB::table("last_error_branch_views")

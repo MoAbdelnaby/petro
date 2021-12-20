@@ -1498,6 +1498,11 @@ return array(
     'last_connected' => 'اخر اتصال',
     'branch_online' => 'الفرع متصل ب الانترنت',
     'branch_offline' => 'الفرع غير متصل ب الانترنت',
-    'branch_lessThan15' => 'اقل من 15 دقيقه'
-
+    'branch_lessThan15' => 'اقل من 15 دقيقه',
+    'assign_notification_message' => ' تم تخصيص هذا الحساب للفروع',
+    'created_by' => 'بواسطة',
+    'branch_connection_notification_message' => 'رسالة إعلام اتصال الفرع',
+    'branch_notification_message' => 'تم إضافة فرع جديد',
+    'region_notification_message' => 'تمت إضافة منطقة جديدة',
+    'add_user_notification_message' => 'تمت إضافة مستخدم جديد',
 );

@@ -131,7 +131,7 @@ class UserController extends Controller
         /*notification to admins*/
         $admins = User::where('type','admin')->get();
         foreach ($admins as $admin) {
-            $admin->notify(new AdminNotifications($user));
+            $admin->notify(new AdminNotifications($user,Auth::user()->name));
         }
         /*end */
 

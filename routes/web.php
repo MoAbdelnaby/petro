@@ -25,6 +25,8 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
+    Route::get('userNotify','HomeController@getNotify')->name('notfication');
+
 
     Route::group(['prefix' => 'api/charts'], function () {
         Route::post('getTotalPeople', 'Models\DashController@getPeopleCount');

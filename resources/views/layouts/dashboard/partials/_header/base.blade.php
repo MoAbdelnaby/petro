@@ -69,21 +69,45 @@
                         <div class="iq-card shadow-none m-0">
                             <div class="iq-card-body p-0 ">
                                 <div class="bg-primary">
-                                    <h5 class="mb-0 text-white">{{ __('app.All_notification') }}<small class="badge  badge-light float-right pt-1">{{count($oldRequest)}}</small></h5>
+{{--                                    <h5 class="mb-0 text-white">{{ __('app.All_notification') }}<small class="badge  badge-light float-right pt-1">{{count($oldRequest)}}</small></h5>--}}
+                                    <h5 class="mb-0 text-white">{{ __('app.All_notification') }}<small class="badge  badge-light float-right pt-1">{{count(Auth::user()->notifications)}}</small></h5>
                                 </div>
-                                @foreach($oldRequest as $old)
-                                    <a href=""  onclick="delete_oldrequest('saas/packageRequests/items/delete',{{$old->id}});" class="iq-sub-card notify{{$old->id}}" id="row{{$old->id}}">
-                                        <div class="media align-items-center">
-                                            <div class="">
-                                                <img class="avatar-40 rounded" src="{{url('/')}}/images/user/1.jpg" alt="">
-                                            </div>
-                                            <div class="media-body ml-3">
-                                                <h6 class="mb-0 ">{{ __('app.Your_Request_to') }} {{$old->package->name}} {{ __('app.has_been') }}  {{$old->status}}</h6>
-                                                <small class="float-right font-size-12">{{$old->created_at->diffForHumans()}}</small>
-                                            </div>
-                                        </div>
-                                    </a>
+                                @foreach(Auth::user()->notifications->take(5) as $notification)
+                                                                        <span class="iq-sub-card notify{{$notification->id}}" id="row{{$notification->id}}">
+                                                                            <div class="media align-items-center">
+                                                                                <div class="">
+                                                                                    <img class="avatar-40 rounded" src="{{url('/')}}/images/user/1.jpg" alt="">
+                                                                                </div>
+                                                                                <div class="media-body ml-3">
+                                                                                        <h6 class="mb-0 ">{{ __('app.'.$notification->data['message']) }} {{ __('app.created_by') }} {{$notification->data['created_by']}} </h6>
+                                                                                    @if($notification->data['come_from'] == 'add_branch')
+                                                                                        <small>{{ __('app.branch_name_is') }} : {{ $notification->data['branch_name'] }}</small>
+                                                                                        <small>{{ __('app.branch_code_is') }} : {{ $notification->data['branch_code'] }}</small>
+                                                                                        <small>{{ __('app.region_name_is') }} : {{ $notification->data['region_name'] }}</small>
+                                                                                    @endif
+                                                                                    @if($notification->data['come_from'] == 'add_region')
+                                                                                        <small>{{ __('app.region_name_is') }} : {{ $notification->data['region_name'] }}</small>
+                                                                                    @endif
+                                                                                    <small class="float-right font-size-12">{{$notification->created_at->diffForHumans()}}</small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </span>
                                 @endforeach
+                                <a href="{{ route("notfication") }}" class="text-center">{{ __('app.show_all') }}</a>
+
+                                {{--                                @foreach($oldRequest as $old)--}}
+{{--                                    <a href=""  onclick="delete_oldrequest('saas/packageRequests/items/delete',{{$old->id}});" class="iq-sub-card notify{{$old->id}}" id="row{{$old->id}}">--}}
+{{--                                        <div class="media align-items-center">--}}
+{{--                                            <div class="">--}}
+{{--                                                <img class="avatar-40 rounded" src="{{url('/')}}/images/user/1.jpg" alt="">--}}
+{{--                                            </div>--}}
+{{--                                            <div class="media-body ml-3">--}}
+{{--                                                <h6 class="mb-0 ">{{ __('app.Your_Request_to') }} {{$old->package->name}} {{ __('app.has_been') }}  {{$old->status}}</h6>--}}
+{{--                                                <small class="float-right font-size-12">{{$old->created_at->diffForHumans()}}</small>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </a>--}}
+{{--                                @endforeach--}}
                             </div>
                         </div>
                     </div>

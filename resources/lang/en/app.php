@@ -1524,5 +1524,11 @@ return [
     'last_connected' => 'Last Connected',
     'branch_online' => 'online branch',
     'branch_offline' => 'offline branch',
-    'branch_lessThan15' => ' Less than 15 min '
+    'branch_lessThan15' => ' Less than 15 min ',
+    'assign_notification_message' => ' this account has been assigned to branches',
+    'created_by' => 'By',
+    'branch_connection_notification_message' => 'branch connection notification message',
+    'branch_notification_message' => 'New branch has been added',
+    'region_notification_message' => 'New region has been added',
+    'add_user_notification_message' => 'New user has been added',
 ];

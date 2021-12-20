@@ -61,7 +61,7 @@ class branchNotification extends Notification
         return [
             'branch_name' => $this->branch['name'],
             'branch_code' => $this->branch['code'],
-            'region_id' => Region::find($this->branch['region_id'])->name,
+            'region_name' => Region::find($this->branch['region_id'])->name,
             'created_by' => $this->name,
             'message' => 'branch_notification_message',
             'come_from' => 'add_branch',

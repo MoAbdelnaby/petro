@@ -68,4 +68,9 @@ class HomeController extends Controller
             return view('index');
         }
     }
+
+    public function getNotify() {
+        $notfications = \DB::table("notifications")->where("notifiable_id",Auth::id())->orderBy("created_at","DESC")->paginate(25);
+        return view('notfication',compact('notfications'));
+    }
 }

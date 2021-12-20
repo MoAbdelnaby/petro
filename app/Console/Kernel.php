@@ -33,19 +33,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('area:duration')->daily()->timezone('Asia/Riyadh');
-         $schedule->command('area:duration-daily')->daily()->timezone('Asia/Riyadh');
-         $schedule->command('files:export')->everyFiveMinutes()->timezone('Asia/Riyadh');
-         $schedule->command('welcome:send')->everyMinute()->timezone('Asia/Riyadh');
-         $schedule->command('reminder:send')->daily()->timezone('Asia/Riyadh');
-         $schedule->command('profile:handle')->dailyAt('01:00')->timezone('Asia/Riyadh');
-         $schedule->command('carplate:images-handle')->dailyAt('01:00')->timezone('Asia/Riyadh');
-//         $schedule->command('queue:work --tries=3')->everyMinute()->withoutOverlapping();
-         /* azure-images-upload */
-         $schedule->command('plate-images:upload')->everyMinute()->timezone('Asia/Riyadh');
-         $schedule->command('place-images:upload')->everyMinute()->timezone('Asia/Riyadh');
+//         $schedule->command('area:duration')->daily()->timezone('Asia/Riyadh');
+//         $schedule->command('area:duration-daily')->daily()->timezone('Asia/Riyadh');
+//         $schedule->command('files:export')->everyFiveMinutes()->timezone('Asia/Riyadh');
+//         $schedule->command('welcome:send')->everyMinute()->timezone('Asia/Riyadh');
+//         $schedule->command('reminder:send')->daily()->timezone('Asia/Riyadh');
+//         $schedule->command('profile:handle')->dailyAt('01:00')->timezone('Asia/Riyadh');
+//         $schedule->command('carplate:images-handle')->dailyAt('01:00')->timezone('Asia/Riyadh');
+////         $schedule->command('queue:work --tries=3')->everyMinute()->withoutOverlapping();
+//         /* azure-images-upload */
+//         $schedule->command('plate-images:upload')->everyMinute()->timezone('Asia/Riyadh');
+//         $schedule->command('place-images:upload')->everyMinute()->timezone('Asia/Riyadh');
 
-         $schedule->command('branch-status-api')->everyFifteenMinutes();
+         $schedule->command('branch-status-api')->everyMinute();
     }
 
     /**

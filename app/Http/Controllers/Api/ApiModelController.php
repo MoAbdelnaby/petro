@@ -21,6 +21,8 @@ use App\Http\Resources\VehiclesResource;
 use App\Models\AreaStatus;
 use App\Models\Branch;
 use App\Models\Carprofile;
+use App\Notifications\branchStatusNotification;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -361,6 +363,11 @@ class ApiModelController extends Controller
                         $json['message'] = 500;
                         $json['code'] = 'issue of creation branch status';
                     }
+                    /* send notification to admins heating branch */
+                    foreach (User::where('type','admin')->get() as $user) {
+                        $user->notify(new branchStatusNotification($branchStatusArr,Auth::user()->name));
+                    }
+                    /* end notify*/
                     return response()->json(['data' => $json],$json['code']);
                 } else {
                     return response()->json(['data' => [], 'message' => 'this Branch is inActive', 'code' => 200],200);
