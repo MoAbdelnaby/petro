@@ -12,8 +12,9 @@
     <style>
         #chartdiv {
             width: 100%;
-            height: 300px;
+            height: calc(100vh - 370px);
         }
+
         .select2-container {
             width: 100% !important;
         }
@@ -28,9 +29,10 @@
         }
 
         .miters .miter-download {
-            background: #158ccf3b;
-            padding: 40px;
+            background: #f6f6f6;
+            padding: 40px 0px;
             min-height: 50vh;
+            max-height: 50vh;
         }
 
         .miters .miter-download b,
@@ -40,9 +42,10 @@
         }
 
         .miters .miter-upload {
-            padding: 15px;
+            padding: 40px 0px;
             min-height: 50vh;
-            background: #db69ac36;
+            background: #eaeaea;
+            max-height: 50vh;
         }
 
         .miters .miter-upload b,
@@ -52,7 +55,7 @@
         }
 
         .miters-details .download {
-            background: #158ccf29;
+            background: #f6f6f6;
             padding: 15px;
             border-bottom: 5px solid #158ccf;
         }
@@ -64,7 +67,7 @@
         }
 
         .miters-details .upload {
-            background: #db338130;
+            background: #eaeaea;
             padding: 15px;
             border-bottom: 5px solid #db3381;
         }
@@ -80,103 +83,108 @@
         }
 
         #branch {
-            background: #3a76b994;
-            color: #ccc;
-            border: 0;
             border-radius: 0;
         }
 
         .content-page h5 {
-            color: #ccc;
+            color: #03334b;
             font-size: 16px;
         }
 
         .btn-primary:hover, .btn-primary {
-            color: #ccc;
+            color: #fff;
             background-color: #023d5f;
             border-color: #2f48c5;
             border: 0;
         }
 
         p {
-            color: #ccc;
+            color: #504f4f;
         }
 
         body {
-            background: #050606;
+            background: #fff;
         }
 
         @media (max-width: 768px) {
-            .miters  {
+            .miters {
                 width: 100%;
                 position: relative;
                 display: block;
                 max-width: 100%;
-                flex: 0 0 100%!important;
+                flex: 0 0 100% !important;
             }
+
             .miters .miter-download {
-                background: #158ccf3b;
                 padding: 20px;
-                min-height: 50vh;
-                height: 180px;
+                min-height: 180px;
                 width: 50%;
                 float: left;
             }
+
             .miters .miter-upload {
                 padding: 20px;
-                min-height: 50vh;
-                background: #db69ac36;
-                height: 180px;
+                min-height: 180px;
                 width: 50%;
                 float: left;
             }
-            .col-8{
+
+            .col-8 {
                 flex: 0 0 100%;
                 max-width: 100%;
             }
+
             #downloadSpeed,
-            #uploadSpeed{
-                width: 100%;
+            #uploadSpeed {
+                width: 100%!important;
                 height: auto;
             }
+
             .miters .miter-upload b, .miters .miter-upload h1, .miters .miter-upload h3,
-            .miters .miter-download b, .miters .miter-download h1, .miters .miter-download h3{
+            .miters .miter-download b, .miters .miter-download h1, .miters .miter-download h3 {
                 font-size: 18px;
             }
         }
 
         @media (max-width: 400px) {
             .miters .miter-upload,
-            .miters .miter-download{
+            .miters .miter-download {
                 min-height: auto;
                 height: 150px;
             }
-            .miters .miter-upload b, .miters .miter-upload h1, .miters .miter-upload h3, .miters .miter-download b, .miters .miter-download h1, .miters .miter-download h3{
+
+            .miters .miter-upload b, .miters .miter-upload h1, .miters .miter-upload h3, .miters .miter-download b, .miters .miter-download h1, .miters .miter-download h3 {
                 font-size: 14px;
             }
+
             .miters-details .download h3, .miters-details .download h3 i, .miters-details .download h2,
-            .miters-details .upload h3, .miters-details .upload h3 i, .miters-details .upload h2{
+            .miters-details .upload h3, .miters-details .upload h3 i, .miters-details .upload h2 {
                 color: #158ccf;
                 font-size: 18px;
             }
         }
+
         .select2-container .select2-selection--single,
         .select2-container--default .select2-selection--single .select2-selection__rendered,
         .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 35px !important;
             line-height: 35px !important;
         }
+
         .select2-container--default .select2-selection--single {
             border-radius: 0 !important;
         }
+
         .select2-container--default .select2-selection--single {
-            background-color: #023d5f !important;
+            /*background-color: #023d5f !important;*/
             border: 1px solid #03293f !important;
-            color: #cacbcb !important;
+            /*color: #cacbcb !important;*/
         }
+
         .select2-container--default .select2-selection--single .select2-selection__rendered {
             color: #cacbcb !important;
         }
+
         .select2-container--default .select2-selection--single .select2-selection__arrow b {
             border-color: #cacbcb transparent transparent transparent;
         }
@@ -192,12 +200,12 @@
                 <div class="col-4 miters px-0 text-center">
                     <div class="col-12 miter-download">
                         <h1 id="downloadVal"><b></b></h1>
-                        <canvas id="downloadSpeed"></canvas>
-                        <h3>Dowload Speed</h3>
+                        <canvas id="downloadSpeed" style="width:100%!important"></canvas>
+                        <h3>Download Speed</h3>
                     </div>
                     <div class="col-12 miter-upload">
                         <h1 id="uploadVal"><b></b></h1>
-                        <canvas id="uploadSpeed"></canvas>
+                        <canvas id="uploadSpeed" style="width:100%!important"></canvas>
                         <h3>Upload Speed</h3>
                     </div>
                 </div>
@@ -216,7 +224,8 @@
                                 </select>
                             </siv>
                             <div class="input-group-append border-radius-0">
-                                <button id="startTest" class="btn btn-primary " style="width: 100px">  <i class="fas fa-spinner fa-pulse" style="display: none"></i> Start
+                                <button id="startTest" class="btn btn-primary " style="width: 100px"><i
+                                        class="fas fa-spinner fa-pulse" style="display: none"></i> Start
                                 </button>
                             </div>
                             @error('branch_id')
@@ -242,7 +251,7 @@
 
                     </div>
                     <div class="col-12">
-{{--                        <canvas id="myChart" style="width:100%;max-width:100%; height: 300px"></canvas>--}}
+                        {{--                        <canvas id="myChart" style="width:100%;max-width:100%; height: 300px"></canvas>--}}
                         <div id="chartdiv"></div>
                         {{--                        <div id="myPlot" style="width:100%;max-width:100%;height: 300px"></div>--}}
                     </div>
@@ -253,316 +262,398 @@
 @endsection
 
 @section('scripts')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.8.0/plotly.min.js" integrity="sha512-f3qLqdhI7wNaQjMmD8wj7NiBqolsL1Xi+9ZTvojVvhcXjzDePVtdzHhO+DwD2QM2OAlRF8LCoxMr+zQLeirBGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
+            integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     {{--    new   --}}
-    <script src="//www.amcharts.com/lib/4/core.js"></script>
-    <script src="//www.amcharts.com/lib/4/charts.js"></script>
-    <script src="//www.amcharts.com/lib/4/themes/animated.js"></script>
-    <script src="//www.amcharts.com/lib/4/themes/dark.js"></script>
+    <!-- Resources -->
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
     <script>
-        // In your Javascript (external .js resource or <script> tag)
-        $(document).ready(function() {
+        am5.ready(function () {
+            var root = am5.Root.new("chartdiv");
+
+            root.setThemes([
+                am5themes_Animated.new(root)
+            ]);
+
+            var chart = root.container.children.push(am5xy.XYChart.new(root, {
+                focusable: true,
+                panX: true,
+                panY: true,
+                wheelX: "panX",
+                wheelY: "zoomX"
+            }));
+
+            var easing = am5.ease.linear;
+
+            var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+                maxDeviation: 0.5,
+                extraMin: -0.1,
+                extraMax: 15,
+                groupData: false,
+                baseInterval: {
+                    timeUnit: "min",
+                    count: 1
+                },
+                renderer: am5xy.AxisRendererX.new(root, {
+                    minGridDistance: 100
+                }),
+                tooltip: am5.Tooltip.new(root, {})
+            }));
+
+            // var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+            //     renderer: am5xy.AxisRendererY.new(root, {})
+            // }));
+            let yAxis = chart.yAxes.push(
+                am5xy.ValueAxis.new(root, {
+                    min: 0,
+                    max: 70,
+                    renderer: am5xy.AxisRendererY.new(root, {}),
+                })
+            );
+
+            var series = chart.series.push(am5xy.LineSeries.new(root, {
+                minBulletDistance: 1,
+                name: "Download",
+                xAxis: xAxis,
+                yAxis: yAxis,
+                valueYField: "value",
+                valueXField: "date",
+                tooltip: am5.Tooltip.new(root, {
+                    pointerOrientation: "horizontal",
+                    labelText: "{valueY}"
+                })
+            }));
+            series.set({"fill": am5.color("#158ccf"), "stroke": am5.color("#5ca1c7")}); // set Series color to green
+
+            series.data.setAll([]);
+
+            series.bullets.push(function () {
+                return am5.Bullet.new(root, {
+                    locationX: undefined,
+                    sprite: am5.Circle.new(root, {
+                        radius: 4,
+                        fill: series.get("fill")
+                    })
+                })
+            });
+
+            var series2 = chart.series.push(am5xy.LineSeries.new(root, {
+                minBulletDistance: 1,
+                name: "Upload",
+                xAxis: xAxis,
+                yAxis: yAxis,
+                valueYField: "value2",
+                valueXField: "date",
+                tooltip: am5.Tooltip.new(root, {
+                    pointerOrientation: "horizontal",
+                    labelText: "{value2Y}"
+                })
+            }));
+            series2.data.setAll([]);
+            series2.set("fill", am5.color("#db3381")); // set Series color to green
+            series2.set("stroke", am5.color("#ee579c")); // set Series color to green
+
+            series2.bullets.push(function () {
+                return am5.Bullet.new(root, {
+                    locationX: undefined,
+                    sprite: am5.Circle.new(root, {
+                        radius: 4,
+                        fill: series2.get("fill")
+                    })
+                })
+            });
+
+            var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+                xAxis: xAxis
+            }));
+            cursor.lineY.set("visible", false);
+
+            /////////////////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////////////////
             $('.js-example-basic-single').select2();
-            $('#startTest').on('click', function(){
+            $('#startTest').on('click', function () {
                 MeasureConnectionSpeed();
                 $('#startTest i.fa-spinner').show();
             });
-        });
-        data = [];
-        am4core.useTheme(am4themes_animated);
-        am4core.useTheme(am4themes_dark);
 
-        var chart = am4core.create("chartdiv", am4charts.XYChart);
-        chart.hiddenState.properties.opacity = 0;
-
-        chart.padding(0, 0, 0, 0);
-
-        chart.zoomOutButton.disabled = true;
-
-        chart.data = data;
-
-        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-        dateAxis.renderer.grid.template.location = 0;
-        dateAxis.renderer.minGridDistance = 1;
-        dateAxis.dateFormats.setKey("second", "ss");
-        dateAxis.periodChangeDateFormats.setKey("second", "[bold]h:mm a");
-        dateAxis.periodChangeDateFormats.setKey("minute", "[bold]h:mm a");
-        dateAxis.periodChangeDateFormats.setKey("hour", "[bold]h:mm a");
-        dateAxis.renderer.inside = true;
-        dateAxis.renderer.axisFills.template.disabled = true;
-        dateAxis.renderer.ticks.template.disabled = true;
-
-        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        valueAxis.tooltip.disabled = true;
-        valueAxis.interpolationDuration = 500;
-        valueAxis.rangeChangeDuration = 500;
-        valueAxis.renderer.inside = true;
-        valueAxis.renderer.minLabelPosition = 0.05;
-        valueAxis.renderer.maxLabelPosition = 0.95;
-        valueAxis.renderer.axisFills.template.disabled = true;
-        valueAxis.renderer.ticks.template.disabled = true;
-
-        var series = chart.series.push(new am4charts.LineSeries());
-        series.dataFields.dateX = "date";
-        series.dataFields.valueY = "value";
-        series.interpolationDuration = 500;
-        series.defaultState.transitionDuration = 0;
-        series.tensionX = 0.8;
-
-        chart.events.on("datavalidated", function () {
-            dateAxis.zoom({ start: 1 / 15, end: 1.2 }, false, true);
-        });
-
-        dateAxis.interpolationDuration = 500;
-        dateAxis.rangeChangeDuration = 500;
-
-        // all the below is optional, makes some fancy effects
-        // gradient fill of the series
-        series.fillOpacity = 1;
-        var gradient = new am4core.LinearGradient();
-        gradient.addColor(chart.colors.getIndex(0), 0.2);
-        gradient.addColor(chart.colors.getIndex(0), 0);
-        series.fill = gradient;
-
-        // this makes date axis labels to fade out
-        dateAxis.renderer.labels.template.adapter.add("fillOpacity", function (fillOpacity, target) {
-            var dataItem = target.dataItem;
-            return dataItem.position;
-        })
-
-        // need to set this, otherwise fillOpacity is not changed and not set
-        dateAxis.events.on("validated", function () {
-            am4core.iter.each(dateAxis.renderer.labels.iterator(), function (label) {
-                label.fillOpacity = label.fillOpacity;
-            })
-        })
-
-        // this makes date axis labels which are at equal minutes to be rotated
-        dateAxis.renderer.labels.template.adapter.add("rotation", function (rotation, target) {
-            var dataItem = target.dataItem;
-            if (dataItem.date.getTime() == am4core.time.round(new Date(dataItem.date.getTime()), "minute").getTime()) {
-
-                target.verticalCenter = "middle";
-                target.horizontalCenter = "left";
-                return -90;
-            }
-            else {
-                target.verticalCenter = "bottom";
-                target.horizontalCenter = "middle";
-                return 0;
-            }
-        })
-
-        // bullet at the front of the line
-        var bullet = series.createChild(am4charts.CircleBullet);
-        bullet.circle.radius = 5;
-        bullet.fillOpacity = 1;
-        bullet.fill = chart.colors.getIndex(0);
-        bullet.isMeasured = false;
-
-        series.events.on("validated", function() {
-            bullet.moveTo(series.dataItems.last.point);
-            bullet.validatePosition();
-        });
-
-
-        for (let i=0; i<60; i++)
-            data.push({ date: new Date().setSeconds(i - 60), value: 0 });
-
-        // download start meter
-        var optsDowload = {
-            angle: -0.11, // The span of the gauge arc
-            lineWidth: 0.04, // The line thickness
-            radiusScale: 0.85, // Relative radius
-            pointer: {
-                length: 0.4, // // Relative to gauge radius
-                strokeWidth: 0.071, // The thickness
-                color: '#158ccf' // Fill color
-            },
-            limitMax: false,     // If false, max value increases automatically if value > maxValue
-            limitMin: false,     // If true, the min value of the gauge will be fixed
-            colorStart: '#fff',   // Colors
-            colorStop: '#158ccf',    // just experiment with them
-            strokeColor: '#fff',  // to see which ones work best for you
-            generateGradient: true,
-            highDpiSupport: true,     // High resolution support
-            // renderTicks is Optional
-            renderTicks: {
-                divisions: 19,
-                divWidth: 0.1,
-                divLength: 1,
-                divColor: '#030733',
-                subDivisions: 4,
-                subLength: 0.53,
-                subWidth: 0.1,
-                subColor: '#160266'
-            }
-
-        };
-        var target = document.getElementById('downloadSpeed'); // your canvas element
-        var gaugeDownload = new Gauge(target).setOptions(optsDowload); // create sexy gauge!
-        gaugeDownload.maxValue = 3000; // set max gauge value
-        gaugeDownload.setMinValue(0);  // Prefer setter over gauge.minValue = 0
-        gaugeDownload.animationSpeed = 32; // set animation speed (32 is default value)
-
-
-        // end meter
-
-        var optsUpload = {
-            angle: -0.11, // The span of the gauge arc
-            lineWidth: 0.04, // The line thickness
-            radiusScale: 0.85, // Relative radius
-            pointer: {
-                length: 0.4, // // Relative to gauge radius
-                strokeWidth: 0.071, // The thickness
-                color: '#db3381' // Fill color
-            },
-            limitMax: false,     // If false, max value increases automatically if value > maxValue
-            limitMin: false,     // If true, the min value of the gauge will be fixed
-            colorStart: '#ffffff',   // Colors
-            colorStop: '#db3381',    // just experiment with them
-            strokeColor: '#ffffff',  // to see which ones work best for you
-            generateGradient: true,
-            highDpiSupport: true,     // High resolution support
-            // renderTicks is Optional
-            renderTicks: {
-                divisions: 19,
-                divWidth: 0.1,
-                divLength: 1,
-                divColor: '#db3381',
-                subDivisions: 4,
-                subLength: 0.53,
-                subWidth: 0.1,
-                subColor: '#db3381'
-            }
-        };
-
-        var targetUpload = document.getElementById('uploadSpeed'); // your canvas element
-        var gaugeUpload = new Gauge(targetUpload).setOptions(optsUpload); // create sexy gauge!
-        gaugeUpload.maxValue = 75; // set max gauge value
-        gaugeUpload.setMinValue(0);  // Prefer setter over gauge.minValue = 0
-        gaugeUpload.animationSpeed = 32; // set animation speed (32 is default value)
-
-        // end meter
-
-        var imageAddr = '{{ asset('images/to-download.jpg') }}';
-        var downloadSize = 41026764; //bytes
-
-        // if (window.addEventListener) {
-        //     window.addEventListener('load', InitiateSpeedDetection, false);
-        // } else if (window.attachEvent) {
-        //     window.attachEvent('onload', InitiateSpeedDetection);
-        // }
-        $('#downloadVal b').html("0  <small>/ Mbps</small>");
-        $('#uploadVal b').html("0  <small>/ Mbps</small>");
-
-        var dataDownload=[140, 150, 160, 140, 130, 150, 130, 140, 160, 165];
-        function MeasureConnectionSpeed() {
-            gaugeDownload.set(0);
-            gaugeUpload.set(0);
-            $('#downloadVal b').html(0 + " Mbps");
-            if ($('#branch').val()) {
-
-                var startTime, endTime;
-                var download = new Image();
-                download.onload = function () {
-                    endTime = (new Date()).getTime();
-                    showResults();
+            // download start meter
+            var optsDowload = {
+                angle: -0.11, // The span of the gauge arc
+                lineWidth: 0.04, // The line thickness
+                radiusScale: 0.85, // Relative radius
+                pointer: {
+                    length: 0.4, // // Relative to gauge radius
+                    strokeWidth: 0.071, // The thickness
+                    color: '#158ccf' // Fill color
+                },
+                limitMax: false,     // If false, max value increases automatically if value > maxValue
+                limitMin: false,     // If true, the min value of the gauge will be fixed
+                colorStart: '#fff',   // Colors
+                colorStop: '#158ccf',    // just experiment with them
+                strokeColor: '#6bb2da',  // to see which ones work best for you
+                generateGradient: true,
+                highDpiSupport: true,     // High resolution support
+                // renderTicks is Optional
+                renderTicks: {
+                    divisions: 19,
+                    divWidth: 0.1,
+                    divLength: 1,
+                    divColor: '#030733',
+                    subDivisions: 4,
+                    subLength: 0.53,
+                    subWidth: 0.1,
+                    subColor: '#160266'
                 }
-                download.onerror = function (err, msg) {
-                    console.log("Invalid image, or error downloading");
+
+            };
+            var target = document.getElementById('downloadSpeed'); // your canvas element
+            var gaugeDownload = new Gauge(target).setOptions(optsDowload); // create sexy gauge!
+            gaugeDownload.maxValue = 150; // set max gauge value
+            gaugeDownload.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+            gaugeDownload.animationSpeed = 32; // set animation speed (32 is default value)
+            // end meter
+            var optsUpload = {
+                angle: -0.11, // The span of the gauge arc
+                lineWidth: 0.04, // The line thickness
+                radiusScale: 0.85, // Relative radius
+                pointer: {
+                    length: 0.4, // // Relative to gauge radius
+                    strokeWidth: 0.071, // The thickness
+                    color: '#db3381' // Fill color
+                },
+                limitMax: false,     // If false, max value increases automatically if value > maxValue
+                limitMin: false,     // If true, the min value of the gauge will be fixed
+                colorStart: '#ffffff',   // Colors
+                colorStop: '#db3381',    // just experiment with them
+                strokeColor: '#f679b4',  // to see which ones work best for you
+                generateGradient: true,
+                highDpiSupport: true,     // High resolution support
+                // renderTicks is Optional
+                renderTicks: {
+                    divisions: 19,
+                    divWidth: 0.1,
+                    divLength: 1,
+                    divColor: '#db3381',
+                    subDivisions: 4,
+                    subLength: 0.53,
+                    subWidth: 0.1,
+                    subColor: '#db3381'
                 }
-                startTime = (new Date()).getTime();
-                var cacheBuster = "?nnn=" + startTime;
-                download.src = imageAddr + cacheBuster;
+            };
+            var targetUpload = document.getElementById('uploadSpeed'); // your canvas element
+            var gaugeUpload = new Gauge(targetUpload).setOptions(optsUpload); // create sexy gauge!
+            gaugeUpload.maxValue = 75; // set max gauge value
+            gaugeUpload.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+            gaugeUpload.animationSpeed = 32; // set animation speed (32 is default value)
+            // end meter
+            var imageAddr = '{{ asset('images/to-download.jpg') }}';
+            var downloadSize = 41026764; //bytes
 
-                function showResults() {
-                    var duration = (endTime - startTime) / 1000;
-                    var bitsLoaded = downloadSize * 8;
-                    var speedBps = (bitsLoaded / duration).toFixed(2);
-                    var speedKbps = (speedBps / 1024).toFixed(2);
-                    var speedMbps = (speedKbps / 1024).toFixed(2);
+            // if (window.addEventListener) {
+            //     window.addEventListener('load', InitiateSpeedDetection, false);
+            // } else if (window.attachEvent) {
+            //     window.attachEvent('onload', InitiateSpeedDetection);
+            // }
+            $('#downloadVal b').html("0  <small>/ Mbps</small>");
+            $('#uploadVal b').html("0  <small>/ Mbps</small>");
 
+            var dataDownload = [0, 0];
+            var dataUpload = [0, 0];
 
-                    $('#downloadVal b').each(function () {
-                        var $this = $(this);
-                        jQuery({Counter: this.Counter}).animate({Counter: speedMbps}, {
-                            duration: 1000,
-                            easing: 'swing',
-                            step: function () {
-                                $this.text(Math.ceil(this.Counter) + " Mbps");
-                            }
-                        });
-                    });
-                    dataDownload.push(speedMbps);
-
-                    var current = parseInt($('#downloadVal b').text());
-                    for (var i = current; i <= parseInt(speedMbps); i++) {
-                        $('#downloadVal b').html(parseInt(i) + " Mbps");
-                    }
-                    $('.miters-details .download h2 b').html(speedMbps);
-                    $('.miters-details .download p').html("Test Time: " +duration +"/s");
-
-                    gaugeDownload.set(speedMbps); // set actual value
-
-                    startTime =  new Date();
-                    let uploadSpeedMbps = 0;
-
-                    //////////////////////////////////////
-                    uploadSpeedMbps = 0;
-
-                    current = parseInt($('#uploadVal b').text());
-                    for (var i = current; i <= parseInt(uploadSpeedMbps); i++) {
-                        $('#uploadVal b').html(0 + " Mbps");
-                    }
-                    gaugeUpload.set(uploadSpeedMbps);
-
-                    axios.post('/connection-speed', {
-                        internet_speed: speedMbps,
-                        upload_speed: 0,
-                        branch_id: $('#branch').val()
-                    })
-                        .then(() => {
-                            var lastdataItem = series.dataItems.getIndex(series.dataItems.length - 1);
-                            chart.addData(
-                                { date: new Date(lastdataItem.dateX.getTime() + 1000), value: speedMbps },
-                                1
-                            );
-                        });
-                    ////////////////////////////
-
-                    // axios.post('upload', getRandomString(1))
-                    //     .then(res => {
-                    //
-                    //     })
-                    //     .catch(err => {
-                    //     });
-                }
-            }
-
-        }
-
-
-
-        $(document).ready(function () {
-            // $('#branch').change(function () {
-            //     MeasureConnectionSpeed();
-            // })
-
-            setInterval(function () {
+            function MeasureConnectionSpeed() {
                 const branch = $('#branch').val();
-                if (branch) {
-                    MeasureConnectionSpeed();
+                if (branch < 0) {
+                    return;
                 }
-            }, 60 * 1000);
-        });
+                gaugeDownload.set(0);
+                gaugeUpload.set(0);
+                $('#downloadVal b').html(0 + " Mbps");
+                if ($('#branch').val()) {
+                    var startTime, endTime;
+                    var download = new Image();
+                    download.onload = function () {
+                        endTime = (new Date()).getTime();
+                        showResults();
+                    }
+                    download.onerror = function (err, msg) {
+                        console.log("Invalid image, or error downloading");
+                    }
+                    startTime = (new Date()).getTime();
+                    var cacheBuster = "?nnn=" + startTime;
+                    download.src = imageAddr + cacheBuster;
+
+                    function showResults() {
+                        var duration = (endTime - startTime) / 1000;
+                        var bitsLoaded = downloadSize * 8;
+                        var speedBps = (bitsLoaded / duration).toFixed(2);
+                        var speedKbps = (speedBps / 1024).toFixed(2);
+                        var speedMbps = (speedKbps / 1024).toFixed(2);
+
+
+                        $('#downloadVal b').each(function () {
+                            var $this = $(this);
+                            jQuery({Counter: this.Counter}).animate({Counter: speedMbps}, {
+                                duration: 1000,
+                                easing: 'swing',
+                                step: function () {
+                                    $this.text(Math.ceil(this.Counter) + " Mbps");
+                                }
+                            });
+                        });
+                        dataDownload.push(speedMbps);
+
+                        var current = parseInt($('#downloadVal b').text());
+                        for (var i = current; i <= parseInt(speedMbps); i++) {
+                            $('#downloadVal b').html(parseInt(i) + " Mbps");
+                        }
+                        $('.miters-details .download h2 b').html(speedMbps);
+                        $('.miters-details .download p').html("Test Time: " + duration + "/s");
+
+                        gaugeDownload.set(speedMbps); // set actual value
+
+
+                        startTime = new Date();
+                        let uploadSpeedMbps = 0;
+                        let uploadSize = 10 * 1024 * 1024;
+                        let base64 = `{{ file_get_contents(url('assets/base64.txt')) }}`;
+
+                        axios.post('/uploadSpeed', {
+                            base64: base64
+                        })
+                            .then(res => {
+                                endTime = (new Date()).getTime();
+                                var duration2 = (endTime - startTime) / 1000;
+                                bitsLoaded = uploadSize * 8;
+                                speedBps = (bitsLoaded / duration2).toFixed(2);
+                                speedKbps = (speedBps / 1024).toFixed(2);
+                                uploadSpeedMbps = (speedKbps / 1024).toFixed(2);
+
+                                $('#uploadVal b').each(function () {
+                                    var $this = $(this);
+                                    jQuery({Counter: this.Counter}).animate({Counter: uploadSpeedMbps}, {
+                                        duration: 1000,
+                                        easing: 'swing',
+                                        step: function () {
+                                            $this.text(Math.ceil(this.Counter) + " Mbps");
+                                        }
+                                    });
+                                });
+
+                                current = parseInt($('#uploadVal b').text());
+                                for (var i = current; i <= parseInt(uploadSpeedMbps); i++) {
+                                    $('#uploadVal b').html(i + " Mbps");
+                                }
+                                dataUpload.push(uploadSpeedMbps);
+                                gaugeUpload.set(uploadSpeedMbps);
+
+                                $('.miters-details .upload h2 b').html(uploadSpeedMbps);
+                                $('.miters-details .upload p').html("Test Time: " + duration + "/s");
+
+                                axios.post('/connection-speed', {
+                                    internet_speed: speedMbps,
+                                    load_time: duration,
+                                    upload_speed: uploadSpeedMbps,
+                                    uploaded_time: duration2,
+                                    branch_id: $('#branch').val()
+                                })
+                                    .then(() => {
+                                        addData(speedMbps, uploadSpeedMbps);
+
+                                        setTimeout(() => {
+                                            MeasureConnectionSpeed();
+                                        }, 60*1000);
+                                    });
+                            })
+                            .catch(err => {
+                            });
+                    }
+                }
+
+            }
+
+            /////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////
+
+
+            function addData(download, upload) {
+                var lastDataItem = series.dataItems[series.dataItems.length - 1];
+                var lastValue = lastDataItem ? lastDataItem.get("valueY") : 0;
+                var newValue = download;
+                var lastDate = lastDataItem ? new Date(lastDataItem.get("valueX")) : new Date();
+                var time = am5.time.add(new Date(lastDate), "minute", 1).getTime();
+                if (series.data.length > 30)
+                    series.data.removeIndex(0);
+                series.data.push({
+                    date: time,
+                    value: newValue,
+                })
+
+                var newDataItem = series.dataItems[series.dataItems.length - 1];
+                newDataItem.animate({
+                    key: "valueYWorking",
+                    to: newValue,
+                    from: lastValue,
+                    duration: 600,
+                    easing: easing
+                });
+
+                var lastDataItem2 = series2.dataItems[series2.dataItems.length - 1];
+                var lastValue2 = lastDataItem2 ? lastDataItem2.get("value2Y") : 0;
+                if (series2.data.length > 30)
+                    series2.data.removeIndex(0);
+                series2.data.push({
+                    date: time,
+                    value2: upload,
+                })
+
+                var newDataItem2 = series2.dataItems[series2.dataItems.length - 1];
+                newDataItem2.animate({
+                    key: "value2YWorking",
+                    to: upload,
+                    from: lastValue2,
+                    duration: 600,
+                    easing: easing
+                });
+
+                var animation = newDataItem.animate({
+                    key: "locationX",
+                    to: 0.5,
+                    from: -0.5,
+                    duration: 600
+                });
+                if (animation) {
+                    var tooltip = xAxis.get("tooltip");
+                    if (tooltip && !tooltip.isHidden()) {
+                        animation.events.on("stopped", function () {
+                            xAxis.updateTooltip();
+                        })
+                    }
+                }
+            }
+
+            chart.appear(1000, 100);
+
+            $(document).ready(function () {
+                $('.js-example-basic-single').select2();
+                $('#startTest').on('click', function () {
+                    MeasureConnectionSpeed();
+                    $('#startTest i.fa-spinner').show();
+                });
+            });
+
+        }); // end am5.ready()
 
 
 

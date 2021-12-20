@@ -14,7 +14,8 @@
                         <thead>
                         <tr role="row">
                             <th>{{ __('app.customers.speed.index.branchName') }}</th>
-                            <th>{{ __('app.customers.speed.index.speed') }}</th>
+                            <th>{{ __('app.customers.speed.index.downloadSpeed') }}</th>
+                            <th>{{ __('app.customers.speed.index.uploadSpeed') }}</th>
                             <th>{{ __('app.customers.speed.index.action') }}</th>
                         </tr>
                         </thead>
@@ -22,9 +23,10 @@
                         @foreach($logs as $log)
                             @continue (!$log->branch)
 
-                            <tr class="item{{$log->id}}">
+                            <tr class="item{{$loop->index}}">
                                 <td>{{$log->branch->name}}</td>
-                                <td>{{$log->internet_speed}} {{ __('app.customers.speed.unit') }}</td>
+                                <td>{{ number_format($log->internet_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
+                                <td>{{ number_format($log->upload_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
                                 <td>
                                     <a class="btn btn-sm btn-info" href="{{ route('branch.connection-speeds', $log->branch->id) }}">{{__('app.customers.speed.show.action')}}</a>
                                 </td>

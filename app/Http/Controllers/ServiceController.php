@@ -92,7 +92,7 @@ class ServiceController extends Controller
     public function edit($id)
     {
         try {
-            $service = Service::where('user_id', auth()->id())->findOrFail($id);
+            $service = Service::with('branches')->where('user_id', auth()->id())->findOrFail($id);
         } catch (\Throwable $th) {
             return back()->with('danger', 'Service not found');
         }
@@ -114,6 +114,7 @@ class ServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $data = $request->validate([
             'name_ar' => 'required|string|max:255',
             'name_en' => 'required|string|max:255',

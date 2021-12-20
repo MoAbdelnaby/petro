@@ -29,9 +29,7 @@
                                             <label for="branch_id" class="col-md-2 col-form-label text-capitalize">
                                                 {{ __('app.branch') }}
                                             </label>
-                                            <select name="branch_id[]" class="form-control" id="branch_id">
-                                                <option value="" selected disabled> -Please select branch-</option>
-
+                                            <select name="branch_id[]"  id="service_branch_id" multiple class="form-control" >
                                                 @foreach ($branches as $item)
                                                     <option {{ old('branch_id') == $item->id ? 'selected' : '' }}
                                                         value="{{ $item->id }}">
@@ -144,3 +142,14 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script rel="stylesheet" src="{{asset('assets/js/select2.min.js')}}"></script>
+    <script>
+        $(function () {
+            $("#service_branch_id").select2({
+                placeholder: "Select a Branch",
+                allowClear: true
+            });
+        });
+    </script>
+@endpush

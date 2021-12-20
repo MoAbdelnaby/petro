@@ -91,10 +91,20 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
-                                            <label for="package">{{__('app.test_speed')}}</label>
-                                            <input type="checkbox" style="display: block; width: 46px;" name="speedtest"
-                                                   checked="checked"
-                                                   class="form-control  @error('speedtest') is-invalid @enderror">
+                                            <label class="d-block w-100">&nbsp;&nbsp;</label>
+
+
+                                            <label for="speedtest" class="custom-checkbox">
+                                                <p>{{__('app.test_speed')}}</span>
+                                                <input class="trashselect" type="checkbox" name="speedtest" id="speedtest" value="3">
+                                                <span class="checkmark"></span>
+                                            </label>
+
+
+                                            {{-- <input type="checkbox" style="" name="speedtest"
+                                                   checked="checked" id="speedtest"
+                                                   class=" @error('speedtest') is-invalid @enderror">
+                                            <label for="speedtest">{{__('app.test_speed')}}</label> --}}
                                             @error('speedtest')
                                              <span class="invalid-feedback" role="alert">
                                                <strong>{{ $message }}</strong>
