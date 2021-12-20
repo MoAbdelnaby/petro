@@ -71,7 +71,7 @@
                                     <input type="hidden" name="package_id" value="{{$id}}">
                                     <div class="row">
 
-                                        <div class="form-group col-sm-12">
+                                        <div class="form-group col-md-6 col-lg-4">
                                             <label>{{ __('app.User') }}</label>
                                             <select class="form-control" id="user_id" name="user_id">
                                                 @foreach($users as $user)
@@ -80,8 +80,7 @@
                                             </select>
                                         </div>
 
-
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6 col-lg-4">
                                             <label for="start_date">{{__('app.saas.packages.table.start_date')}} *</label>
                                             <input required type="date" min="{{date('Y-m-d')}}" name="start_date" class="form-control mindate" id="start_date" placeholder="{{__('app.saas.packages.table.start_date')}}" value="{{ old('start_date') }}">
                                             @error('start_date')
@@ -91,7 +90,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6 col-lg-4">
                                             <label for="end_date">{{__('app.saas.packages.table.end_date')}} *</label>
                                             <input required type="date" min="{{date('Y-m-d')}}" name="end_date" class="form-control mindate" id="end_date" placeholder="{{__('app.saas.packages.table.end_date')}}" value="{{ old('end_date') }}">
                                             @error('end_date')
@@ -102,10 +101,10 @@
                                         </div>
 
 
-
-
-
                                     </div>
+
+                                    <div class="col-12 clearfix my-3 border-bottom"></div>
+
 
                                     <button type="submit" class="btn btn-primary">{{__('app.saas.packages.save')}}</button>
                                 </form>

@@ -23,9 +23,9 @@
             <div class="row">
 
                 <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-title">
-                            <h3>{{ $branchName }}</h3>
+                    <div class="iq-card">
+                        <div class="card-header">
+                            <h5>{{ $branchName }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="row">

@@ -27,7 +27,7 @@
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="row">
 
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6 col-lg-4 col-xl-3">
                                             <label for="name">{{__('app.auth.name')}} *</label>
                                             <input required type="text" name="name" class="form-control  @error('name') is-invalid @enderror" id="name" placeholder="{{__('app.auth.name')}}" value="{{ old('name') ? old('name') :$user->name}}">
                                             @error('name')
@@ -36,7 +36,7 @@
                                             </span>
                                             @enderror
                                         </div>
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6 col-lg-4 col-xl-3">
                                             <label for="email">{{__('app.auth.email')}} *</label>
                                             <input required type="email"  name="email" class="form-control  @error('email') is-invalid @enderror" id="email" placeholder="{{__('app.auth.email')}}" value="{{ old('email')? old('email') :$user->email }}">
                                             @error('email')
@@ -45,7 +45,7 @@
                                             </span>
                                             @enderror
                                         </div>
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6 col-lg-4 col-xl-3">
                                             <label for="phone">{{__('app.auth.phone')}}</label>
                                             <input type="phone"  name="phone" class="form-control  @error('phone') is-invalid @enderror" id="phone" placeholder="{{__('app.auth.phone')}}" value="{{ old('phone')? old('phone') :$user->phone }}">
                                             @error('phone')
@@ -55,7 +55,7 @@
                                             @enderror
 
                                         </div>
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6 col-lg-4 col-xl-3">
                                             <label for="password">{{__('app.auth.password')}} *</label>
                                             <input  type="password"  name="password" class="form-control  @error('password') is-invalid @enderror" id="password" placeholder="{{__('app.auth.password')}}">
                                             @error('password')
@@ -65,7 +65,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6 col-lg-4 col-xl-3">
                                             <label for="password_confirmation">{{__('app.auth.password_confirmation')}}</label>
                                             <input  type="password" class="form-control mb-0  @error('password_confirmation') is-invalid @enderror" id="password_confirmation" placeholder="{{__('app.auth.password_confirmation')}}"  name="password_confirmation" >
                                             @error('password_confirmation')
@@ -76,7 +76,7 @@
                                         </div>
 
 
-                                        <div class="form-group col-sm-12">
+                                        <div class="form-group col-md-6 col-lg-4 col-xl-3">
                                             <label>{{__('app.users.table.Type')}}</label>
                                             <select class="form-control" id="usertype" name="type">
                                                 <option {{$user->type=='customer' ?'selected':''}} value="customer">{{__('app.users.table.customer')}}</option>
@@ -85,7 +85,7 @@
                                                 <option {{$user->type=='subadmin' ?'selected':''}} value="subadmin">{{__('app.users.table.subadmin')}}</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-sm-12"  id="userroles">
+                                        <div class="form-group col-md-6 col-lg-4 col-xl-3"  id="userroles">
                                             <label>{{__('app.users.table.roles')}}</label>
                                             <select class="form-control userroles"  name="roles[]" multiple="multiple">
 
@@ -108,6 +108,10 @@
                                         </div>
 
                                     </div>
+
+
+                                    <div class="col-12 clearfix my-3 border-bottom"></div>
+
 
                                     <button type="submit" class="btn btn-primary">{{__('app.users.save')}}</button>
                                 </form>

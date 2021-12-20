@@ -71,7 +71,6 @@
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script>
         $(document).ready(function () {
-
             $('.drop-icon').on("click", function (e) {
                 $('.dropdown-menu.child').hide()
             })
@@ -122,7 +121,6 @@
 
                 $(this).closest('.chart-type ').find('.test').removeClass('selected');
                 $(this).addClass('selected');
-
                 if ($(this).hasClass('chart-1')) {
 
                     var div = $(this).closest('.iq-card ').find('.chartDiv');
@@ -167,9 +165,8 @@
                     // Themes end
                     var chart = am4core.create(id, am4charts.XYChart)
                     chart.colors.list = [
-                        am4core.color("#29A0D8"),
-                        am4core.color("#EF1B2F"),
-                        am4core.color("#13153E"),
+                        am4core.color(chart1Colrs[0]),
+                        am4core.color(chart1Colrs[1]),
                     ];
                     chart.colors.step = 2;
 
@@ -292,7 +289,10 @@
 
                     // Create chart instance
                     var chart = am4core.create(divId, am4charts.PieChart);
-
+                    chart.colors.list = [
+                        am4core.color(chart2Colrs[0]),
+                        am4core.color(chart2Colrs[1]),
+                    ];
                     // Add data
                     chart.data = [{
                         "country": "Lithuania",
@@ -351,9 +351,8 @@
 
                     var chart = am4core.create(divId, am4charts.XYChart);
                     chart.colors.list = [
-                        am4core.color("#29ABE2"),
-                        am4core.color("#732877"),
-                        am4core.color("#110B30"),
+                        am4core.color(chart3Colrs[0]),
+                        am4core.color(chart3Colrs[1]),
                     ];
                     chart.data = [{
                         "branch": "Branch 1",
@@ -483,7 +482,10 @@
                     am4core.useTheme(am4themes_animated);
 
                     var chart = am4core.create(divId, am4charts.XYChart);
-
+                    chart.colors.list = [
+                        am4core.color(chart4Colrs[0]),
+                        am4core.color(chart4Colrs[1]),
+                    ];
                     var data = [
                         {
                             country: "Lithuania",
@@ -612,6 +614,10 @@
                     am4core.useTheme(am4themes_animated);
 
                     var chart = am4core.create(divId, am4charts.XYChart);
+                    chart.colors.list = [
+                        am4core.color(chart5Colrs[0]),
+                        am4core.color(chart5Colrs[1]),
+                    ];
                     chart.padding(40, 40, 40, 40);
 
                     chart.numberFormatter.bigNumberPrefixes = [
@@ -2003,7 +2009,10 @@
                     var chart = am4core.create(divId, am4charts.XYChart);
 
                     chart.exporting.menu = new am4core.ExportMenu();
-
+                    chart.colors.list = [
+                        am4core.color(chart6Colrs[0]),
+                        am4core.color(chart6Colrs[1]),
+                    ];
                     var data = [ {
                         "year": "2009",
                         "income": 23.5,
@@ -2085,7 +2094,10 @@
                     am4core.useTheme(am4themes_animated);
 
                     var chart = am4core.create(divId, am4charts.XYChart);
-
+                    chart.colors.list = [
+                        am4core.color(chart7Colrs[0]),
+                        am4core.color(chart7Colrs[1]),
+                    ];
                     chart.data = generateChartData();
 
                     var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -2134,7 +2146,6 @@
                             newDate.setDate(newDate.getDate() + i);
 
                             visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-
                             chartData.push({
                                 date: newDate,
                                 visits: visits
