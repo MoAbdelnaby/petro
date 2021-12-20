@@ -20,36 +20,54 @@
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
         <div class="container-fluid">
+
             <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-body">
+                            <div class="related-heading mb-5">
+                                <h2>
 
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>{{ __('app.gym.Notifications') }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <table class="table table-bordered text-center">
+                                    <img src="{{resolveDark()}}/img/icon_menu/work-time.svg" width="20" alt="">
 
-                                    <thead class="bg-primary">
-                                    <th>#</th>
-                                    <th>{{__('app.Models')}}</th>
-                                    <th>{{ __('app.data') }}</th>
-                                    <th>{{ __('app.createdIn') }}</th>
-                                    </thead>
-                                    <tbody class="trashbody">
-                                    @foreach($notfications as $k => $notfication)
-                                        <tr>
-                                            <td>{{ $k+1 }}</td>
-                                            <td>{{ $notfication->notifiable_type }}</td>
-                                            <td>{{ $notfication->data }}</td>
-                                            <td>{{$notfication->created_at}}</td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                    {{ __('app.gym.Notifications') }}
+
+                                </h2>
                             </div>
-                            {{ $notfications->links() }}
+                            <div class="related-product-block position-relative col-12">
+                                <div class="product_table table-responsive row p-0 m-0 col-12">
+                                    <table class="table table-bordered text-center">
+
+                                        <thead class="bg-primary">
+                                        <th>#</th>
+                                        <th>{{__('app.Models')}}</th>
+                                        <th>{{ __('app.data') }}</th>
+                                        <th>{{ __('app.createdIn') }}</th>
+                                        </thead>
+                                        <tbody class="trashbody">
+                                        @foreach($notfications as $k => $notfication)
+                                            @php
+                                                $notis = explode(',', $notfication->data);
+                                            @endphp
+                                            <tr>
+                                                <td>{{ $k+1 }}</td>
+                                                <td>{{ $notfication->notifiable_type }}</td>
+                                                <td>
+                                                    @foreach($notis as $noti)
+                                                        @php
+                                                            $key = explode(':', $noti) ;
+                                                        @endphp
+                                                        <span class="btn btn-sm btn-info waves-effect waves-light">{{ str_replace(['_','"','{','}'], [' ', ''],$key[0]) }} : {{ str_replace(['_','"','{','}'], [' ', ''],$key[1]) }}</span>
+                                                    @endforeach
+                                                </td>
+                                                <td>{{$notfication->created_at }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {{ $notfications->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

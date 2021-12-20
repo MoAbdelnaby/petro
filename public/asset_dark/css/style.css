@@ -424,7 +424,7 @@ body.sidebar-main .iq-menu-bt {
     100% { -webkit-transform: translateY(0); transform: translateY(0); opacity: 1; }
 }
 .iq-show .iq-sub-dropdown { display: inline-block; }
-.navbar-list li .iq-sub-dropdown .iq-sub-card { font-size: inherit; padding: 15px; line-height: normal; color: inherit; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: inline-block; width: 100%; }
+.navbar-list li .iq-sub-dropdown .iq-sub-card { font-size: inherit; padding: 5px; line-height: normal; color: inherit; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: inline-block; width: 100%; }
 .iq-top-navbar .search-box { display: none; position: absolute; top: 100%; right: 0; -webkit-transform: translateY(100%); transform: translateY(100%); background-color: #ffffff; transition: all 0.3s; padding: 15px; -webkit-box-shadow: 0px 0px 25px 0px rgba(45, 69, 95, 0.1); -moz-box-shadow: 0px 0px 25px 0px rgba(45, 69, 95, 0.1); box-shadow: 0px 0px 25px 0px rgba(45, 69, 95, 0.1); -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; -webkit-animation: fade-in-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both; animation: fade-in-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both; }
 .iq-show .search-box { display: inline-block; -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
 .search-box .search-input { width: 300px; height: 50px; padding: 0 1em; border: 1px solid #d4e3f9; background-color: #f3f7fd; opacity: 1; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
@@ -1367,9 +1367,9 @@ a.btn-dark{
     color: #f9f9f9!important;
 }
 .navbar-list h6{
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
+    font-size: 12px;
+    font-weight: normal;
+    color: #eee;
 }
 .navbar-list li > a > img {
     width: 40px;
@@ -2504,8 +2504,9 @@ g[transform="translate(144,0)"] g[stroke-opacity="0.15"]{
 input[type="email"]:-webkit-autofill{
     background-color: inherit!important;
 }
-input[type="email"]:-webkit-autofill
-
+.navbar-list li .iq-sub-dropdown .iq-sub-card:hover {
+    background-color: #15202b;
+}
 
 /*******************************************************/
 /*-----------------------------------------------------*/

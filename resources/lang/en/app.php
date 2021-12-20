@@ -1,5 +1,8 @@
 <?php
 return [
+    'show_all' => 'Show All',
+    'data' => 'Data',
+
     'branchSetting' => 'Branch Status Mail',
     'duration' => 'Duration',
     'selectType' => 'Select Duration Type',
