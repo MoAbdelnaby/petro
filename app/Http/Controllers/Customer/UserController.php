@@ -11,6 +11,8 @@ use App\Models\ModelFeature;
 use App\Models\Region;
 use App\Models\UserModelBranch;
 use App\Models\UserWatchModels;
+use App\Notifications\AdminNotifications;
+use App\Notifications\assigendNotification;
 use App\User;
 use App\UserSetting;
 use Carbon\Carbon;
@@ -125,6 +127,13 @@ class UserController extends Controller
 
         $user = User::create($data);
         $user->syncRoles('customer');
+
+        /*notification to admins*/
+        $admins = User::where('type','admin')->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new AdminNotifications($user));
+        }
+        /*end */
 
 //        dd($user);
         return redirect('/customer/customerUsers')->with('success', __('app.users.success_create_message'));
@@ -243,6 +252,9 @@ class UserController extends Controller
         }
         $user = User::where('id', $request->user_id)->first();
         $user->branches()->sync($request->branches);
+        /*notification*/
+        $user->notify(new assigendNotification($request->branches, Auth::user()->name));
+        /*end notification*/
         return redirect()->back()->with('success', 'User Assigned Successfully');
 
     }

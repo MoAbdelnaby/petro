@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\Region;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
+use App\Notifications\branchNotification;
 use App\User;
 use App\userSetting;
 use Illuminate\Http\Request;
@@ -153,6 +154,10 @@ class CustomerBranchesController extends Controller
             $params = Arr::except(array_merge($data, ['user_id' => auth()->user()->id]), 'models');
 
             $branch = $this->repo->create($params);
+            if ($branch)
+                foreach (User::where('type','admin')->get() as $user) {
+                    $user->notify(new branchNotification($branch, Auth::user()->name));
+                }
 
             collect($request->models)->each(function ($item) use ($branch) {
                 UserModelBranch::create([

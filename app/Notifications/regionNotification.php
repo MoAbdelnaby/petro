@@ -7,19 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AdminNotifications extends Notification
+class regionNotification extends Notification
 {
     use Queueable;
 
-    protected $notificationData;
+    protected $region;
+    protected $name;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $userName)
     {
-        $this->notificationData = $data;
+        $this->region = $data;
+        $this->name = $userName;
     }
 
     /**
@@ -56,11 +58,10 @@ class AdminNotifications extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'user_name' => $this->notificationData['name'],
-            'user_phone' => $this->notificationData['phone'],
-            'user_type' => $this->notificationData['type'],
-            'message' => 'add_user_notification_message',
-            'come_from' => 'user_model',
+            'region_name' => $this->region['name'],
+            'created_by' => $this->name,
+            'message' => 'region_notification_message',
+            'come_from' => 'add_region',
         ];
     }
 }

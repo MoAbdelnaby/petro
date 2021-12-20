@@ -7,6 +7,8 @@ use App\Http\Repositories\Eloquent\RegionRepo;
 use App\Models\Branch;
 use App\Models\Region;
 use App\Models\UserPackages;
+use App\Notifications\regionNotification;
+use App\User;
 use App\userSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -89,7 +91,12 @@ class RegionController extends Controller
             $data = array_merge($data, ['photo' => 'regions/'.$fileName]);
         }
         $params = array_merge($data, ['user_id' => auth()->user()->id,'display_name'=>$data['name'] ?? '']);
-        $insert=$this->repo->create($params);
+        $insert = $this->repo->create($params);
+        if ($insert)
+            /* Region notification to admins */
+            foreach (User::where('type','admin')->get() as $user) {
+                $user->notify( new regionNotification($insert, Auth::user()->name));
+            }
         return redirect()->route('customerRegions.index')->with('success',__('app.customers.regions.success_message'));
     }
 

@@ -2,24 +2,27 @@
 
 namespace App\Notifications;
 
+use App\Models\Region;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AdminNotifications extends Notification
+class branchNotification extends Notification
 {
     use Queueable;
 
-    protected $notificationData;
+    protected $branch;
+    protected $name;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $userName)
     {
-        $this->notificationData = $data;
+        $this->branch = $data;
+        $this->name = $userName;
     }
 
     /**
@@ -56,11 +59,12 @@ class AdminNotifications extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'user_name' => $this->notificationData['name'],
-            'user_phone' => $this->notificationData['phone'],
-            'user_type' => $this->notificationData['type'],
-            'message' => 'add_user_notification_message',
-            'come_from' => 'user_model',
+            'branch_name' => $this->branch['name'],
+            'branch_code' => $this->branch['code'],
+            'region_id' => Region::find($this->branch['region_id'])->name,
+            'created_by' => $this->name,
+            'message' => 'branch_notification_message',
+            'come_from' => 'add_branch',
         ];
     }
 }
