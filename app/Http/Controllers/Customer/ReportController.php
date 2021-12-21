@@ -48,7 +48,7 @@ class ReportController extends Controller
             $valdaitor = Validator::make($request->all(), [
                 'filter_type' => 'required|string|in:comparison,branch',
                 'branch_comparison' => 'required_if:filter_type,comparison|min:2|max:10',
-                'branch_data' => 'required_if:filter_type,branch|min:2|max:10',
+                'branch_data' => 'required_if:filter_type,branch|min:1|max:10',
                 'start_date' => 'nullable|date',
                 'end_date' => 'nullable|date',
             ]);
