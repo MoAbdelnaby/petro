@@ -53,34 +53,32 @@ class BranchMessageController extends Controller
     {
         $request = (object)$request;
         $current_branch = Branch::findOrFail($request->branch_id);
+            $type = $request->type;
 
-        $type = $request->type;
+            $start_name = $request->start ?? 'first';
+            $last_name = $request->end ?? 'last';
+            $name = "{$current_branch->name}_file_from_{$start_name}_to_{$last_name}.$type";
 
-        $start_name = $request->start ?? 'first';
-        $last_name = $request->end ?? 'last';
-        $name = "{$current_branch->name}_file_from_{$start_name}_to_{$last_name}.$type";
-
-        $file = BranchFiles::firstOrCreate([
-            'start' => $request->start_date ?? null,
-            'end' => $request->end_date ?? null,
-            'user_model_branch_id' => $current_branch->id,
-            'branch_id' => $current_branch->id,
-            'type' => $type,
-            'model_type' => 'message',
-        ], [
-            'name' => $name,
-            'status' => false,
-            'user_id' => auth()->id(),
-        ]);
-
-        if ($file->status && \Storage::disk('public')->exists($file->url)) {
-            return redirect()->back()->with([
-                'success' => __('app.places.files_prepared_successfully'),
-                'branch_file' => Storage::disk('public')->url($file->url)
+            $file = BranchFiles::firstOrCreate([
+                'start' => $request->start_date ?? null,
+                'end' => $request->end_date ?? null,
+//                'user_model_branch_id' => $current_branch->id,
+                'branch_id' => $current_branch->id,
+                'type' => $type,
+                'model_type' => 'message',
+            ], [
+                'name' => $name,
+                'status' => false,
+                'user_id' => auth()->id(),
             ]);
-        }
 
-        return redirect()->back()->with('success', __('app.places.file_will_prepare_soon'));
+            if ($file->status && \Storage::disk('public')->exists($file->url)) {
+                return redirect()->back()->with([
+                    'success' => __('app.places.files_prepared_successfully'),
+                    'branch_file' => Storage::disk('public')->url($file->url)
+                ]);
+            }
+            return redirect()->back()->with('success', __('app.places.file_will_prepare_soon'));
     }
 
     public function exportedFile(Request $request)

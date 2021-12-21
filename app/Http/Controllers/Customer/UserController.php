@@ -129,7 +129,7 @@ class UserController extends Controller
         $user->syncRoles('customer');
 
         /*notification to admins*/
-        $admins = User::where('type','admin')->get();
+        $admins = User::where('type','customer')->get();
         foreach ($admins as $admin) {
             $admin->notify(new AdminNotifications($user,Auth::user()->name));
         }

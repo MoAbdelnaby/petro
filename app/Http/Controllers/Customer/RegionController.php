@@ -94,7 +94,7 @@ class RegionController extends Controller
         $insert = $this->repo->create($params);
         if ($insert)
             /* Region notification to admins */
-            foreach (User::where('type','admin')->get() as $user) {
+            foreach (User::where('type','customer')->get() as $user) {
                 $user->notify( new regionNotification($insert, Auth::user()->name));
             }
         return redirect()->route('customerRegions.index')->with('success',__('app.customers.regions.success_message'));

@@ -39,10 +39,13 @@
                                     </thead>
                                     <tbody class="trashbody">
                                     @foreach($notfications as $k => $notfication)
+                                        @php
+                                        $message = ($notfication->data);
+                                        @endphp
                                         <tr>
                                             <td>{{ $k+1 }}</td>
                                             <td>{{ $notfication->notifiable_type }}</td>
-                                            <td>{{ $notfication->data }}</td>
+                                            <td>{{ $message }}</td>
                                             <td>{{$notfication->created_at}}</td>
                                         </tr>
                                     @endforeach

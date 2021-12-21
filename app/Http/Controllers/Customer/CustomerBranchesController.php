@@ -155,7 +155,7 @@ class CustomerBranchesController extends Controller
 
             $branch = $this->repo->create($params);
             if ($branch)
-                foreach (User::where('type','admin')->get() as $user) {
+                foreach (User::where('type','customer')->get() as $user) {
                     $user->notify(new branchNotification($branch, Auth::user()->name));
                 }
 
