@@ -94,17 +94,18 @@ class BranchStatusApi extends Command
                     }
 //                    if ( $now->subMinutes($minutes) < $branch->created_at && $branch->sending == 0) {
                     info($now->subMinutes($minutes));
-                    if ( $now->subMinutes($minutes) < $branch->created_at) {
+                    if ( $now->subMinute($minutes) > $branch->created_at) {
+                        info('inter in if statement');
                         /* Send notify to admins */
-//                        foreach (User::where('type','admin')->get() as $admin) {
-//                            $admin->notify(new branchConnectionNotification($branch,$minutes));
-//                        }
+                        foreach (User::where('type','customer')->get() as $admin) {
+                            $admin->notify(new branchConnectionNotification($branch,$data,$minutes,'schedule'));
+                        }
                         /* End notify */
                         foreach ($users as $key => $user) {
                             $send = Mail::to($user->email)->send(new mailUserBranch($branch));
-                            $updateBranchView = DB::table("last_error_branch_views")
-                                ->when("branch_code",$branch->branch_code)
-                                ->update(['sending',1]);
+//                            $updateBranchView = DB::table("last_error_branch_views")
+//                                ->when("branch_code",$branch->branch_code)
+//                                ->update(['sending',1]);
                         }
                     }
                 }
