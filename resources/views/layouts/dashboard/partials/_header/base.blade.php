@@ -76,7 +76,7 @@
                                                                         <span class="iq-sub-card notify{{$notification->id}}" id="row{{$notification->id}}">
                                                                             <div class="media align-items-center">
                                                                                 <div class="">
-                                                                                    <img class="avatar-40 rounded" src="{{url('/')}}/images/user/1.jpg" alt="">
+                                                                                    <img class="avatar-40" src="{{url('/')}}/images/user/1.jpg" alt="">
                                                                                 </div>
                                                                                 <div class="media-body ml-3">
                                                                                         <h6 class="mb-0 ">{{ __('app.'.$notification->data['message']) }} {{ __('app.created_by') }} {{$notification->data['created_by']}} </h6>
