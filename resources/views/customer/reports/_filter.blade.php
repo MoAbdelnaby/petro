@@ -21,7 +21,7 @@
             </div>
             <div class="mt-4" id="filter_branch"  @if(request('filter_type') == 'branch') style="display: block" @else style="display: none" @endif>
                 <lebel>{{ __('app.Select_branch') }}:</lebel>
-                <select class="form-control" id="select_branch"  name="branch_data">
+                <select class="form-control" id=""  name="branch_data">
                     <option value="">{{ __('app.Select_Branch') }}</option>
                     @foreach($branches as $id => $name)
                         <option value="{{$id}}" @if(request('branch_data') == $id) selected @endif>{{$name}}</option>

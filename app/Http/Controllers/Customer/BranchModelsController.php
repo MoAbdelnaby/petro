@@ -256,7 +256,9 @@ class BranchModelsController extends Controller
     {
         /* get branches by table view last_branch_error */
         $branches = BranchStatus::with('branch')->paginate(25);
-        return view("customer.branches_status.index", compact('branches'));
+        $off = BranchStatus::where('status', 'offline')->count();
+        $on = BranchStatus::where('status', 'online')->count();
+        return view("customer.branches_status.index", compact('branches', 'off', 'on'));
     }
 
     public function getLogs($code) {

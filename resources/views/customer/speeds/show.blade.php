@@ -39,7 +39,7 @@
                            id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <tr role="row">
-                            <th>id</th>
+{{--                            <th>id</th>--}}
                             <th>{{ __('app.customers.speed.index.downloadSpeed') }}</th>
                             <th>{{ __('app.customers.speed.index.downloadTime') }}</th>
                             <th>{{ __('app.customers.speed.index.uploadSpeed') }}</th>
@@ -50,7 +50,7 @@
                         <tbody>
                         @foreach($logs as $log)
                             <tr class="item{{$log->id}}">
-                                <td>{{ $log->id }}</td>
+{{--                                <td>{{ $log->id }}</td>--}}
                                 <td>{{ number_format($log->internet_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
                                 <td>{{$log->load_time ?? 0}} {{ __('app.customers.second') }}</td>
                                 <td>{{ number_format($log->upload_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
@@ -127,7 +127,6 @@
 
             var easing = am5.ease.linear;
             chart.get("colors").set("step", 3);
-
 // Create axes
 // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
             var xAxis = chart.xAxes.push(
@@ -143,7 +142,7 @@
                 })
             );
 
-            function createAxisAndSeries(data, opposite) {
+            function createAxisAndSeries(data, opposite, legend='Download') {
                 var yRenderer = am5xy.AxisRendererY.new(root, {
                     opposite: opposite
                 });
@@ -168,8 +167,9 @@
                         valueXField: "date",
                         tooltip: am5.Tooltip.new(root, {
                             pointerOrientation: "horizontal",
-                            labelText: "{valueY}"
-                        })
+                            labelText: '{valueY}'
+                        }),
+                        legendValueText: legend
                     })
                 );
                 //series.fills.template.setAll({ fillOpacity: 0.2, visible: true });
@@ -205,12 +205,59 @@
                 orientation: "horizontal"
             }));
 
-            createAxisAndSeries(data, false);
-            createAxisAndSeries(data2, true);
+            createAxisAndSeries(data, false, 'Download');
+            createAxisAndSeries(data2, true, 'Upload');
             // createAxisAndSeries(8000, true);
 
-// Make stuff animate on load
-// https://www.amcharts.com/docs/v5/concepts/animations/
+
+
+            var legend = chart.bottomAxesContainer.children.push(am5.Legend.new(root, {
+                nameField: "legendValueText",
+                x: am5.percent(50),
+                centerX: am5.percent(50),
+            }));
+
+// When legend item container is hovered, dim all the series except the hovered one
+            legend.itemContainers.template.events.on("pointerover", function(e) {
+                var itemContainer = e.target;
+
+                // As series list is data of a legend, dataContext is series
+                var series = itemContainer.dataItem.dataContext;
+
+                chart.series.each(function(chartSeries) {
+                    if (chartSeries != series) {
+                        chartSeries.strokes.template.setAll({
+                            strokeOpacity: 0.15,
+                            stroke: am5.color(0x000000)
+                        });
+                    } else {
+                        chartSeries.strokes.template.setAll({
+                            strokeWidth: 3
+                        });
+                    }
+                })
+            })
+
+// When legend item container is unhovered, make all series as they are
+            legend.itemContainers.template.events.on("pointerout", function(e) {
+                var itemContainer = e.target;
+                var series = itemContainer.dataItem.dataContext;
+
+                chart.series.each(function(chartSeries) {
+                    chartSeries.strokes.template.setAll({
+                        strokeOpacity: 1,
+                        strokeWidth: 1,
+                        stroke: chartSeries.get("fill")
+                    });
+                });
+            })
+
+
+
+// It's is important to set legend data after all the events are set on template, otherwise events won't be copied
+            legend.data.setAll(chart.series.values);
+
+
             chart.appear(1000, 100);
 
 
