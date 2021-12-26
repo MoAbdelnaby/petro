@@ -43,7 +43,7 @@
                                 </h2>
                             </div>
                             <div class="row col-12 p-0 m-0 mb-3 menu-and-filter">
-                                <div class="col">
+                                <div class="col mx-0 px-0">
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link " href="{{route('config.index','place')}}">{{ __('app.Place') }}</a>

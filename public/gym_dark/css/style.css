@@ -2597,3 +2597,6 @@ select.form-control:focus{
 .filter-content a:hover {
     background-color: #1d2e3d;
 }
+.related-heading,.related-heading h2{
+    line-height: 50px!important;
+}

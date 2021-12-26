@@ -2,7 +2,7 @@
 return [
     'show_all' => 'Show All',
     'data' => 'Data',
-
+    'Internet_status' => 'Internet Status',
     'branchSetting' => 'Branch Status Mail',
     'duration' => 'Duration',
     'selectType' => 'Select Duration Type',

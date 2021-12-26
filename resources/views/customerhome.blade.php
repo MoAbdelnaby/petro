@@ -309,8 +309,9 @@
             @php $key_name = 'home'; @endphp
             /************************** Palce Branch Charts *********************/
             @if(!empty($charts['InternetStatus']))
-            @if(!in_array($key_name ,array_values($config['place']['InternetStatus']['1'])))
-            $("#statistic").hide();
+                @if(!in_array($key_name ,array_values($config['place']['InternetStatus']['1'])))
+                $("#statistic").hide();
+                @endif
             @endif
 
 

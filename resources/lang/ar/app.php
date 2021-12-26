@@ -3,6 +3,7 @@
 return array(
     'branchSetting' => 'بريد حالة الافرع',
     'duration' => 'الفترة',
+    'Internet_status' => 'حالة الإنترنت',
     'selectType' => 'اختر نوع الوقت',
     'Branch_Status_Header' => 'حالة الافرع',
     'ALL_Days' => 'كل الايام',

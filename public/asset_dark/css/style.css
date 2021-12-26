@@ -170,7 +170,7 @@ a:hover { text-decoration: none; }
 .dropdown-menu .dropdown-item:focus, .dropdown-menu .dropdown-item:hover { background: transparent; color: var(--iq-primary); }
 
 /*--------------*/
-.iq-card-header select.form-control { background: #eef0f4; border: none; font-size: 14px; margin-right: 15px; }
+.iq-card-header select.form-control {border: none; font-size: 14px; margin-right: 15px; }
 .iq-card-header select.form-control.width-100 { width: 180px; }
 
 /*---------------------------------------------------------------------
@@ -1519,6 +1519,7 @@ a.btn-dark{
 }
 .iq-top-navbar .iq-sub-dropdown .iq-card-body{
     background: #273d54;
+    overflow: inherit;
 }
 .user-settings .iq-card-body h6 {
     font-size: 13px;
@@ -1561,6 +1562,7 @@ a.btn-dark{
 }
 .iq-card-body {
     padding: 10px;
+    overflow: hidden;
 }
 
 .iq-card-icon h3 {
@@ -1626,6 +1628,7 @@ a.btn-dark{
     text-transform: uppercase;
     border-bottom: 1px solid #304356;
     padding-bottom: 5px;
+    line-height: 50px;
 }
 .related-heading h2 img{
     margin-top: -5px;
@@ -1635,6 +1638,8 @@ a.btn-dark{
     right: 0;
     top: -5px;
     font-size: 15px;
+    line-height: 50px;
+
 }
 .related-heading span i:hover,
 .related-heading span i.active{
@@ -1805,7 +1810,7 @@ a.btn-dark{
     height: 40px;
     line-height: 40px;
     border-radius: 5px;
-    background: #111a24;
+    background: #111a24!important;
     border-color: #182533;
     color: #cbcaca;
 }
@@ -2297,6 +2302,7 @@ input, select,textarea {
     padding: 20px 0;
     position: relative;
     border-top: 1px solid #cccc;
+
 }
 
 
@@ -2507,7 +2513,9 @@ input[type="email"]:-webkit-autofill{
 .navbar-list li .iq-sub-dropdown .iq-sub-card:hover {
     background-color: #15202b;
 }
-
+.table td, .table th{
+    color: #ffffff;
+}
 /*******************************************************/
 /*-----------------------------------------------------*/
 /*================ custom style fahd ==================*/

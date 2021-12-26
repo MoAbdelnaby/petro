@@ -18,3 +18,34 @@ body.sidebar-main .content-page, body.sidebar-main .iq-footer {
     list-style-type: none;
     position: relative;
 }
+.online {
+    background: #192734;
+}
+.offline,.iq-card .iq-card .iq-card{
+    background: #192734!important;
+}
+.card{
+    border: 0;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right;
+    display: inline-block;
+    float: left;
+}
+#iq-sidebar-toggle i{
+    color: #fff;
+}
+.trashbody a{
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+}
+.trashbody a:hover {
+    color: #a2aeb9;
+    text-decoration: none;
+}
+
+.menu-and-filter .nav-tabs .nav-item a{
+    font-family: inherit;
+}

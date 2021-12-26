@@ -632,4 +632,13 @@ g[transform="translate(144,0)"] g[stroke-opacity="0.15"]{
 g[stroke="#000000"]{
     stroke: #ffffff!important;
 }
+
+.online {
+    background: #15202b;
+}
+.offline {
+    background: #15202b;
+}
+
+
 /* ****** */

@@ -34,7 +34,7 @@
 {{--                                    <div id="logChart"></div>--}}
                                 </div>
                                 <div class="col-12">
-                                    <table class="table table-bordered text-center">
+                                    <table class="table dataTable table-bordered text-center">
 
                                         <thead class="bg-primary">
                                         <th>#</th>

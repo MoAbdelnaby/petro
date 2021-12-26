@@ -519,7 +519,7 @@
                 <div class="iq-card-body">
                     <div class="related-heading mb-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
-                            <h2 class="border-bottom-0">{{ __('app.gym.Statistics') }}</h2>
+                            <h2 class="border-bottom-0">{{ __('app.Internet_status') }}</h2>
                             <div class="dropdown config_key" data-type="statistics">
                                 <a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown">
                                     <i class="fas fa-bars" style=""></i>
@@ -545,29 +545,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-3" id="sortable" data-sortable-id="0" aria-dropeffect="move">
-                        <div class="col-md-4 col-lg-6 " data-id="13" data-item-sortable-id="0" draggable="true"
-                             role="option" aria-grabbed="false" style="">
-                            <div class="iq-card mb-4">
-                                <div class="iq-card-body">
-                                    <div class="rounded-circle iq-card-icon iq-bg-danger mr-1 float-left">
-                                        <i class="fa fa-subway"></i>
+                    <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="card text-center">
+                                <div class="card-header row online">
+                                    <div class="col-4"><img width="60" src="{{ asset("images/online-svgrepo-com.svg") }}" alt=""></div>
+                                    <div class="col-8">
+                                        <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
+                                        <h3><b>6</b></h3>
                                     </div>
-                                    <h5 class="border-bottom-0 text-center" >{{ __('app.region') }}</h5>
-                                    <h4 class="text-center">5</h4>
 
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-lg-6 column" data-id="9" data-item-sortable-id="0" draggable="true"
-                             role="option" aria-grabbed="false" style="">
-                            <div class="iq-card mb-4">
-                                <div class="iq-card-body">
-                                    <div class="rounded-circle iq-card-icon bg-primary mr-1 float-left"><i
-                                            class="fa fa-id-card"></i>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="card text-center col-12">
+                                <div class="card-header row offline">
+                                    <div class="col-4"><img width="60" fill="red" src="{{ asset("images/offline-svgrepo-com.svg") }}" alt=""></div>
+                                    <div class="col-8">
+                                        <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
+                                        <h3><b>8</b></h3>
                                     </div>
-                                    <h5 class="border-bottom-0 text-center">{{ __('app.Branches') }}</h5>
-                                    <h4 class="text-center">6</h4>
 
                                 </div>
                             </div>

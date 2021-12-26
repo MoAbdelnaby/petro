@@ -1498,6 +1498,7 @@ input.increment { text-align: center; }
     text-transform: uppercase;
     border-bottom: 1px solid #ccc;
     padding-bottom: 5px;
+    line-height: 50px;
 }
 
 .related-heading h2 img{
@@ -1508,6 +1509,8 @@ input.increment { text-align: center; }
     left: 0;
     top: 0px;
     font-size: 15px;
+    line-height: 50px;
+
 }
 
 .related-heading span form{
@@ -2252,6 +2255,11 @@ a,a:hover{
 }
 .ratting-item-div .ratting-item a{
     margin: 0 3px;
+}
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right;
+    display: inline-block;
+    float: left;
 }
 /*******************************************************/
 /*-----------------------------------------------------*/
