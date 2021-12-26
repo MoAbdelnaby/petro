@@ -75,7 +75,7 @@
                                         @foreach($branches as $k => $branch)
                                             <tr>
                                                 <td>{{ $k+1 }}</td>
-                                                <td><a href="branches-log/{{$branch->branch_code}}" target="_blank">{{ $branch->branch->name }}</a></td>
+                                                <td><a href="branches-log/{{$branch->branch_code}}" target="_blank">{{ \App\Models\Branch::where('code', $branch->branch_code)->first()->name }}</a></td>
                                                 <td>
                                                     @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
                                                         <i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}

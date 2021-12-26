@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Branch;
 use Illuminate\Database\Eloquent\Model;
 
 class BranchNetWork extends Model
@@ -17,5 +18,9 @@ class BranchNetWork extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function branch() {
+        return $this->belongsTo(Branch::Class,"branch_code","code");
     }
 }
