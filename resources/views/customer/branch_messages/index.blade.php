@@ -188,7 +188,7 @@
                                                 <td>{{str_replace('whatsapp:+','',$item->phone)}}</td>
                                                 <td>
                                                     @if($item->invoiceUrl)
-                                                        <a href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceUrl}}"
+                                                        <a target="_blank" style="padding: 0 5px 0 5px" href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceUrl}}"
                                                            class="btn btn-info">
                                                             @lang('app.View')
                                                         </a>
