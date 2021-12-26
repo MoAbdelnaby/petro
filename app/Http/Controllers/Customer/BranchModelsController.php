@@ -256,11 +256,11 @@ class BranchModelsController extends Controller
     public function BranchesStatus()
     {
         /* get branches by table view last_branch_error */
-        $branches = BranchStatus::orderBy('id', 'DESC')->distinct('branch_code')->with('branch')->get();
-        $off = BranchStatus::orderBy('id', 'DESC')->distinct('branch_code')
+        $branches = BranchNetWork::orderBy('id', 'DESC')->distinct('branch_code')->with('branch')->get();
+        $off = BranchNetWork::orderBy('id', 'DESC')->distinct('branch_code')
             ->where('created_at', '<', Carbon::now()->subMinutes(15))
             ->count();
-        $on = BranchStatus::orderBy('id', 'DESC')->distinct('branch_code')
+        $on = BranchNetWork::orderBy('id', 'DESC')->distinct('branch_code')
             ->where('created_at', '>=', Carbon::now()->subMinutes(15))
             ->where('created_at', '<=', Carbon::now())
             ->count();
