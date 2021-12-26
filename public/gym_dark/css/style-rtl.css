@@ -29,7 +29,7 @@ body.sidebar-main .content-page, body.sidebar-main .iq-footer {
 }
 
 div.dataTables_wrapper div.dataTables_filter {
-    text-align: right;
+    text-align: left;
     display: inline-block;
     float: left;
 }

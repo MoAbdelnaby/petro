@@ -610,9 +610,9 @@ td img{
     position: relative;
     margin: 5px;
     display: block;
+    padding-left: 25px;
 }
 .custom-checkbox p{
-    padding-left: 25px;
     margin: 0;
 }
 .custom-checkbox input:checked ~ .checkmark{

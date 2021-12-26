@@ -3,6 +3,7 @@
 return array(
     'branchSetting' => 'بريد حالة الافرع',
     'duration' => 'الفترة',
+    'connection_speed' => 'Connection Speed',
     'Internet_status' => 'حالة الإنترنت',
     'selectType' => 'اختر نوع الوقت',
     'Branch_Status_Header' => 'حالة الافرع',

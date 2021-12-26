@@ -14,7 +14,7 @@
             width: 100% !important;
         }
         .search-model{display: none}
-        .search-model .col-md-3{
+        .search-model .col-md-6{
             display: none;
         }
     </style>
@@ -326,7 +326,7 @@
                                 @foreach($regions as $key=>$reg)
                                     @if(count($reg->branches))
                                         @foreach($reg->branches as $branche)
-                                            <div class="col-md-3">
+                                            <div class="col-md-12">
                                                 <label class="custom-checkbox" rel="{{$branche->id}}"> {{ $branche->name }}
                                                     <input type="checkbox" rel2="{{ $branche->name }}" >
                                                     <span class="checkmark"></span>
@@ -375,11 +375,11 @@
                     var search_result = 0;
                     for (var i=0; i < regions.length; i++){
                         if (regions[i].name.search(text) >= 0){
-                            $('#assignform .search-model').find('input[rel2="'+regions[i].name+'"]').closest('.col-md-3').css({'display':'block'});
+                            $('#assignform .search-model').find('input[rel2="'+regions[i].name+'"]').closest('.col-md-6').css({'display':'block'});
                             search_result = search_result + 1;
                         }
                         else{
-                            $('#assignform .search-model').find('input[rel2="'+regions[i].name+'"]').closest('.col-md-3').css({'display':'none'});
+                            $('#assignform .search-model').find('input[rel2="'+regions[i].name+'"]').closest('.col-md-6').css({'display':'none'});
                         }
                         $('#assignform .assign_body').hide();
                         $('#assignform .search-model').show();

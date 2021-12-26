@@ -2,6 +2,7 @@
 return [
     'show_all' => 'Show All',
     'data' => 'Data',
+    'connection_speed' => 'Connection Speed',
     'Internet_status' => 'Internet Status',
     'branchSetting' => 'Branch Status Mail',
     'duration' => 'Duration',

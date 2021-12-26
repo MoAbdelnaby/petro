@@ -515,10 +515,11 @@ table.dataTable {
 }
 .plates-car-cont .nav-link{
     border-radius: 0;
+    color: #ffffff;
 }
 .plates-car-cont .nav-link.active, .plates-car-cont.show>.nav-link {
     color: #ffffff;
-    background: #005183;
+    background: #005183!important;
     border-radius: 0;
 }
 .plates-car-cont .nav-link.active::before{
@@ -561,7 +562,7 @@ g[transform="translate(144,0)"] g[stroke-opacity="0.15"]{
 #chartdiv, #chartdiv2 {
     width: 100%;
     height: 500px;
-    background: #aabcd2;;
+    background: #ffffff1f;
 }
 .related-heading .dropdown-toggle i {
     color: #b8c2cb;
@@ -639,6 +640,21 @@ g[stroke="#000000"]{
 .offline {
     background: #15202b;
 }
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right;
+    display: inline-block;
+    width: 50%;
+    float: right;
+}
+
+.select2-dropdown .select2-results__option {
+    padding: 6px;
+    user-select: none;
+    -webkit-user-select: none;
+    padding-right: 35px;
+}
+
+
 
 
 /* ****** */

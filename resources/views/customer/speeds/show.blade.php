@@ -21,46 +21,55 @@
                     <div class="col-md-12">
 
                         <div class="iq-card col">
-                            {{--                            <div class="iq-card-header">--}}
-                            {{--                                <h2 class="text-white"--}}
-                            {{--                                    style="font-size: 16px;line-height: 50px">{{ __('app.overall') }}</h2>--}}
-                            {{--                            </div>--}}
                             <div class="iq-card-body">
                                 <div id="chartdiv"></div>
-                                {{--                                <canvas id="myChart" style="width:100%;max-width:100%"></canvas>--}}
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="product_table table-responsive row p-0 m-0 col-12">
-                    <table class="table dataTable ui celled table-bordered text-center no-footer"
-                           id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
-                        <thead>
-                        <tr role="row">
-{{--                            <th>id</th>--}}
-                            <th>{{ __('app.customers.speed.index.downloadSpeed') }}</th>
-                            <th>{{ __('app.customers.speed.index.downloadTime') }}</th>
-                            <th>{{ __('app.customers.speed.index.uploadSpeed') }}</th>
-                            <th>{{ __('app.customers.speed.index.uploadTime') }}</th>
-                            <th>{{ __('app.customers.speed.index.date') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($logs as $log)
-                            <tr class="item{{$log->id}}">
-{{--                                <td>{{ $log->id }}</td>--}}
-                                <td>{{ number_format($log->internet_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
-                                <td>{{$log->load_time ?? 0}} {{ __('app.customers.second') }}</td>
-                                <td>{{ number_format($log->upload_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
-                                <td>{{$log->uploaded_time ?? 0}} {{ __('app.customers.second') }}</td>
-                                <td>{{$log->created_at->format('d-m-Y h:i A')}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="iq-card col">
+                            <div class="iq-card-body">
+
+                                <div class="product_table table-responsive row p-0 m-0 col-12">
+                                    <table class="table dataTable ui celled table-bordered text-center no-footer"
+                                           id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                        <thead>
+                                        <tr role="row">
+                                            {{--                            <th>id</th>--}}
+                                            <th>{{ __('app.customers.speed.index.downloadSpeed') }}</th>
+                                            <th>{{ __('app.customers.speed.index.downloadTime') }}</th>
+                                            <th>{{ __('app.customers.speed.index.uploadSpeed') }}</th>
+                                            <th>{{ __('app.customers.speed.index.uploadTime') }}</th>
+                                            <th>{{ __('app.customers.speed.index.date') }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($logs as $log)
+                                            <tr class="item{{$log->id}}">
+                                                {{--                                <td>{{ $log->id }}</td>--}}
+                                                <td>{{ number_format($log->internet_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
+                                                <td>{{$log->load_time ?? 0}} {{ __('app.customers.second') }}</td>
+                                                <td>{{ number_format($log->upload_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
+                                                <td>{{$log->uploaded_time ?? 0}} {{ __('app.customers.second') }}</td>
+                                                <td>{{$log->created_at->format('d-m-Y h:i A')}}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+
             </div>
         </div>
     </div>

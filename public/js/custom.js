@@ -723,7 +723,7 @@ function assign_user_to_branch_model_alert(val, u_brs, branches, regions) {
         var $element = $('<div class="tab-pane fade' + (index == 0 ? 'show active' : '') + '" id="home-' + value.id + '" role="tabpanel" aria-labelledby="home-tab">' +
             '<div class="row join">' +
             '<div class="col-md-12 p-0">' +
-            '<div class="col-md-3">' +
+            '<div class="col-md-6 col-lg-4">' +
             '<label class="custom-checkbox">'+trans_Check_All+' <input type="checkbox"  class="checkall" /> <span class="checkmark"></span></label>' +
             '</div>' +
             '</div>' +
@@ -732,14 +732,14 @@ function assign_user_to_branch_model_alert(val, u_brs, branches, regions) {
 
         $.each(value.branches, function (i, br) {
             if (user_branches.includes(br.id.toString())) {
-                $element.find('.join').append(`<div class="col-md-3">
+                $element.find('.join').append(`<div class="col-md-6 col-lg-4">
                 <label class="custom-checkbox" id="` + br.id + `" >` + br.name + `
                 <input class="branchselect" checked="checked"  type="checkbox" name="branches[]" id="` + br.name + `" value="` + br.id + `">
                 <span class="checkmark"></span>
               </label><div>`);
                 $('#myModalAssign .search-model').find('.custom-checkbox[rel="' + br.id + '"]').find('input[type="checkbox"]').trigger('click');
             } else {
-                $element.find('.join').append(`<div class="col-md-3">
+                $element.find('.join').append(`<div class="col-md-6 col-lg-4">
                 <label class="custom-checkbox" id="` + br.id + `" >` + br.name + `
                 <input class="branchselect"  type="checkbox" name="branches[]" id="` + br.name + `" value="` + br.id + `">
               <span class="checkmark"></span>
