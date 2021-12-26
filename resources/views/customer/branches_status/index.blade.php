@@ -13,6 +13,23 @@
         .invalid-feedback{
             display: block;
         }
+        .offline {
+            border-bottom: 5px solid red;
+        }
+        .offline h3 b {
+            color: red;
+            font-size: 50px;
+            font-weight: 900;
+        }
+        .online {
+            border-bottom: 5px solid green;
+        }
+        .online h3 b {
+            color: green;
+            font-size: 50px;
+            font-weight: 900;
+        }
+
     </style>
 @endpush
 
@@ -31,20 +48,30 @@
                             <div class="row mb-3 mt-3 justify-content-center">
                                 <div class="col-lg-3 col-md-6">
                                     <div class="card text-center">
-                                        <div class="card-header">
-                                            <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
-                                            <h3><b>{{ $off }}</b></h3>
+                                        <div class="card-header row online">
+                                            <div class="col-4"><img width="60" src="{{ asset("images/online-svgrepo-com.svg") }}" alt=""></div>
+                                            <div class="col-8">
+                                                <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
+                                                <h3><b>{{ $on }}</b></h3>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-3 col-md-6">
-                                    <div class="card text-center">
-                                        <div class="card-header">
-                                            <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
-                                            <h3><b>{{ $on }}</b></h3>
+                                    <div class="card text-center col-12">
+                                        <div class="card-header row offline">
+                                            <div class="col-4"><img width="60" fill="red" src="{{ asset("images/offline-svgrepo-com.svg") }}" alt=""></div>
+                                            <div class="col-8">
+                                                <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
+                                                <h3><b>{{ $off }}</b></h3>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                         <div class="card-body">
@@ -65,18 +92,21 @@
                                                 <td>{{ $k+1 }}</td>
                                                 <td><a href="branches-log/{{$branch->branch_code}}" target="_blank">{{ $branch->branch->name }}</a></td>
                                                 <td>
-                                                    @if ($branch->status == 'online')
+                                                    @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
                                                         <i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}
                                                     @else
                                                         <i class="fas fa-circle" style="color: red"></i> {{ __('app.branch_offline') }}
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if($branch->last_connected)
-                                                        {{ $branch->last_connected }}
-                                                    @else
-                                                        {{ __('app.branch_lessThan15') }}
+                                                    @php($diff = \Carbon\Carbon::now()->diff($branch->created_at))
+                                                    @if($diff->d)
+                                                        {{ $diff->d }} {{ __('Day'.($diff->d > 1 ? 's' : '')) }}
                                                     @endif
+                                                    @if($diff->d || $diff->h)
+                                                        {{ $diff->h }} {{ __('Hour'.($diff->h > 1 ? 's' : '')) }}
+                                                    @endif
+                                                    {{ $diff->i }} {{ __('Minute'.($diff->i > 1 ? 's' : '')) }}
                                                 </td>
                                             </tr>
                                         @endforeach

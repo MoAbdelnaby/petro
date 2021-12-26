@@ -20,6 +20,7 @@
     @stack('css')
 </head>
 <body class="sidebar-main">
+@include('layouts.dashboard.partials._page-loader')
 
 @yield('content')
 

@@ -1833,7 +1833,7 @@ select.form-control option:hover{
     margin-right: 5px;
 }
 .dataTables_length{
-    display: none;
+    display: inline-block!important;
 }
 .dataTable thead {
     background: #05125a;

@@ -430,7 +430,7 @@
             </div>
         </div>
         <div class="col-lg-6 Statistics">
-            <div class="iq-card secondary-custom-card mb-4">
+            <div class="iq-card secondary-custom-card mb-4 mb-3">
                 <div class="iq-card-body">
                     <div class="related-heading mb-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
@@ -508,6 +508,66 @@
                                     </div>
                                     <h5 class="border-bottom-0 text-center">{{ __('app.Models') }}</h5>
                                     <h4 class="text-center">2</h4>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="iq-card secondary-custom-card mb-4">
+                <div class="iq-card-body">
+                    <div class="related-heading mb-4">
+                        <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
+                            <h2 class="border-bottom-0">{{ __('app.gym.Statistics') }}</h2>
+                            <div class="dropdown config_key" data-type="statistics">
+                                <a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <i class="fas fa-bars" style=""></i>
+                                </a>
+                                <ul class="dropdown-menu main-dropdown config_value" data-type="1">
+                                    <li>
+                                        <a tabindex="-1" class="dropdown-item removeDefault" href="#" data-type="home">
+                                            {{ __('app.Show_in_home_page') }}
+                                            <i class="fal fa-check show-icon"
+                                               @if(in_array('home',isset($config['InternetStatus']['1'])?array_values($config['InternetStatus']['1']):[])) style="display: inline"
+                                               data-active="1" @else data-active="0" @endif></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="-1" class="dropdown-item removeDefault" href="#" data-type="report">
+                                            {{ __('app.Show_in_Report') }}
+                                            <i class="fal fa-check show-icon"
+                                               @if(in_array('report',isset($config['InternetStatus']['1'])?array_values($config['InternetStatus']['1']):[])) style="display: inline"
+                                               data-active="1" @else data-active="0" @endif></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+                        <div class="col-md-4 col-lg-6 " data-id="13" data-item-sortable-id="0" draggable="true"
+                             role="option" aria-grabbed="false" style="">
+                            <div class="iq-card mb-4">
+                                <div class="iq-card-body">
+                                    <div class="rounded-circle iq-card-icon iq-bg-danger mr-1 float-left">
+                                        <i class="fa fa-subway"></i>
+                                    </div>
+                                    <h5 class="border-bottom-0 text-center" >{{ __('app.region') }}</h5>
+                                    <h4 class="text-center">5</h4>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-6 column" data-id="9" data-item-sortable-id="0" draggable="true"
+                             role="option" aria-grabbed="false" style="">
+                            <div class="iq-card mb-4">
+                                <div class="iq-card-body">
+                                    <div class="rounded-circle iq-card-icon bg-primary mr-1 float-left"><i
+                                            class="fa fa-id-card"></i>
+                                    </div>
+                                    <h5 class="border-bottom-0 text-center">{{ __('app.Branches') }}</h5>
+                                    <h4 class="text-center">6</h4>
 
                                 </div>
                             </div>

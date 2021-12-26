@@ -10,6 +10,95 @@
 @push('css')
     <!-- Styles -->
     <style>
+        #loading {
+            background: #fff url(../../images/loader.gif) no-repeat scroll center center;
+            height: 100%;
+            width: 100%;
+            background-size: 10%;
+            position: fixed;
+            margin-top: 0px;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            overflow: hidden !important;
+            right: 0px;
+            z-index: 999999;
+        }
+        .loading-view span {
+            border: 3px solid #f3f3f3; /* Light grey */
+            border-top: 3px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            left: calc(50% - 60px);
+            top: calc(50% - 60px);
+        }
+        .loading-view img {
+            width: 90px;
+            height: auto;
+            left: calc(50% - 45px);
+            top: calc(50% - 40px);
+            position: absolute;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-view::before{
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            background: #d6d6d6;
+        }
+        @-webkit-keyframes load {
+
+            to {
+                transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+            }
+        }
+        @keyframes load {
+
+            to {
+                transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+            }
+        }
+        @-webkit-keyframes load2 {
+
+            to {
+                transform: rotate(-360deg);
+                -webkit-transform: rotate(-360deg);
+                -moz-transform: rotate(-360deg);
+                -ms-transform: rotate(-360deg);
+                -o-transform: rotate(-360deg);
+            }
+
+        }
+
+        @keyframes load2 {
+
+            to {
+                transform: rotate(-360deg);
+                -webkit-transform: rotate(-360deg);
+                -moz-transform: rotate(-360deg);
+                -ms-transform: rotate(-360deg);
+                -o-transform: rotate(-360deg);
+            }
+
+        }
+
         #chartdiv {
             width: 100%;
             height: calc(100vh - 370px);
@@ -106,6 +195,28 @@
             background: #fff;
         }
 
+        .miter-download::before{
+            content: "";
+            width: 30px;
+            height: 30px;
+            display: block;
+            z-index: 9;
+            top: 90px;
+            left: 0;
+            position: absolute;
+            background: #f6f6f6;
+        }
+        .miter-upload::before{
+            content: "";
+            width: 30px;
+            height: 30px;
+            display: block;
+            z-index: 9;
+            top: 90px;
+            left: 0;
+            position: absolute;
+            background: #eaeaea;
+        }
         @media (max-width: 768px) {
             .miters {
                 width: 100%;
@@ -138,6 +249,29 @@
             #uploadSpeed {
                 width: 100%!important;
                 height: auto;
+            }
+
+            .miter-download::before{
+                content: "";
+                width: 40px;
+                height: 40px;
+                display: block;
+                z-index: 9;
+                top: 40px;
+                left: 0;
+                position: absolute;
+                background: #f6f6f6;
+            }
+            .miter-upload::before{
+                content: "";
+                width: 40px;
+                height: 40px;
+                display: block;
+                z-index: 9;
+                top: 40px;
+                left: 0;
+                position: absolute;
+                background: #eaeaea;
             }
 
             .miters .miter-upload b, .miters .miter-upload h1, .miters .miter-upload h3,
@@ -190,6 +324,7 @@
         }
     </style>
 @endpush
+
 @section('content')
     <!-- Page Content  -->
     <div id="contentPage" class="content-page">
@@ -225,7 +360,8 @@
                             </siv>
                             <div class="input-group-append border-radius-0">
                                 <button id="startTest" class="btn btn-primary " style="width: 100px"><i
-                                        class="fas fa-spinner fa-pulse" style="display: none"></i> Start
+                                        class="fas fa-spinner fa-pulse" style="display: none"></i>
+                                    <span class="btn-text">Start</span>
                                 </button>
                             </div>
                             @error('branch_id')
@@ -280,6 +416,8 @@
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
     <script>
+        jQuery("#load").fadeOut();
+        jQuery("#loading").delay().fadeOut("");
         am5.ready(function () {
             var root = am5.Root.new("chartdiv");
 
@@ -387,6 +525,10 @@
                 MeasureConnectionSpeed();
                 $('#startTest i.fa-spinner').show();
             });
+            $('#branch').on('change', function (){
+                $('#startTest i.fa-spinner').hide();
+
+            })
 
             // download start meter
             var optsDowload = {
@@ -431,7 +573,8 @@
                 pointer: {
                     length: 0.4, // // Relative to gauge radius
                     strokeWidth: 0.071, // The thickness
-                    color: '#db3381' // Fill color
+                    color: '#db3381', // Fill color
+                    font_size: 55,
                 },
                 limitMax: false,     // If false, max value increases automatically if value > maxValue
                 limitMin: false,     // If true, the min value of the gauge will be fixed
@@ -500,7 +643,6 @@
                         var speedBps = (bitsLoaded / duration).toFixed(2);
                         var speedKbps = (speedBps / 1024).toFixed(2);
                         var speedMbps = (speedKbps / 1024).toFixed(2);
-
 
                         $('#downloadVal b').each(function () {
                             var $this = $(this);
@@ -595,19 +737,19 @@
                 var time = am5.time.add(new Date(lastDate), "minute", 1).getTime();
                 if (series.data.length > 30)
                     series.data.removeIndex(0);
-                series.data.push({
-                    date: time,
-                    value: newValue,
-                })
+                    series.data.push({
+                        date: time,
+                        value: newValue,
+                    })
 
                 var newDataItem = series.dataItems[series.dataItems.length - 1];
-                newDataItem.animate({
-                    key: "valueYWorking",
-                    to: newValue,
-                    from: lastValue,
-                    duration: 600,
-                    easing: easing
-                });
+                    newDataItem.animate({
+                        key: "valueYWorking",
+                        to: newValue,
+                        from: lastValue,
+                        duration: 600,
+                        easing: easing
+                    });
 
                 var lastDataItem2 = series2.dataItems[series2.dataItems.length - 1];
                 var lastValue2 = lastDataItem2 ? lastDataItem2.get("value2Y") : 0;
@@ -646,6 +788,7 @@
             chart.appear(1000, 100);
 
             $(document).ready(function () {
+
                 $('.js-example-basic-single').select2();
                 $('#startTest').on('click', function () {
                     MeasureConnectionSpeed();

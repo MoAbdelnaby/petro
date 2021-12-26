@@ -2032,7 +2032,7 @@ div.dataTables_wrapper div.dataTables_info{
 }
 
 .dataTables_length{
-    display: none;
+    /*display: none;*/
 }
 .dataTable thead {
     background: #35536b;

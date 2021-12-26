@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\UserModel;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -255,9 +256,14 @@ class BranchModelsController extends Controller
     public function BranchesStatus()
     {
         /* get branches by table view last_branch_error */
-        $branches = BranchStatus::with('branch')->paginate(25);
-        $off = BranchStatus::where('status', 'offline')->count();
-        $on = BranchStatus::where('status', 'online')->count();
+        $branches = BranchStatus::orderBy('id', 'DESC')->distinct('branch_code')->with('branch')->get();
+        $off = BranchStatus::orderBy('id', 'DESC')->distinct('branch_code')
+            ->where('created_at', '<', Carbon::now()->subMinutes(15))
+            ->count();
+        $on = BranchStatus::orderBy('id', 'DESC')->distinct('branch_code')
+            ->where('created_at', '>=', Carbon::now()->subMinutes(15))
+            ->where('created_at', '<=', Carbon::now())
+            ->count();
         return view("customer.branches_status.index", compact('branches', 'off', 'on'));
     }
 
