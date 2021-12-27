@@ -427,7 +427,7 @@ body.sidebar-main .content-page, body.sidebar-main .iq-footer {
     width: auto;
     display: inline-block !important;
     padding: 2px 4px;
-    float: inherit!important;
+    /*float: inherit!important;*/
     margin:0 3px;
 }
 .scroll-vertical-custom.main li {
@@ -597,3 +597,35 @@ body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .s
     padding: 0 5px;
 }
 
+.badge{
+    font-size: 12px;
+}
+.menu-and-filter .nav-tabs .nav-link,
+.menu-and-filter .nav-tabs .nav-link.active {
+    font-family: "cairo", Regular;
+}
+.menu-and-filter .nav-tabs .nav-link.active {
+    border-bottom: 2px solid var(--iq-primary);
+    color: var(--iq-primary);
+    font-family: "cairo", Regular;
+}
+
+.nav-pills #v-pills-reminder-tab.active, .nav-pills #v-pills-branch-tab.active {
+    background: var(--iq-primary);
+    color: white;
+    border-radius: 5px;
+}
+a {
+    color: var(--iq-primary);
+}
+div.dataTables_wrapper div.dataTables_length select {
+    display: inline-block;
+    width: 54px;
+    height: 34px;
+    border: 1px solid #ccc;
+    color: #999;
+    text-align: center;
+}
+.btn-primary, .btn-primary:hover{
+    border-color: #1c085c;
+}

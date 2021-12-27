@@ -26,36 +26,63 @@
                                 <div class="row">
 
 
-                                    <div class="form-group col-md-6 digits">
-                                        <label for="en-plate" class="col-form-label">{{__('app.gym.plate_number_ar')}} <i class="fas fa-plus-square float-right"></i></label>
-                                        <input type="text" class="form-control" name="number_ar" id="en_plate" value="">
-                                        <div class="digitsSpan w-100">
+                                    <div class="form-group col-md-6 digits px-2 " data-info="number_ar">
+                                        <span class="info-patter">{{ __('app.numArExample') }}</span>
+
+                                        <label for="en-plate" class="col-form-label">{{__('app.gym.plate_number_ar')}} <i class="fas float-right fa-info-circle"></i></label>
+                                        <input type="text" class="form-control" name="number_ar" id="number_ar" value="">
+                                        <div class="input-group mb-3 zindex-4">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                            <input class="digit" maxlength="1" minlength="1">
                                             <input class="digit" maxlength="1" minlength="1">
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-6 digits">
-                                        <label for="ar-plate" class="col-form-label">{{__('app.gym.plate_char_ar')}} <i class="fas fa-plus-square float-right"></i></label>
-                                        <input type="text" class="form-control" name="plate_ar" id="ar_plate" value="">
-                                        <div class="digitsSpan w-100">
+                                    <div class="form-group col-md-6 digits px-2 " data-info="plate_ar">
+                                        <span class="info-patter"> {{ __('app.charArExample') }}</span>
+
+                                        <label for="ar-plate" class="col-form-label">{{__('app.gym.plate_char_ar')}}  <i class="fas float-right fa-info-circle"></i></label>
+                                        <input type="text" class="form-control" name="plate_ar" id="plate_ar" value="">
+
+                                        <div class="input-group mb-3 zindex-4">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                            <input class="digit" maxlength="1" minlength="1">
                                             <input class="digit" maxlength="1" minlength="1">
                                         </div>
 
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-6 digits">
-                                        <label for="en-plate" class="col-form-label">{{__('app.gym.plate_number_en')}} <i class="fas fa-plus-square float-right"></i></label>
-                                        <input type="text" class="form-control"  name="number_en" id="en_plate" value="">
-                                        <div class="digitsSpan w-100">
+                                    <div class="form-group col-md-6 digits px-2 " data-info="number_en">
+                                        <span class="info-patter">{{ __('app.numEnExample') }}</span>
+
+                                        <label for="en-plate" class="col-form-label">{{__('app.gym.plate_number_en')}} <i class="fas float-right fa-info-circle"></i></label>
+                                        <input type="text" class="form-control"  name="number_en" id="number_en" value="">
+
+                                        <div class="input-group mb-3 zindex-4">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                            <input class="digit" maxlength="1" minlength="1">
+                                            <input class="digit" maxlength="1" minlength="1">
                                             <input class="digit" maxlength="1" minlength="1">
                                         </div>
 
                                     </div>
-                                    <div class="form-group col-md-6 digits">
-                                        <label for="ar-plate" class="col-form-label">{{__('app.gym.plate_char_en')}} <i class="fas fa-plus-square float-right"></i></label>
-                                        <input type="text" class="form-control" name="plate_en" id="ar_plate" value="">
-                                        <div class="digitsSpan w-100">
-                                            <input class="digit" maxlength="1" minlength="1">
+                                    <div class="form-group col-md-6 digits px-2 " data-info="plate_en">
+                                        <span class="info-patter">{{ __('app.charEnExample') }}</span>
+
+                                        <label for="ar-plate" class="col-form-label">{{__('app.gym.plate_char_en')}} <i class="fas float-right fa-info-circle"></i></label>
+                                        <input type="text" class="form-control" name="plate_en" id="plate_en" value="">
+
+                                        <div class="input-group mb-3 zindex-4">
+                                            <input class="digit" maxlength="1" minlength="1" pattern = “[A-Za-z]”>
+                                            <input class="digit" maxlength="1" minlength="1" pattern = “[A-Za-z]”>
+                                            <input class="digit" maxlength="1" minlength="1" pattern = “[A-Za-z]”>
+                                            <input class="digit" maxlength="1" minlength="1" pattern = “[A-Za-z]”>
+                                            <input class="digit" maxlength="1" minlength="1" pattern = “[A-Za-z]”>
                                         </div>
 
                                     </div>

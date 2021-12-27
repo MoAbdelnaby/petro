@@ -1477,6 +1477,7 @@ input.increment { text-align: center; }
     text-transform: uppercase;
     border-bottom: 1px solid #ccc;
     padding-bottom: 5px;
+    line-height: 50px;
 }
 .related-heading .dropdown-toggle i{
     color: #11044C;
@@ -1951,7 +1952,7 @@ select.form-control option:hover{
     height: 10px;
     display: block;
     position: absolute;
-    bottom: -20px;
+    bottom: -22px;
     left: calc(50% - 7px);
     background: #b7b7b7;
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
@@ -1970,7 +1971,7 @@ select.form-control option:hover{
 #myModalAssign .nav-tabs {
     border-bottom: 2px solid #c1c1c1;
     margin-bottom: 15px;
-    padding: 0 20px;
+    padding: 0;
     padding-bottom: 20px;
 }
 

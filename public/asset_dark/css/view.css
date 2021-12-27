@@ -655,6 +655,18 @@ div.dataTables_wrapper div.dataTables_filter {
 }
 
 
+#myModalAssign .overflowx-auto{
+    overflow-x: auto;
+    height: 75px;
+    overflow-y: hidden;
+}
 
+#myModalAssign .overflowx-auto .nav-tabs {
+    width: max-content;
+}
+
+.card-body{
+    overflow: hidden;
+}
 
 /* ****** */

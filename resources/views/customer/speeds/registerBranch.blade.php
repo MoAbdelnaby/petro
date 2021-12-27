@@ -336,17 +336,17 @@
                     <div class="col-12 miter-download">
                         <h1 id="downloadVal"><b></b></h1>
                         <canvas id="downloadSpeed" style="width:100%!important"></canvas>
-                        <h3>Download Speed</h3>
+                        <h3>{{ __('app.downloadSpeed') }}</h3>
                     </div>
                     <div class="col-12 miter-upload">
                         <h1 id="uploadVal"><b></b></h1>
                         <canvas id="uploadSpeed" style="width:100%!important"></canvas>
-                        <h3>Upload Speed</h3>
+                        <h3>{{ __('app.uploadSpeed') }} </h3>
                     </div>
                 </div>
                 <div class="col-8">
                     <div class="col-12 py-5">
-                        <h5><i class="fas fa-check"></i> Select Branch</h5>
+                        <h5><i class="fas fa-check"></i> {{ __('app.Select_Branch') }}</h5>
                         <div class="input-group">
                             <siv class="col">
                                 <select class="js-example-basic-single form-control" id="branch" name="branch_id"
@@ -361,7 +361,7 @@
                             <div class="input-group-append border-radius-0">
                                 <button id="startTest" class="btn btn-primary " style="width: 100px"><i
                                         class="fas fa-spinner fa-pulse" style="display: none"></i>
-                                    <span class="btn-text">Start</span>
+                                    <span class="btn-text">{{ __('app.start') }}</span>
                                 </button>
                             </div>
                             @error('branch_id')
@@ -374,14 +374,14 @@
                     <div class="col-12 miters-details mb-5">
                         <div class="row">
                             <div class="col text-center download border-right border-dashed">
-                                <h3><i class="fas fa-download"></i> <b>Download</b></h3>
-                                <h2><b>0</b> <small>/ MB.S</small></h2>
-                                <p>Test Time: 0s</p>
+                                <h3><i class="fas fa-download"></i> <b>{{ __('app.Download') }}</b></h3>
+                                <h2><b>0</b> <small>/ {{ __('app.MBS') }}</small></h2>
+                                <p>{{ __('app.TestTime') }}: 0s</p>
                             </div>
                             <div class="col text-center upload">
-                                <h3><i class="fas fa-upload"></i> <b>Upload</b></h3>
-                                <h2><b>0</b> <small>/ MB.S</small></h2>
-                                <p>Test Time: 0s</p>
+                                <h3><i class="fas fa-upload"></i> <b>{{ __('app.Upload') }}</b></h3>
+                                <h2><b>0</b> <small>/ {{ __('app.MBS') }}</small></h2>
+                                <p>{{ __('app.TestTime') }}: 0s</p>
                             </div>
                         </div>
 

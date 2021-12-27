@@ -3,7 +3,20 @@
 return array(
     'branchSetting' => 'بريد حالة الافرع',
     'duration' => 'الفترة',
-    'connection_speed' => 'Connection Speed',
+
+    'charEnExample' => 'يجب إدخال الحروف باللغة الإنجليزية على سبيل المثال [ abc... ] ',
+    'numEnExample' => 'يجب إدخال الأرقام باللغة الإنجليزية على سبيل المثال [ 123... ] ',
+    'charArExample' => 'يجب إدخال الحروف باللغة العربية على سبيل المثال [ ا ب ت ... ]',
+    'numArExample' => 'يجب إدخال الأرقام باللغة العربية على سبيل المثال [ ۰۱۲۳ ] ',
+
+    'MBS' => 'ميجا بيت / ث',
+    'TestTime' => 'وقت الاختبار',
+    'Upload' => 'تحميل',
+    'downloadSpeed' => 'سرعة التنزيل',
+    'uploadSpeed' => 'سرعة تحميل',
+
+
+    'connection_speed' => 'سرعة الاتصال',
     'Internet_status' => 'حالة الإنترنت',
     'selectType' => 'اختر نوع الوقت',
     'Branch_Status_Header' => 'حالة الافرع',
@@ -1481,11 +1494,11 @@ return array(
     'service' => [
         'service' => 'خدمات',
         'index' => 'الرئيسيه',
-        'create' => 'اضافه خدمه خديده',
+        'create' => 'اضافه خدمه جديده',
         'update' => 'تعديل خدمه',
         'delete' => 'حذف خدمه',
         'arabic_name' => 'الاسم باللغه العربيه',
-        'english_name' => 'الاسم باللغه الانخليزيه',
+        'english_name' => 'الاسم باللغه الانجليزيه',
         'arabic_description' => 'الوصف باللغه العربيه',
         'english_description' => 'الوصف باللغه الانجليزيه',
         'action' => 'اجراء',
@@ -1495,6 +1508,8 @@ return array(
     'branch_name' => 'اسم الفرع',
     'branch_status' => 'حالة الفرع',
     'lastError' => 'اخر خطاء',
+    'branch_message' => 'رسالة الفرع',
+
     'user_name' => 'اسم المستخدم',
     'createdIn' => 'انشاء في',
     'last_connected' => 'اخر اتصال',

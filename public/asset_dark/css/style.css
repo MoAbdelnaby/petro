@@ -2448,8 +2448,8 @@ g[transform="translate(144,0)"] g[stroke-opacity="0.15"]{
 }
 
 .iq-bg-danger {
-    background: #cd0416 !important;
-    color: #efebeb !important;
+    /*background: #cd0416 !important;*/
+    /*color: #efebeb !important;*/
 }
 .iq-bg-warning {
     background: #dba608 !important;

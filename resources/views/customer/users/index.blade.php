@@ -140,12 +140,12 @@
                                     <div class="product_table table-responsive row p-0 m-0 col-12">
                                         <table class="table dataTable ui celled table-bordered text-center">
                                             <thead>
-                                            <th>{{__('app.users.table.image')}}</th>
-                                            <th>{{__('app.users.table.name')}}</th>
-                                            <th>{{__('app.users.table.email')}}</th>
-                                            <th>{{__('app.users.table.Phone')}}</th>
-                                            <th>{{__('app.saas.packages.items.active_branches')}}</th>
-                                            <th>{{ __('app.Settings') }}</th>
+                                                <th>{{__('app.users.table.image')}}</th>
+                                                <th>{{__('app.users.table.name')}}</th>
+                                                <th>{{__('app.users.table.email')}}</th>
+                                                <th>{{__('app.users.table.Phone')}}</th>
+                                                <th>{{__('app.saas.packages.items.active_branches')}}</th>
+                                                <th>{{ __('app.Settings') }}</th>
                                             </thead>
                                             <tbody>
                                             @foreach($users as $user)
@@ -163,7 +163,7 @@
                                                             @endforeach
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td style="width: max-content;display: inline-block">
                                                         @if(auth()->user()->type=="customer")
                                                             @php
                                                                 $user_branches = [];
@@ -305,21 +305,24 @@
                             <input type="hidden" name="user_id" id="user_id">
 
                             <div class="tab-content assign_body" id="myTabContent">
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    @foreach($regions as $key=>$reg)
-                                        @if(count($reg->branches))
-                                            @foreach($reg->branches as $branche)
-                                                @php
-                                                    $Branches[] = ["name" => $branche->name, "id" => $branche->id];
-                                                @endphp
-                                            @endforeach
-                                        @endif
+                                <div class="overflowx-auto">
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        @foreach($regions as $key=>$reg)
+                                            @if(count($reg->branches))
+                                                @foreach($reg->branches as $branche)
+                                                    @php
+                                                        $Branches[] = ["name" => $branche->name, "id" => $branche->id];
+                                                    @endphp
+                                                @endforeach
+                                            @endif
 
-                                        <li class="nav-item" role="presentation">
-                                            <a class="nav-link {{$key == 0 ? 'active' : '' }}" id="home-tab" data-toggle="tab" href="#home-{{$reg->id}}" rel="home-{{$reg->id}}" role="tab" aria-controls="home" aria-selected="true">{{$reg->name}} <small>5</small></a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                            <li class="nav-item" role="presentation">
+                                                <a class="nav-link {{$key == 0 ? 'active' : '' }}" id="home-tab" data-toggle="tab" href="#home-{{$reg->id}}" rel="home-{{$reg->id}}" role="tab" aria-controls="home" aria-selected="true">{{$reg->name}} <small>5</small></a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+
+                                </div>
                             </div>
 
                             <div class="tab-content search-model">

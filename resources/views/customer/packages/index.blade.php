@@ -313,7 +313,7 @@
 
     <!-- myModalAssign -->
     <div id="myModalAssign" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
