@@ -16,7 +16,7 @@ return array(
     'uploadSpeed' => 'سرعة تحميل',
 
     'Create_New_Service' => 'إنشاء خدمة جديدة',
-
+    'not_connected_yet' => 'غير متصل بعد',
     'connection_speed' => 'سرعة الاتصال',
     'Internet_status' => 'حالة الإنترنت',
     'selectType' => 'اختر نوع الوقت',

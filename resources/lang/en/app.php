@@ -13,6 +13,7 @@ return [
     'uploadSpeed' => 'Upload Speed',
 
     'Create_New_Service' => 'Create New Service',
+    'not_connected_yet' => 'Not Connected Yet',
 
 
     'connection_speed' => 'Connection Speed',
