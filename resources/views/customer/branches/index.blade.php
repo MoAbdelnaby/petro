@@ -43,7 +43,7 @@
                                                 </i>{{ __('app.delete_all') }}</button>
 
                                         </div>
-                                        <table class="table table-bordered text-center">
+                                        <table class="table dataTable table-bordered text-center">
 
                                             <thead class="bg-primary">
                                                 <td> <label for="selectall" class="custom-checkbox pl-1">

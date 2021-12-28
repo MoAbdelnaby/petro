@@ -584,9 +584,12 @@ td img{
 .kt-avatar .kt-avatar__upload{
     right: -16px;
     top: -4px;
+    display: block;
+    line-height: 28px;
 }
 .kt-avatar .kt-avatar__upload i{
     color: #29abe2;
+    display: block;
 }
 .kt-avatar .kt-avatar__upload:hover{
     background-color: #29abe2;

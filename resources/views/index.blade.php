@@ -154,7 +154,7 @@
                         </div>
                         <div class="iq-card-body">
                             <div class="table-responsive">
-                                <table class="table mb-0 table-borderless">
+                                <table class="table mb-0 dataTable table-borderless">
                                     <thead>
                                     <tr>
                                         <th scope="col">{{ __('app.Client') }}</th>

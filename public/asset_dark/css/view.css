@@ -95,7 +95,7 @@
 /* reports */
 .iq-card .nav-tabs .nav-link.active {
     border-bottom: 2px solid #544f9c;
-    color: #ffffff;
+    color: #ffffff!important;
     font-weight: 700;
 }
 .iq-card .nav-tabs .nav-link {
@@ -128,7 +128,7 @@
 
 .settings-custom-card.iq-card .iq-card-header {
     background: none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #1f3246;
     border-radius: 0;
 }
 .settings-custom-card .table {
@@ -165,23 +165,23 @@
 }
 
 .btn-primary {
-    background: #1f3246!important;
+    background: #3f7bb5!important;
     color: #fff!important;
-    border-color: #1f3246!important;
+    border-color: #153c68!important;
 }
 .btn-primary:hover {
-    background: #29425b !important;
+    background: #25558a !important;
     color: #fff!important;
     border-color: #1f3246!important;
 }
 
 
 .btn-danger {
-    background: #940032 !important;
+    background: #a53c60 !important;
     border-color: #940032;
 }
 .btn-danger:hover {
-    background: #a9043c !important;
+    background: #b7134c !important;
     border-color: #940032;
 }
 .select2-container--default .select2-selection--single {
@@ -410,23 +410,26 @@ div.dataTables_wrapper div.dataTables_filter input {
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #1f364e;
-    border: 0px solid #0b1116;
     border-radius: 2px;
     box-sizing: border-box;
     display: inline-block;
-    margin-left: 5px;
     margin-top: 8px;
-    padding: 0 3px;
-    padding-left: 20px;
     position: relative;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #b9baba;
     vertical-align: bottom;
     white-space: nowrap;
     font-size: 12px;
+
+    margin-left: 5px;
+    margin-right: auto;
+    background: #171741;
+    color: #fff;
+    border: 1px solid #171741;
+    padding: 0 5px;
+    padding-left: 20px;
+
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
@@ -495,6 +498,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 table.dataTable {
     color: #ccc;
+    background: #15202b;
 }
 
 .plates-car-cont .setting-nav{
@@ -563,6 +567,7 @@ g[transform="translate(144,0)"] g[stroke-opacity="0.15"]{
     width: 100%;
     height: 500px;
     background: #ffffff1f;
+    direction: ltr!important;
 }
 .related-heading .dropdown-toggle i {
     color: #b8c2cb;
@@ -607,7 +612,7 @@ g[transform="translate(144,0)"] g[stroke-opacity="0.15"]{
 }
 .paginate_button.disabled, .paginate_button.disabled:hover {
     background: #15202b;
-    color: #ffffff!important;
+    color: #cbcbcb!important;
     border-color: #013d58;
 }
 .page-link{
@@ -667,6 +672,53 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .card-body{
     overflow: hidden;
+}
+.table td, .table th {
+    padding: 0.75rem;
+    border-top: 1px solid #38414b;
+}
+.select2-container--default .select2-search--inline .select2-search__field{
+    border: none!important;
+}
+.kt-avatar .kt-avatar__holder {
+    background: #1f3246;
+    background-blend-mode: soft-light;
+}
+.border-bottom {
+    border-bottom: 1px solid #1f3246!important;
+}
+.kt-avatar .kt-avatar__upload i{
+    color: #ffffff;
+}
+.kt-avatar .kt-avatar__upload{
+    background-color: #1f3246;
+}
+.kt-avatar .kt-avatar__upload:hover {
+    background-color: #111a24;
+}
+
+
+.online img,.offline img{
+    filter: contrast(0.5);
+}
+
+.online i.fa-circle  {
+    color: #408040;
+}
+.online h3 b {
+    color: #408040;
+}
+.online {
+    border-bottom: 5px solid #408040!important;
+}
+.offline i.fa-circle  {
+    color: #bf4040!important;
+}
+.offline h3 b {
+    color: #bf4040;
+}
+.offline {
+    border-bottom: 5px solid #bf4040!important;
 }
 
 /* ****** */

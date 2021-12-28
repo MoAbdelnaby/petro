@@ -2281,8 +2281,6 @@ div.dataTables_wrapper div.dataTables_filter {
     height: 100%;
     position: absolute;
     z-index: 0;
-    background: linear-gradient(
-        -20deg , #15212c, #2b4054);
     display: block;
     left: 0;
     top: 0;
@@ -2290,8 +2288,20 @@ div.dataTables_wrapper div.dataTables_filter {
     border-radius: 10px;
     clip-path: polygon(42% 0, 100% 0%, 100% 100%, 42% 100%, 0% 50%);
     right: auto;
-    transform: rotateY(
-        180deg);
+    transform: rotateY(180deg);
+}
+.select2-container--default[dir="ltr"] .select2-selection--multiple .select2-selection__choice {
+    margin-left: 5px;
+    margin-right: auto;
+    background: #171741;
+    color: #fff;
+    border: 1px solid #171741;
+    padding: 0 5px;
+    padding-left: 20px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+    left: 0!important;
+    right: auto!important;
 }
 /*******************************************************/
 /*-----------------------------------------------------*/

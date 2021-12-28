@@ -2600,3 +2600,10 @@ select.form-control:focus{
 .related-heading,.related-heading h2{
     line-height: 50px!important;
 }
+.kt-avatar .kt-avatar__holder {
+    background: #1f3246;
+    background-blend-mode: soft-light;
+}
+.border-bottom {
+    border-bottom: 1px solid #1f3246!important;
+}

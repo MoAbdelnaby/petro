@@ -2225,4 +2225,6 @@ g[aria-labelledby$="title"] {
 a,a:hover{
     text-decoration: none!important;
 }
-
+.table{
+    text-align: center;
+}

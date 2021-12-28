@@ -163,7 +163,7 @@
                             </div>
                             <div class="tables text-center">
                                 <div class="custom-table error-mg-table">
-                                    <table id="paginationSimpleNumbers" class="table mt-4 table-striped" width="100%">
+                                    <table id="paginationSimpleNumbers" class="table dataTable mt-4 table-striped" width="100%">
                                         <thead>
                                         <tr>
                                             <th class="th-sm">#</th>
@@ -202,13 +202,13 @@
                                     </table>
                                 </div>
 
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination pg-blue">
-                                        @if($data != [])
-                                            {!! $data->appends(request()->query())->links() !!}
-                                        @endif
-                                    </ul>
-                                </nav>
+{{--                                <nav aria-label="Page navigation example">--}}
+{{--                                    <ul class="pagination pg-blue">--}}
+{{--                                        @if($data != [])--}}
+{{--                                            {!! $data->appends(request()->query())->links() !!}--}}
+{{--                                        @endif--}}
+{{--                                    </ul>--}}
+{{--                                </nav>--}}
                             </div>
                         </div>
                     </div>

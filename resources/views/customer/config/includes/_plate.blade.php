@@ -327,7 +327,7 @@
                         </div>
                     </div>
                     <div class="custom-table mt-5">
-                        <table class="table {{handleTableConfig($config['table'])}}" width="100%">
+                         <table class="table {{handleTableConfig($config['table'])}} dataTable text-center" width="100%">
                             <thead>
                             <tr>
                                 <th class="th-sm">{{ __('app.Date') }}

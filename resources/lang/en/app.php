@@ -12,6 +12,7 @@ return [
     'downloadSpeed' => 'Download Speed',
     'uploadSpeed' => 'Upload Speed',
 
+    'Create_New_Service' => 'Create New Service',
 
 
     'connection_speed' => 'Connection Speed',

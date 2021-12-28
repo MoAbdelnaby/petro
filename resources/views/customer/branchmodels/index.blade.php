@@ -74,7 +74,7 @@
                                         @endif
                                     @endcan
                                 </div>
-                                <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid" aria-describedby="user-list-page-info">
+                                <table id="user-list-table" class="table dataTable table-striped table-bordered mt-4" role="grid" aria-describedby="user-list-page-info">
                                     <thead>
                                     <tr>
                                         <th>{{__('app.customers.branchmodels.table.model')}}</th>
@@ -111,20 +111,20 @@
                                 </table>
 
                             </div>
-                            <div class="row justify-content-between mt-3">
-                                <div id="user-list-page-info" class="col-md-6">
-                                    <span>{{ __('app.Showing') }} 1 {{ __('app.to') }} {{count($items)}} of {{count($items)}} {{ __('app.entries') }}</span>
-                                </div>
+{{--                            <div class="row justify-content-between mt-3">--}}
+{{--                                <div id="user-list-page-info" class="col-md-6">--}}
+{{--                                    <span>{{ __('app.Showing') }} 1 {{ __('app.to') }} {{count($items)}} of {{count($items)}} {{ __('app.entries') }}</span>--}}
+{{--                                </div>--}}
 
-                                <div class="col-md-6">
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-end mb-0">
-                                            {{ $items->links() }}
-                                        </ul>
-                                    </nav>
-                                </div>
+{{--                                <div class="col-md-6">--}}
+{{--                                    <nav aria-label="Page navigation example">--}}
+{{--                                        <ul class="pagination justify-content-end mb-0">--}}
+{{--                                            {{ $items->links() }}--}}
+{{--                                        </ul>--}}
+{{--                                    </nav>--}}
+{{--                                </div>--}}
 
-                            </div>
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>

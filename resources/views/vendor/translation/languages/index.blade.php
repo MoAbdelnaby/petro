@@ -24,7 +24,7 @@
                             <div class="panel">
                                 <div class="panel-body">
 
-                                    <table class="table table-striped table-bordered mt-4">
+                                    <table class="table dataTable table-striped table-bordered mt-4">
 
                                         <thead>
                                         <tr>

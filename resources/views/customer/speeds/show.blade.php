@@ -12,65 +12,51 @@
     </style>
 @endsection
 @section('content')
-    <div id="content-page" class="content-page">
+    <div id="content-page" class="content-page mb-5">
         <div class="container-fluid">
-            <h4>{{  __('app.customers.speed.show.title', ['branch' => $branch->name]) }}</h4>
-            <hr/>
-            <div class="related-product-block position-relative table">
-                <div class="row">
-                    <div class="col-md-12">
 
-                        <div class="iq-card col">
-                            <div class="iq-card-body">
-                                <div id="chartdiv"></div>
-                            </div>
+            <div class="iq-card secondary-custom-card mb-4">
+                <div class="iq-card-body">
+                    <div class="related-heading mb-5">
+                        <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
+                            <h2 class="border-bottom-0">{{  __('app.customers.speed.show.title', ['branch' => $branch->name]) }}</h2>
                         </div>
                     </div>
-                </div>
+                    <div id="chartdiv" class="mb-5"></div>
 
 
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <div class="iq-card col">
-                            <div class="iq-card-body">
-
-                                <div class="product_table table-responsive row p-0 m-0 col-12">
-                                    <table class="table dataTable ui celled table-bordered text-center no-footer"
-                                           id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
-                                        <thead>
-                                        <tr role="row">
-                                            {{--                            <th>id</th>--}}
-                                            <th>{{ __('app.customers.speed.index.downloadSpeed') }}</th>
-                                            <th>{{ __('app.customers.speed.index.downloadTime') }}</th>
-                                            <th>{{ __('app.customers.speed.index.uploadSpeed') }}</th>
-                                            <th>{{ __('app.customers.speed.index.uploadTime') }}</th>
-                                            <th>{{ __('app.customers.speed.index.date') }}</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($logs as $log)
-                                            <tr class="item{{$log->id}}">
-                                                {{--                                <td>{{ $log->id }}</td>--}}
-                                                <td>{{ number_format($log->internet_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
-                                                <td>{{$log->load_time ?? 0}} {{ __('app.customers.second') }}</td>
-                                                <td>{{ number_format($log->upload_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
-                                                <td>{{$log->uploaded_time ?? 0}} {{ __('app.customers.second') }}</td>
-                                                <td>{{$log->created_at->format('d-m-Y h:i A')}}</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                        </div>
+                    <div class="product_table table-responsive row p-0 m-0 col-12">
+                        <table class="table dataTable ui celled table-bordered text-center no-footer"
+                               id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                            <thead>
+                            <tr role="row">
+                                {{--                            <th>id</th>--}}
+                                <th>{{ __('app.customers.speed.index.downloadSpeed') }}</th>
+                                <th>{{ __('app.customers.speed.index.downloadTime') }}</th>
+                                <th>{{ __('app.customers.speed.index.uploadSpeed') }}</th>
+                                <th>{{ __('app.customers.speed.index.uploadTime') }}</th>
+                                <th>{{ __('app.customers.speed.index.date') }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($logs as $log)
+                                <tr class="item{{$log->id}}">
+                                    {{--                                <td>{{ $log->id }}</td>--}}
+                                    <td>{{ number_format($log->internet_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
+                                    <td>{{$log->load_time ?? 0}} {{ __('app.customers.second') }}</td>
+                                    <td>{{ number_format($log->upload_speed, 2) }} {{ __('app.customers.speed.unit') }}</td>
+                                    <td>{{$log->uploaded_time ?? 0}} {{ __('app.customers.second') }}</td>
+                                    <td>{{$log->created_at->format('d-m-Y h:i A')}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
+
                 </div>
-
-
-
             </div>
+
+
         </div>
     </div>
 @endsection

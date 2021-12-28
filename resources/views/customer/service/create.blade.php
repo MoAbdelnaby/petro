@@ -13,7 +13,7 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Create New Service</h4>
+                        <h4 class="card-title">{{ __('app.Create_New_Service') }}</h4>
                     </div>
                 </div>
                 <div class="iq-card-body">
