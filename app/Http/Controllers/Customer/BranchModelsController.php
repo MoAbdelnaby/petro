@@ -263,7 +263,7 @@ class BranchModelsController extends Controller
             ->where('created_at', '<=', Carbon::now())
             ->count();
 
-        Branch::whereNotIn('code', $branches->pluck('branch_code'))->get()->map(function($item) use ($branches) {
+        Branch::whereNotIn('code', $branches->pluck('branch_code')->toArray())->get()->map(function($item) use ($branches) {
             $branches->push((object) [
                 'id' => 111,
                 'branch_code' => $item->branch_code,
