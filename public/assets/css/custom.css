@@ -1209,3 +1209,20 @@ div.dataTables_wrapper div.dataTables_filter input {
     padding: 0 8px;
 }
 
+.nothingtoshoehere {
+    width: 500px;
+    margin: 100px auto;
+    border: 1px solid #93bacd;
+    padding: 15px;
+    text-align: center;
+    background: #f4fbff;
+    box-shadow: 0 0 5px #eee;
+    border-radius: 10px;
+}
+.nothingtoshoehere h2{
+    font-weight: bold;
+    font-size: 24px;
+}
+.nothingtoshoehere p {
+    margin-bottom: 10px;
+}

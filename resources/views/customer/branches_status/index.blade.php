@@ -85,13 +85,17 @@
                                                 </td>
                                                 <td>
                                                     @php($diff = \Carbon\Carbon::now()->diff($branch->created_at))
-                                                    @if($diff->d)
-                                                        {{ $diff->d }} {{ __('Day'.($diff->d > 1 ? 's' : '')) }}
+                                                    @if($diff->y)
+                                                        {{ __('app.not_connected_yet') }}
+                                                    @else
+                                                        @if($diff->d)
+                                                            {{ $diff->d }} {{ __('Day'.($diff->d > 1 ? 's' : '')) }}
+                                                        @endif
+                                                        @if($diff->d || $diff->h)
+                                                            {{ $diff->h }} {{ __('Hour'.($diff->h > 1 ? 's' : '')) }}
+                                                        @endif
+                                                        {{ $diff->i }} {{ __('Minute'.($diff->i > 1 ? 's' : '')) }}
                                                     @endif
-                                                    @if($diff->d || $diff->h)
-                                                        {{ $diff->h }} {{ __('Hour'.($diff->h > 1 ? 's' : '')) }}
-                                                    @endif
-                                                    {{ $diff->i }} {{ __('Minute'.($diff->i > 1 ? 's' : '')) }}
                                                 </td>
                                             </tr>
                                         @endforeach

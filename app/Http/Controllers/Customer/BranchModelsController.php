@@ -258,12 +258,23 @@ class BranchModelsController extends Controller
         /* get branches by table view last_branch_error */
         $query = DB::table('last_error_branch_views');
         $branches = $query->get();
-
         $on = $query
             ->where('created_at', '>=', Carbon::now()->subMinutes(15))
             ->where('created_at', '<=', Carbon::now())
             ->count();
-        $off =$branches->count() - $on;
+
+        Branch::whereNotIn('code', $branches->pluck('branch_code'))->get()->map(function($item) use ($branches) {
+            $branches->push((object) [
+                'id' => 111,
+                'branch_code' => $item->branch_code,
+                'user_id' => $item->user_id,
+                'error' => '',
+                'created_at' => Carbon::now()->subYear(),
+                'updated_at' => Carbon::now()->subYear(),
+            ]);
+        });
+
+        $off = $branches->count() - $on;
 
         return view("customer.branches_status.index", compact('branches', 'off', 'on'));
     }

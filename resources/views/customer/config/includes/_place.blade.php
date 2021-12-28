@@ -533,7 +533,7 @@
                                         <a tabindex="-1" class="dropdown-item removeDefault" href="#" data-type="home">
                                             {{ __('app.Show_in_home_page') }}
                                             <i class="fal fa-check show-icon"
-                                               @if(in_array('home',isset($config['InternetStatus']['1'])?array_values($config['InternetStatus']['1']):[])) style="display: inline"
+                                               @if(in_array('home',isset($config['InternetStatus']['1']) ? array_values($config['InternetStatus']['1']):[])) style="display: inline"
                                                data-active="1" @else data-active="0" @endif></i>
                                         </a>
                                     </li>
