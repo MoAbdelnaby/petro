@@ -11,6 +11,7 @@ return [
     'TestTime' => 'Test Time',
     'downloadSpeed' => 'Download Speed',
     'uploadSpeed' => 'Upload Speed',
+    'Show' => 'Show',
 
     'Create_New_Service' => 'Create New Service',
     'not_connected_yet' => 'Not Connected Yet',

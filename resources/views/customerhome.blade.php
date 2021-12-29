@@ -180,7 +180,7 @@
                     </div>
                 @endif
 
-                @if(in_array('home' ,Arr::flatten(array_values($config['place']['table']))) || in_array('home' ,Arr::flatten(array_values($config['plate']['table']))))
+                @if(in_array('home' ,Arr::flatten(array_values($config['place']['table']))) || in_array('home' ,Arr::flatten(array_values($config['plate']['table']))) || in_array('home' ,array_values($config['place']['InternetStatus'][1])))
                     <div class="row">
                         @if(in_array('home' ,Arr::flatten(array_values($config['place']['table']))))
                             <div class="col-lg-6">
@@ -248,7 +248,50 @@
                                 </div>
                             </div>
                         @endif
+
+                        @if(in_array('home' ,array_values($config['place']['InternetStatus'][1])))
+                            <div class=" col-lg-6 col-md-12">
+                                <div class="iq-card secondary-custom-card mb-4">
+                                <div class="iq-card-body">
+                                    <div class="related-heading mb-4">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
+                                            <h2 class="border-bottom-0">{{ __('app.Internet_status') }}</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+
+                                        <div class="col-lg-6 col-md-6 mb-3">
+                                            <div class="card text-center col-12">
+                                                <div class="card-header row online">
+                                                    <div class="col-4"><img width="60" src="{{ asset("images/online-svgrepo-com.svg") }}" alt=""></div>
+                                                    <div class="col-8">
+                                                        <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
+                                                        <h3><b>6</b></h3>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="card text-center col-12">
+                                                <div class="card-header row offline">
+                                                    <div class="col-4"><img width="60" fill="red" src="{{ asset("images/offline-svgrepo-com.svg") }}" alt=""></div>
+                                                    <div class="col-8">
+                                                        <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
+                                                        <h3><b>8</b></h3>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        @endif
                     </div>
+
                 @endif
 
             @else
@@ -262,52 +305,6 @@
                     <p>Please Go To Config and change some thing to display in home page</p>
                     <a href="{{ route('config.index', 'place') }}" class="btn btn-info">Config</a>
                 </div>
-            @endif
-
-
-{{--            @dd($config['place']['InternetStatus'])--}}
-            @if(in_array('home' ,array_values($config['place']['InternetStatus'][1])))
-
-                <div class="row justify-content-center">
-                    <div class="iq-card secondary-custom-card mb-4 col-6">
-                        <div class="iq-card-body">
-                            <div class="related-heading mb-4">
-                                <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
-                                    <h2 class="border-bottom-0">{{ __('app.Internet_status') }}</h2>
-                                </div>
-                            </div>
-                            <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
-
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="card text-center col-12">
-                                        <div class="card-header row online">
-                                            <div class="col-4"><img width="60" src="{{ asset("images/online-svgrepo-com.svg") }}" alt=""></div>
-                                            <div class="col-8">
-                                                <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
-                                                <h3><b>6</b></h3>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="card text-center col-12">
-                                        <div class="card-header row offline">
-                                            <div class="col-4"><img width="60" fill="red" src="{{ asset("images/offline-svgrepo-com.svg") }}" alt=""></div>
-                                            <div class="col-8">
-                                                <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
-                                                <h3><b>8</b></h3>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             @endif
         </div>
     </div>

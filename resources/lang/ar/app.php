@@ -15,6 +15,9 @@ return array(
     'downloadSpeed' => 'سرعة التنزيل',
     'uploadSpeed' => 'سرعة تحميل',
 
+    'Show' => 'عرض',
+
+
     'Create_New_Service' => 'إنشاء خدمة جديدة',
     'not_connected_yet' => 'غير متصل بعد',
     'connection_speed' => 'سرعة الاتصال',

@@ -69,13 +69,16 @@
                                         <th>{{__('app.branch_name')}}</th>
                                         <th>{{ __('app.branch_status') }}</th>
                                         <th>{{ __('app.last_connected') }}</th>
+                                        <th>{{ __('app.Actions') }}</th>
 
                                         </thead>
                                         <tbody class="trashbody">
                                         @foreach($branches as $k => $branch)
                                             <tr>
                                                 <td>{{ $k+1 }}</td>
-                                                <td><a href="branches-log/{{$branch->branch_code}}" target="_blank">{{ \App\Models\Branch::where('code', $branch->branch_code)->first()->name }}</a></td>
+                                                <td>
+                                                    {{ \App\Models\Branch::where('code', $branch->branch_code)->first()->name }}
+                                                </td>
                                                 <td>
                                                     @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
                                                         <i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}
@@ -96,6 +99,9 @@
                                                         @endif
                                                         {{ $diff->i }} {{ __('Minute'.($diff->i > 1 ? 's' : '')) }}
                                                     @endif
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="branches-log/{{$branch->branch_code}}" target="_blank">{{ __('app.Show') }}</a>
                                                 </td>
                                             </tr>
                                         @endforeach
