@@ -456,7 +456,7 @@
                                                 {{--                                    <img src="{{resolveDark()}}/img/Group 23115.png" class="one">--}}
                                                 {{--                                    <img src="{{resolveDark()}}/img/Group 23116.png" class="three">--}}
                                                 <div class="custom-table">
-                                                     id="paginationSimpleNumbers"
+                                                     <table id="paginationSimpleNumbers"
                                                            class="table mt-4 {{ $userSettings ? handleTableSetting($userSettings):'theme-1' }}"
                                                            width="100%">
                                                         <thead>
