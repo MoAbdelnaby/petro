@@ -520,9 +520,10 @@
 
                                                                 <td>
                                                                     @if(!is_null($item->invoice))
-                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">
-                                                                            <i class="fas fa-file-pdf text-success "></i>
-                                                                        </a>
+{{--                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">--}}
+{{--                                                                            <i class="fas fa-file-pdf text-success "></i>--}}
+{{--                                                                        </a>--}}
+                                                                        <i class="fas fa-check text-success"></i>
                                                                     @endif
                                                                 </td>
 
