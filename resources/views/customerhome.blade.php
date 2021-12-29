@@ -266,7 +266,8 @@
                                                     <div class="col-4"><img width="60" src="{{ asset("images/online-svgrepo-com.svg") }}" alt=""></div>
                                                     <div class="col-8">
                                                         <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
-                                                        <h3><b>6</b></h3>
+                                                        <h3><b>{{ $on }}</b></h3>
+
                                                     </div>
 
                                                 </div>
@@ -279,7 +280,8 @@
                                                     <div class="col-4"><img width="60" fill="red" src="{{ asset("images/offline-svgrepo-com.svg") }}" alt=""></div>
                                                     <div class="col-8">
                                                         <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
-                                                        <h3><b>8</b></h3>
+                                                        <h3><b>{{ $off }}</b></h3>
+
                                                     </div>
 
                                                 </div>

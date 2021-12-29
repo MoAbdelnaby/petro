@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SendWelcomeMessage;
+use App\Models\Branch;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Session;
 
@@ -57,6 +60,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->type == "customer") {
+
 
             return \redirect()->route('CustomerHome');
 
