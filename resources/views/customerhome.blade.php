@@ -289,23 +289,25 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
                             </div>
-                            </div>
-                        @endif
+                            @endif
                     </div>
 
-                @endif
+                    @endif
 
             @else
                 <div class="nothingtoshoehere">
                     @if (session()->has('darkMode'))
-                        <img alt="Logo" src="{{url('/images')}}/wakeball/wakebwhite.png" class="img-fluid mainlogo" width="150"  alt="" style=""/>
+                        <img alt="Logo" src="{{url('/images')}}/wakeball/wakebwhite.png" class="img-fluid mainlogo mb-3"
+                             width="150" alt="" style=""/>
                     @else
-                        <img  src="{{url('/images')}}/wakeball/wakebdark.png"  class="img-fluid mainlogo" width="150"  alt="" style="">
+                        <img src="{{url('/images')}}/wakeball/wakebdark.png" class="img-fluid mainlogo  mb-3"
+                             width="150" alt="" style="">
                     @endif
                     <h2>{{ __('app.No_Thing_TO_Show_Here') }}</h2>
-                    <p>Please Go To Config and change some thing to display in home page</p>
-                    <a href="{{ route('config.index', 'place') }}" class="btn btn-info">Config</a>
+                    <p>{{ __('app.No_thing_to_paragraph') }}</p>
+                    <a href="{{ route('config.index', 'place') }}" class="btn btn-info">{{ __('app.config') }}</a>
                 </div>
             @endif
         </div>

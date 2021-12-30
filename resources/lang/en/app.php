@@ -13,6 +13,9 @@ return [
     'uploadSpeed' => 'Upload Speed',
     'Show' => 'Show',
 
+    'No_Thing_TO_Show_Here' => 'No Thing To Show Here',
+    'No_thing_to_paragraph' => 'Please Go To Config and change some thing to display in home page',
+
     'Create_New_Service' => 'Create New Service',
     'not_connected_yet' => 'Not Connected Yet',
 

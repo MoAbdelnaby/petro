@@ -520,7 +520,7 @@
                     <div class="related-heading mb-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
                             <h2 class="border-bottom-0">{{ __('app.Internet_status') }}</h2>
-                            <div class="dropdown config_key" data-type="statistics">
+                            <div class="dropdown config_key" data-type="InternetStatus">
                                 <a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown">
                                     <i class="fas fa-bars" style=""></i>
                                 </a>

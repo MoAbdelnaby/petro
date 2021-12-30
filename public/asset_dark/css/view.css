@@ -711,14 +711,33 @@ div.dataTables_wrapper div.dataTables_filter {
 .online {
     border-bottom: 5px solid #408040!important;
 }
-.offline i.fa-circle  {
-    color: #bf4040!important;
+
+.offline i.fa-circle {
+    color: #bf4040 !important;
 }
+
 .offline h3 b {
     color: #bf4040;
 }
+
 .offline {
-    border-bottom: 5px solid #bf4040!important;
+    border-bottom: 5px solid #bf4040 !important;
+}
+
+.nothingtoshoehere {
+    width: 500px;
+    margin: 100px auto;
+    border: 1px solid #192734;
+    padding: 15px;
+    text-align: center;
+    background: #192734;
+    box-shadow: 0 0 5px #3b4f62;
+    border-radius: 10px;
+}
+
+.nothingtoshoehere p {
+    margin-bottom: 10px;
+    color: #fff;
 }
 
 /* ****** */
