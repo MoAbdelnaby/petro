@@ -14,7 +14,7 @@
             width: 100% !important;
         }
         .search-model{display: none}
-        .search-model .col-md-3{
+        .search-model .col-md-6{
             display: none;
         }
     </style>
@@ -140,12 +140,12 @@
                                     <div class="product_table table-responsive row p-0 m-0 col-12">
                                         <table class="table dataTable ui celled table-bordered text-center">
                                             <thead>
-                                            <th>{{__('app.users.table.image')}}</th>
-                                            <th>{{__('app.users.table.name')}}</th>
-                                            <th>{{__('app.users.table.email')}}</th>
-                                            <th>{{__('app.users.table.Phone')}}</th>
-                                            <th>{{__('app.saas.packages.items.active_branches')}}</th>
-                                            <th>{{ __('app.Settings') }}</th>
+                                                <th>{{__('app.users.table.image')}}</th>
+                                                <th>{{__('app.users.table.name')}}</th>
+                                                <th>{{__('app.users.table.email')}}</th>
+                                                <th>{{__('app.users.table.Phone')}}</th>
+                                                <th>{{__('app.saas.packages.items.active_branches')}}</th>
+                                                <th>{{ __('app.Settings') }}</th>
                                             </thead>
                                             <tbody>
                                             @foreach($users as $user)
@@ -163,7 +163,7 @@
                                                             @endforeach
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td style="width: max-content;display: inline-block">
                                                         @if(auth()->user()->type=="customer")
                                                             @php
                                                                 $user_branches = [];
@@ -305,28 +305,31 @@
                             <input type="hidden" name="user_id" id="user_id">
 
                             <div class="tab-content assign_body" id="myTabContent">
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    @foreach($regions as $key=>$reg)
-                                        @if(count($reg->branches))
-                                            @foreach($reg->branches as $branche)
-                                                @php
-                                                    $Branches[] = ["name" => $branche->name, "id" => $branche->id];
-                                                @endphp
-                                            @endforeach
-                                        @endif
+                                <div class="overflowx-auto">
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        @foreach($regions as $key=>$reg)
+                                            @if(count($reg->branches))
+                                                @foreach($reg->branches as $branche)
+                                                    @php
+                                                        $Branches[] = ["name" => $branche->name, "id" => $branche->id];
+                                                    @endphp
+                                                @endforeach
+                                            @endif
 
-                                        <li class="nav-item" role="presentation">
-                                            <a class="nav-link {{$key == 0 ? 'active' : '' }}" id="home-tab" data-toggle="tab" href="#home-{{$reg->id}}" rel="home-{{$reg->id}}" role="tab" aria-controls="home" aria-selected="true">{{$reg->name}} <small>5</small></a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                            <li class="nav-item" role="presentation">
+                                                <a class="nav-link {{$key == 0 ? 'active' : '' }}" id="home-tab" data-toggle="tab" href="#home-{{$reg->id}}" rel="home-{{$reg->id}}" role="tab" aria-controls="home" aria-selected="true">{{$reg->name}} <small>5</small></a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+
+                                </div>
                             </div>
 
                             <div class="tab-content search-model">
                                 @foreach($regions as $key=>$reg)
                                     @if(count($reg->branches))
                                         @foreach($reg->branches as $branche)
-                                            <div class="col-md-3">
+                                            <div class="col-md-12">
                                                 <label class="custom-checkbox" rel="{{$branche->id}}"> {{ $branche->name }}
                                                     <input type="checkbox" rel2="{{ $branche->name }}" >
                                                     <span class="checkmark"></span>
@@ -375,11 +378,11 @@
                     var search_result = 0;
                     for (var i=0; i < regions.length; i++){
                         if (regions[i].name.search(text) >= 0){
-                            $('#assignform .search-model').find('input[rel2="'+regions[i].name+'"]').closest('.col-md-3').css({'display':'block'});
+                            $('#assignform .search-model').find('input[rel2="'+regions[i].name+'"]').closest('.col-md-6').css({'display':'block'});
                             search_result = search_result + 1;
                         }
                         else{
-                            $('#assignform .search-model').find('input[rel2="'+regions[i].name+'"]').closest('.col-md-3').css({'display':'none'});
+                            $('#assignform .search-model').find('input[rel2="'+regions[i].name+'"]').closest('.col-md-6').css({'display':'none'});
                         }
                         $('#assignform .assign_body').hide();
                         $('#assignform .search-model').show();

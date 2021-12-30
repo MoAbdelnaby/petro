@@ -2448,8 +2448,8 @@ g[transform="translate(144,0)"] g[stroke-opacity="0.15"]{
 }
 
 .iq-bg-danger {
-    background: #cd0416 !important;
-    color: #efebeb !important;
+    /*background: #cd0416 !important;*/
+    /*color: #efebeb !important;*/
 }
 .iq-bg-warning {
     background: #dba608 !important;
@@ -2515,6 +2515,9 @@ input[type="email"]:-webkit-autofill{
 }
 .table td, .table th{
     color: #ffffff;
+}
+.table td, .table th {
+    border-top: 1px solid #38414b!important;
 }
 /*******************************************************/
 /*-----------------------------------------------------*/

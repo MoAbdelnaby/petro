@@ -81,8 +81,6 @@
                                     </div>
                                 </div>
                                 <div class=" my-4">
-
-
                                     <form method="get" action="{{route('error_mangment.index',9)}}" class="d-flex">
                                         @csrf
                                         <div class=" col-12 col-md-4" id="filter_branch" >
@@ -108,7 +106,7 @@
                             <div class="tables text-center">
                                 <div class="custom-table error-mg-table">
                                     <table id="paginationSimpleNumbers"
-                                           class="table mt-4 table-striped"
+                                           class="table mt-4 table-striped dataTable"
                                            width="100%">
                                         <thead>
                                         <tr>
@@ -163,14 +161,14 @@
                                     </table>
                                 </div>
 
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination pg-blue">
-                                        @if($data != [])
-                                            {!! $data->appends(request()->query())->links() !!}
+{{--                                <nav aria-label="Page navigation example">--}}
+{{--                                    <ul class="pagination pg-blue">--}}
+{{--                                        @if($data != [])--}}
+{{--                                            {!! $data->appends(request()->query())->links() !!}--}}
 
-                                        @endif
-                                    </ul>
-                                </nav>
+{{--                                        @endif--}}
+{{--                                    </ul>--}}
+{{--                                </nav>--}}
                             </div>
                         </div>
                     </div>
@@ -187,9 +185,6 @@
 @push("js")
     <script>
         $(document).ready(function () {
-
-
-
             /***** Tables Show ******/
             $('.tables-types-d .dropdown-item').on("click", function (e) {
                 e.stopPropagation();
@@ -227,54 +222,58 @@
 
 
         $(".update-plate-btn").on("click", function (e) {
-            var plate_ar = $(`#errorMangamentModal input[name=plate_ar]`).val();
-            var plate_en = $(`#errorMangamentModal input[name=plate_en]`).val();
-            var number_ar = $(`#errorMangamentModal input[name=number_ar]`).val();
-            var number_en = $(`#errorMangamentModal input[name=number_en]`).val();
-            var item_id = $(`#errorMangamentModal input[name=item_id]`).val();
+                var plate_ar = $(`#errorMangamentModal input[name=plate_ar]`).val();
+                var plate_en = $(`#errorMangamentModal input[name=plate_en]`).val();
+                var number_ar = $(`#errorMangamentModal input[name=number_ar]`).val();
+                var number_en = $(`#errorMangamentModal input[name=number_en]`).val();
+                var item_id = $(`#errorMangamentModal input[name=item_id]`).val();
 
-            var errorTextMessage    = "Sorry, looks like there are some errors detected, please try again.";
-            var ConfirmButtonText   = "Ok, got it!";
-            var successTextMessage  = "You have updated plate successfully.";
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                data: $("#ErrorForm").serialize(),
-                url: `${app_url}/customer/error-mangment/${item_id}/updatePlate`,
-                dataType: "JSON",
-                type: "POST",
-                success: function (data) {
-                    Swal.fire({
-                        text: successTextMessage,
-                        icon: "success",
-                        buttonsStyling: !1,
-                        confirmButtonText: ConfirmButtonText,
-                        customClass: {confirmButton: "btn fw-bold btn-primary"}
-                    }).then((function () {
-                        $("#errorMangamentModal").hide();
-                        location.reload();
-                    }))
-                },
-                error: function (data) {
-                    console.log(data)
-                    Swal.fire({
-                        text: data.responseJSON?data.responseJSON.message:errorTextMessage,
-                        icon: "error",
-                        buttonsStyling: !1,
-                        confirmButtonText: ConfirmButtonText,
-                        customClass: {confirmButton: "btn btn-primary"}
-                    })
-                }
-            })
+                var errorTextMessage    = "Sorry, looks like there are some errors detected, please try again.";
+                var ConfirmButtonText   = "Ok, got it!";
+                var successTextMessage  = "You have updated plate successfully.";
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    data: $("#ErrorForm").serialize(),
+                    url: `${app_url}/customer/error-mangment/${item_id}/updatePlate`,
+                    dataType: "JSON",
+                    type: "POST",
+                    success: function (data) {
+                        Swal.fire({
+                            text: successTextMessage,
+                            icon: "success",
+                            buttonsStyling: !1,
+                            confirmButtonText: ConfirmButtonText,
+                            customClass: {confirmButton: "btn fw-bold btn-primary"}
+                        }).then((function () {
+                            $("#errorMangamentModal").hide();
+                            location.reload();
+                        }))
+                    },
+                    error: function (data) {
+                        // console.log(data)
+                        Swal.fire({
+                            text: data.responseJSON?data.responseJSON.message:errorTextMessage,
+                            icon: "error",
+                            buttonsStyling: !1,
+                            confirmButtonText: ConfirmButtonText,
+                            customClass: {confirmButton: "btn btn-primary"}
+                        })
+                    }
+                })
+
+
         });
 
 
         function openEditModal(data) {
             var data = JSON.parse(data);
+            console.log(data)
             $(`#errorMangamentModal input[name=plate_ar]`).val(data.char_ar);
             $(`#errorMangamentModal input[name=plate_en]`).val(data.char_en);
             $(`#errorMangamentModal input[name=number_ar]`).val(data.number_ar);
@@ -283,7 +282,122 @@
             $(`#errorMangamentModal #ErrorForm`).attr('action', `${app_url}/customer/error-mangment/${data.id}/updatePlate`);
             document.getElementById('screenshot_modal').src = data.path_screenshot ?? app_url + '/images/blank.png';
             $('#errorMangamentModal').modal('show');
+
+            console.log(data.char_ar.length, data.char_ar)
+            var tempCharAR = data.char_ar.replace(/ /g,'');
+            var tempCharEN = data.char_en.replace(/ /g,'');
+            var tempNumAR = data.number_ar.replace(/ /g,'');
+            var tempNumEn = data.number_en.replace(/ /g,'');
+
+            console.log(tempCharAR, tempCharEN, tempNumAR, tempNumEn)
+            for (var i=0; i<5; i++){
+                $($('.digits[data-info="number_ar"] .input-group input')[i]).val(tempNumAR[i]);
+                $($('.digits[data-info="plate_ar"] .input-group input')[i]).val(tempCharAR[i]);
+                $($('.digits[data-info="number_en"] .input-group input')[i]).val(tempNumEn[i]);
+                $($('.digits[data-info="plate_en"] .input-group input')[i]).val(tempCharEN[i]);
+            }
         }
+
+        function replaceFarsiNumber(input) {
+            const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            const farsi = ['۰', '۱', '۲', '۳', '٤', '۵', '٦', '۷', '۸', '۹'];
+
+            for (var i = 0; i < english.length; i++) {
+                input = input.replaceAll(english[i], farsi[i]);
+            }
+
+            return input;
+        }
+
+        $('.digit').on('keyup',function (){
+
+            var ennumbers = "0123456789";
+            var arnumbers = "۰۱۲۳٤۵٦۷۸۹";
+            // $(this).next().focus();
+            var val = $(this).val();
+            var parent = $(this).closest('.form-group').attr('data-info');
+
+            if(parent == "number_ar"){
+                if (arnumbers.search(val) > -1){
+                    $(this).next().focus();
+                    // $('#number_ar').val += val;
+                    setInputValue($(this), '#number_ar');
+
+                }
+                else if(ennumbers.search(val) > -1) {
+                    $(this).val(replaceFarsiNumber(val));
+                    $(this).next().focus();
+                    setInputValue($(this), '#number_ar');
+                }
+                else {
+                    $('span.info-patter').fadeOut();
+                    $(this).closest('.digits').find('span.info-patter').fadeIn();
+                    $(this).val('');
+                }
+            }
+            else if(parent == "plate_ar"){
+
+                var isArabic = /[\u0600-\u06FF\u0750-\u077F]/;
+                if (isArabic.test(val)){
+                    $(this).next().focus();
+                    setInputValue($(this), '#plate_ar');
+
+                }
+                else {
+                    $('span.info-patter').fadeOut();
+                    $(this).closest('div.digits').find('span.info-patter').fadeIn();
+                    $(this).val('');
+                }
+
+            }
+            else if(parent == "plate_en"){
+                const regex = /[A-Za-z]/;
+                if(regex.test(val)){
+                    $(this).next().focus();
+                    setInputValue($(this), '#plate_en');
+
+                }
+                else{
+                    $('span.info-patter').fadeOut();
+                    $(this).closest('div.digits').find('span.info-patter').fadeIn();
+                    $(this).val('');
+                }
+            }
+            else if(parent == "number_en"){
+                if (ennumbers.search(val) > -1){
+                    $(this).next().focus();
+                    setInputValue($(this), '#number_en');
+
+                }
+                else {
+                    $('span.info-patter').fadeOut();
+                    $(this).closest('.digits').find('span.info-patter').fadeIn();
+                    $(this).val('');
+                }
+
+            }
+        });
+
+        info();
+        function info (){
+            $('.digits label i.fa-info-circle').on('click', function (){
+                $('span.info-patter').fadeOut();
+                $(this).closest('.digits').find('span.info-patter').fadeIn();
+                setTimeout(function(){
+                    $('span.info-patter').fadeOut()
+                }, 3000)
+            })
+        }
+
+        function setInputValue(ele, input){
+            var text="";
+            inputs = ele.closest('.digits').find('input.digit');
+            for(var i=0; i < inputs.length; i++){
+                text = text + $(inputs[i]).val();
+            }
+            $(input).val(text);
+        }
+
 
     </script>
 @endpush

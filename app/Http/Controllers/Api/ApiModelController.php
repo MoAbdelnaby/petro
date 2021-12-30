@@ -28,6 +28,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -318,11 +319,19 @@ class ApiModelController extends Controller
     }
 
     public function branchNetwork(Request $request) {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'branch_code' => 'required',
             'last_error' => 'required',
             'status' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            $json['status'] = 'field';
+            $json['code'] = 500;
+            $json['message'] = 'issue of creation branch status';
+
+            return response()->json(['data' => $json],$json['code']);
+        }
 
         try {
             $json = array();
@@ -360,8 +369,8 @@ class ApiModelController extends Controller
                         $json['code'] = 200;
                     }else {
                         $json['status'] = 'field';
-                        $json['message'] = 500;
-                        $json['code'] = 'issue of creation branch status';
+                        $json['code'] = 500;
+                        $json['message'] = 'issue of creation branch status';
                     }
                     /* send notification to admins heating branch */
                     foreach (User::where('type','customer')->get() as $user) {

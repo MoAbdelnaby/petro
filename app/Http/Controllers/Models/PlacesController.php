@@ -90,10 +90,13 @@ class PlacesController extends Controller
 
         if ($results->isNotEmpty()) {
             foreach ($results as $result) {
-                $final_branches[] = (object)[
-                    'name' => $result->branch->name,
-                    'user_model_branch_id' => $result->id
-                ];
+                $result = (object)$result;
+
+                if ($result->branch)
+                    $final_branches[] = [
+                        'name' => $result->branch->name,
+                        'user_model_branch_id' => $result->id
+                    ];
             }
         }
 
@@ -163,7 +166,7 @@ class PlacesController extends Controller
             'start' => 'nullable|date',
             'submittype' => 'required',
             'exportType' => 'required_if:submittype,2',
-        ],[
+        ], [
             'exportType.required_if' => 'please select file format first',
         ]);
 

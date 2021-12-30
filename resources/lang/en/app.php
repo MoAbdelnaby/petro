@@ -2,6 +2,22 @@
 return [
     'show_all' => 'Show All',
     'data' => 'Data',
+    'charEnExample' => 'The letters must be entered in English example [ abc... ] ',
+    'numEnExample' => 'The numbers must be entered in English example [ 123... ] ',
+    'charArExample' => 'The letters must be entered in Arabic example [ ا ب ت ... ]',
+    'numArExample' => 'The numbers must be entered in Arabic example [ ۰۱۲۳ ] ',
+    'Upload' => 'Upload',
+    'MBS' => 'MB.S',
+    'TestTime' => 'Test Time',
+    'downloadSpeed' => 'Download Speed',
+    'uploadSpeed' => 'Upload Speed',
+    'Show' => 'Show',
+
+    'Create_New_Service' => 'Create New Service',
+    'not_connected_yet' => 'Not Connected Yet',
+
+
+    'connection_speed' => 'Connection Speed',
     'Internet_status' => 'Internet Status',
     'branchSetting' => 'Branch Status Mail',
     'duration' => 'Duration',

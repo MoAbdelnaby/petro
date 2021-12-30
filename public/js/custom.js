@@ -722,8 +722,8 @@ function assign_user_to_branch_model_alert(val, u_brs, branches, regions) {
     $.each(regions, function (index, value) {
         var $element = $('<div class="tab-pane fade' + (index == 0 ? 'show active' : '') + '" id="home-' + value.id + '" role="tabpanel" aria-labelledby="home-tab">' +
             '<div class="row join">' +
-            '<div class="col-md-12 p-0">' +
-            '<div class="col-md-3">' +
+            '<div class="col-md-12 mx-0 px-0 my-3 border-bottom">' +
+            '<div class="col-md-6 col-lg-4">' +
             '<label class="custom-checkbox">'+trans_Check_All+' <input type="checkbox"  class="checkall" /> <span class="checkmark"></span></label>' +
             '</div>' +
             '</div>' +
@@ -731,15 +731,16 @@ function assign_user_to_branch_model_alert(val, u_brs, branches, regions) {
             '</div>');
 
         $.each(value.branches, function (i, br) {
+            console.log(value.branches.length)
             if (user_branches.includes(br.id.toString())) {
-                $element.find('.join').append(`<div class="col-md-3">
+                $element.find('.join').append(`<div class="col-md-6 col-lg-4">
                 <label class="custom-checkbox" id="` + br.id + `" >` + br.name + `
                 <input class="branchselect" checked="checked"  type="checkbox" name="branches[]" id="` + br.name + `" value="` + br.id + `">
                 <span class="checkmark"></span>
               </label><div>`);
                 $('#myModalAssign .search-model').find('.custom-checkbox[rel="' + br.id + '"]').find('input[type="checkbox"]').trigger('click');
             } else {
-                $element.find('.join').append(`<div class="col-md-3">
+                $element.find('.join').append(`<div class="col-md-6 col-lg-4">
                 <label class="custom-checkbox" id="` + br.id + `" >` + br.name + `
                 <input class="branchselect"  type="checkbox" name="branches[]" id="` + br.name + `" value="` + br.id + `">
               <span class="checkmark"></span>
@@ -913,4 +914,13 @@ function delete_oldrequest(url, id) {
 
 //========================= End Delete Option ============================//
 
+
+$('#myModalAssign .nav-tabs .nav-link').on('click',function (){
+    var chekedInputs = $($(this).attr('href')).find('.col-md-6.col-lg-4 input:checked').length;
+    var length = $($(this).attr('href')).find('.col-md-6.col-lg-4').length;
+   if(length <= 1){
+       console.log(length)
+       $($(this).attr('href')).html('<div class="noBrache"><i class="fas fa-code-branch"></i> <h2> No Branch available <small>No Branch available No Branch available</small></h2></div>');
+   }
+});
 

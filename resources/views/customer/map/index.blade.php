@@ -213,7 +213,7 @@
                                             <span class="close"><i class="fa fa-close"></i></span>
                                             <img src="" alt="">
                                         </div>
-                                        <table class="table-bordered table tabl">
+                                         <table class="table-bordered dataTable table tabl">
                                             <thead>
                                                 <th>{{ __('app.Image') }}</th>
                                                 <th>{{ __('app.branch') }}</th>

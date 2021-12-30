@@ -61,7 +61,7 @@
 {{--                                        </div>--}}
                                     </div>
                                 </div>
-                                <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid" aria-describedby="user-list-page-info">
+                                <table id="user-list-table" class="table dataTable table-striped table-bordered mt-4" role="grid" aria-describedby="user-list-page-info">
                                     <thead>
                                     <tr>
                                         <th>{{__('app.permissions.table.name')}}</th>

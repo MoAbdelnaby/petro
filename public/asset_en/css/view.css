@@ -115,3 +115,41 @@
 .features-div {
     height: 30px;
 }
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right;
+    width: 50%;
+    float: right;
+}
+
+.li-btn-sm{
+    margin-bottom: 5px;
+}
+div.dataTables_wrapper div.dataTables_length select{
+    display: inline-block;
+    width: 54px;
+    height: 34px;
+    border: 1px solid #ccc;
+    color: #999;
+    text-align: center;
+}
+
+#myModalAssign .overflowx-auto{
+    overflow-x: auto;
+    height: 75px;
+    overflow-y: hidden;
+}
+
+#myModalAssign .overflowx-auto .nav-tabs {
+    width: max-content;
+}
+.table td, .table th {
+    padding: 0.75rem;
+}
+.iq-card-body{
+    overflow: hidden;
+}
+.dataTables_length {
+    display: inline-block!important;
+    float: left;
+}

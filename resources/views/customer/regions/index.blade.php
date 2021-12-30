@@ -39,7 +39,7 @@
                                         <button type="submit" style="display: none" class="restore_all btn btn-sm btn-primary mr-1"><i class="fas fa-recycle"></i> {{__('app.restore_all')}}</button>
                                         <button type="submit" style="display: none" class="remove_all btn btn-sm btn-danger" ><i class="fas fa-trash"> </i>{{__('app.delete_all')}}</button>
                                     </div>
-                               <table class="table table-bordered text-center">
+                               <table class="table dataTable table-bordered text-center">
 
                                    <thead class="bg-primary">
                                     <td>

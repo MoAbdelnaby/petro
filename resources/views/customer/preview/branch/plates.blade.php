@@ -456,7 +456,7 @@
                                                 {{--                                    <img src="{{resolveDark()}}/img/Group 23115.png" class="one">--}}
                                                 {{--                                    <img src="{{resolveDark()}}/img/Group 23116.png" class="three">--}}
                                                 <div class="custom-table">
-                                                    <table id="paginationSimpleNumbers"
+                                                     <table id="paginationSimpleNumbers"
                                                            class="table mt-4 {{ $userSettings ? handleTableSetting($userSettings):'theme-1' }}"
                                                            width="100%">
                                                         <thead>
@@ -520,9 +520,10 @@
 
                                                                 <td>
                                                                     @if(!is_null($item->invoice))
-                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">
-                                                                            <i class="fas fa-file-pdf text-success "></i>
-                                                                        </a>
+{{--                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">--}}
+{{--                                                                            <i class="fas fa-file-pdf text-success "></i>--}}
+{{--                                                                        </a>--}}
+                                                                        <i class="fas fa-check text-success"></i>
                                                                     @endif
                                                                 </td>
 

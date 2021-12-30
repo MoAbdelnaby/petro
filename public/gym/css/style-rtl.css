@@ -409,6 +409,7 @@ body.sidebar-main .content-page, body.sidebar-main .iq-footer {
 }
 .table-responsive {
     overflow-x: inherit;
+    overflow-y: hidden;
 }
 .float-left{
     float: right!important;
@@ -427,8 +428,9 @@ body.sidebar-main .content-page, body.sidebar-main .iq-footer {
     width: auto;
     display: inline-block !important;
     padding: 2px 4px;
-    float: inherit!important;
+    float: right!important;
     margin:0 3px;
+    margin-bottom: 5px;
 }
 .scroll-vertical-custom.main li {
     float: inherit!important;
@@ -597,3 +599,65 @@ body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .s
     padding: 0 5px;
 }
 
+.badge{
+    font-size: 14px;
+}
+.menu-and-filter .nav-tabs .nav-link,
+.menu-and-filter .nav-tabs .nav-link.active {
+    font-family: "cairo", Regular;
+}
+.menu-and-filter .nav-tabs .nav-link.active {
+    border-bottom: 2px solid var(--iq-primary);
+    color: var(--iq-primary);
+    font-family: "cairo", Regular;
+}
+
+.nav-pills #v-pills-reminder-tab.active, .nav-pills #v-pills-branch-tab.active {
+    background: var(--iq-primary);
+    color: white;
+    border-radius: 5px;
+}
+/*a {*/
+/*    color: var(--iq-primary);*/
+/*}*/
+div.dataTables_wrapper div.dataTables_length select {
+    display: inline-block;
+    width: 54px;
+    height: 34px;
+    border: 1px solid #ccc;
+    color: #999;
+    text-align: center;
+}
+.btn-primary, .btn-primary:hover{
+    border-color: #1c085c;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+    left: 0!important;
+    right: auto!important;
+}
+.col-form-label{
+    padding-top: 0;
+}
+.select2-container--default.select2-container .select2-selection--multiple {
+    border: solid #1e3044 1px;
+    outline: 0;
+    /*background: #111a24;*/
+    height: 38px;
+    border: 1px solid #1f3246;
+}
+
+.select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove {
+    border-right: 1px solid #aaa;
+    border-right: none;
+    border-top-left-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    left: auto;
+    right: 0;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    padding-left: 5px;
+    padding-right:20px!important;
+}

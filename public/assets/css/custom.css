@@ -522,7 +522,7 @@ input:checked + .slider:before {
 table.table-bordered.dataTable tbody th,
 table.table-bordered.dataTable tbody td{
     vertical-align: middle;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 table.table-bordered .btn{
@@ -584,9 +584,12 @@ td img{
 .kt-avatar .kt-avatar__upload{
     right: -16px;
     top: -4px;
+    display: block;
+    line-height: 28px;
 }
 .kt-avatar .kt-avatar__upload i{
     color: #29abe2;
+    display: block;
 }
 .kt-avatar .kt-avatar__upload:hover{
     background-color: #29abe2;
@@ -610,9 +613,9 @@ td img{
     position: relative;
     margin: 5px;
     display: block;
+    padding-left: 25px;
 }
 .custom-checkbox p{
-    padding-left: 25px;
     margin: 0;
 }
 .custom-checkbox input:checked ~ .checkmark{
@@ -860,7 +863,7 @@ g[aria-labelledby$="title"] {
 
 
 }
-.table td,
+
 .table th{
     padding: 0 5px;
     margin: 0;
@@ -1084,7 +1087,7 @@ body{overflow-x:hidden;}
 }
 .digits .form-control{
     opacity: 0;
-    z-index: 1;
+    z-index: 0;
     position: absolute;
 }
 .digits .digitsSpan {
@@ -1156,4 +1159,70 @@ div.dataTables_wrapper div.dataTables_paginate {
     text-align: center!important;
     display: block;
     width: 100%;
+}
+
+.noBrache{
+    padding:25px;
+}
+.noBrache i.fa-code-branch{
+    font-size: 6rem;
+    color: red;
+    float: left;
+    margin-right: 10px;
+}
+.noBrache h2 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: red;
+}
+.noBrache h2 small {
+    display: table;
+    font-size: 1.5rem;
+}
+.info-patter {
+    position: absolute;
+    z-index: 1;
+    top: -25px;
+    background: #b1180d;
+    padding: 0 6px;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 5px;
+    width: max-content;
+    right: 0;
+    display: none;
+}
+
+.badge{
+    font-size: 12px;
+}
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: auto;
+    border: 1px solid #ccc;
+    height: 34px;
+    line-height: 34px;
+    font-size: 14px;
+    width: 200px;
+    border-radius: 5px;
+    padding: 0 8px;
+}
+
+.nothingtoshoehere {
+    width: 500px;
+    margin: 100px auto;
+    border: 1px solid #93bacd;
+    padding: 15px;
+    text-align: center;
+    background: #f4fbff;
+    box-shadow: 0 0 5px #eee;
+    border-radius: 10px;
+}
+.nothingtoshoehere h2{
+    font-weight: bold;
+    font-size: 24px;
+}
+.nothingtoshoehere p {
+    margin-bottom: 10px;
 }

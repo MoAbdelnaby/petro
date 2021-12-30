@@ -171,7 +171,7 @@
 
                                             <div class="p-4">
                                                 <div class="custom-table mt-5"  >
-                                                    <table class="table {{handleTableConfig($config['table'],'report')}}" id="Plate_table" width="100%">
+                                                    <table class="table dataTable text-center {{handleTableConfig($config['table'],'report')}}" id="Plate_table" width="100%">
                                                         <thead>
                                                         <tr>
                                                             <th class="th-sm">{{ucfirst($filter_key)}}</th>

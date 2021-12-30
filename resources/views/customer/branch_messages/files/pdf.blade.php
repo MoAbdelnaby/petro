@@ -71,7 +71,7 @@
         Start : {{$list['start']}} <span style='margin-left: 15px'>End : {{$list['end']}}</span>
     </h3>
 
-    <table class="styled-table">
+    <table class="styled-table dataTable">
         <thead>
         <tr>
             <th class="th-sm">#</th>

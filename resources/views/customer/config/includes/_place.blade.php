@@ -327,7 +327,7 @@
                         </div>
                     </div>
                     <div class="custom-table mt-5">
-                        <table class="table {{handleTableConfig($config['table'])}}" width="100%">
+                         <table class="table {{handleTableConfig($config['table'])}} dataTable text-center" width="100%">
                             <thead>
                             <tr>
                                 <th class="th-sm">
@@ -533,7 +533,7 @@
                                         <a tabindex="-1" class="dropdown-item removeDefault" href="#" data-type="home">
                                             {{ __('app.Show_in_home_page') }}
                                             <i class="fal fa-check show-icon"
-                                               @if(in_array('home',isset($config['InternetStatus']['1'])?array_values($config['InternetStatus']['1']):[])) style="display: inline"
+                                               @if(in_array('home',isset($config['InternetStatus']['1']) ? array_values($config['InternetStatus']['1']):[])) style="display: inline"
                                                data-active="1" @else data-active="0" @endif></i>
                                         </a>
                                     </li>
@@ -552,7 +552,7 @@
                     <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
 
                         <div class="col-lg-6 col-md-6">
-                            <div class="card text-center">
+                            <div class="card text-center col-12">
                                 <div class="card-header row online">
                                     <div class="col-4"><img width="60" src="{{ asset("images/online-svgrepo-com.svg") }}" alt=""></div>
                                     <div class="col-8">

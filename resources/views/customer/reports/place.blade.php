@@ -184,7 +184,7 @@
 
                                         <div class="p-4">
                                             <div class="custom-table mt-5">
-                                                <table class="table {{handleTableConfig($config['table'],'report')}}"
+                                                <table class="table dataTable text-center {{handleTableConfig($config['table'],'report')}}"
                                                        id="place_table" width="100%">
                                                     <thead>
                                                     <tr>

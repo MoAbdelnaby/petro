@@ -258,27 +258,32 @@ class BranchModelsController extends Controller
         /* get branches by table view last_branch_error */
         $query = DB::table('last_error_branch_views');
         $branches = $query->get();
-
         $on = $query
             ->where('created_at', '>=', Carbon::now()->subMinutes(15))
             ->where('created_at', '<=', Carbon::now())
             ->count();
-        $off =$branches->count() - $on;
 
+        Branch::whereNotIn('code', $branches->pluck('branch_code'))->get()->map(function($item) use ($branches) {
+            $branches->push((object) [
+                'id' => 111,
+                'branch_code' => $item->code,
+                'user_id' => $item->user_id,
+                'error' => '',
+                'created_at' => Carbon::now()->subYear(),
+                'updated_at' => Carbon::now()->subYear(),
+            ]);
+        });
+
+        $off = $branches->count() - $on;
         return view("customer.branches_status.index", compact('branches', 'off', 'on'));
     }
 
     public function getLogs($code)
     {
-        $logChart = array();
-        $branchName = Branch::where('code', $code)->first()->name;
-        $logs = BranchNetWork::with('user')->where("branch_code", "=", $code)->paginate(25);
-        foreach (BranchNetWork::where('branch_code', '=', $code)->get() as $key => $bStatus) {
-            $logChart[$key]['created_at'] = $bStatus->created_at->format("Y-m-d h:i a");
-            $logChart[$key]['status'] = ($bStatus->status == 'online') ? 1 : 0;
-        }
-//        return response()->json($logChart);
-        return view("customer.branches_status.logs", compact('logs', 'branchName', 'logChart'));
+        $branchName = Branch::where('code', $code)->firstOrFail()->name;
+        $logs = BranchNetWork::with('user')->where("branch_code", $code)->get();
+
+        return view("customer.branches_status.logs", compact('logs', 'branchName'));
     }
 
 }

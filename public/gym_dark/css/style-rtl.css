@@ -18,10 +18,10 @@ body.sidebar-main .content-page, body.sidebar-main .iq-footer {
     list-style-type: none;
     position: relative;
 }
-.online {
-    background: #192734;
+.online,.offline {
+        background: #15202b;
 }
-.offline,.iq-card .iq-card .iq-card{
+.iq-card .iq-card .iq-card{
     background: #192734!important;
 }
 .card{
@@ -29,7 +29,7 @@ body.sidebar-main .content-page, body.sidebar-main .iq-footer {
 }
 
 div.dataTables_wrapper div.dataTables_filter {
-    text-align: right;
+    text-align: left;
     display: inline-block;
     float: left;
 }
@@ -48,4 +48,30 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .menu-and-filter .nav-tabs .nav-item a{
     font-family: inherit;
+}
+
+#statistic .iq-card:before {
+    content: '';
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+    display: block;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 10px;
+    clip-path: polygon(42% 0, 100% 0%, 100% 100%, 42% 100%, 0% 50%);
+    right: auto;
+    transform: rotateY(180deg);
+}
+a,a:hover{
+    text-decoration: none;
+}
+.kt-avatar .kt-avatar__holder {
+    background: #1f3246;
+    background-blend-mode: soft-light;
+}
+.border-bottom {
+    border-bottom: 1px solid #1f3246!important;
 }
