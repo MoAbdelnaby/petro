@@ -95,7 +95,7 @@
 
 
                                             <label for="speedtest" class="custom-checkbox">
-                                                <p>{{__('app.test_speed')}}</span>
+                                                <span>{{__('app.test_speed')}}</span>
                                                 <input class="trashselect" type="checkbox" name="speedtest" id="speedtest" value="3">
                                                 <span class="checkmark"></span>
                                             </label>
