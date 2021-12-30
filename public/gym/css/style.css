@@ -1857,7 +1857,7 @@ input[type="checkbox"].switch_1:checked:after{
 
 .header .tables{
     width: 100%;
-    overflow-x: auto;}
+}
 
 @media(max-width:767px) {
     .charts-sec {
