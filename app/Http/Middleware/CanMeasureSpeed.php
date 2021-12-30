@@ -16,7 +16,8 @@ class CanMeasureSpeed
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->speedtest == 1) {
+        if (Auth::user()->speedtest == 1 && Auth::user()->type != 'customer' ) {
+
             return redirect()->route('branch.register');
         }
         return $next($request);
