@@ -27,7 +27,7 @@
             <div class="scroll-vertical-custom-div">
                 @foreach ($final_branches as $branch)
                     <li class="nav-item">
-                        <a class="nav-link {{$branch->name == $usermodelbranch->branch->name ? 'active':''}}"
+                        <a class="nav-link {{$branch->name == ($usermodelbranch->branch->name ?? '') ? 'active':''}}"
                            id="pills-home-tab" href="{{route('modelbranchpreview',[$branch->user_model_branch_id])}}"
                            aria-controls="pills-home" aria-selected="true">
                             <img src="{{resolveDark()}}/img/icon-location.svg" alt="">
