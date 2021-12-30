@@ -29,7 +29,7 @@ return array(
     'status' => 'الحاله',
     'overall' => 'الكل',
     'Today' => 'اليوم',
-    'test_speed'=>'قياس سرعه الانترنت',
+    'test_speed'=>'يستطيع قياس سرعه الإنترنت فقط',
     'AVG_Employee_Costs' => 'تكاليف الموظف AVG',
     'Actions' => 'إجراءات',
     'Actions_in_Users' => 'الإجراءات في المستخدمين',

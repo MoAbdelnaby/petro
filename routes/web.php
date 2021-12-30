@@ -22,7 +22,7 @@ Route::get('dark/{code}', 'HomeController@dark')->name('dark');
 Route::post('user_settings/{col}', 'UserSettingsController@update')->name('user_settings');
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','speed']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
     Route::get('userNotify','HomeController@getNotify')->name('notfication');
@@ -269,8 +269,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('service', 'ServiceController');
     Route::get('connection-speed', 'Models\ConnectionSpeedController@index')->name('connection-speed.index');
     Route::get('branches/{branch}/connection-speeds', 'Models\ConnectionSpeedController@show')->name('branch.connection-speeds');
-    Route::get('branches/register', 'Models\ConnectionSpeedController@registerBranch')->name('branch.register');
     Route::get('branches/message-log', 'Customer\BranchMessageController@index')->name('branch.message_log');
     Route::post('branches/export', 'Customer\BranchMessageController@export')->name('branch.export');
     Route::get('branches/message-exported', 'Customer\BranchMessageController@exportedFile')->name('branch.exported_file');
 });
+Route::get('branches/register', 'Models\ConnectionSpeedController@registerBranch')->name('branch.register');
+

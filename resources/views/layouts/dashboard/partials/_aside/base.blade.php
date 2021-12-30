@@ -320,21 +320,6 @@
                             </div>
                         </div>
 
-                        @if(auth()->user()->speedtest == 1)
-                        <div
-                            class="row justify-content-center  p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/connection-speed' ? 'active' : '' }} ">
-                            <div class="col-12 justify-content-center">
-                                <div class="iq-product-cover d-flex justify-content-center">
-                                    <a href="{{ route('connection-speed.index') }}" class="iq-waves-effect">
-                                        <i class="fas fa-wifi fa-2x"></i>
-                                    </a>
-                                </div>
-                                <div class="iq-product-cover d-flex justify-content-center"><a
-                                        href="{{ route('connection-speed.index') }}"
-                                        class="iq-waves-effect menutext">{{ __('app.Connections') }}</a></div>
-                            </div>
-                        </div>
-                            @endif
 
                     @endif
                 @endif
