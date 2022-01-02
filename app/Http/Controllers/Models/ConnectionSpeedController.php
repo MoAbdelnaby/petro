@@ -48,7 +48,7 @@ class ConnectionSpeedController extends Controller
 
     public function registerBranch()
     {
-        
+
         $branches = Branch::all();
 
         return view('customer.speeds.registerBranch', compact('branches'));

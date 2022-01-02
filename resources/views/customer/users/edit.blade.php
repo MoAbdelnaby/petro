@@ -75,6 +75,28 @@
                                                 </span>
                                             @enderror
                                         </div>
+                                        <div class="form-group col-lg-4 col-md-6 col-sm-12">
+                                            <label class="d-block w-100">&nbsp;&nbsp;</label>
+
+
+                                            <label for="speedtest" class="custom-checkbox">
+                                                <span>{{__('app.test_speed')}}</span>
+                                                <input class="trashselect" type="checkbox" {{ $user->speedtest == 1 ? 'checked' : '' }} name="speedtest" id="speedtest" >
+                                                <span class="checkmark"></span>
+                                            </label>
+
+
+                                            {{-- <input type="checkbox" style="" name="speedtest"
+                                                   checked="checked" id="speedtest"
+                                                   class=" @error('speedtest') is-invalid @enderror">
+                                            <label for="speedtest">{{__('app.test_speed')}}</label> --}}
+                                            @error('speedtest')
+                                            <span class="invalid-feedback" role="alert">
+                                               <strong>{{ $message }}</strong>
+                                             </span>
+                                            @enderror
+
+                                        </div>
 
                                     </div>
                                     <div class="border-bottom my-2"></div>

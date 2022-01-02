@@ -101,7 +101,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
         $validator = Validator::make($request->all(), [
             'email' => 'required|max:70|email|unique:users|regex:/^\S+@\S+\.\S+$/',
             'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/',
