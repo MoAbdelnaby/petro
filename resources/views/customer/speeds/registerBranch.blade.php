@@ -101,7 +101,7 @@
 
         #chartdiv {
             width: 100%;
-            height: calc(100vh - 370px);
+            height: calc(100vh - 430px);
         }
 
         .select2-container {
@@ -345,6 +345,18 @@
                     </div>
                 </div>
                 <div class="col-8">
+                    <div class="col-12 text-right">
+                        <a href="{{ route("logout") }}"></a>
+                        <a class="iq-sub-card iq-bg-primary-hover border-0"
+                           style="font-size: 25px;padding-top: 15px;display: inline-block;" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();document.getElementById('logout-form').submit();"
+                           role="button">
+                            <i class="fas fa-power-off"></i>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </div>
                     <div class="col-12 py-5">
                         <h5><i class="fas fa-check"></i> {{ __('app.Select_Branch') }}</h5>
                         <div class="input-group">
