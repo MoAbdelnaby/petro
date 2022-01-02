@@ -219,7 +219,7 @@
                                 </a>
                                 <ul class="dropdown-menu main-dropdown chart-type tables-type dropped">
                                     <li class="dropdown-submenu config_value_parent">
-                                            {{ __('app.Show_in_report') }}
+                                            {{ __('app.Show_in_Report') }}
                                         <a tabindex="-1" class="dropdown-item test table-1 selected" href="#">
                                             <img src="{{ asset('assets/images/tables-type/table-1.png')}}" alt="Theme 1"
                                                  title="Theme 1">
@@ -445,7 +445,8 @@
                                 </a>
                                 <ul class="dropdown-menu main-dropdown config_value" data-type="1">
                                     <li>
-                                        <a tabindex="-1" class="dropdown-item removeDefault" href="#" data-type="home">
+                                        <a tabindex="-1" class="dropdown-item removeDefault p-3" href="#"
+                                           data-type="home">
                                             {{ __('app.Show_in_home_page') }}
                                             <i class="fal fa-check show-icon"
                                                @if(in_array('home',isset($config['statistics']['1'])?array_values($config['statistics']['1']):[])) style="display: inline"
@@ -453,7 +454,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a tabindex="-1" class="dropdown-item removeDefault" href="#" data-type="report">
+                                        <a tabindex="-1" class="dropdown-item removeDefault p-3" href="#"
+                                           data-type="report">
                                             {{ __('app.Show_in_Report') }}
                                             <i class="fal fa-check show-icon"
                                                @if(in_array('report',isset($config['statistics']['1'])?array_values($config['statistics']['1']):[])) style="display: inline"
@@ -524,7 +526,7 @@
                     <div class="related-heading mb-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
                             <h2 class="border-bottom-0">{{ __('app.Internet_status') }}</h2>
-                            <div class="dropdown config_key" data-type="statistics">
+                            <div class="dropdown config_key" data-type="InternetStatus">
                                 <a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown">
                                     <i class="fas fa-bars" style=""></i>
                                 </a>
@@ -532,17 +534,34 @@
                                     <li>
                                         <a tabindex="-1" class="dropdown-item removeDefault" href="#" data-type="home">
                                             {{ __('app.Show_in_home_page') }}
+                                            {{--                                            @dd($config['InternetStatus'])--}}
                                             <i class="fal fa-check show-icon"
-                                               @if(in_array('home',isset($config['InternetStatus']['1']) ? array_values($config['InternetStatus']['1']):[])) style="display: inline"
-                                               data-active="1" @else data-active="0" @endif></i>
+                                               @if(in_array('home',isset($config['InternetStatus']['1'])?array_values($config['InternetStatus']['1']):[]))
+                                               style="display: inline"
+                                               data-active="1"
+                                               @else
+                                               data-active="0"
+                                                @endif
+                                            >
+
+                                            </i>
+
                                         </a>
                                     </li>
                                     <li>
-                                        <a tabindex="-1" class="dropdown-item removeDefault" href="#" data-type="report">
+                                        <a tabindex="-1" class="dropdown-item removeDefault" href="#"
+                                           data-type="report">
                                             {{ __('app.Show_in_Report') }}
                                             <i class="fal fa-check show-icon"
-                                               @if(in_array('report',isset($config['InternetStatus']['1'])?array_values($config['InternetStatus']['1']):[])) style="display: inline"
-                                               data-active="1" @else data-active="0" @endif></i>
+                                               @if(in_array('report',isset($config['InternetStatus']['1'])?array_values($config['InternetStatus']['1']):[]))
+                                               style="display: inline"
+                                               data-active="1"
+                                               @else
+                                               data-active="0"
+                                                @endif
+                                            >
+
+                                            </i>
                                         </a>
                                     </li>
                                 </ul>
