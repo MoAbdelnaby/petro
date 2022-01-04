@@ -67,7 +67,7 @@
                                     </li>
                                     <li class="dropdown-submenu config_value_parent">
                                         <a tabindex="-1" class=" test chart-3" href="#">
-                                            <img src="{{ asset('assets/images/chart-type/Line-Chart.svg')}}"
+                                            <img src="{{ asset('assets/images/chart-type/Line-chart.svg')}}"
                                                  alt="Line Chart" title="Line Chart">
                                         </a>
                                         <small class="drop-icon dropdown-item"></small>
@@ -93,11 +93,12 @@
                                     </li>
                                     <li class="dropdown-submenu config_value_parent">
                                         <a tabindex="-1" class=" test chart-4" href="#">
-                                            <img src="{{ asset('assets/images/chart-type/Line-Chart-2.svg')}}"
+                                            <img src="{{ asset('assets/images/chart-type/Line-chart-2.svg')}}"
                                                  alt="Line Chart" title="Line Chart">
                                         </a>
                                         <small class="drop-icon dropdown-item"></small>
-                                        <ul class="dropdown-menu main-dropdown child config_value" data-type="dynamic_bar">
+                                        <ul class="dropdown-menu main-dropdown child config_value"
+                                            data-type="dynamic_bar">
                                             <li>
                                                 <a tabindex="-1" class="dropdown-item removeDefault" data-type="home"
                                                    href="#">
@@ -119,7 +120,7 @@
                                     </li>
                                     <li class="dropdown-submenu config_value_parent">
                                         <a tabindex="-1" class=" test chart-5" href="#">
-                                            <img src="{{ asset('assets/images/chart-type/Line-Chart-3.svg')}}"
+                                            <img src="{{ asset('assets/images/chart-type/Line-chart-3.svg')}}"
                                                  alt="Line Chart" title="Line Chart">
                                         </a>
                                         <small class="drop-icon dropdown-item"></small>
