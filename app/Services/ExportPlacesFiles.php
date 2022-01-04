@@ -37,20 +37,29 @@ class ExportPlacesFiles implements IExportFile
                 $result = array_merge($result, $places->toArray());
             });
 
-            $path = "branches/$file->branch_id/files/plates";
+
+            $path = "branches/$file->branch_id/files/places";
+            if (!is_dir(storage_path("/app/public/".$path))) {
+                \File::makeDirectory(storage_path("/app/public/".$path), 777);
+            }
 
             $file_path = $path . '/' . $file->name;
 
             $check = false;
-
             if ($type == 'pdf') {
                 $list = $result;
-                $check = PDF::loadView('customer.preview.places.placespdf', compact('list'))
-                    ->save('storage/app/public/' . $file_path);
+                try {
 
-            } elseif($type == 'xls') {
+                    $check = PDF::loadView('customer.preview.places.placespdf', compact('list'))
+                        ->save(storage_path( 'app/public/' . $file_path));
+
+                } catch (\Exception $e) {
+                    dd($e);
+                }
+            } elseif ($type == 'xls') {
                 $check = Excel::store(new PlacesExcelExport($result), 'public/' . $file_path);
             }
+
 
             if ($check) {
                 $file->url = $file_path;

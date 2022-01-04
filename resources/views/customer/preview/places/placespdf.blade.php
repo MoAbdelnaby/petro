@@ -113,6 +113,7 @@
         margin: 0 auto;
     }
 </style>
+
 <div class="door-open">
     <h3>{{ __('app.Places_Maintenance_records') }}</h3>
     <table id="t01">
@@ -122,21 +123,22 @@
             <th>{{ __('app.Area') }}</th>
             <th>{{ __('app.Status') }}</th>
             <th>{{ __('app.Camera_Id') }}</th>
-            <th>{{ __('app.screenshot') }}</th>
+{{--            <th>{{ __('app.screenshot') }}</th>--}}
         </tr>
+
         @foreach($list as $item)
             <tr>
                 <td>{{ $item['date'] }}</td>
                 <td>{{ $item['time'] }}</td>
-                <td>{{$item['area']==1 ? 'Area 1':($item['area']==2 ?'Area 2':($item['area']==3 ?'Area 3':'Area 4'))}}</td>
+                <td>{{"Area ".$item['area']}}</td>
                 <td>{{$item['status']==0 ? 'Available':'Busy'}}</td>
                 <td>{{ $item['camera_id'] }}</td>
-                <td> @if($item['screenshot'])
-                        <a href="{{$item['screenshot']}}">
-                            <img src="{{$item['screenshot']}}" height="50" width="50" alt="">
-                        </a>
-                    @endif
-                </td>
+{{--                <td> @if($item['screenshot'])--}}
+{{--                        <a href="{{$image}}">--}}
+{{--                            <img src="{{$image}}" height="50" width="50" alt="">--}}
+{{--                        </a>--}}
+{{--                    @endif--}}
+{{--                </td>--}}
             </tr>
         @endforeach
     </table>

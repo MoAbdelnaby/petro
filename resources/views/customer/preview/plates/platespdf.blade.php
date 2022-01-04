@@ -123,7 +123,7 @@
             <th>{{ __('app.Area') }}</th>
             <th>{{ __('app.Arabic_Plate') }}</th>
             <th>{{ __('app.English_Plate') }}</th>
-            <th>{{ __('app.screenshot') }}</th>
+{{--            <th>{{ __('app.screenshot') }}</th>--}}
             <th>{{ __('app.status') }}</th>
             <th>{{ __('app.Welcome_Message') }}</th>
         </tr>
@@ -138,11 +138,11 @@
                 <td>
                     {{$item['plate_en']}}
                 </td>
-                <td> @if($item['screenshot'])
-                        <a href="{{$item['screenshot']}}"> <img src="{{$item['screenshot']}}" height="50" width="50" alt="">
-                        </a>
-                    @endif
-                </td>
+{{--                <td> @if($item['path_screenshot'])--}}
+{{--                        <a href="{{$item['path_screenshot']}}"> <img src="{{$item['path_screenshot']}}" height="50" width="50" alt="">--}}
+{{--                        </a>--}}
+{{--                    @endif--}}
+{{--                </td>--}}
                 <td>{{$item['plate_status']}}</td>
                 <td>{{isset($item['welcome']) ? 'sent' : 'failed'}}</td>
 
