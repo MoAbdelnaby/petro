@@ -47,6 +47,8 @@ class ExportPlatesFiles implements IExportFile
             if (!is_dir(storage_path("/app/public/".$path))) {
                 \File::makeDirectory(storage_path("/app/public/".$path), 777);
             }
+            info('branches-status: '. is_dir(storage_path("/app/public/".$path)));
+            dd(is_dir(storage_path("/app/public/".$path)));
 
             $file_path = $path . '/' . $file->name;
 
