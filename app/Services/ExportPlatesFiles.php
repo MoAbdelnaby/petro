@@ -45,10 +45,10 @@ class ExportPlatesFiles implements IExportFile
             $path = "branches/$file->branch_id/files/plates";
 
             if (!is_dir(storage_path("/app/public/".$path))) {
-                \File::makeDirectory(storage_path("/app/public/".$path), 777);
+                \File::makeDirectory(storage_path("/app/public/".$path), 0777, true, true);
+//                \File::makeDirectory(storage_path("/app/public/".$path), 0711, true, true);
+//                \File::makeDirectory(storage_path("/app/public/".$path), 777);
             }
-            info('branches-status: '. is_dir(storage_path("/app/public/".$path)));
-            dd(is_dir(storage_path("/app/public/".$path)));
 
             $file_path = $path . '/' . $file->name;
 
