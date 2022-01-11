@@ -109,7 +109,7 @@ class CustomerBranchesController extends Controller
     public function store(Request $request)
     {
         $request_data = $request->validate([
-            'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/|unique:branches,name,NULL,id,deleted_at,NULL,user_id,' . auth()->id(),
+            'name' => 'required|string|min:2|max:60|unique:branches,name,NULL,id,deleted_at,NULL,user_id,' . auth()->id(),
             'photo' => 'nullable|image',
             'code' => 'required|unique:branches,code',
             'region_id' => 'required',
@@ -210,7 +210,7 @@ class CustomerBranchesController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/|unique:branches,name,' . $id . ',id,deleted_at,NULL,user_id,' . auth()->id(),
+            'name' => 'required|string|min:2|max:60|unique:branches,name,' . $id . ',id,deleted_at,NULL,user_id,' . auth()->id(),
             'photo' => 'nullable|image',
             'region_id' => 'required',
             'top' => 'required',

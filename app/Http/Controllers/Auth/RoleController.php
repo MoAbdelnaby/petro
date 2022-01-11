@@ -81,7 +81,7 @@ class RoleController extends Controller
     {
         {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/|unique:roles',
+                'name' => 'required|string|min:2|max:60|unique:roles',
                 'display_name' => 'required|min:2',
             ]);
             if ($validator->errors()->all()) {
@@ -122,7 +122,7 @@ class RoleController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/|unique:roles,name,' . $request->id,
+            'name' => 'required|string|min:2|max:60|unique:roles,name,' . $request->id,
             'display_name' => 'required|min:2',
         ]);
 

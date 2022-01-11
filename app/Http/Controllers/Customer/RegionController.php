@@ -75,7 +75,7 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/|unique:regions,name,NULL,id,deleted_at,NULL,user_id,'.auth()->id(),
+            'name' => 'required|string|min:2|max:60|unique:regions,name,NULL,id,deleted_at,NULL,user_id,'.auth()->id(),
             'photo' => 'nullable|image',
 
         ]);
@@ -122,7 +122,7 @@ class RegionController extends Controller
     public function update(Request $request,$id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/|unique:branches,name,'.$id.',id,deleted_at,NULL,user_id,'.auth()->id(),
+            'name' => 'required|string|min:2|max:60|unique:branches,name,'.$id.',id,deleted_at,NULL,user_id,'.auth()->id(),
             'photo' => 'nullable|image'
         ]);
         if ($validator->errors()->count()) {

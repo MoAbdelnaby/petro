@@ -103,7 +103,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|max:70|email|unique:users|regex:/^\S+@\S+\.\S+$/',
-            'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/',
+            'name' => 'required|string|min:2|max:60',
             'phone' => 'nullable|string|min:11|max:13|unique:users,phone|regex:/^[0-9\-\(\)\/\+\s]*$/',
             'password' => 'required|min:8|confirmed',
             'speedtest' => 'nullable',
@@ -165,7 +165,7 @@ class UserController extends Controller
 //        dd($request->all());
         $validator = Validator::make($request->all(), [
             'email' => 'required|max:70|email|regex:/^\S+@\S+\.\S+$/|unique:users,email,' . $id,
-            'name' => 'required|string|min:2|max:60|regex:/^[a-zA-Z ]+$/',
+            'name' => 'required|string|min:2|max:60',
             'phone' => 'nullable|min:11|max:13|regex:/^[0-9\-\(\)\/\+\s]*$/|unique:users,phone,' . $id,
             'password' => 'sometimes|nullable|min:8|confirmed',
         ]);
