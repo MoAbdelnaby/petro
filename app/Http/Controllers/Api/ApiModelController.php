@@ -373,9 +373,9 @@ class ApiModelController extends Controller
                         $json['message'] = 'issue of creation branch status';
                     }
                     /* send notification to admins heating branch */
-                    foreach (User::where('type','customer')->get() as $user) {
-                        $user->notify(new branchStatusNotification($branchStatusArr,Auth::user()->name));
-                    }
+//                    foreach (User::where('type','customer')->get() as $user) {
+//                        $user->notify(new branchStatusNotification($branchStatusArr,Auth::user()->name));
+//                    }
                     /* end notify*/
                     return response()->json(['data' => $json],$json['code']);
                 } else {
