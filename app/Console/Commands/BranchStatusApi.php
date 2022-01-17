@@ -97,9 +97,9 @@ class BranchStatusApi extends Command
                     if ( $now->subMinute($minutes) > $branch->created_at) {
                         info('inter in if statement');
                         /* Send notify to admins */
-                        foreach (User::where('type','customer')->get() as $admin) {
-                            $admin->notify(new branchConnectionNotification($branch,$data,$minutes,'schedule'));
-                        }
+//                        foreach (User::where('type','customer')->get() as $admin) {
+//                            $admin->notify(new branchConnectionNotification($branch,$data,$minutes,'schedule'));
+//                        }
                         /* End notify */
                         foreach ($users as $key => $user) {
                             $send = Mail::to($user->email)->send(new mailUserBranch($branch));

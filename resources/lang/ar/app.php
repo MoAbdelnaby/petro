@@ -669,6 +669,7 @@ return array(
     ),
     'fail' => 'فشل في اتمام العملية',
     'gym' => array(
+        'period' => 'الفترة الزمنية',
         'Area' => 'الفتحة',
         'Available' => 'متاح',
         'Control_Settings' => 'لوحة التحكم',
@@ -756,6 +757,7 @@ return array(
         'total_faces' => 'كل الوجوه',
         'truck_count' => 'شاحنة',
         'work_van_count' => 'شاحنة العمل',
+        'minutes' => 'دقيقة'
     ),
     'hand_wave' => 'موجة اليد',
     'has_been' => 'كان',

@@ -263,6 +263,15 @@
                                                 <div class="card">
                                                     <div class="card-body p-0">
                                                         <div class="text-center border-bottom px-2 pt-3 pb-1">
+                                                            <div class="text-center border-bottom px-2 pt-3 pb-1">
+                                                                <select name="filter_date" data-key="{{$key}}"
+                                                                        class="filter_date">
+                                                                    <option value="all">All</option>
+                                                                    <option value="today">Today</option>
+                                                                    <option value="week">Week</option>
+                                                                    <option value="month">Month</option>
+                                                                </select>
+                                                            </div>
 
                                                             <img src="{{resolveDark()}}/img/Icon-car.svg"
                                                                  alt="Area-{{$val}}">
@@ -273,7 +282,7 @@
                                                         <div class="d-flex aligh-items-center  area-desc">
                                                             <div class=" text-center p-2 w-100">
                                                                 <h2>{{__('app.gym.car_plates')}}</h2>
-                                                                <h3>{{$val}}</h3>
+                                                                <h3 id="times_value_{{$key}}">{{$val}}</h3>
                                                                 <p>{{__('app.gym.times')}}</p>
                                                             </div>
 
@@ -349,6 +358,7 @@
                                                         <tr>
                                                             <th class="th-sm">{{__('app.gym.check_in_date')}}</th>
                                                             <th class="th-sm">{{__('app.gym.check_out_date')}}</th>
+                                                            <th class="th-sm">{{__('app.gym.period')}}</th>
                                                             <th class="th-sm">{{__('app.gym.Area')}}</th>
                                                             <th class="th-sm">{{__('app.gym.plate_no_ar')}}</th>
                                                             <th class="th-sm">{{__('app.gym.plate_no_en')}}</th>
@@ -366,6 +376,7 @@
                                                                 data-toggle="modal" data-target="#basicExampleModal">
                                                                 <td>{{$item->checkInDate}}</td>
                                                                 <td>{{$item->checkOutDate}}</td>
+                                                                <td>{{ str_replace('before','',\Carbon\Carbon::parse($item->checkInDate)->diffForHumans($item->checkOutDate)) }}</td>
                                                                 <td class="open">{{ __('app.gym.Area').' '.$item->BayCode}}</td>
                                                                 <td class="open ">
                                                                     {{$item->plate_ar}}
@@ -884,6 +895,31 @@
         @else
             branchPlateBar('chart1',@json($charts));
         @endif
+
+        $(document).ready(function () {
+            $(".filter_date").on('change', function () {
+                var area = $(this).data('key');
+                var branch_id = "{{$usermodelbranch->branch->id}}";
+                var date = $(this).val();
+
+                // console.log(area,branch_id,date);
+                $.ajax({
+                    type: 'get',
+                    url: "{{route('branch.plates.times')}}",
+                    data: {
+                        area: area,
+                        branch_id: branch_id,
+                        date: date
+                    },
+                    success: function (res) {
+                        var count = res.data.count;
+                        $(`#times_value_${area}`).text(count);
+                    }
+
+                })
+
+            });
+        });
 
     </script>
 @endsection

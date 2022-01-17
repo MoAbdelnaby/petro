@@ -275,3 +275,6 @@ Route::group(['middleware' => ['auth','speed']], function () {
 });
 Route::get('branches/register', 'Models\ConnectionSpeedController@registerBranch')->name('branch.register');
 
+Route::get('branch/filter/area','Models\PlacesController@get_branch_data')->name('branch.filter.area');
+
+Route::get('branch/plates/times','Models\PlatesController@get_branch_plate_times')->name('branch.plates.times');

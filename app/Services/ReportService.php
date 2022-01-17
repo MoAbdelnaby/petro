@@ -100,6 +100,7 @@ class ReportService
                 DB::raw('SUM(empty_by_minute) as empty')
             );
 
+
         if ($type == 'custom') {
             if ($start != null || $end != null) {
                 $query = AreaDurationDay::whereIn('branch_id', $branch);

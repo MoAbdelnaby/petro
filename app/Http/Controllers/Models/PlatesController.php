@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Models;
 
 use App\Exports\PlatesExcelExport;
 use App\Http\Repositories\Eloquent\PlatesRepo;
+use App\Models\AreaDuration;
+use App\Models\AreaDurationDay;
 use App\Models\Branch;
 use App\Models\BranchFiles;
 use App\Models\CarPLatesSetting;
@@ -338,7 +340,7 @@ class PlatesController extends Controller
 
 
             } else {
-                $customer = Invoice::where('PlateNumber', str_replace(' ','',$request->plateNumber))->latest()->first();
+                $customer = Invoice::where('PlateNumber', str_replace(' ', '', $request->plateNumber))->latest()->first();
                 if ($customer) {
                     $messageTemplate = [
                         'template_id' => '2',
@@ -354,8 +356,8 @@ class PlatesController extends Controller
                             ['phone' => $phone] + $messageTemplate);
 
                         if ($data['success'] === true) {
-                            $row = FailedMessage::where('carprofile_id',$request->plateID)->delete();
-                        }else {
+                            $row = FailedMessage::where('carprofile_id', $request->plateID)->delete();
+                        } else {
                             FailedMessage::updateOrCreate([
                                 'carprofile_id' => $request->plateID,
                             ], [
@@ -388,4 +390,36 @@ class PlatesController extends Controller
         }
 
     }
+
+    public function get_branch_plate_times(Request $request)
+    {
+
+        $start = false;
+        $end = false;
+        if ($request->date != 'all') {
+            $date = getStartEndDate($request->date);
+            $start = $date['start'];
+            $end = $date['end'];
+        }
+
+        $query = DB::table('carprofiles')
+            ->select(DB::raw('count(id) as count ,BayCode'))
+            ->where('status', 'completed')
+            ->where('plate_status', '!=','error')
+            ->where('branch_id', $request->branch_id)
+            ->where('BayCode', $request->area);
+
+        if ($start) {
+            $query->whereDate('checkInDate', '>=', $start);
+        }
+
+        if ($end) {
+            $query->whereDate('checkInDate', '<=', $end);
+        }
+
+        $data = $query->first();
+
+        return response()->json(['data' => $data]);
+    }
+
 }

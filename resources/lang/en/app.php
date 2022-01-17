@@ -1158,6 +1158,7 @@ return [
             'dashboard' => 'Model Dashboard',
             'index' => 'Model',
         ],
+        'period' => 'Period',
         'empty_region' => 'No Data Found For This Region',
         'check_in_date' => 'CheckIn Date',
         'check_out_date' => 'CheckOut Date',
@@ -1243,6 +1244,7 @@ return [
         'Monthly' => 'Monthly',
         'Weekly' => 'Weekly',
         'Daily' => 'Daily',
+        'minutes' => 'Minutes',
 
     ],
     'languages' => [

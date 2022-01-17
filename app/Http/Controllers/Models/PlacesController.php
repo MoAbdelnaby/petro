@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Models;
 use App\Exports\PlacesExcelExport;
 use App\Exports\RecieptionExcelExport;
 use App\Http\Repositories\Eloquent\PlacesRepo;
+use App\Models\AreaDuration;
+use App\Models\AreaDurationDay;
 use App\Models\AreaStatus;
 use App\Models\Branch;
 use App\Models\BranchFiles;
@@ -14,6 +16,7 @@ use App\Models\UserModel;
 use App\Models\UserModelBranch;
 use App\Http\Controllers\Controller;
 use App\Models\UserPackages;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -118,6 +121,7 @@ class PlacesController extends Controller
             }
         }
 
+        // here
         $lastsetting = $this->repo->getUserShiftSettingByUserModel($usermodelbranchid);
         $modelrecords = $this->repo->getNewData($usermodelbranchid, null, null, $starttime, $endtime);
         $data = $modelrecords['data'] ?? [];
@@ -323,5 +327,34 @@ class PlacesController extends Controller
         return $this->repo->shiftSettingSave($request, $usermodelbranchid);
     }
 
+    public function get_branch_data(Request $request)
+    {
+
+        if ($request->date == 'all') {
+            $query = AreaDuration::where('branch_id', $request->branch_id)->where('area', $request->area);
+
+        } else {
+
+            $date = getStartEndDate($request->date);
+            $start = $date['start'];
+            $end = $date['end'];
+
+            $query = AreaDurationDay::where('branch_id', $request->branch_id)->where('area', $request->area);
+
+            if ($start) {
+                $query = $query->whereDate('date', '>=', $start);
+            }
+            if ($end) {
+                $query = $query->whereDate('date', '<=', $end);
+            }
+        }
+
+        $data = $query->select('area',
+            DB::raw('SUM(work_by_minute) as work_by_minute'),
+            DB::raw('SUM(empty_by_minute) as empty_by_minute')
+        )->first();
+
+        return response()->json(['data' => $data]);
+    }
 
 }
