@@ -238,6 +238,15 @@
                                                 <div class="card">
                                                     <div class="card-body p-0">
                                                         <div class="text-center border-bottom px-2 pt-3 pb-1">
+                                                            <select name="filter_date" data-key="{{$key}}"
+                                                                    class="filter_date">
+                                                                <option value="all">All</option>
+                                                                <option value="today">Today</option>
+                                                                <option value="week">Week</option>
+                                                                <option value="month">Month</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="text-center border-bottom px-2 pt-3 pb-1">
                                                             @if($area['areaavailable'] && $area['areaavailable']->status==1)
                                                                 <img src="{{resolveDark()}}/img/Icon-area-1.svg"
                                                                      height="62" alt="Area-1">
@@ -257,18 +266,41 @@
                                                                 </div>
 
                                                             @endif
+
+                                                                <div>
+                                                                    <input type="button"
+                                                                           class="btn btn-primary btn-sm change-btn"
+                                                                           id="btn-{{$key}}" value="Change to Minutes">
+                                                                </div>
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
-                                                            <div class="border-right text-center p-2 w-50">
+
+
+                                                            <div
+                                                                class="div-hours-btn-{{$key}} border-right text-center p-2 w-50">
                                                                 <h2>{{__('app.gym.DurationEmpty')}}</h2>
-                                                                <h3>{{$area['areabusydura']}}</h3>
+                                                                <h3 id="hours_empty_{{$key}}">{{$area['areaavildura']}}</h3>
                                                                 <p>{{__('app.gym.hours')}}</p>
                                                             </div>
-                                                            <div class="p-2 w-50 text-center">
+                                                            <div class="div-hours-btn-{{$key}} p-2 w-50 text-center">
                                                                 <h2>{{__('app.gym.DurationWork')}}</h2>
-                                                                <h3>{{$area['areaavildura']}}</h3>
+                                                                <h3 id="hours_work_{{$key}}" >{{$area['areabusydura']}}</h3>
                                                                 <p>{{__('app.gym.hours')}}</p>
                                                             </div>
+                                                            <div
+                                                                class="div-minutes-btn-{{$key}} border-right text-center p-2 w-50"
+                                                                style="display: none">
+                                                                <h2>{{__('app.gym.DurationEmpty')}}</h2>
+                                                                <h3 id="minutes_empty_{{$key}}">{{$area['areaavildura'] * 60 }}</h3>
+                                                                <p>{{__('app.gym.minutes')}}</p>
+                                                            </div>
+                                                            <div class="div-minutes-btn-{{$key}} p-2 w-50 text-center"
+                                                                 style="display: none">
+                                                                <h2>{{__('app.gym.DurationWork')}}</h2>
+                                                                <h3 id="minutes_work_{{$key}}" >{{$area['areabusydura'] * 60 }}</h3>
+                                                                <p>{{__('app.gym.minutes')}}</p>
+                                                            </div>
+
                                                         </div>
 
                                                     </div>
@@ -684,6 +716,78 @@
                 branchPlaceBar('chart1',@json($charts['bar']));
             @endif
         @endif
+
+
+
+            $(document).ready(function () {
+
+                // until do it
+                {{--$("#branch_search").keydown(function (){--}}
+
+                {{--    let branches = {{$activebranches}} ;--}}
+
+                {{--    let branches _li = '';--}}
+                {{--    branches.forEach(function (branches,i){--}}
+                {{--       --}}
+                {{--    })--}}
+
+                {{--    $('#li-branches').text('');--}}
+
+                {{--});--}}
+
+
+                $('.change-btn').click(function (e) {
+
+                    // console.log(e.target.value)
+                    let btn_id = e.target.id
+
+                    $(`.div-hours-${btn_id}`).each(function () {
+                        if ($(this).css("display") == "none") {
+                            $(this).show();
+                            $(`.div-minutes-${btn_id}`).hide();
+                            e.target.value = 'Change To MInutes';
+                        } else {
+                            $(this).hide();
+                            $(`.div-minutes-${btn_id}`).show()
+                            e.target.value = 'Change To Hours';
+                        }
+                    });
+
+
+                });
+
+                $(".filter_date").on('change', function () {
+                    var key = $(this).data('key');
+                    var branch_id = "{{$usermodelbranch->branch_id}}";
+                    var date = $(this).val();
+
+                    console.log(key,branch_id,date)
+
+                    $.ajax({
+                        type: 'get',
+                        url: "{{route('branch.filter.area')}}",
+                        data: {
+                            area: key,
+                            branch_id: branch_id,
+                            date: date
+                        },
+                        success: function (res) {
+
+                            let empty_val = res.data.work_by_minute??0;
+                            let work_val = res.data.empty_by_minute??0;
+
+                            $(`#minutes_empty_${key}`).text(empty_val);
+                            $(`#minutes_work_${key}`).text(work_val);
+                            $(`#hours_empty_${key}`).text(Math.round(empty_val/60,0));
+                            $(`#hours_work_${key}`).text(Math.round(work_val/60,0));
+
+                        }
+                    })
+                })
+            });
+
+
+
     </script>
 @endsection
 

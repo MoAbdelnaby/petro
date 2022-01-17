@@ -8,6 +8,7 @@
  * @return string return the name of active class for tab
  */
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 if (!function_exists('active')) {
@@ -317,7 +318,37 @@ if (!function_exists('unKnownError')) {
             : redirect()->back()->with(['status' => 'error', 'message' => $message]);
     }
 }
+if (!function_exists('getStartEndDate')) {
+    function getStartEndDate($time = null): array
+    {
+        if ($time == "today") {
 
+            $start_name = Carbon::today()->format("Y-m-d");
+            $last_name = Carbon::today()->format("Y-m-d");
+
+        } elseif ($time == 'week') {
+
+            $start_name = Carbon::now()->startOfWeek()->subDays(1)->format("Y-m-d");
+            $last_name = Carbon::now()->endOfWeek()->subDays(1)->format("Y-m-d");
+
+        } elseif ($time == 'month') {
+
+            $start_name = Carbon::now()->startOfMonth()->format('Y-m-d');
+            $last_name = Carbon::now()->format('Y-m-d');
+
+        } elseif ($time == 'year') {
+
+            $start_name = Carbon::now()->startOfYear()->format('Y-m-d');
+            $last_name = Carbon::now()->format('Y-m-d');
+
+        } else {
+            $start_name = Carbon::create(date('Y'), $time)->startOfMonth()->format('Y-m-d');
+            $last_name = Carbon::create(date('Y'), $time)->lastOfMonth()->format('Y-m-d');
+        }
+
+        return ['start' => $start_name, 'end' => $last_name];
+    }
+}
 define(
     'WELCOME', "أهلاً بك في *بترومين اكسبرس*، سعداء بخدمتك، ونأمل أن تكون تجربتك سعيدة.
 

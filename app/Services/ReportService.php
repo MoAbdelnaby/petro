@@ -76,8 +76,8 @@ class ReportService
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name();
         }
-        $charts['place'] = self::placeComparisonReport('default');
-        $charts['plate'] = self::plateComparisonReport('default');
+        $charts['place'] = [];
+        $charts['plate'] = [];
 
         return $charts;
     }
@@ -99,6 +99,7 @@ class ReportService
                 DB::raw('SUM(work_by_minute) as work'),
                 DB::raw('SUM(empty_by_minute) as empty')
             );
+
 
         if ($type == 'custom') {
             if ($start != null || $end != null) {

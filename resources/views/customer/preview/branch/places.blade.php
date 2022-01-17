@@ -33,22 +33,34 @@
                     </li>
                 @endforeach
             </div>
+
         </ul>
         <!-- //////////// -->
+
+        {{--            here start --}}
+
         <ul class="branch nav nav-pills scroll-vertical-custom" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div">
-                @foreach ($activebranches as $branch)
+                <div class="scroll-vertical-custom-div">
                     <li class="nav-item">
-                        <a class="nav-link {{$branch->b_id==$branch_id ? 'active':''}}" id="pills-home-tab"
-                           href="{{route('branchmodelpreview.index',[$branch->b_id])}}" aria-controls="pills-home"
-                           aria-selected="true">
-                            <img
-                                src="{{$branch->b_id==$branch_id ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
-                                alt="">
-                            <span class="ml-1"> {{$branch->bname}}</span></a>
+                        <input type="text" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-sm" placeholder="Branch Search" id="branch_search">
                     </li>
-                @endforeach
-            </div>
+                    <span id="li-branches">
+                    @foreach ($activebranches as $branch)
+                        <li class="nav-item">
+                            <a class="nav-link {{$branch->b_id==$branch_id ? 'active':''}}" id="pills-home-tab"
+                               href="{{route('branchmodelpreview.index',[$branch->b_id])}}"
+                               aria-controls="pills-home"
+                               aria-selected="true">
+                                <img
+                                    src="{{$branch->b_id==$branch_id ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
+                                    alt="">
+                                <span class="ml-1"> {{$branch->bname}}</span></a>
+                        </li>
+                    @endforeach
+                    </span>
+                </div>
+
         </ul>
         <ul class="model nav nav-pills scroll-vertical-custom" id="pills-tab" role="tablist">
             <div class="scroll-vertical-custom-div">
@@ -61,7 +73,7 @@
                                aria-controls="pills-home" aria-selected="true">
                                 <img src="{{resolveDark()}}/img/door.svg" alt="" height="35px">
 
-                                <span class="ml-1"> {{$model->mname}}</span></a>
+                                <span class="ml-1"> {{$model->mname}} </span></a>
                         </li>
                     @endif
                     @if($model->lt_id==4)
@@ -194,7 +206,9 @@
                                     <i class="fas fa-cog fa-spin"></i>
                                 </span>
                                 <span class="files-icon-sho ">
-                                    <a title="prepared files" alt="prepared files" href="{{route('branchmodelpreview.files.index',[$branch_id,$usermodelbranchid])}}" class="text-white">
+                                    <a title="prepared files" alt="prepared files"
+                                       href="{{route('branchmodelpreview.files.index',[$branch_id,$usermodelbranchid])}}"
+                                       class="text-white">
                                     <i class="far fa-file-alt"></i>
                                         <p style="display: none;">{{ __('app.prepared_files') }}</p>
                                     </a>
@@ -203,8 +217,8 @@
                                     <img src="{{resolveDark()}}/img/Group 5933.png" class="up">
                                     <img src="{{resolveDark()}}/img/Group 5931.png" class="down">
 
-                                    <div class="card " >
-                                    <div class="card-body">
+                                    <div class="card ">
+                                        <div class="card-body">
                                             <h6>{{__('app.gym.settings')}}</h6>
                                             <small>{{__('app.gym.Control_Settings')}}</small>
                                             <form method="POST" class="text-center onemaincolor"
@@ -312,10 +326,12 @@
                                                 <input type="hidden" value="1" name="submittype">
                                                 <div>
                                                     <p>{{ __('app.File_Format') }}</p>
-                                                    <select class="form-control" name="exportType" style="cursor: pointer">
-                                                        <option value="" selected>{{ __('app.Select_File_Format') }}</option>
-                                                        <option value="2" id="excel" >
-                                                        {{__('app.gym.EXCEL')}}
+                                                    <select class="form-control" name="exportType"
+                                                            style="cursor: pointer">
+                                                        <option value=""
+                                                                selected>{{ __('app.Select_File_Format') }}</option>
+                                                        <option value="2" id="excel">
+                                                            {{__('app.gym.EXCEL')}}
                                                         </option>
                                                         <option value="1" id="pdf">
                                                             {{__('app.gym.PDF')}}
@@ -345,6 +361,15 @@
                                                 <div class="card">
                                                     <div class="card-body p-0">
                                                         <div class="text-center border-bottom px-2 pt-3 pb-1">
+                                                            <select name="filter_date" data-key="{{$key}}"
+                                                                    class="filter_date">
+                                                                <option value="all">All</option>
+                                                                <option value="today">Today</option>
+                                                                <option value="week">Week</option>
+                                                                <option value="month">Month</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="text-center border-bottom px-2 pt-3 pb-1">
                                                             @if($area['areaavailable'] && $area['areaavailable']->status==1)
                                                                 <img src="{{resolveDark()}}/img/Icon-area-1.svg"
                                                                      height="62" alt="Area-1">
@@ -364,18 +389,39 @@
                                                                 </div>
 
                                                             @endif
+                                                            <div>
+                                                                <input type="button"
+                                                                       class="btn btn-primary btn-sm change-btn"
+                                                                       id="btn-{{$key}}" value="Change to Minutes">
+                                                            </div>
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
-                                                            <div class="border-right text-center p-2 w-50">
+
+                                                            <div
+                                                                class="div-hours-btn-{{$key}} border-right text-center p-2 w-50">
                                                                 <h2>{{__('app.gym.DurationEmpty')}}</h2>
-                                                                <h3>{{$area['areaavildura']}}</h3>
+                                                                <h3 id="hours_empty_{{$key}}">{{$area['areaavildura']}}</h3>
                                                                 <p>{{__('app.gym.hours')}}</p>
                                                             </div>
-                                                            <div class="p-2 w-50 text-center">
+                                                            <div class="div-hours-btn-{{$key}} p-2 w-50 text-center">
                                                                 <h2>{{__('app.gym.DurationWork')}}</h2>
-                                                                <h3>{{$area['areabusydura']}}</h3>
+                                                                <h3 id="hours_work_{{$key}}" >{{$area['areabusydura']}}</h3>
                                                                 <p>{{__('app.gym.hours')}}</p>
                                                             </div>
+                                                            <div
+                                                                class="div-minutes-btn-{{$key}} border-right text-center p-2 w-50"
+                                                                style="display: none">
+                                                                <h2>{{__('app.gym.DurationEmpty')}}</h2>
+                                                                <h3 id="minutes_empty_{{$key}}">{{$area['areaavildura'] * 60 }}</h3>
+                                                                <p>{{__('app.gym.minutes')}}</p>
+                                                            </div>
+                                                            <div class="div-minutes-btn-{{$key}} p-2 w-50 text-center"
+                                                                 style="display: none">
+                                                                <h2>{{__('app.gym.DurationWork')}}</h2>
+                                                                <h3 id="minutes_work_{{$key}}" >{{$area['areabusydura'] * 60 }}</h3>
+                                                                <p>{{__('app.gym.minutes')}}</p>
+                                                            </div>
+
                                                         </div>
 
                                                     </div>
@@ -404,7 +450,8 @@
                                                                    href="#">
                                                                     <img
                                                                         src="{{ asset('assets/images/tables-type/table-1.png')}}"
-                                                                        alt="{{ __('app.Pie_Chart') }}" title="{{ __('app.Pie_Chart') }}">
+                                                                        alt="{{ __('app.Pie_Chart') }}"
+                                                                        title="{{ __('app.Pie_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -413,7 +460,8 @@
                                                                    href="#">
                                                                     <img
                                                                         src="{{ asset('assets/images/tables-type/table-2.png')}}"
-                                                                        alt="{{ __('app.Bar_Chart') }}" title="{{ __('app.Bar_Chart') }}">
+                                                                        alt="{{ __('app.Bar_Chart') }}"
+                                                                        title="{{ __('app.Bar_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -422,7 +470,8 @@
                                                                    href="#">
                                                                     <img
                                                                         src="{{ asset('assets/images/tables-type/table-3.png')}}"
-                                                                        alt="{{ __('app.Line_Chart') }}" title="{{ __('app.Line_Chart') }}">
+                                                                        alt="{{ __('app.Line_Chart') }}"
+                                                                        title="{{ __('app.Line_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -431,7 +480,8 @@
                                                                    href="#">
                                                                     <img
                                                                         src="{{ asset('assets/images/tables-type/table-4.png')}}"
-                                                                        alt="{{ __('app.Pyramid_Chart') }}" title="{{ __('app.Pyramid_Chart') }}">
+                                                                        alt="{{ __('app.Pyramid_Chart') }}"
+                                                                        title="{{ __('app.Pyramid_Chart') }}">
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -442,7 +492,7 @@
                                                 {{--                                    <img src="{{resolveDark()}}/img/Group 23115.png" class="one">--}}
                                                 {{--                                    <img src="{{session()->has('darkMode') ?url('/gym_dark'):url('/gym')}}/img/Group 23116.png" class="three">--}}
                                                 <div class="custom-table">
-                                                     <table id="paginationSimpleNumbers" class="table mt-4
+                                                    <table id="paginationSimpleNumbers" class="table mt-4
                                                             {{ $userSettings ? handleTableSetting($userSettings):'theme-1' }}"
                                                            width="100%">
                                                         <thead>
@@ -490,7 +540,8 @@
                                     </div>
                                 @else
                                     <div class="col-12 text-center">
-                                        <img src="{{ asset('images/no-results.webp') }}" class="no-results-image col-12 col-md-7  mt-5"
+                                        <img src="{{ asset('images/no-results.webp') }}"
+                                             class="no-results-image col-12 col-md-7  mt-5"
                                              alt="">
                                     </div>
                                 @endif
@@ -514,7 +565,8 @@
                                                                    href="#">
                                                                     <img
                                                                         src="{{ asset('assets/images/chart-type/Bar-Chart.svg')}}"
-                                                                        alt="{{ __('app.Bar_Chart') }}" title="{{ __('app.Bar_Chart') }}">
+                                                                        alt="{{ __('app.Bar_Chart') }}"
+                                                                        title="{{ __('app.Bar_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -523,7 +575,8 @@
                                                                    href="#">
                                                                     <img
                                                                         src="{{ asset('assets/images/chart-type/Pie-Chart.png')}}"
-                                                                        alt="{{ __('app.Pie_Chart') }}" title="{{ __('app.Pie_Chart') }}">
+                                                                        alt="{{ __('app.Pie_Chart') }}"
+                                                                        title="{{ __('app.Pie_Chart') }}">
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -572,7 +625,8 @@
 
                                                     @foreach($active_areas as $val)
                                                         <li class="nav-item">
-                                                            <a class="nav-link {{ $val === 1 ? 'active':'' }} " href="#home-just-{{$val}}"
+                                                            <a class="nav-link {{ $val === 1 ? 'active':'' }} "
+                                                               href="#home-just-{{$val}}"
                                                                id="home-tab-just-{{$val}}" data-toggle="tab"
                                                                role="tab" aria-controls="home-just-{{$val}}"
                                                                aria-selected="true">{{__('app.gym.Area')}}</a>
@@ -581,7 +635,8 @@
                                                 </ul>
                                                 <div class="tab-content  pt-3" id="myTabContentJust">
                                                     @foreach($active_areas as $key=>$val)
-                                                        <div class="tab-pane fade {{ $key == 0 ? 'show active': '' }}" id="home-just-{{$key}}"
+                                                        <div class="tab-pane fade {{ $key == 0 ? 'show active': '' }}"
+                                                             id="home-just-{{$key}}"
                                                              role="tabpanel" aria-labelledby="home-tab-just-{{$key}}">
                                                             <div class="screenshoot-content">
                                                                 @php
@@ -613,7 +668,8 @@
                                                                 @endforeach
 
                                                                 @if($noImage == false)
-                                                                    <img src="/assets/images/no_image.svg" class="mt-5 no_image" alt="" />
+                                                                    <img src="/assets/images/no_image.svg"
+                                                                         class="mt-5 no_image" alt=""/>
                                                                 @endif
 
                                                             </div>
@@ -745,5 +801,72 @@
         branchPlaceBar('chart1',@json($charts['bar']));
         @endif
         @endif
+
+
+        $(document).ready(function () {
+
+            // until do it
+            {{--$("#branch_search").keydown(function (){--}}
+
+            {{--    let branches = {{$activebranches}} ;--}}
+
+            {{--    let branches _li = '';--}}
+            {{--    branches.forEach(function (branches,i){--}}
+            {{--       --}}
+            {{--    })--}}
+
+            {{--    $('#li-branches').text('');--}}
+
+            {{--});--}}
+
+
+            $('.change-btn').click(function (e) {
+
+                // console.log(e.target.value)
+                let btn_id = e.target.id
+
+                $(`.div-hours-${btn_id}`).each(function () {
+                    if ($(this).css("display") == "none") {
+                        $(this).show();
+                        $(`.div-minutes-${btn_id}`).hide();
+                        e.target.value = 'Change To MInutes';
+                    } else {
+                        $(this).hide();
+                        $(`.div-minutes-${btn_id}`).show()
+                        e.target.value = 'Change To Hours';
+                    }
+                });
+
+
+            });
+
+            $(".filter_date").on('change', function () {
+                var key = $(this).data('key');
+                var branch_id = "{{$current_branch->id}}";
+                var date = $(this).val();
+
+                $.ajax({
+                    type: 'get',
+                    url: "{{route('branch.filter.area')}}",
+                    data: {
+                        area: key,
+                        branch_id: branch_id,
+                        date: date
+                    },
+                    success: function (res) {
+
+                        let empty_val = res.data.work_by_minute??0;
+                        let work_val = res.data.empty_by_minute??0;
+
+                        $(`#minutes_empty_${key}`).text(empty_val);
+                        $(`#minutes_work_${key}`).text(work_val);
+                        $(`#hours_empty_${key}`).text(Math.round(empty_val/60,0));
+                        $(`#hours_work_${key}`).text(Math.round(work_val/60,0));
+
+                    }
+                })
+            })
+        });
+
     </script>
 @endsection
