@@ -43,14 +43,16 @@
                             <div>
                                 <div class="row col-12 p-0 m-0 mb-3 menu-and-filter">
                                     <div class="col">
-                                        <ul class="nav nav-tabs row" id="myTab" role="tablist">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'place'], request()->toArray()))}} @else {{ route('reports.index','place')}} @endif">{{ __('app.Bay_Area') }}</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link active" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'plate'], request()->toArray()))}} @else {{ route('reports.index','plate')}} @endif">{{ __('app.Car_Plate') }}</a>
                                             </li>
-
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.index','invoice')}} @endif">{{ __('app.Invoice') }}</a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="col">
@@ -59,10 +61,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="tab-content" >
                                     <div class="tab-pane fade show active">
-
                                         <div class="row" id="statistic">
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">

@@ -3,14 +3,17 @@
         <i class="fas fa-sort-alt"></i> &nbsp;{{ __('app.Filter') }}
     </a>
     <div class="filter-content" aria-labelledby="dropdownMenuButton">
-        <form action="{{route('report.filter',$type)}}" method="Get">
+        <form action="{{route('report.filter',$type)}}" method="get">
             @csrf
             <label>{{ __('app.type') }}:</label>
             <select name="filter_type" class="form-control filter-select">
-                <option value="comparison" @if(request('filter_type') == 'comparison') selected @endif >{{ __('app.Comparison_Branch_data') }}</option>
-                <option value="branch" @if(request('filter_type') == 'branch') selected @endif >{{ __('app.Branch_data') }}</option>
+                <option value="comparison"
+                        @if(request('filter_type') == 'comparison') selected @endif >{{ __('app.Comparison_Branch_data') }}</option>
+                <option value="branch"
+                        @if(request('filter_type') == 'branch') selected @endif >{{ __('app.Branch_data') }}</option>
             </select>
-            <div class="mt-4" id="filter_comparison" @if(request('filter_type') == 'branch') style="display: none" @else style="display: block" @endif >
+            <div class="mt-4" id="filter_comparison" @if(request('filter_type') == 'branch') style="display: none"
+                 @else style="display: block" @endif >
                 <lebel>{{ __('app.Select_branches') }}:</lebel>
                 <select class="form-control" id="select_comparison" multiple name="branch_comparison[]">
                     @foreach($branches as $id => $name)
@@ -19,9 +22,10 @@
                     @endforeach
                 </select>
             </div>
-            <div class="mt-4" id="filter_branch"  @if(request('filter_type') == 'branch') style="display: block" @else style="display: none" @endif>
+            <div class="mt-4" id="filter_branch" @if(request('filter_type') == 'branch') style="display: block"
+                 @else style="display: none" @endif>
                 <lebel>{{ __('app.Select_branch') }}:</lebel>
-                <select class="form-control" id=""  name="branch_data">
+                <select class="form-control" id="" name="branch_data">
                     <option value="">{{ __('app.Select_Branch') }}</option>
                     @foreach($branches as $id => $name)
                         <option value="{{$id}}" @if(request('branch_data') == $id) selected @endif>{{$name}}</option>
@@ -49,7 +53,8 @@
                 </div>
             </div>
             <div class="text-center mt-4">
-                <button type="submit" class="btn btn-secondary waves-effect waves-light px-4 py-2">{{ __('app.Filter') }}</button>
+                <button type="submit"
+                        class="btn btn-secondary waves-effect waves-light px-4 py-2">{{ __('app.Filter') }}</button>
             </div>
         </form>
     </div>

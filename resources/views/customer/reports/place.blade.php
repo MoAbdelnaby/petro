@@ -49,6 +49,9 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'plate'], request()->toArray()))}} @else {{ route('reports.index','plate')}} @endif">{{ __('app.Car_Plate') }}</a>
                                             </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.index','invoice')}} @endif">{{ __('app.Invoice') }}</a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="col">
@@ -60,8 +63,6 @@
 
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
-
-
                                         <div class="row" id="statistic">
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">

@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth','speed']], function () {
         Route::post('heatmapLowHigh', 'Models\DashController@getPositionsLowHigh');
     });
     Route::group(['prefix' => 'api/map'], function () {
-        Route::post('filter', 'Customer\MapController@filter')->name('map.filter');
+        Route::match(['get','post'],'filter', 'Customer\MapController@filter')->name('map.filter');
         Route::post('plates_filter', 'Customer\MapController@MapPlatesfilter')->name('map.platesFilter');
     });
 

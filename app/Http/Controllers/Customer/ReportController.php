@@ -10,7 +10,6 @@ use App\Services\ReportService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use PDF;
 
 class ReportController extends Controller
 {
@@ -18,7 +17,7 @@ class ReportController extends Controller
     {
         try {
             // Get Top {5} Branch Report By Model Type
-            $charts = ReportService::defaultcomparison($type);
+            $charts = ReportService::defaultcomparison($type ?? 'place');
             $config = ConfigService::get($type);
             $regioncount = Region::where('active', true)->where('user_id', parentID())->count();
             $branchcount = Branch::where('active', true)->where('user_id', parentID())->count();
@@ -37,7 +36,7 @@ class ReportController extends Controller
                 'filter_key' => 'branch',
             ]);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'UnKnowm Error');
         }
     }
@@ -56,7 +55,6 @@ class ReportController extends Controller
             if ($valdaitor->errors()->count()) {
                 return redirect()->back()->withErrors($valdaitor->errors())->withInput();
             }
-
 
             $filter_type = $request->filter_type;
             $filter_key = ($filter_type != 'comparison') ? 'area' : 'branch';
@@ -85,7 +83,7 @@ class ReportController extends Controller
                 'filter_key' => $filter_key,
             ]);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'UnKnowm Error');
         }
     }
