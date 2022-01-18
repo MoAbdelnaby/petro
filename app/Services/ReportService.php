@@ -212,35 +212,36 @@ class ReportService
      */
     public static function invoiceComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
     {
-        $query = DB::table('carprofiles')
-            ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
-            ->where('branches.active', true)
-            ->whereNull('branches.deleted_at');
-
-        if ($type == 'custom') {
-            if ($start) {
-                $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
-                $query->whereDate('created_at', '>=', $start);
-            }
-            if ($end) {
-                $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
-                $query->whereDate('created_at', '<=', $end);
-            }
-            $query->whereIn('branches.id', $branch);
-        } else {
-            $query->whereIn('branches.id', array_slice(self::$topPlaceBranch, 0, self::$branch_count));
-        }
-
         foreach (['invoice', 'no_invoice'] as $status) {
-            if ($status === 'no_invoice') {
-                $query->whereNull('invoice')
-                    ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as no_invoice'));
+            $result[$status] = DB::table('carprofiles')
+                ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
+                ->where('branches.active', true)
+                ->whereNull('branches.deleted_at');
+
+            if ($type == 'custom') {
+                if ($start) {
+                    $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
+                    $result[$status]->whereDate('created_at', '>=', $start);
+                }
+                if ($end) {
+                    $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
+                    $result[$status]->whereDate('created_at', '<=', $end);
+                }
+                $result[$status]->whereIn('branches.id', $branch);
             } else {
-                $query->whereNotNull('invoice')
+                $result[$status]->whereIn('branches.id', array_slice(self::$topPlaceBranch, 0, self::$branch_count));
+            }
+
+            if ($status === 'no_invoice') {
+                $result[$status]->whereNull('invoice')
+                    ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as no_invoice'))
+                    ->groupBy('branch');
+            } else {
+                $result[$status]->whereNotNull('invoice')
                     ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as invoice'));
             }
 
-            $result[$status] = json_decode($query->groupBy('branch')
+            $result[$status] = json_decode($result[$status]->groupBy('branch')
                 ->get(),true, 512, JSON_THROW_ON_ERROR);
         }
 

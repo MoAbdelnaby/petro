@@ -37,6 +37,7 @@ class ReportController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->back()->with('danger', 'UnKnowm Error');
         }
     }

@@ -67,6 +67,14 @@
                                                     <div id="BranceInvoiceLine" class="chartDiv"
                                                          style="min-height: 450px"></div>
                                                 </div>
+                                                <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceSmoothCon" style="display: none">
+                                                    <div id="BranchInvoiceSmooth" class="chartDiv"
+                                                         style="min-height: 450px"></div>
+                                                </div>
+                                                <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceTrendLineCon" style="display: none">
+                                                    <div id="BranchInvoiceTrendLine" class="chartDiv"
+                                                         style="min-height: 450px"></div>
+                                                </div>
                                             </div>
                                         @else
                                             <div class="col-12 text-center">
@@ -89,7 +97,7 @@
     <script src="{{asset('js/branchCharts.js')}}"></script>
     <script src="{{asset('js/comparisonChart.js')}}"></script>
     <script>
-        /****** Place Chart ******/
+        /****** Inovice Chart ******/
         @php $key_name = 'report'; @endphp
 
         /************* Start Bar Chart ****************/
@@ -113,5 +121,16 @@
             @endif
         @endif
         /************** End Line Chart ************/
+
+        /************* Start Range Slider Chart ****************/
+        @if(count($charts))
+            $("#BranchInvoiceTrendLineCon").show();
+            @if($filter_type == 'comparison')
+                comparisonInvoiceTrendLine('BranchInvoiceTrendLine',@json($charts, JSON_THROW_ON_ERROR));
+            @else
+                branchInoviceTrendLine('BranchInvoiceTrendLine', @json($charts, JSON_THROW_ON_ERROR));
+            @endif
+        @endif
+        /**************** End Range Slider Chart****************/
     </script>
 @endpush

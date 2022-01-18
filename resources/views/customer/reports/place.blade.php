@@ -307,7 +307,6 @@
         /**************** End Circle Chart ***************/
 
         /************* Start Range Slider Chart ****************/
-
         @if(in_array($key_name ,array_values($config['chart']['trend_line']??[])))
             @if(count($charts))
                 $("#BranchPLaceTrendLineCon").show();
