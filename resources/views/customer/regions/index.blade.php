@@ -51,7 +51,6 @@
                                     <th>{{__('app.Image')}}</th>
                                     <th>{{__('app.users.table.name')}}</th>
                                     <th>{{ __('app.Settings') }}</th>
-
                                     </thead>
                                     <tbody class="trashbody">
 
@@ -134,6 +133,7 @@
                                                     <thead>
                                                     <th>{{ __('app.Image') }}</th>
                                                     <th>{{ __('app.Name') }}</th>
+                                                    <th>{{ __('app.users.table.Parent') }}</th>
                                                     <th>{{ __('app.Status') }}</th>
                                                     <th>{{ __('app.Settings') }}</th>
                                                     </thead>
@@ -141,9 +141,18 @@
                                                     @foreach($items as $item)
                                                         <tr class="item{{$item->id}}">
                                                             <td>
-                                                                <img src="{{ $item->photo ? url('storage/'.$item->photo): ( session()->has('darkMode') ? url('/images/models/dark/branch.svg'):url('/images/models/default/branch.svg') )}}" width="auto" height="50"  alt="product-image" >
+                                                                <img width="auto" height="50" alt="product-image"
+                                                                     src="@if($item->photo)
+                                                                         {{url('storage/'.$item->photo)}}
+                                                                        @elseif($item->parent != null)
+                                                                            {{url('storage/'.optional($item->parent)->photo)}}
+                                                                        @else
+                                                                          {{ session()->has('darkMode') ? url('/images/models/dark/branch.svg'):url('/images/models/default/branch.svg') }}"
+                                                                        @endif"
+                                                                />
                                                             </td>
                                                             <td>{{$item->name}}</td>
+                                                            <td>{{optional($item->parent)->name??'----'}}</td>
                                                             <td>
                                                                 <a href="{{ url(route('regions.change_active',[$item->id])) }}">
                                                                     @if($item->active==1)

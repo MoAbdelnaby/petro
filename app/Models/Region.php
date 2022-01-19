@@ -18,6 +18,19 @@ class Region extends Model
         return $this->hasMany(Branch::class);
     }
 
+    public function parent()
+    {
+        return $this->hasOne(__CLASS__, 'id', 'parent_id');
+    }
+
+    public function getFullPhotoAttribute()
+    {
+        $photo = $this->photo ?? '';
+        if ($this->parent != null) {
+            $photo = $this->parent->photo;
+        }
+        return $photo;
+    }
 
     protected static function booted()
     {

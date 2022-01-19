@@ -29,45 +29,46 @@
                             <div class="row">
                                 <div class="col-md-12 pb-3">
                                     <div class="iq-image-container">
-                                            <div class="iq-product-cover d-flex justify-content-center">
-                                                <img
-                                                    src="{{ session()->has('darkMode') ? url('/images/package-light.png'):url('/images/package.svg')}}"
-                                                    alt="product-image" class="img-fluid">
+                                        <div class="iq-product-cover d-flex justify-content-center">
+                                            <img
+                                                src="{{ session()->has('darkMode') ? url('/images/package-light.png'):url('/images/package.svg')}}"
+                                                alt="product-image" class="img-fluid">
+
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <ul id="" class="d-flex m-0 p-0">
+                                                @foreach($items as $item)
+                                                    <li class="mx-1 d-flex"><img
+                                                            src="{{ session()->has('darkMode') ? url('/images/models/dark'):url('/images/models/default') }}/{{$item->model->model->id}}.svg"
+                                                            width="80px" height="80px" alt="product-image"
+                                                            class="img-fluid"></li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        @if(auth()->user()->type=="customer")
+                                            <div class="additional-product-action row justify-content-center mt-3">
+                                                @if($package)
+                                                    <div class="product-action ml-2">
+                                                        <div class="add-to-cart">
+                                                            <a class="btn btn-primary"
+                                                               href="{{ route('branchmodelpreview.index') }}">
+                                                                <i class="fa fa-eye"></i> {{__('app.customers.packages.table.ShowModels')}}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                @if(auth()->user()->id != 3)
+                                                    <div class="product-action ml-2">
+                                                        <div class="add-to-cart">
+                                                            <a class="btn btn-default"
+                                                               href="{{ route('customerPackages.allpackages') }}">
+                                                                {{__('app.customers.packages.table.upgrade')}}
+                                                                <i class="fa fa-plus"></i> </a></div>
+                                                    </div>
+                                                @endif
 
                                             </div>
-                                            <div class="row justify-content-center">
-                                                <ul id="" class="d-flex m-0 p-0">
-                                                    @foreach($items as $item)
-                                                        <li class="mx-1 d-flex"><img
-                                                                src="{{ session()->has('darkMode') ? url('/images/models/dark'):url('/images/models/default') }}/{{$item->model->model->id}}.svg"
-                                                                width="80px" height="80px" alt="product-image"
-                                                                class="img-fluid"></li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                            @if(auth()->user()->type=="customer")
-                                                <div class="additional-product-action row justify-content-center mt-3">
-                                                    @if($package)
-                                                        <div class="product-action ml-2">
-                                                            <div class="add-to-cart">
-                                                                <a class="btn btn-primary"
-                                                                   href="{{ route('branchmodelpreview.index') }}">
-                                                                    <i class="fa fa-eye"></i> {{__('app.customers.packages.table.ShowModels')}}
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                    @if(auth()->user()->id != 3)
-                                                        <div class="product-action ml-2">
-                                                            <div class="add-to-cart">
-                                                                <a class="btn btn-default" href="{{ route('customerPackages.allpackages') }}">
-                                                                    {{__('app.customers.packages.table.upgrade')}}
-                                                                    <i class="fa fa-plus"></i> </a></div>
-                                                        </div>
-                                                    @endif
-
-                                                </div>
-                                            @endif
+                                        @endif
 
                                     </div>
                                 </div>
@@ -143,11 +144,12 @@
                                                             </td>
                                                             <td>
                                                                 @if(!empty($item->itembranches) and $item->itembranches[0] !== null)
-                                                                    @foreach($item->itembranches as $branch)
+                                                                    @foreach($item->itembranches as $key => $branch)
                                                                         <span class="nav-item li-btn-sm btn-info">
                                                                             <i class="far fa-sitemap"></i>
                                                                             {{$branch->name}}
                                                                         </span>
+                                                                        @if($key == 2) ..... @break @endif
                                                                     @endforeach
                                                                 @endif
                                                             </td>
@@ -161,19 +163,32 @@
                                                                 @if(auth()->user()->type=="customer")
 
                                                                     <span class="text-center  border-0 border-radius-0">
-                                                                        <a class="btn btn-info waves-effect waves-light" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="{{__('app.saas.packages.items.Assign_Branch')}}" onclick=assign_alert({{ $item->id }},@json($item->branches()->pluck('branch_id')))>
+                                                                        <a class="btn btn-info waves-effect waves-light"
+                                                                           data-container="body" data-trigger="hover"
+                                                                           data-toggle="popover" data-placement="top"
+                                                                           data-content="{{__('app.saas.packages.items.Assign_Branch')}}"
+                                                                           onclick=assign_alert({{ $item->id }},@json($item->branches()->pluck('branch_id')))>
                                                                             <i class="fas fa-sitemap m-0"></i>
                                                                         </a>
                                                                     </span>
-                                                                @if(!empty($item->itembranches) and $item->itembranches[0] !== null)
-                                                                    <span class="text-center  border-0 border-radius-0 " style="">
-                                                                        <a class="btn btn-primary waves-effect waves-light" href="{{ route('branchmodels.show',[$item->id]) }}" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="{{__('app.saas.packages.items.Show')}}">
+                                                                    @if(!empty($item->itembranches) and $item->itembranches[0] !== null)
+                                                                        <span
+                                                                            class="text-center  border-0 border-radius-0 "
+                                                                            style="">
+                                                                        <a class="btn btn-primary waves-effect waves-light"
+                                                                           href="{{ route('branchmodels.show',[$item->id]) }}"
+                                                                           data-container="body" data-trigger="hover"
+                                                                           data-toggle="popover" data-placement="top"
+                                                                           data-content="{{__('app.saas.packages.items.Show')}}">
                                                                             <i class="fas fa-eye m-0"></i>
                                                                         </a>
                                                                     </span>
-                                                                @endif
+                                                                    @endif
                                                                     <span class="text-center  border-0 border-radius-0">
-                                                                      <a class="btn btn-danger waves-effect waves-light" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="{{ __('app.Error_Manageent') }}"
+                                                                      <a class="btn btn-danger waves-effect waves-light"
+                                                                         data-container="body" data-trigger="hover"
+                                                                         data-toggle="popover" data-placement="top"
+                                                                         data-content="{{ __('app.Error_Manageent') }}"
                                                                          href="{{route('error_mangment.index',9)}}">
                                                                           <i class="fas fa-exclamation-triangle m-0"></i>
                                                                       </a>
@@ -217,7 +232,8 @@
                                                                     >{{__('app.saas.packages.items.count')}}</span> : {{$item->count}}</h5>--}}
                                                                     {{--                                                                    <div class="clearfix border-bottom my-2"></div>--}}
                                                                     <h5>
-                                                                      <span class="float-left" style="{{ session()->has('darkMode') ? 'color:#ffffff' : 'color:#000' }}">
+                                                                      <span class="float-left"
+                                                                            style="{{ session()->has('darkMode') ? 'color:#ffffff' : 'color:#000' }}">
                                                                           <i class="far fa-sitemap"></i>
                                                                           {{__('app.saas.packages.items.active_branches')}}
                                                                       </span>
@@ -226,11 +242,12 @@
                                                                             <i class="fas fa-info"></i>
                                                                         </span>
                                                                         <div class="branchesAll" style="display: none;">
-                                                                           <div class="content-branches">
-                                                                                @foreach($item->itembranches as $branch)
+                                                                            <div class="content-branches">
+                                                                                @foreach($item->itembranches as $key=>$branch)
                                                                                     <h6>
                                                                                         <i class="far fa-sitemap"></i> {{$branch->name}}
                                                                                     </h6>
+                                                                                    @if($key == 2) ..... @break @endif
                                                                                 @endforeach
                                                                             </div>
 
@@ -242,10 +259,11 @@
                                                                         <ul class="ratting-item scroll-vertical-custom d-flex p-0 m-0">
                                                                             <div class="scroll-vertical-custom-div">
                                                                                 @if(!empty($item->itembranches) and $item->itembranches[0] !== null)
-                                                                                    @foreach($item->itembranches as $branch)
+                                                                                    @foreach($item->itembranches as $key=>$branch)
                                                                                         <li class="nav-item li-btn-sm btn-info">
                                                                                             <i class="far fa-sitemap"></i> {{$branch->name}}
                                                                                         </li>
+                                                                                        @if($key == 8) ..... @break @endif
                                                                                     @endforeach
                                                                                 @endif
                                                                             </div>

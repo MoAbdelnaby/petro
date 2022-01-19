@@ -23,10 +23,11 @@ class ReportService
      * @param $end
      * @return array
      */
-    public static function comparisonReport($model = 'all', $bracnh, $start, $end): array
+    public static function comparisonReport(string $model = 'all', $bracnh, $start, $end): array
     {
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate'])) {
+
+        if ($model != 'all' && in_array($model, ['place', 'plate','invoice'])) {
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name('custom', $bracnh, $start, $end);
         }
@@ -45,10 +46,10 @@ class ReportService
      * @param $end
      * @return array
      */
-    public static function branchReport($model = 'all', $bracnh, $start, $end): array
+    public static function branchReport(string $model = 'all', $bracnh, $start, $end): array
     {
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate','invoice'])) {
             $fun_name = "{$model}BranchReport";
             return self::$fun_name($bracnh, $start, $end);
         }
@@ -62,10 +63,10 @@ class ReportService
      * Get Default Report Data For Top 5 Or N Branch To comparison between them depend non modeltype
      *
      * @param string $model
-     * @param int $count
+     * @param int|null $count
      * @return array
      */
-    public static function defaultcomparison($model = 'all', $count = null): array
+    public static function defaultcomparison(string $model = 'all', int $count = null): array
     {
         self::$branch_count = $count ?? self::$branch_count;
         self::$topPlaceBranch = DB::table('view_top_branch_place')->pluck('branch_id')->toArray();
@@ -91,7 +92,7 @@ class ReportService
      * @param null $end
      * @return array
      */
-    public static function placeComparisonReport($type = 'default', $branch = [], $start = null, $end = null): array
+    public static function placeComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
     {
         $query = AreaDuration::join('branches', 'branches.id', '=', 'area_durations.branch_id')
             ->where('branches.user_id', '=', parentID())
@@ -158,7 +159,7 @@ class ReportService
      * @param null $end
      * @return array
      */
-    public static function plateComparisonReport($type = 'default', $branch = [], $start = null, $end = null): array
+    public static function plateComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
     {
         $plate_data = Carprofile::where('status', 'completed')
             ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
@@ -318,9 +319,7 @@ class ReportService
                 return [$item['BayCode'] => $item];
             })->toArray();
 
-        $charts = self::preparePlateChart($plate_data, 'area');
-
-        return $charts;
+        return self::preparePlateChart($plate_data, 'area');
     }
 
     /**
@@ -332,7 +331,7 @@ class ReportService
      * @param null $end
      * @return array
      */
-    public static function dynamicPlaceBar($type = 'default', $branch = [], $start = null, $end = null): array
+    public static function dynamicPlaceBar(string $type = 'default', array $branch = [], $start = null, $end = null): array
     {
         $query = DB::table('area_duration_days')
             ->join('branches', 'branches.id', '=', 'area_duration_days.branch_id')
@@ -419,7 +418,7 @@ class ReportService
      * @param null $end
      * @return array
      */
-    public static function dynamicPlateBar($type = 'default', $branch = [], $start = null, $end = null): array
+    public static function dynamicPlateBar(string $type = 'default', array $branch = [], $start = null, $end = null): array
     {
         $plate_data = Db::table('carprofiles')
             ->select(['branches.name as branch', 'carprofiles.id', 'carprofiles.branch_id', 'carprofiles.checkInDate'])
@@ -504,10 +503,10 @@ class ReportService
      * Prepare Format of Place Data Chart
      *
      * @param $place_data
-     * @param string $filter_key
+     * @param string $key_name
      * @return array
      */
-    public static function preparePlaceChart($place_data, $key_name = 'branch'): array
+    public static function preparePlaceChart($place_data, string $key_name = 'branch'): array
     {
         $charts = [];
         $filter_key = ($key_name == 'area') ? 'Area#' : '';
@@ -542,10 +541,10 @@ class ReportService
      * Prepare Format of Plate Data Chart
      *
      * @param $plate_data
-     * @param string $filter_key
+     * @param string $key_name
      * @return array
      */
-    public static function preparePlateChart($plate_data, $key_name = 'branch'): array
+    public static function preparePlateChart($plate_data, string $key_name = 'branch'): array
     {
         $charts = [];
         $x = 0;

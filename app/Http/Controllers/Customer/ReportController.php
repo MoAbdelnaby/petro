@@ -9,6 +9,7 @@ use App\Services\ConfigService;
 use App\Services\ReportService;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
@@ -23,12 +24,15 @@ class ReportController extends Controller
             $branchcount = Branch::where('active', true)->where('user_id', parentID())->count();
             $userscount = User::where('parent_id', parentID())->count();
             $branches = Branch::where('active', true)->where('user_id', parentID())->pluck('name', 'id')->toArray();
+            $branches_report = Branch::whereIn('id',DB::table('view_top_branch_place')->pluck('branch_id')
+                ->toArray())->take(7)->pluck('name');
 
             return view("customer.reports.{$type}", [
                 'regioncount' => $regioncount,
                 'branchcount' => $branchcount,
                 'userscount' => $userscount,
                 'branches' => $branches,
+                'branches_report' => $branches_report,
                 'modelscount' => 2,
                 'charts' => $charts,
                 'config' => $config,
@@ -37,7 +41,6 @@ class ReportController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            dd($e);
             return redirect()->back()->with('danger', 'UnKnowm Error');
         }
     }
@@ -47,10 +50,10 @@ class ReportController extends Controller
         try {
             $valdaitor = Validator::make($request->all(), [
                 'filter_type' => 'required|string|in:comparison,branch',
-                'branch_comparison' => 'required_if:filter_type,comparison|min:2|max:10',
-                'branch_data' => 'required_if:filter_type,branch|min:1|max:10',
-                'start_date' => 'nullable|date',
-                'end_date' => 'nullable|date',
+                'branch_comparison' => 'required_if:filter_type,comparison|array',
+                'branch_data' => 'required_if:filter_type,branch',
+                'start_date' => 'nullable|date|before_or_equal:end_date',
+                'end_date' => 'nullable|date|after_or_equal:start_date',
             ]);
 
             if ($valdaitor->errors()->count()) {
@@ -60,6 +63,13 @@ class ReportController extends Controller
             $filter_type = $request->filter_type;
             $filter_key = ($filter_type != 'comparison') ? 'area' : 'branch';
             $branch = ($filter_type != 'comparison') ? $request->branch_data : $request->branch_comparison;
+
+            if($model_type == 'invoice'){
+                $filter_type = 'comparison';
+                $filter_key = 'branch';
+                $branch = \Arr::wrap($branch);
+            }
+
             $func_name = $filter_type . 'Report';
 
             //Prepare Chart Data And Conig By Type
@@ -71,12 +81,14 @@ class ReportController extends Controller
             $branchcount = Branch::where('active', true)->where('user_id', parentID())->count();
             $userscount = User::where('parent_id', parentID())->count();
             $branches = Branch::where('active', true)->where('user_id', parentID())->pluck('name', 'id')->toArray();
+            $branches_report = Branch::whereIn('id',\Arr::wrap($branch))->take(7)->pluck('name');
 
             return view("customer.reports.{$model_type}", [
                 'regioncount' => $regioncount,
                 'branchcount' => $branchcount,
                 'userscount' => $userscount,
                 'branches' => $branches,
+                'branches_report' => $branches_report,
                 'modelscount' => 2,
                 'charts' => $charts,
                 'config' => $config,
