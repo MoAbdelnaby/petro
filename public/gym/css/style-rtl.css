@@ -426,7 +426,7 @@ body.sidebar-main .content-page, body.sidebar-main .iq-footer {
 }
 .scroll-vertical-custom-div li.nav-item {
     width: auto;
-    display: inline-block !important;
+    /* display: inline-block !important; */
     padding: 2px 4px;
     float: right!important;
     margin:0 3px;
@@ -514,6 +514,14 @@ input[type="checkbox"].switch_1:checked:after {
     left: auto;
     display: inline-block;
     width: 40px;
+}
+#back.top{
+    right: 50px;
+}
+.search-cont.top{
+    left: auto !important;
+    right: 95px;
+    top: 10px !important;
 }
 #logout {
     position: absolute;
@@ -660,4 +668,35 @@ div.dataTables_wrapper div.dataTables_length select {
 .select2-container--default .select2-selection--multiple .select2-selection__choice{
     padding-left: 5px;
     padding-right:20px!important;
+}
+
+.search-cont{
+    left: auto !important;
+    right: 60px;
+    top: 72px !important;
+}
+.search_branch-ul.seacrh-open .scroll-vertical-custom-div {
+    padding-left: 0 ;
+    padding-right: 215px;
+    float: right !important;
+}
+.search_branch-ul.seacrh-open.top .scroll-vertical-custom-div{
+    padding-left: 0;
+    padding-right: 250px;
+}
+.setting-card-cont .custom-dropdown{
+    direction: rtl;
+    text-align: right;
+}
+.setting-card-cont .custom-dropdown .form-check-inline .form-check-input{
+    margin-right: 0;
+    margin-left: .3125rem;
+}
+.search-cont .dropdown-menu.show{
+
+    transform: translate3d(-260px, -2px, 0px) !important;
+}
+
+#li-branches.scroll-vertical-custom-div{
+    float: right;
 }

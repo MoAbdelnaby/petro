@@ -1470,12 +1470,13 @@ input.increment { text-align: center; }
 }
 .related-heading{
     position: relative;
+    border-bottom: 1px solid #ccc;
 }
 .related-heading h2{
     font-size: 20px;
     color: #565555;
     text-transform: uppercase;
-    border-bottom: 1px solid #ccc;
+
     padding-bottom: 5px;
     line-height: 50px;
 }
@@ -2148,5 +2149,14 @@ div.dataTables_wrapper div.dataTables_paginate {
 /*-----------------------------------------------------*/
 /*******************************************************/
 
+.model-card .card-body{
+    position: relative;
+}
+
+.model-card .card-body .setting-cont{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
 
 

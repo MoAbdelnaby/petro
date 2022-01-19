@@ -1621,12 +1621,13 @@ a.btn-dark{
 }
 .related-heading{
     position: relative;
+    border-bottom: 1px solid #304356;
 }
 .related-heading h2{
     font-size: 20px;
     color: #e6e6e6;
     text-transform: uppercase;
-    border-bottom: 1px solid #304356;
+
     padding-bottom: 5px;
     line-height: 50px;
 }

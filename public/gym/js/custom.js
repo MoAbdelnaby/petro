@@ -58,11 +58,13 @@ jQuery(document).ready(function () {
         ]
     });
     $('.show-image-icon-sho, .setting-icon-sho ').on('click', function () {
+
         $('.area-section.slider').slick('refresh');
+        cr = true;
     })
 
 });
-
+var cr = false;
 
 
  function store() {
@@ -135,5 +137,63 @@ jQuery(document).ready(function () {
 
 
  }
+
+
+//  toggle search
+$(".search-cont").on("show.bs.dropdown", function(event){
+    $(".search_branch-ul").addClass('seacrh-open');
+    $(this).find('[autofocus]').focus();
+});
+$(".search-cont").on("shown.bs.dropdown", function(event){
+    $(this).find('[autofocus]').focus();
+});
+$(".search-cont").on("hide.bs.dropdown", function(event){
+    $(".search_branch-ul").removeClass('seacrh-open')
+});
+//  search in branhc
+let branchesElm = document.querySelectorAll("#li-branches .nav-item:not(.no_data)");
+document.querySelector("#branch_search").addEventListener('keyup', function (e) {
+let filterText = e.target.value;
+let filterReg = new RegExp(filterText, 'i');
+let flag = 0;
+ $('#li-branches .no_data').addClass('hide')
+branchesElm.forEach(elm => {
+    if(elm.dataset.bname.trim().match(filterReg)){
+        elm.style.display = 'inline-block';
+        flag++;
+    }else{
+        elm.style.display = 'none'
+    }
+})
+if(!flag){
+    $('#li-branches .no_data').removeClass('hide')
+}
+
+})
+
+
+function slickCarouselCardEvents(fn) {
+$('.setting-card-cont .custom-dropdown').on('click', function(e){
+e.stopPropagation();
+});
+$('.custom-dropdown input[type=radio]').click(function (e) {
+    e.preventDefault;
+    e.stopPropagation
+    let btn_id = e.target.dataset.key;
+    $(`.div-hours-btn-${btn_id}`).each(function () {
+        if ($(this).css("display") == "none") {
+            $(this).show();
+            $(`.div-minutes-btn-${btn_id}`).hide();
+        } else {
+            $(this).hide();
+            $(`.div-minutes-btn-${btn_id}`).show()
+        }
+    });
+});
+
+$(".filter_date").on('change', fn);
+
+};
+
 
 

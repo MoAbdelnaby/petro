@@ -19,17 +19,17 @@
             <span><img src="{{resolveDark()}}/img/list.png" alt=""></span>
         </div>
         <!-- //////////// -->
-        <ul class="branch nav nav-pills scroll-vertical-custom" id="pills-tab" role="tablist">
+        <ul class="branch nav nav-pills scroll-vertical-custom search_branch-ul top" id="pills-tab" role="tablist">
             {{--          <li class="nav-item" style="width: 445px;">--}}
             {{--                <a class="nav-link active" id="pills-home-tab"  href="{{route('places.index',[$usermodelbranchid])}}" aria-controls="pills-home" aria-selected="true">--}}
             {{--                    <img src="{{resolveDark()}}/img/icon-location.svg" alt="">--}}
             {{--               <span class="ml-1"> {{$usermodelbranch->branch->name}}</span></a>--}}
-            <div class="scroll-vertical-custom-div">
+            <div class="scroll-vertical-custom-div" id='li-branches'>
                 @foreach ($final_branches as $branch)
                     @php
                         $branch = (object)$branch;
                     @endphp
-                    <li class="nav-item">
+                    <li class="nav-item" data-bName='{{$branch->name}}'>
                         <a class="nav-link {{$branch->name == $usermodelbranch->branch->name ? 'active':''}}"
                            id="pills-home-tab" href="{{route('modelbranchpreview',[$branch->user_model_branch_id])}}"
                            aria-controls="pills-home" aria-selected="true">
@@ -37,6 +37,12 @@
                             <span class="ml-1"> {{$branch->name}}</span></a>
                     </li>
                 @endforeach
+                    <li class="nav-item no_data hide">
+                            <a href="javascript:void(0);" class="nav-link">
+                                 {{__('app.no_data')}}
+                            </a>
+                    </li>
+
             </div>
         </ul>
         <ul class="model nav nav-pills scroll-vertical-custom" id="pills-tab" role="tablist">
@@ -48,9 +54,16 @@
                 </a>
             </li>
         </ul>
-        <div id="back">
+        <div id="back" class='top'>
             <div class="backdash">
                 <a href="{{route('home')}}"> <i class="fa fa-home"></i></a>
+            </div>
+        </div>
+        <div class="search-cont top dropright">
+            <button class='btn btn-icon ' data-toggle="dropdown" aria-expanded="false"><i class="fas fa-search"></i></button>
+            <div class="dropdown-menu">
+                <input autofocus type="text" class="form-control " aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
             </div>
         </div>
         <div id="logout">
@@ -235,9 +248,44 @@
                                     @foreach($areas as $key=>$area)
                                         <div class="col">
                                             <div class="door-open">
-                                                <div class="card">
+                                                <div class="card model-card">
                                                     <div class="card-body p-0">
-                                                        <div class="text-center border-bottom px-2 pt-3 pb-1">
+                                                    <div class="setting-card-cont dropleft ">
+                                                            <a href="#"  type="button" data-toggle="dropdown" id="dropdownMenuCardSetting" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class="fas fa-cog"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right custom-dropdown" aria-labelledby="dropdownMenuCardSetting">
+                                                               <div class="">
+                                                                    <h6>{{__('app.duration')}}</h6>
+                                                                    <select name="filter_date" data-key="{{$key}}"
+                                                                            class="filter_date custom-select">
+                                                                        <option value="all">{{__('app.all')}}</option>
+                                                                        <option value="today">{{__('app.today')}}</option>
+                                                                        <option value="week">{{__('app.week')}}</option>
+                                                                        <option value="month">{{__('app.month')}}</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="time-unit mt-4">
+
+                                                                    <h6>{{__('app.duration_time_unit')}}</h4>
+                                                                    <form action="">
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" data-key={{$key}} value='hours' type="radio" name="duration_unit" id="duration_hours-{{$key}}" checked>
+                                                                            <label class="form-check-label"  for="duration_hours-{{$key}}">
+                                                                                {{__('app.Hours')}}
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input  class="form-check-input" data-key={{$key}} value='minutes' type="radio" name="duration_unit" id="duration_minutes-{{$key}}" >
+                                                                            <label class="form-check-label" for="duration_minutes-{{$key}}">
+                                                                                {{__('app.Minutes')}}
+                                                                            </label>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {{-- <div class="text-center border-bottom px-2 pt-3 pb-1">
                                                             <select name="filter_date" data-key="{{$key}}"
                                                                     class="filter_date">
                                                                 <option value="all">All</option>
@@ -245,7 +293,7 @@
                                                                 <option value="week">Week</option>
                                                                 <option value="month">Month</option>
                                                             </select>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="text-center border-bottom px-2 pt-3 pb-1">
                                                             @if($area['areaavailable'] && $area['areaavailable']->status==1)
                                                                 <img src="{{resolveDark()}}/img/Icon-area-1.svg"
@@ -267,11 +315,11 @@
 
                                                             @endif
 
-                                                                <div>
+                                                                {{-- <div>
                                                                     <input type="button"
                                                                            class="btn btn-primary btn-sm change-btn"
                                                                            id="btn-{{$key}}" value="Change to Minutes">
-                                                                </div>
+                                                                </div> --}}
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
 
@@ -722,41 +770,9 @@
             $(document).ready(function () {
 
                 // until do it
-                {{--$("#branch_search").keydown(function (){--}}
-
-                {{--    let branches = {{$activebranches}} ;--}}
-
-                {{--    let branches _li = '';--}}
-                {{--    branches.forEach(function (branches,i){--}}
-                {{--       --}}
-                {{--    })--}}
-
-                {{--    $('#li-branches').text('');--}}
-
-                {{--});--}}
 
 
-                $('.change-btn').click(function (e) {
-
-                    // console.log(e.target.value)
-                    let btn_id = e.target.id
-
-                    $(`.div-hours-${btn_id}`).each(function () {
-                        if ($(this).css("display") == "none") {
-                            $(this).show();
-                            $(`.div-minutes-${btn_id}`).hide();
-                            e.target.value = 'Change To MInutes';
-                        } else {
-                            $(this).hide();
-                            $(`.div-minutes-${btn_id}`).show()
-                            e.target.value = 'Change To Hours';
-                        }
-                    });
-
-
-                });
-
-                $(".filter_date").on('change', function () {
+                let filterDataFn = function () {
                     var key = $(this).data('key');
                     var branch_id = "{{$usermodelbranch->branch_id}}";
                     var date = $(this).val();
@@ -783,6 +799,13 @@
 
                         }
                     })
+                }
+
+                slickCarouselCardEvents(filterDataFn)
+
+
+                $('.area-section.slider').on('afterChange', function(event, currentSlide){
+                    cr && (slickCarouselCardEvents(filterDataFn), cr = false);
                 })
             });
 

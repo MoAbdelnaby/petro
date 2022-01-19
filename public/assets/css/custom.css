@@ -1241,3 +1241,39 @@ div.dataTables_wrapper div.dataTables_filter input {
 .dropdown-item.test {
     padding: 0;
 }
+
+.iq-card  .iq-card-title{
+
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.related-heading h2{
+    font-weight: bold;
+}
+.duration-cont{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.duration-cont > i {
+    margin-bottom: 4px;
+}
+.related-heading .duration{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5rem;
+}
+.related-heading .duration p:first-child{
+    margin-right: 1rem;
+}
+.related-heading .duration p {
+    margin-bottom: 0;
+    font-size: 16px;
+}
+.c-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

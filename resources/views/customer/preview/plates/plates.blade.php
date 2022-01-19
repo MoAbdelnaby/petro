@@ -51,10 +51,10 @@
                                             style="width: 170px"></a>
             <span><img src="{{resolveDark()}}/img/list.png" alt=""></span>
         </div>
-        <ul class="branch nav nav-pills scroll-vertical-custom" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div">
+        <ul class="branch nav nav-pills scroll-vertical-custom search_branch-ul top" id="pills-tab" role="tablist">
+            <div class="scroll-vertical-custom-div" id='li-branches'>
                 @foreach ($final_branches as $branch)
-                    <li class="nav-item">
+                    <li class="nav-item" data-bName='{{$branch->name}}'>
                         <a class="nav-link {{$branch->name==$usermodelbranch->branch->name ? 'active':''}}"
                            id="pills-home-tab" href="{{route('modelbranchpreview',[$branch->user_model_branch_id])}}"
                            aria-controls="pills-home" aria-selected="true">
@@ -62,6 +62,11 @@
                             <span class="ml-1"> {{$branch->name}}</span></a>
                     </li>
                 @endforeach
+                     <li class="nav-item no_data hide">
+                            <a href="javascript:void(0);" class="nav-link">
+                                 {{__('app.no_data')}}
+                            </a>
+                    </li>
             </div>
 
         </ul>
@@ -76,12 +81,19 @@
             </li>
 
         </ul>
-        <div id="back">
+        <div id="back" class='top'>
 
             <div class="backdash">
                 <a href="{{route('home')}}"> <i class="fa fa-home"></i></a>
             </div>
 
+        </div>
+        <div class="search-cont top dropright">
+            <button class='btn btn-icon ' data-toggle="dropdown" aria-expanded="false"><i class="fas fa-search"></i></button>
+            <div class="dropdown-menu">
+                <input autofocus type="text" class="form-control " aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
+            </div>
         </div>
         <div id="logout">
             <span class="close-setting" style="cursor: pointer;"><i class="fas fa-sign-out-alt"></i>{{__('app.gym.Logout')}}</span>
@@ -260,10 +272,29 @@
                                     @foreach($areatimes as $key=>$val)
                                         <div class="col">
                                             <div class="door-open">
-                                                <div class="card">
-                                                    <div class="card-body p-0">
+                                                <div class="card model-card">
+                                                    <div class="card-body  p-0">
+                                                             <div class="setting-card-cont dropleft ">
+                                                            <a href="#"  type="button" data-toggle="dropdown" id="dropdownMenuCardSetting" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class="fas fa-cog"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right custom-dropdown" aria-labelledby="dropdownMenuCardSetting">
+                                                               <div class="">
+                                                                    <h6>{{__('app.duration')}}</h6>
+                                                                    <select name="filter_date" data-key="{{$key}}"
+                                                                            class="filter_date custom-select">
+                                                                        <option value="all">{{__('app.all')}}</option>
+                                                                        <option value="today">{{__('app.today')}}</option>
+                                                                        <option value="week">{{__('app.week')}}</option>
+                                                                        <option value="month">{{__('app.month')}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
                                                         <div class="text-center border-bottom px-2 pt-3 pb-1">
-                                                            <div class="text-center border-bottom px-2 pt-3 pb-1">
+                                                            {{-- <div class="text-center border-bottom px-2 pt-3 pb-1">
                                                                 <select name="filter_date" data-key="{{$key}}"
                                                                         class="filter_date">
                                                                     <option value="all">All</option>
@@ -271,7 +302,7 @@
                                                                     <option value="week">Week</option>
                                                                     <option value="month">Month</option>
                                                                 </select>
-                                                            </div>
+                                                            </div> --}}
 
                                                             <img src="{{resolveDark()}}/img/Icon-car.svg"
                                                                  alt="Area-{{$val}}">
@@ -897,7 +928,8 @@
         @endif
 
         $(document).ready(function () {
-            $(".filter_date").on('change', function () {
+           // $(".filter_date").on('change', );
+            let filterDataFn  = function () {
                 var area = $(this).data('key');
                 var branch_id = "{{$usermodelbranch->branch->id}}";
                 var date = $(this).val();
@@ -918,7 +950,11 @@
 
                 })
 
-            });
+            }
+            slickCarouselCardEvents(filterDataFn)
+            $('.area-section.slider').on('afterChange', function(event, currentSlide){
+                cr && (slickCarouselCardEvents(filterDataFn), cr = false);
+            })
         });
 
     </script>

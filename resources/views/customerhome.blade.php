@@ -18,7 +18,7 @@
                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                     <a href="{{route('customerRegions.index')}}" class="iq-card-body">
                                         <div class="d-flex align-items-center justify-content-between">
-                                            <h6>{{ __('app.Regions') }}</h6>
+                                            <h6 class='iq-card-title'>{{ __('app.Regions') }}</h6>
                                         </div>
                                         <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                             <div class="d-flex align-items-center">
@@ -39,7 +39,7 @@
                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                     <a href="{{route('customerBranches.index')}}" class="iq-card-body">
                                         <div class="d-flex align-items-center justify-content-between">
-                                            <h6>{{ __('app.Branches') }}</h6>
+                                            <h6 class='iq-card-title'>{{ __('app.Branches') }}</h6>
                                         </div>
                                         <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                             <div class="d-flex align-items-center">
@@ -58,7 +58,7 @@
                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                     <a href="{{route('customerUsers.index')}}" class="iq-card-body">
                                         <div class="d-flex align-items-center justify-content-between">
-                                            <h6>{{ __('app.Users') }}</h6>
+                                            <h6 class='iq-card-title'>{{ __('app.Users') }}</h6>
                                         </div>
                                         <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                             <div class="d-flex align-items-center">
@@ -78,7 +78,7 @@
                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                     <a href="{{url('customer/customerPackages')}}" class="iq-card-body">
                                         <div class="d-flex align-items-center justify-content-between">
-                                            <h6>{{ __('app.Models') }}</h6>
+                                            <h6 class='iq-card-title'>{{ __('app.Models') }}</h6>
                                         </div>
                                         <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                             <div class="d-flex align-items-center">
@@ -106,8 +106,35 @@
                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-0">
                                     <div class="iq-card-body p-0">
 
-                                        <div class="related-heading mb-5">
-                                            <h2 class="p-2">{{ __('app.Bay_area_charts') }}</h2>
+                                        <div class="related-heading mb-5 c-flex">
+                                            <h2 class="p-2">{{ __('app.Bay_area_reports') }}</h2>
+                                            <div class="duration-cont">
+                                                <i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+                                                        <title>Stockholm-icons / Home / Timer</title>
+                                                        <desc>Created with Sketch.</desc>
+                                                        <defs/>
+                                                        <g id="Stockholm-icons-/-Home-/-Timer" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect id="bound" x="0" y="0" width="24" height="24"/>
+                                                            <path d="M12,21 C7.581722,21 4,17.418278 4,13 C4,8.581722 7.581722,5 12,5 C16.418278,5 20,8.581722 20,13 C20,17.418278 16.418278,21 12,21 Z" id="Combined-Shape" fill="#000000" opacity="0.3"/>
+                                                            <path d="M13,5.06189375 C12.6724058,5.02104333 12.3386603,5 12,5 C11.6613397,5 11.3275942,5.02104333 11,5.06189375 L11,4 L10,4 C9.44771525,4 9,3.55228475 9,3 C9,2.44771525 9.44771525,2 10,2 L14,2 C14.5522847,2 15,2.44771525 15,3 C15,3.55228475 14.5522847,4 14,4 L13,4 L13,5.06189375 Z" id="Combined-Shape" fill="#000000"/>
+                                                            <path d="M16.7099142,6.53272645 L17.5355339,5.70710678 C17.9260582,5.31658249 18.5592232,5.31658249 18.9497475,5.70710678 C19.3402718,6.09763107 19.3402718,6.73079605 18.9497475,7.12132034 L18.1671361,7.90393167 C17.7407802,7.38854954 17.251061,6.92750259 16.7099142,6.53272645 Z" id="Combined-Shape" fill="#000000"/>
+                                                            <path d="M11.9630156,7.5 L12.0369844,7.5 C12.2982526,7.5 12.5154733,7.70115317 12.5355117,7.96165175 L12.9585886,13.4616518 C12.9797677,13.7369807 12.7737386,13.9773481 12.4984096,13.9985272 C12.4856504,13.9995087 12.4728582,14 12.4600614,14 L11.5399386,14 C11.2637963,14 11.0399386,13.7761424 11.0399386,13.5 C11.0399386,13.4872031 11.0404299,13.4744109 11.0414114,13.4616518 L11.4644883,7.96165175 C11.4845267,7.70115317 11.7017474,7.5 11.9630156,7.5 Z" id="Path-107" fill="#000000"/>
+                                                        </g>
+                                                    </svg>
+                                                </i>
+                                                   <div class="duration">
+                                                       <p>
+                                                    <b>{{ __('app.from') }} : </b>
+                                                    22 Dec
+                                                    </p>
+                                                   <p>
+                                                    <b>{{ __('app.to') }} : </b>
+                                                    15 Jan
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="mb-5 bg-gray" id="BranchPlaceDynamicBarCon">
                                             <div id="BranchPLaceDynamicBar" class="chartDiv" style="min-height: 450px"></div>
@@ -149,8 +176,35 @@
                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-0">
                                     <div class="iq-card-body p-0">
 
-                                        <div class="related-heading mb-5">
-                                            <h2 class="p-2">{{ __('app.Car_Plate_charts') }}</h2>
+                                        <div class="related-heading mb-5 c-flex">
+                                            <h2 class="p-2">{{ __('app.Car_Plate_Reports') }}</h2>
+                                              <div class="duration-cont">
+                                                <i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+                                                        <title>Stockholm-icons / Home / Timer</title>
+                                                        <desc>Created with Sketch.</desc>
+                                                        <defs/>
+                                                        <g id="Stockholm-icons-/-Home-/-Timer" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect id="bound" x="0" y="0" width="24" height="24"/>
+                                                            <path d="M12,21 C7.581722,21 4,17.418278 4,13 C4,8.581722 7.581722,5 12,5 C16.418278,5 20,8.581722 20,13 C20,17.418278 16.418278,21 12,21 Z" id="Combined-Shape" fill="#000000" opacity="0.3"/>
+                                                            <path d="M13,5.06189375 C12.6724058,5.02104333 12.3386603,5 12,5 C11.6613397,5 11.3275942,5.02104333 11,5.06189375 L11,4 L10,4 C9.44771525,4 9,3.55228475 9,3 C9,2.44771525 9.44771525,2 10,2 L14,2 C14.5522847,2 15,2.44771525 15,3 C15,3.55228475 14.5522847,4 14,4 L13,4 L13,5.06189375 Z" id="Combined-Shape" fill="#000000"/>
+                                                            <path d="M16.7099142,6.53272645 L17.5355339,5.70710678 C17.9260582,5.31658249 18.5592232,5.31658249 18.9497475,5.70710678 C19.3402718,6.09763107 19.3402718,6.73079605 18.9497475,7.12132034 L18.1671361,7.90393167 C17.7407802,7.38854954 17.251061,6.92750259 16.7099142,6.53272645 Z" id="Combined-Shape" fill="#000000"/>
+                                                            <path d="M11.9630156,7.5 L12.0369844,7.5 C12.2982526,7.5 12.5154733,7.70115317 12.5355117,7.96165175 L12.9585886,13.4616518 C12.9797677,13.7369807 12.7737386,13.9773481 12.4984096,13.9985272 C12.4856504,13.9995087 12.4728582,14 12.4600614,14 L11.5399386,14 C11.2637963,14 11.0399386,13.7761424 11.0399386,13.5 C11.0399386,13.4872031 11.0404299,13.4744109 11.0414114,13.4616518 L11.4644883,7.96165175 C11.4845267,7.70115317 11.7017474,7.5 11.9630156,7.5 Z" id="Path-107" fill="#000000"/>
+                                                        </g>
+                                                    </svg>
+                                                </i>
+                                                <div class="duration">
+                                                       <p>
+                                                    <b>{{ __('app.from') }} : </b>
+                                                    22 Dec
+                                                    </p>
+                                                   <p>
+                                                    <b>{{ __('app.to') }} : </b>
+                                                    15 Jan
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="pt-4 mb-5 bg-gray" id="BranchPlateDynamicBarCon">
                                             <div id="BranchPlateDynamicBar" class="chartDiv" style="min-height: 450px"></div>
@@ -185,7 +239,7 @@
                         @if(in_array('home' ,Arr::flatten(array_values($config['place']['table']))))
                             <div class="col-lg-6">
                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                    <div class="iq-card-body">
+                                    <div class="iq-card-body pt-0">
                                         <div class="related-heading mb-2">
                                             <h2 class="p-2">{{ __('app.Bay_area_statistics') }}</h2>
                                         </div>
@@ -254,7 +308,7 @@
                                 <div class="iq-card secondary-custom-card mb-4">
                                 <div class="iq-card-body">
                                     <div class="related-heading mb-4">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
+                                        <div class="d-flex justify-content-between align-items-center config_key_parent">
                                             <h2 class="border-bottom-0">{{ __('app.Internet_status') }}</h2>
                                         </div>
                                     </div>

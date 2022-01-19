@@ -39,15 +39,13 @@
 
         {{--            here start --}}
 
-        <ul class="branch nav nav-pills scroll-vertical-custom" id="pills-tab" role="tablist">
-                <div class="scroll-vertical-custom-div">
-                    <li class="nav-item">
-                        <input type="text" class="form-control" aria-label="Sizing example input"
-                               aria-describedby="inputGroup-sizing-sm" placeholder="Branch Search" id="branch_search">
-                    </li>
-                    <span id="li-branches">
+        <ul class="branch nav nav-pills scroll-vertical-custom search_branch-ul" id="pills-tab" role="tablist">
+
+                <div class="scroll-vertical-custom-div " id='li-branches'>
+
+
                     @foreach ($activebranches as $branch)
-                        <li class="nav-item">
+                        <li class="nav-item" data-bName='{{$branch->bname}}'>
                             <a class="nav-link {{$branch->b_id==$branch_id ? 'active':''}}" id="pills-home-tab"
                                href="{{route('branchmodelpreview.index',[$branch->b_id])}}"
                                aria-controls="pills-home"
@@ -55,10 +53,15 @@
                                 <img
                                     src="{{$branch->b_id==$branch_id ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
                                     alt="">
-                                <span class="ml-1"> {{$branch->bname}}</span></a>
+                                <span class="ml-1 b-name"> {{$branch->bname}}</span></a>
                         </li>
                     @endforeach
-                    </span>
+                        <li class="nav-item no_data hide">
+                            <a href="javascript:void(0);" class="nav-link">
+                                 {{__('app.no_data')}}
+                            </a>
+                        </li>
+
                 </div>
 
         </ul>
@@ -176,7 +179,13 @@
                 <a href="{{route('home')}}"> <i class="fas fa-home"></i></a>
             </div>
         </div>
-
+         <div class="search-cont dropright">
+            <button class='btn btn-icon ' data-toggle="dropdown" aria-expanded="false"><i class="fas fa-search"></i></button>
+            <div class="dropdown-menu">
+                <input autofocus type="text" class="form-control " aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
+            </div>
+        </div>
         <div id="logout">
              <span class="close-setting" style="cursor: pointer;">
                  <i class="fas fa-sign-out-alt"></i>
@@ -358,9 +367,44 @@
                                     @foreach($areas as $key=>$area)
                                         <div class="col ">
                                             <div class="door-open">
-                                                <div class="card">
+                                                <div class="card model-card">
                                                     <div class="card-body p-0">
-                                                        <div class="text-center border-bottom px-2 pt-3 pb-1">
+                                                        <div class="setting-card-cont dropleft ">
+                                                            <a href="#"  type="button" data-toggle="dropdown" id="dropdownMenuCardSetting" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class="fas fa-cog"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right custom-dropdown" aria-labelledby="dropdownMenuCardSetting">
+                                                               <div class="">
+                                                                <h6>{{__('app.duration')}}</h6>
+                                                                    <select name="filter_date" data-key="{{$key}}"
+                                                                            class="filter_date custom-select">
+                                                                        <option value="all">{{__('app.all')}}</option>
+                                                                        <option value="today">{{__('app.today')}}</option>
+                                                                        <option value="week">{{__('app.week')}}</option>
+                                                                        <option value="month">{{__('app.month')}}</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="time-unit mt-4">
+
+                                                                    <h6>{{__('app.duration_time_unit')}}</h4>
+                                                                    <form action="">
+                                                                        <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input" data-key={{$key}} value='hours' type="radio" name="duration_unit" id="duration_hours-{{$key}}" checked>
+                                                                        <label class="form-check-label"  for="duration_hours-{{$key}}">
+                                                                            {{__('app.Hours')}}
+                                                                        </label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                        <input  class="form-check-input" data-key={{$key}} value='minutes' type="radio" name="duration_unit" id="duration_minutes-{{$key}}" >
+                                                                        <label class="form-check-label" for="duration_minutes-{{$key}}">
+                                                                            {{__('app.Minutes')}}
+                                                                        </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    </form>
+                                                            </div>
+                                                        </div>
+                                                        {{-- <div class="text-center border-bottom px-2 pt-3 pb-1">
                                                             <select name="filter_date" data-key="{{$key}}"
                                                                     class="filter_date">
                                                                 <option value="all">All</option>
@@ -368,7 +412,7 @@
                                                                 <option value="week">Week</option>
                                                                 <option value="month">Month</option>
                                                             </select>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="text-center border-bottom px-2 pt-3 pb-1">
                                                             @if($area['areaavailable'] && $area['areaavailable']->status==1)
                                                                 <img src="{{resolveDark()}}/img/Icon-area-1.svg"
@@ -389,11 +433,11 @@
                                                                 </div>
 
                                                             @endif
-                                                            <div>
+                                                            {{-- <div>
                                                                 <input type="button"
                                                                        class="btn btn-primary btn-sm change-btn"
                                                                        id="btn-{{$key}}" value="Change to Minutes">
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
 
@@ -735,6 +779,8 @@
                 e.preventDefault();
             });
 
+
+
             /***** Tables Show ******/
             $('.chart-type.tables-type .dropdown-item').on("click", function (e) {
                 e.stopPropagation();
@@ -804,50 +850,13 @@
 
 
         $(document).ready(function () {
-
-            // until do it
-            {{--$("#branch_search").keydown(function (){--}}
-
-            {{--    let branches = {{$activebranches}} ;--}}
-
-            {{--    let branches _li = '';--}}
-            {{--    branches.forEach(function (branches,i){--}}
-            {{--       --}}
-            {{--    })--}}
-
-            {{--    $('#li-branches').text('');--}}
-
-            {{--});--}}
-
-
-            $('.change-btn').click(function (e) {
-
-                // console.log(e.target.value)
-                let btn_id = e.target.id
-
-                $(`.div-hours-${btn_id}`).each(function () {
-                    if ($(this).css("display") == "none") {
-                        $(this).show();
-                        $(`.div-minutes-${btn_id}`).hide();
-                        e.target.value = 'Change To MInutes';
-                    } else {
-                        $(this).hide();
-                        $(`.div-minutes-${btn_id}`).show()
-                        e.target.value = 'Change To Hours';
-                    }
-                });
-
-
-            });
-
-            $(".filter_date").on('change', function () {
+             let filterDataFn = function () {
                 var key = $(this).data('key');
                 var branch_id = "{{$current_branch->id}}";
                 var date = $(this).val();
-
                 $.ajax({
                     type: 'get',
-                    url: "{{route('branch.filter.area')}}",
+                    url : "{{route('branch.filter.area')}}",
                     data: {
                         area: key,
                         branch_id: branch_id,
@@ -865,8 +874,22 @@
 
                     }
                 })
-            })
+            }
+               slickCarouselCardEvents(filterDataFn);
+                $('.area-section.slider').on('afterChange', function(event, slick){
+                     cr && (slickCarouselCardEvents(filterDataFn), cr = false);
+                })
         });
+
+
+
+
+
+
+
+
+
+
 
     </script>
 @endsection
