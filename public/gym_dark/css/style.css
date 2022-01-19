@@ -806,7 +806,37 @@ ul.nav-pills {
 .door-open {
     margin-bottom: 20px;
 }
+.model-card .card-body {
+    position: relative;
+}
 
+.model-card .card-body .setting-card-cont {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.model-card .card-body .setting-card-cont > a {
+    padding: 0.4rem;
+    box-shadow: none;
+    font-size: 16px;
+}
+
+.setting-card-cont .custom-dropdown {
+    padding: 1rem;
+    min-width: 240px;
+    background-color: #1f3246;
+    /* box-shadow: 0 2px 8px #e9e9e9; */
+}
+.setting-card-cont .custom-dropdown h6 {
+    font-weight: bold;
+    color: #fff;
+}
+.setting-card-cont .custom-dropdown .form-check-label {
+    color: #fff;
+}
+.setting-card-cont .custom-dropdown .close.close-1 {
+    color: #fff;
+}
 /* start setting */
 
 /*.header .setting {*/
@@ -2187,7 +2217,7 @@ table.table td {
     line-height: 40px;
     width: 40px;
     text-align: center;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     border-color: #192734;
 }
 .backdash a {
@@ -2446,4 +2476,86 @@ select.form-control:focus {
 }
 .border-bottom {
     border-bottom: 1px solid #1f3246 !important;
+}
+
+.search_branch-cont {
+    position: relative;
+}
+.search-cont {
+    position: absolute;
+    left: 10px;
+    top: 60px;
+}
+.search-cont.top {
+    top: 10px;
+    left: 95px;
+}
+.search-cont .btn {
+    padding: 0px 0px;
+    border-radius: 0px;
+    border: 1px solid;
+    height: 40px;
+    line-height: 40px;
+    width: 40px;
+    text-align: center;
+    margin: 0;
+    box-shadow: none;
+    background-color: #192734;
+    border-color: #192734;
+}
+.search-cont .btn:hover {
+    opacity: 0.7;
+}
+.search-cont .btn:hover i {
+    color: #fff;
+}
+.search-cont .dropdown-menu {
+    padding: 0px;
+    min-width: 250px;
+    border: none;
+}
+.seacrh-open .scroll-vertical-custom-div {
+    padding-left: 175px;
+}
+.seacrh-open.top .scroll-vertical-custom-div {
+    padding-left: 255px;
+}
+
+.search-cont .dropdown-menu {
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+.search-cont .dropdown-menu input {
+    height: calc(1.5em + 0.75rem + 7px);
+}
+#li-branches .no_data.hide {
+    display: none !important;
+}
+#li-branches {
+    float: left;
+}
+.search-cont .dropdown-menu {
+    transform: translate3d(43px, -1px, 0px) !important;
+}
+
+#back.top {
+    left: 50px;
+}
+
+.custom-dropdown .close.close-1 {
+    top: 0;
+    color: #000;
+    text-shadow: none;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#pills-home .iq-card{
+    border-radius: 8px;
+}
+#pills-home .iq-card .related-heading > div{
+    padding: 0.5rem 1rem;
+}
+
+#Combined-Shape{
+    fill: #fff !important;
 }

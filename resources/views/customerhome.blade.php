@@ -8,7 +8,7 @@
     <!-- Page Content  -->
 
 {{--    @dd($config)--}}
-    <div id="content-page" class="content-page">
+    <div id="content-page" class="content-page home_page">
         <div class="container-fluid">
             @if(in_array('home' ,array_values($config['place']['statistics'][1])) || in_array('home' ,array_values($config['place']['chart']['dynamic_bar'])) || in_array('home' ,array_values($config['plate']['chart']['dynamic_bar'])) || in_array('home' ,Arr::flatten(array_values($config['place']['table']))) || in_array('home' ,Arr::flatten(array_values($config['plate']['table']))) || in_array('home' ,array_values($config['place']['InternetStatus'][1])))
                 @if(!empty($charts['place']))
@@ -107,7 +107,7 @@
                                     <div class="iq-card-body p-0">
 
                                         <div class="related-heading mb-5 c-flex">
-                                            <h2 class="p-2">{{ __('app.Bay_area_reports') }}</h2>
+                                            <h2 class="">{{ __('app.Bay_area_reports') }}</h2>
                                             <div class="duration-cont">
                                                 <i>
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -177,7 +177,7 @@
                                     <div class="iq-card-body p-0">
 
                                         <div class="related-heading mb-5 c-flex">
-                                            <h2 class="p-2">{{ __('app.Car_Plate_Reports') }}</h2>
+                                            <h2 class="">{{ __('app.Car_Plate_Reports') }}</h2>
                                               <div class="duration-cont">
                                                 <i>
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

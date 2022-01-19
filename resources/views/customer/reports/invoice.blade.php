@@ -55,7 +55,7 @@
                                 </div>
 
                                 <div class="related-heading mb-3 m-0 row col-12 related-heading--custom">
-                                    <h2 class="p-0 col">{{ __('app.Bay_area_reports') }}</h2>
+                                    <h2 class="p-0 col">{{ __('app.Invoices_reports') }}</h2>
                                     <div class="duration-cont col py-0">
                                         <i>
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -74,17 +74,17 @@
                                         </i>
                                             <div class="duration">
                                                 <p>
-                                            <b>From : </b>
+                                             <b>{{ __('app.from') }} : </b>
                                             22 Dec
                                             </p>
                                             <p>
-                                            <b>To : </b>
+                                             <b>{{ __('app.to') }} : </b>
                                             15 Jan
                                             </p>
                                         </div>
                                     </div>
                                     <div class="col-12 branches-cont pb-4">
-                                        <h3>Branches: </h3>
+                                        <h3>{{ __('app.Branches') }} : </h3>
                                         <ul>
                                             <li>Branch 1</li>
                                             <li>Branch 2</li>

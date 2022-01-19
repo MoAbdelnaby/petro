@@ -1566,5 +1566,6 @@ return [
     'all' => 'All',
     'branch_search' => 'Branch Search',
     'no_data' => 'No Data',
+    'Invoices_reports' => 'Invoices Reports',
 
 ];

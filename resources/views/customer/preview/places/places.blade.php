@@ -33,7 +33,11 @@
                         <a class="nav-link {{$branch->name == $usermodelbranch->branch->name ? 'active':''}}"
                            id="pills-home-tab" href="{{route('modelbranchpreview',[$branch->user_model_branch_id])}}"
                            aria-controls="pills-home" aria-selected="true">
-                            <img src="{{resolveDark()}}/img/icon-location.svg" alt="">
+                            {{-- <img src="{{resolveDark()}}/img/icon-location.svg" alt=""> --}}
+                            <img
+                                src="{{$branch->name == $usermodelbranch->branch->name ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
+                                alt=""
+                            >
                             <span class="ml-1"> {{$branch->name}}</span></a>
                     </li>
                 @endforeach

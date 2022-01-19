@@ -1540,4 +1540,5 @@ return array(
     'all' => 'الكل',
     'branch_search' => 'بحث باسم الفرع',
     'no_data' => 'لايوجد بيانات',
+    'Invoices_reports' => 'تقارير الفواتير',
 );

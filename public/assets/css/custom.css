@@ -1311,3 +1311,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     color: #000;
     text-shadow: none;
 }
+
+.home_page .iq-card .related-heading{
+    padding: .5rem 1rem;
+}

@@ -81,17 +81,17 @@
                                         </i>
                                             <div class="duration">
                                                 <p>
-                                            <b>From : </b>
+                                              <b>{{ __('app.from') }} : </b>
                                             22 Dec
                                             </p>
                                             <p>
-                                            <b>To : </b>
+                                              <b>{{ __('app.to') }} : </b>
                                             15 Jan
                                             </p>
                                         </div>
                                     </div>
                                     <div class="col-12 branches-cont pb-4">
-                                        <h3>Branches: </h3>
+                                        <h3>{{ __('app.Branches') }} : </h3>
                                         <ul>
                                             <li>Branch 1</li>
                                             <li>Branch 2</li>
