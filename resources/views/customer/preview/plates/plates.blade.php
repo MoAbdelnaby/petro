@@ -279,6 +279,9 @@
                                                                 <i class="fas fa-cog"></i>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-right custom-dropdown" aria-labelledby="dropdownMenuCardSetting">
+                                                                <button type="button" class="close close-1" data-dismiss="dropdown" aria-label="Close">
+                                                                    <span class='close-1' aria-hidden="true">&times;</span>
+                                                                </button>
                                                                <div class="">
                                                                     <h6>{{__('app.duration')}}</h6>
                                                                     <select name="filter_date" data-key="{{$key}}"
