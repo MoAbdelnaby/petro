@@ -222,11 +222,11 @@ class ReportService
             if ($type == 'custom') {
                 if ($start) {
                     $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
-                    $result[$status]->whereDate('created_at', '>=', $start);
+                    $result[$status]->whereDate('carprofiles.created_at', '>=', $start);
                 }
                 if ($end) {
                     $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
-                    $result[$status]->whereDate('created_at', '<=', $end);
+                    $result[$status]->whereDate('carprofiles.created_at', '<=', $end);
                 }
                 $result[$status]->whereIn('branches.id', $branch);
             } else {

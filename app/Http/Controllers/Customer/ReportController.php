@@ -24,8 +24,8 @@ class ReportController extends Controller
             $branchcount = Branch::where('active', true)->where('user_id', parentID())->count();
             $userscount = User::where('parent_id', parentID())->count();
             $branches = Branch::where('active', true)->where('user_id', parentID())->pluck('name', 'id')->toArray();
-            $branches_report = Branch::whereIn('id',DB::table('view_top_branch_place')->pluck('branch_id')
-                ->toArray())->take(7)->pluck('name');
+            $branches_report = Branch::where('active', true)->where('user_id', parentID())->whereIn('id',DB::table('view_top_branch_place')->pluck('branch_id')
+                ->toArray())->take(6)->pluck('name');
 
             return view("customer.reports.{$type}", [
                 'regioncount' => $regioncount,
@@ -81,7 +81,8 @@ class ReportController extends Controller
             $branchcount = Branch::where('active', true)->where('user_id', parentID())->count();
             $userscount = User::where('parent_id', parentID())->count();
             $branches = Branch::where('active', true)->where('user_id', parentID())->pluck('name', 'id')->toArray();
-            $branches_report = Branch::whereIn('id',\Arr::wrap($branch))->take(7)->pluck('name');
+            $branches_report = Branch::where('active', true)->where('user_id', parentID())
+                ->whereIn('id',\Arr::wrap($branch))->take(6)->pluck('name');
 
             return view("customer.reports.{$model_type}", [
                 'regioncount' => $regioncount,
