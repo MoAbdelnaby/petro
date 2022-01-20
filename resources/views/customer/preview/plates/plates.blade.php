@@ -448,9 +448,10 @@
                                                                 </td>
                                                                 <td>
                                                                     @if(!is_null($item->invoice))
-                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">
-                                                                            <i class="fas fa-file-pdf text-success "></i>
-                                                                        </a>
+                                                                        {{--                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">--}}
+                                                                        {{--                                                                            <i class="fas fa-file-pdf text-success "></i>--}}
+                                                                        {{--                                                                        </a>--}}
+                                                                        <i class="fas fa-check text-success"></i>
                                                                     @endif
                                                                 </td>
 
@@ -492,6 +493,11 @@
                                                                             <a class="text-danger fw-normal put-error" data-item_id="{{$item->id}}" data-item_status="{{$item->plate_status}}">
                                                                                 {{ __('app.Report_Error') }}
                                                                                 <i class="fas fa-exclamation-triangle"></i>
+                                                                            </a>
+                                                                            <a href="#" class="text-info fw-normal"
+                                                                               id="download-{{$item->id}}" download
+                                                                               onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)">
+                                                                                {{ __('app.invoice_review') }}
                                                                             </a>
                                                                         </div>
                                                                     </div>
