@@ -96,7 +96,7 @@
                                            </i>
                                            <p>
                                                <b>{{ __('app.to') }} : </b>
-                                               {{request('start_date')??now()->toDateString()}}
+                                               {{request('end_date')??now()->toDateString()}}
                                            </p>
                                        </div>
                                    </div>
