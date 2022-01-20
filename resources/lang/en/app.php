@@ -30,7 +30,7 @@ return [
     'config' => 'Config',
     'status' => 'Status',
     'new' => 'New',
-    'test_speed'=>'only measure internet speed',
+    'test_speed' => 'only measure internet speed',
     'home' => 'Home',
     'region' => 'Region',
     'action_message' => 'Action Successfully',
@@ -51,7 +51,7 @@ return [
     'English' => 'English',
     'Spanish' => 'Spanish',
     'German' => 'German',
-    'invoice_review' =>'Invoice Preview',
+    'invoice_review' => 'Invoice Preview',
     'copyrights' => 'Copyright 2020 wakeb All Rights Reserved.',
     'Dark' => 'Dark Mode',
     'Default' => 'Light',
@@ -77,7 +77,7 @@ return [
     'end' => 'End',
     'size' => 'Size',
     'branch' => 'Branch',
-    'Select_Branch'=> 'Select Branch',
+    'Select_Branch' => 'Select Branch',
     'activities' => 'Activities',
     'Export_Tools' => 'Export Tools',
     'apps' => 'Apps',
@@ -115,6 +115,7 @@ return [
     'Print' => 'Print',
     'Download' => 'Download',
     'Invoice' => 'Invoice',
+    'no_invoice' => 'No Invoice',
     'Open_Invoices' => 'Open Invoices',
     'Client' => 'Client',
     'Amount' => 'Amount',
@@ -1567,5 +1568,6 @@ return [
     'branch_search' => 'Branch Search',
     'no_data' => 'No Data',
     'Invoices_reports' => 'Invoices Reports',
-
+    'Welcome_Message_reports' => 'Welcome Message Report',
+    'no_welcome' => 'No Welcome'
 ];

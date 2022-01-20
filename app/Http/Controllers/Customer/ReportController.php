@@ -21,15 +21,40 @@ class ReportController extends Controller
             $charts = ReportService::defaultcomparison($type ?? 'place');
             $config = ConfigService::get($type);
             $regioncount = Region::where('active', true)->where('user_id', parentID())->count();
-            $branchcount = Branch::where('active', true)->where('user_id', parentID())->count();
             $userscount = User::where('parent_id', parentID())->count();
             $branches = Branch::where('active', true)->where('user_id', parentID())->pluck('name', 'id')->toArray();
-            $branches_report = Branch::where('active', true)->where('user_id', parentID())->whereIn('id',DB::table('view_top_branch_place')->pluck('branch_id')
-                ->toArray())->take(6)->pluck('name');
+            $branches_report = Branch::where('active', true)->where('user_id', parentID())->whereIn('id', DB::table('view_top_branch_place')->pluck('branch_id')->toArray())->take(6)->pluck('name');
+
+            $branches_check = [];
+            if ($type == 'invoice') {
+                foreach (['invoice', 'no_invoice'] as $status) {
+
+                    $branches_check[$status] = DB::table('carprofiles')
+                        ->select('branches.id')
+                        ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
+                        ->where('branches.user_id', parentID())
+                        ->where('branches.active', true)
+                        ->whereNull('branches.deleted_at')
+                        ->distinct();
+
+                    if ($status === 'no_invoice') {
+                        $branches_check[$status] = $branches_check[$status]->whereNull('invoice')->get()->toArray();
+                    } else {
+                        $branches_check[$status] = $branches_check[$status]->whereNotNull('invoice')->get()->toArray();
+                    }
+                }
+
+                $invoices = array_column($branches_check['invoice'], 'id');
+                $no_invoices = array_column($branches_check['no_invoice'], 'id');
+                $no_invoices = array_values(array_diff($no_invoices, $invoices));
+                $branches_check['invoice'] = count($invoices);
+                $branches_check['no_invoice'] = count($no_invoices);
+            }
 
             return view("customer.reports.{$type}", [
                 'regioncount' => $regioncount,
-                'branchcount' => $branchcount,
+                'branchcount' => count($branches),
+                'branches_check' => $branches_check,
                 'userscount' => $userscount,
                 'branches' => $branches,
                 'branches_report' => $branches_report,
@@ -63,11 +88,35 @@ class ReportController extends Controller
             $filter_type = $request->filter_type;
             $filter_key = ($filter_type != 'comparison') ? 'area' : 'branch';
             $branch = ($filter_type != 'comparison') ? $request->branch_data : $request->branch_comparison;
+            $branches_check = [];
 
-            if($model_type == 'invoice'){
+            if ($model_type == 'invoice') {
                 $filter_type = 'comparison';
                 $filter_key = 'branch';
                 $branch = \Arr::wrap($branch);
+                $branches_check = [];
+                foreach (['invoice', 'no_invoice'] as $status) {
+
+                    $branches_check[$status] = DB::table('carprofiles')
+                        ->select('branches.id')
+                        ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
+                        ->where('branches.user_id', parentID())
+                        ->where('branches.active', true)
+                        ->whereNull('branches.deleted_at')
+                        ->distinct();
+
+                    if ($status === 'no_invoice') {
+                        $branches_check[$status] = $branches_check[$status]->whereNull('invoice')->get()->toArray();
+                    } else {
+                        $branches_check[$status] = $branches_check[$status]->whereNotNull('invoice')->get()->toArray();
+                    }
+                }
+
+                $invoices = array_column($branches_check['invoice'], 'id');
+                $no_invoices = array_column($branches_check['no_invoice'], 'id');
+                $no_invoices = array_values(array_diff($no_invoices, $invoices));
+                $branches_check['invoice'] = count($invoices);
+                $branches_check['no_invoice'] = count($no_invoices);
             }
 
             $func_name = $filter_type . 'Report';
@@ -78,17 +127,16 @@ class ReportController extends Controller
 
             //Count in statistics
             $regioncount = Region::where('active', true)->where('user_id', parentID())->count();
-            $branchcount = Branch::where('active', true)->where('user_id', parentID())->count();
             $userscount = User::where('parent_id', parentID())->count();
             $branches = Branch::where('active', true)->where('user_id', parentID())->pluck('name', 'id')->toArray();
-            $branches_report = Branch::where('active', true)->where('user_id', parentID())
-                ->whereIn('id',\Arr::wrap($branch))->take(6)->pluck('name');
+            $branches_report = Branch::where('active', true)->where('user_id', parentID())->whereIn('id', \Arr::wrap($branch))->take(6)->pluck('name');
 
             return view("customer.reports.{$model_type}", [
                 'regioncount' => $regioncount,
-                'branchcount' => $branchcount,
+                'branchcount' => count($branches),
                 'userscount' => $userscount,
                 'branches' => $branches,
+                'branches_check' => $branches_check,
                 'branches_report' => $branches_report,
                 'modelscount' => 2,
                 'charts' => $charts,

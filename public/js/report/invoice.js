@@ -196,7 +196,7 @@ function comparisonInvoiceTrendLine(divId, data) {
 
         /* Create series */
         var columnSeries = chart.series.push(new am4charts.ColumnSeries());
-        columnSeries.name = "Invoice (Hours)";
+        columnSeries.name = "Invoice (Record)";
         columnSeries.dataFields.valueY = "invoice";
         columnSeries.dataFields.categoryX = "branch";
         columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
@@ -207,7 +207,7 @@ function comparisonInvoiceTrendLine(divId, data) {
         columnSeries.tooltip.label.textAlign = "middle";
 
         var lineSeries = chart.series.push(new am4charts.LineSeries());
-        lineSeries.name = "No Invoice (Hours)";
+        lineSeries.name = "No Invoice (Record)";
         lineSeries.dataFields.valueY = "no_invoice";
         lineSeries.dataFields.categoryX = "branch";
 

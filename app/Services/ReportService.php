@@ -27,7 +27,7 @@ class ReportService
     {
         $charts = [];
 
-        if ($model != 'all' && in_array($model, ['place', 'plate','invoice'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice','welcome'])) {
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name('custom', $bracnh, $start, $end);
         }
@@ -49,7 +49,7 @@ class ReportService
     public static function branchReport(string $model = 'all', $bracnh, $start, $end): array
     {
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate','invoice'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice','welcome'])) {
             $fun_name = "{$model}BranchReport";
             return self::$fun_name($bracnh, $start, $end);
         }
@@ -73,7 +73,7 @@ class ReportService
         self::$topPlateBranch = DB::table('view_top_branch_plate')->pluck('branch_id')->toArray();
 
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice','welcome'])) {
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name();
         }
@@ -109,12 +109,12 @@ class ReportService
                 if ($start) {
                     $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
 
-                    $query->whereDate('date', '>=', $start);
+                    $query->where('date', '>=', $start);
                 }
                 if ($end) {
                     $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
 
-                    $query->whereDate('date', '<=', $end);
+                    $query->where('date', '<=', $end);
                 }
 
                 $query->join('branches', 'branches.id', '=', 'area_duration_days.branch_id')
@@ -173,11 +173,11 @@ class ReportService
         if ($type == 'custom') {
             if ($start) {
                 $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
-                $plate_data = $plate_data->whereDate('checkInDate', '>=', $start);
+                $plate_data = $plate_data->where('checkInDate', '>=', $start);
             }
             if ($end) {
                 $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
-                $plate_data = $plate_data->whereDate('checkInDate', '<=', $end);
+                $plate_data = $plate_data->where('checkInDate', '<=', $end);
             }
             $plate_data = $plate_data->whereIn('branches.id', $branch);
 
@@ -202,54 +202,6 @@ class ReportService
     }
 
     /**
-     *  Prepate Palte Model Data For Report and comparison between branch
-     *
-     * @param string $type
-     * @param array $branch
-     * @param null $start
-     * @param null $end
-     * @return array
-     * @throws \JsonException
-     */
-    public static function invoiceComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
-    {
-        foreach (['invoice', 'no_invoice'] as $status) {
-            $result[$status] = DB::table('carprofiles')
-                ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
-                ->where('branches.active', true)
-                ->whereNull('branches.deleted_at');
-
-            if ($type == 'custom') {
-                if ($start) {
-                    $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
-                    $result[$status]->whereDate('carprofiles.created_at', '>=', $start);
-                }
-                if ($end) {
-                    $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
-                    $result[$status]->whereDate('carprofiles.created_at', '<=', $end);
-                }
-                $result[$status]->whereIn('branches.id', $branch);
-            } else {
-                $result[$status]->whereIn('branches.id', array_slice(self::$topPlaceBranch, 0, self::$branch_count));
-            }
-
-            if ($status === 'no_invoice') {
-                $result[$status]->whereNull('invoice')
-                    ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as no_invoice'))
-                    ->groupBy('branch');
-            } else {
-                $result[$status]->whereNotNull('invoice')
-                    ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as invoice'));
-            }
-
-            $result[$status] = json_decode($result[$status]->groupBy('branch')
-                ->get(),true, 512, JSON_THROW_ON_ERROR);
-        }
-
-        return self::prepareInvoiceChart($result);
-    }
-
-    /**
      *  Prepate Place Model Data For Report and Show Details about area in one branch
      *
      * @param $branch
@@ -267,11 +219,11 @@ class ReportService
 
             if ($start) {
                 $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
-                $area_duration = $area_duration->whereDate('date', '>=', $start);
+                $area_duration = $area_duration->where('date', '>=', $start);
             }
             if ($end) {
                 $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
-                $area_duration = $area_duration->whereDate('date', '<=', $end);
+                $area_duration = $area_duration->where('date', '<=', $end);
             }
         }
 
@@ -305,12 +257,12 @@ class ReportService
 
         if ($start) {
             $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
-            $count_query = $count_query->whereDate('checkInDate', '>=', $start);
+            $count_query = $count_query->where('checkInDate', '>=', $start);
         }
 
         if ($end) {
             $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
-            $count_query = $count_query->whereDate('checkInDate', '<=', $end);
+            $count_query = $count_query->where('checkInDate', '<=', $end);
         }
 
         $plate_data = $count_query->groupBy('BayCode')
@@ -341,11 +293,11 @@ class ReportService
         if ($type == 'custom') {
             if ($start) {
                 $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
-                $query->whereDate('date', '>=', $start);
+                $query->where('date', '>=', $start);
             }
             if ($end) {
                 $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
-                $query->whereDate('date', '<=', $end);
+                $query->where('date', '<=', $end);
             }
             $query->whereIn('branches.id', $branch);
             $branchesFilter = $branch;
@@ -430,11 +382,11 @@ class ReportService
 
             if ($start) {
                 $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
-                $plate_data = $plate_data->whereDate('checkInDate', '>=', $start);
+                $plate_data = $plate_data->where('checkInDate', '>=', $start);
             }
             if ($end) {
                 $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
-                $plate_data = $plate_data->whereDate('checkInDate', '<=', $end);
+                $plate_data = $plate_data->where('checkInDate', '<=', $end);
             }
 
             $plate_data = $plate_data->whereIn('branches.id', $branch);
@@ -559,17 +511,106 @@ class ReportService
         return $charts;
     }
 
-    /**
-     * Prepare Format of Place Data Chart
-     *
-     * @param $data
-     * @return array
-     */
+
+    public static function invoiceComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
+    {
+        foreach (['invoice', 'no_invoice'] as $status) {
+            $result[$status] = DB::table('carprofiles')
+                ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
+                ->where('branches.active', true)
+                ->where('branches.user_id', parentID())
+                ->whereNull('branches.deleted_at');
+
+            if ($type == 'custom') {
+                if ($start) {
+                    $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
+                    $result[$status]->where('carprofiles.created_at', '>=', $start);
+                }
+                if ($end) {
+                    $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
+                    $result[$status]->where('carprofiles.created_at', '<=', $end);
+                }
+                $result[$status]->whereIn('branches.id', $branch);
+            } else {
+                $result[$status]->whereIn('branches.id', array_slice(self::$topPlaceBranch, 0, self::$branch_count));
+            }
+
+            if ($status === 'no_invoice') {
+                $result[$status]->whereNull('invoice')
+                    ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as no_invoice'))
+                    ->groupBy('branch');
+            } else {
+                $result[$status]->whereNotNull('invoice')
+                    ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as invoice'));
+            }
+
+            $result[$status] = json_decode($result[$status]->groupBy('branch')
+                ->get(),true, 512, JSON_THROW_ON_ERROR);
+        }
+
+        return self::prepareInvoiceChart($result);
+    }
+
     public static function prepareInvoiceChart($data): array
     {
         $result = array_merge_recursive_distinct($data['invoice'], $data['no_invoice']);
 
         $columns = ['invoice', 'no_invoice'];
+        return collect($result)->map(function ($item) use ($columns) {
+            foreach ($columns as $column) {
+                if (!isset($item[$column])) {
+                    $item[$column] = 0;
+                }
+            }
+            return $item;
+        })->toArray();
+    }
+
+    public static function welcomeComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
+    {
+        foreach (['welcome', 'no_welcome'] as $status) {
+            $result[$status] = DB::table('carprofiles')
+                ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
+                ->where('branches.active', true)
+                ->where('branches.user_id', parentID())
+                ->whereNull('branches.deleted_at');
+
+            if ($type == 'custom') {
+                if ($start) {
+                    $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
+                    $result[$status]->where('carprofiles.created_at', '>=', $start);
+                }
+                if ($end) {
+                    $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
+                    $result[$status]->where('carprofiles.created_at', '<=', $end);
+                }
+                $result[$status]->whereIn('branches.id', $branch);
+            } else {
+                $result[$status]->whereIn('branches.id', array_slice(self::$topPlaceBranch, 0, self::$branch_count));
+            }
+
+            if ($status === 'no_welcome') {
+                $result[$status]->whereNull('welcome')
+                    ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as no_welcome'))
+                    ->groupBy('branch');
+            } else {
+                $result[$status]->whereNotNull('welcome')
+                    ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as welcome'));
+            }
+
+            $result[$status] = json_decode($result[$status]->groupBy('branch')
+                ->get(),true, 512, JSON_THROW_ON_ERROR);
+        }
+
+        return self::prepareWelcomeChart($result);
+    }
+
+
+    public static function prepareWelcomeChart($data): array
+    {
+        $result = array_merge_recursive_distinct($data['welcome'], $data['no_welcome']);
+
+        $columns = ['welcome', 'no_welcome'];
         return collect($result)->map(function ($item) use ($columns) {
             foreach ($columns as $column) {
                 if (!isset($item[$column])) {

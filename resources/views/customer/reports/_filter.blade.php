@@ -33,20 +33,17 @@
                 </select>
             </div>
             <div class="form-group input-group input-daterange">
-                <div class="d-flex align-items-end mt-4">
-                    <div>
+                <div class="d-flex align-items-end mt-4 row">
+                    <div class="col-md-12">
                         <label class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
-                        <input type="date" value="{{request('start_date')}}" name="start_date" class="form-control"
+                        <input type="datetime-local" value="{{request('start_date')}}" name="start_date" class="form-control"
                                x-webkit-speech max="{{\Carbon\Carbon::now()->format('Y-m-d')}}"
                                oninput="javascript: if (this.value > this.max) this.value = this.max;">
                     </div>
-                    <div class="input-group-addon">
-                        <small>{{ __('app.TO') }}</small>
-                        <i class="fas fa-long-arrow-alt-right"></i>
-                    </div>
-                    <div>
+
+                    <div class="col-md-12 mt-3">
                         <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
-                        <input type="date" value="{{request('end_date')}}" name="end_date" class="form-control"
+                        <input type="datetime-local" value="{{request('end_date')}}" name="end_date" class="form-control"
                                x-webkit-speech max="{{\Carbon\Carbon::now()->format('Y-m-d')}}"
                                oninput="javascript: if (this.value > this.max) this.value = this.max;">
                     </div>

@@ -42,20 +42,24 @@
                                                    href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'plate'], request()->toArray()))}} @else {{ route('reports.index','plate')}} @endif">{{ __('app.Car_Plate') }}</a>
                                             </li>
                                             <li class="nav-item">
+                                                <a class="nav-link"
+                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.index','invoice')}} @endif">{{ __('app.Welcome') }}</a>
+                                            </li>
+                                            <li class="nav-item">
                                                 <a class="nav-link active"
-                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.index','invoice')}} @endif">{{ __('app.Invoice') }}</a>
+                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.index','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="col">
                                         <div class="d-flex justify-content-end position-relative mt-2">
-                                            @include('customer.reports._filter',['type' => 'invoice'])
+                                            @include('customer.reports._filter',['type' => 'welcome'])
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="related-heading mb-3 m-0 row col-12 related-heading--custom">
-                                    <h2 class="p-0 col">{{ __('app.Invoices_reports') }}</h2>
+                                    <h2 class="p-0 col">{{ __('app.Welcome_Message_reports') }}</h2>
                                     <div class="duration-cont col py-0">
                                         <i>
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -112,7 +116,7 @@
                                                         <div class="card-header row online">
                                                             <div class="col-4"><img width="100" src="{{ asset("images/invoice.svg") }}" alt=""></div>
                                                             <div class="col-8">
-                                                                <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.Invoice')  }}</b></h5>
+                                                                <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.Welcome')  }}</b></h5>
                                                                 <h3><b>{{$branches_check['invoice']??0}}</b></h3>
                                                             </div>
                                                         </div>
@@ -123,7 +127,7 @@
                                                         <div class="card-header row offline">
                                                             <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_invoice.png") }}" alt=""></div>
                                                             <div class="col-8">
-                                                                <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.no_invoice') }}</b></h5>
+                                                                <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.no_welcome') }}</b></h5>
                                                                 <h3><b>{{$branches_check['no_invoice']??0}}</b></h3>
                                                             </div>
                                                         </div>
@@ -131,20 +135,20 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="pt-4 mb-5 col-md-12" id="BranceInvoiceLineCon" style="display: none">
-                                                    <div id="BranceInvoiceLine" class="chartDiv"
+                                                <div class="pt-4 mb-5 col-md-12" id="BranceWelcomeLineCon" style="display: none">
+                                                    <div id="BranceWelcomeLine" class="chartDiv"
                                                          style="min-height: 450px"></div>
                                                 </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceBarCon"
+                                                <div class="pt-4 mb-5 col-md-12" id="BranchWelcomeBarCon"
                                                      style="display: none">
-                                                    <div id="BranchInvoiceBar" class="chartDiv" style="min-height: 450px"></div>
+                                                    <div id="BranchWelcomeBar" class="chartDiv" style="min-height: 450px"></div>
                                                 </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceSmoothCon" style="display: none">
-                                                    <div id="BranchInvoiceSmooth" class="chartDiv"
+                                                <div class="pt-4 mb-5 col-md-12" id="BranchWelcomeSmoothCon" style="display: none">
+                                                    <div id="BranchWelcomeSmooth" class="chartDiv"
                                                          style="min-height: 450px"></div>
                                                 </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceTrendLineCon" style="display: none">
-                                                    <div id="BranchInvoiceTrendLine" class="chartDiv"
+                                                <div class="pt-4 mb-5 col-md-12" id="BranchWelcomeTrendLineCon" style="display: none">
+                                                    <div id="BranchWelcomeTrendLine" class="chartDiv"
                                                          style="min-height: 450px"></div>
                                                 </div>
                                             </div>
@@ -166,28 +170,28 @@
     </div>
 @endsection
 @push('js')
-    <script src="{{asset('js/report/invoice.js')}}"></script>
+    <script src="{{asset('js/report/welcome.js')}}"></script>
     <script>
         /****** Inovice Chart ******/
         @php $key_name = 'report'; @endphp
 
         /************* Start Bar Chart ****************/
         @if(count($charts))
-            $("#BranchInvoiceBarCon").show();
-            comparisonInvoiceBar('BranchInvoiceBar', @json($charts, JSON_THROW_ON_ERROR));
+            $("#BranchWelcomeBarCon").show();
+            comparisonWelcomeBar('BranchWelcomeBar', @json($charts, JSON_THROW_ON_ERROR));
         @endif
         /**************** End Bar Chart****************/
 
         /**************** Start Line Chart ************/
         @if(count($charts))
-            $("#BranceInvoiceLineCon").show();
-            comparisonInvoiceLine('BranceInvoiceLine', @json($charts, JSON_THROW_ON_ERROR));
+            $("#BranceWelcomeLineCon").show();
+            comparisonWelcomeLine('BranceWelcomeLine', @json($charts, JSON_THROW_ON_ERROR));
         @endif
         /************** End Line Chart ************/
         /**************** Start Line Chart ************/
         @if(count($charts))
-            $("#BranchInvoiceTrendLineCon").show();
-            comparisonInvoiceTrendLine('BranchInvoiceTrendLine', @json($charts, JSON_THROW_ON_ERROR));
+            $("#BranchWelcomeTrendLineCon").show();
+            comparisonWelcomeTrendLine('BranchWelcomeTrendLine', @json($charts, JSON_THROW_ON_ERROR));
         @endif
         /************** End Line Chart ************/
     </script>
