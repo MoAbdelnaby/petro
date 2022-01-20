@@ -41,13 +41,11 @@ class HandleCarprofileCommand extends Command
      */
     public function handle()
     {
-        DB::table('area_statuses')->update([
-            'status' => 0
-        ]);
-        $pendings = Carprofile::whereIn('status',['pending','semi-completed'])->get();
+        DB::table('area_statuses')->update(['status' => 0]);
+        $pendings = Carprofile::whereIn('status', ['pending', 'semi-completed'])->get();
 
         foreach ($pendings as $row) {
-            if(!is_null($row->plate_en)){
+            if (!is_null($row->plate_en)) {
                 $row->update([
                     'checkOutDate' => Carbon::now('Asia/Riyadh'),
                     'status' => 'completed'

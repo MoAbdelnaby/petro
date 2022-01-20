@@ -142,7 +142,7 @@ class ApiRepo implements ApiRepoInterface
     public function saveScreenShot($screenshot)
     {
         $imageName = time() . '-' . $screenshot->getClientOriginalName();
-        $imageName = trim(str_replace(' ','-',$imageName));
+        $imageName = trim(str_replace(' ', '-', $imageName));
 
         if (!is_dir(storage_path("/app/public/screenshot"))) {
             \File::makeDirectory(storage_path("/app/public/screenshot"), 777);
@@ -275,13 +275,13 @@ class ApiRepo implements ApiRepoInterface
                     ->where('status', 'completed')
                     ->where('plate_status', 'success')
                     ->where('branch_id', $branch_id)
+                    ->whereDate('checkInDate', now()->toDateString())
                     ->latest()
                     ->first();
 
                 if ($latest) {
 
                     if ($latest->plate_en == $plate['plate_en']['plate'] || $latest->plate_ar == $plate['plate_ar']['plate']) {
-
                         @unlink(storage_path("app/public" . $profile->screenshot));
                         $profile->delete();
                         $latest->update([
@@ -309,7 +309,7 @@ class ApiRepo implements ApiRepoInterface
                             ]);
 
                         }
-                    } elseif ($plate['status']=='error' && $plate['plate_en']['number'] == $latest->number_en && Str::contains(str_replace(' ','',$plate['plate_en']['char']),str_replace(' ','',$latest->char_en))){
+                    } elseif ($plate['status'] == 'error' && $plate['plate_en']['number'] == $latest->number_en && Str::contains(str_replace(' ', '', $plate['plate_en']['char']), str_replace(' ', '', $latest->char_en))) {
                         @unlink(storage_path("app/public" . $profile->screenshot));
                         $profile->delete();
                         $latest->update([
@@ -323,7 +323,7 @@ class ApiRepo implements ApiRepoInterface
                                 $number = $plateService->resolveNumber($profile->number_en, $plate['plate_en']['number']);
                                 $result = ($number['number_en'] == $plate['plate_en']['number'] && $number['number_en'] != $profile->number_en) ? true : false;
                             }
-                            if($result){
+                            if ($result) {
                                 $profile->update([
                                     'welcome' => null,
                                     'plateNumber' => $plate['plate'],
@@ -346,7 +346,7 @@ class ApiRepo implements ApiRepoInterface
                             $number = $plateService->resolveNumber($profile->number_en, $plate['plate_en']['number']);
                             $result = ($number['number_en'] == $plate['plate_en']['number'] && $number['number_en'] != $profile->number_en) ? true : false;
                         }
-                        if($result){
+                        if ($result) {
                             $profile->update([
                                 'welcome' => null,
                                 'plateNumber' => $plate['plate'],
@@ -354,7 +354,7 @@ class ApiRepo implements ApiRepoInterface
                                 'plate_en' => $plate['plate_en']['plate'],
                                 'plate_status' => $plate['status'],
                                 'screenshot' => $data['screenshot'],
-                                'disk'=>'local'
+                                'disk' => 'local'
                             ]);
                             $areaStatus->last_plate = $plate['plate_en']['plate'];
                             $areaStatus->save();
@@ -364,6 +364,7 @@ class ApiRepo implements ApiRepoInterface
             } else {
                 $check = Carprofile::where('BayCode', $data['area'])
                     ->where('branch_id', $branch_id)
+                    ->whereDate('checkInDate', now()->toDateString())
                     ->latest()
                     ->first();
 
@@ -386,7 +387,7 @@ class ApiRepo implements ApiRepoInterface
                                     'plate_en' => $plate['plate_en']['plate'],
                                     'plate_status' => $plate['status'],
                                     'screenshot' => $data['screenshot'],
-                                    'disk'=>'local'
+                                    'disk' => 'local'
                                 ]);
 
                             } else {
@@ -407,7 +408,7 @@ class ApiRepo implements ApiRepoInterface
                                     'BayCode' => $data['area'],
                                     'checkInDate' => $str_time,
                                     'branch_id' => $branch_id,
-                                    'disk'=>'local'
+                                    'disk' => 'local'
                                 ]);
                             }
                         }
@@ -422,7 +423,7 @@ class ApiRepo implements ApiRepoInterface
                                 'plate_en' => $plate['plate_en']['plate'],
                                 'plate_status' => $plate['status'],
                                 'checkOutDate' => $str_time,
-                                'disk'=>'local'
+                                'disk' => 'local'
                             ]);
                         }
                     }
@@ -653,7 +654,6 @@ class ApiRepo implements ApiRepoInterface
                     ]);
                 }
 
-
             } else {
                 $profile = Carprofile::where('BayCode', $data['area'])
                     ->where('status', 'pending')
@@ -670,19 +670,6 @@ class ApiRepo implements ApiRepoInterface
                     } else {
                         $profile->update([
                             'status' => 'completed',
-                            'checkOutDate' => $str_time
-                        ]);
-                    }
-                } else {
-
-                    $latest = Carprofile::where('BayCode', $data['area'])
-                        ->where('status', 'completed')
-                        ->where('branch_id', $branch_id)
-                        ->whereDate('checkInDate', '<=', $str_time)
-                        ->latest()->first();
-
-                    if ($latest) {
-                        $latest->update([
                             'checkOutDate' => $str_time
                         ]);
                     }

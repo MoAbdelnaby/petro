@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\AreaDurationDailyCommand;
 use App\Console\Commands\AreaDurationTotalCommand;
+use App\Console\Commands\AreaStatusDailyCommand;
 use App\Console\Commands\ExportModelsFilesCommand;
 use App\Console\Commands\HandleCarprofileCommand;
 use App\Console\Commands\SendWelcomeMessageCommand;
@@ -22,7 +23,7 @@ class Kernel extends ConsoleKernel
         AreaDurationDailyCommand::class,
         ExportModelsFilesCommand::class,
         SendWelcomeMessageCommand::class,
-        HandleCarprofileCommand::class
+        HandleCarprofileCommand::class,
     ];
 
     /**

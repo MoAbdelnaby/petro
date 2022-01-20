@@ -80,9 +80,7 @@ Route::get('testcase',function(){
     $data = Carprofile::where('status', 'pending')
         ->where('plate_status', 'success')->whereNotNull('plate_en')->whereNull('welcome')->get();
     if (count($data) > 0) {
-        dd('fdd');
     }
-    dd($data);
 });
 
 

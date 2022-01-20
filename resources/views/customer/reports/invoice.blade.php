@@ -106,14 +106,13 @@
                                     <div class="tab-pane fade show active">
                                         @if(count($charts))
                                             <div class="row">
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchInoiceeBarCon"
-                                                     style="display: none">
-                                                    <div id="BranchInoiceeBar" class="chartDiv" style="min-height: 450px"></div>
-                                                </div>
-
                                                 <div class="pt-4 mb-5 col-md-12" id="BranceInvoiceLineCon" style="display: none">
                                                     <div id="BranceInvoiceLine" class="chartDiv"
                                                          style="min-height: 450px"></div>
+                                                </div>
+                                                <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceBarCon"
+                                                     style="display: none">
+                                                    <div id="BranchInvoiceBar" class="chartDiv" style="min-height: 450px"></div>
                                                 </div>
                                                 <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceSmoothCon" style="display: none">
                                                     <div id="BranchInvoiceSmooth" class="chartDiv"
@@ -142,43 +141,29 @@
     </div>
 @endsection
 @push('js')
-    <script src="{{asset('js/branchCharts.js')}}"></script>
-    <script src="{{asset('js/comparisonChart.js')}}"></script>
+    <script src="{{asset('js/report/invoice.js')}}"></script>
     <script>
         /****** Inovice Chart ******/
         @php $key_name = 'report'; @endphp
 
         /************* Start Bar Chart ****************/
         @if(count($charts))
-            $("#BranchInoiceeBarCon").show();
-            @if($filter_type == 'comparison')
-                comparisonInvoiceBar('BranchInoiceeBar', @json($charts, JSON_THROW_ON_ERROR));
-            @else
-                branchInvoiceBar('BranchInoiceeBar', @json($charts, JSON_THROW_ON_ERROR));
-            @endif
+            $("#BranchInvoiceBarCon").show();
+            comparisonInvoiceBar('BranchInvoiceBar', @json($charts, JSON_THROW_ON_ERROR));
         @endif
         /**************** End Bar Chart****************/
 
         /**************** Start Line Chart ************/
         @if(count($charts))
             $("#BranceInvoiceLineCon").show();
-            @if($filter_type == 'comparison')
-                comparisonInvoiceLine('BranceInvoiceLine', @json($charts, JSON_THROW_ON_ERROR));
-            @else
-                branchInvoiceLine('BranceInvoiceLine', @json($charts, JSON_THROW_ON_ERROR));
-            @endif
+            comparisonInvoiceLine('BranceInvoiceLine', @json($charts, JSON_THROW_ON_ERROR));
         @endif
         /************** End Line Chart ************/
-
-        /************* Start Range Slider Chart ****************/
+        /**************** Start Line Chart ************/
         @if(count($charts))
             $("#BranchInvoiceTrendLineCon").show();
-            @if($filter_type == 'comparison')
-                comparisonInvoiceTrendLine('BranchInvoiceTrendLine',@json($charts, JSON_THROW_ON_ERROR));
-            @else
-                branchInoviceTrendLine('BranchInvoiceTrendLine', @json($charts, JSON_THROW_ON_ERROR));
-            @endif
+            comparisonInvoiceTrendLine('BranchInvoiceTrendLine', @json($charts, JSON_THROW_ON_ERROR));
         @endif
-        /**************** End Range Slider Chart****************/
+        /************** End Line Chart ************/
     </script>
 @endpush
