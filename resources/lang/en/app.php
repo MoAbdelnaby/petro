@@ -1572,4 +1572,7 @@ return [
     'no_welcome' => 'No Welcome',
     'invoice_chart' => 'Invoice Chart',
     'car_duration_area' => 'Car Duration in each Area',
+    'backout' => 'Backout',
+    'staying_car_ratio' => 'Car Staying Ratio',
+    'Backout_reports' => 'Backout Report',
 ];
