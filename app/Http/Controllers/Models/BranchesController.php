@@ -12,6 +12,7 @@ use App\Models\PlaceMaintenanceSetting;
 use App\Models\Region;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
+use App\Services\ReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -80,10 +81,9 @@ class BranchesController extends Controller
             } else {
                 if ($items[0]->lt_id == 9) {
                     return redirect()->route('branchmodelpreview.plates', [$branch_id, $items[0]->id]);
-                }elseif ($items[0]->lt_id == 8) {
+                } elseif ($items[0]->lt_id == 8) {
                     return redirect()->route('branchmodelpreview.places', [$branch_id, $items[0]->id]);
-                }
-                else {
+                } else {
                     return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotexist'));
                 }
             }
@@ -296,12 +296,6 @@ class BranchesController extends Controller
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
         $activepackage = UserPackages::where('user_id', parentID())->where('active', '1')->first();
-        $activebranches = DB::table('user_model_branches')
-            ->select(DB::raw('distinct(branches.id) as b_id, branches.name as bname'))
-            ->join('users_models', 'users_models.id', '=', 'user_model_branches.user_model_id')
-            ->join('branches', 'branches.id', '=', 'user_model_branches.branch_id')
-            ->where('users_models.user_package_id', $activepackage->id)->distinct()->get();
-
         $query = DB::table('user_model_branches')
             ->select(['user_model_branches.*', 'branches.id as b_id', 'branches.name as bname', 'models.name as mname', 'lt_models.id as lt_id'])
             ->join('users_models', 'users_models.id', '=', 'user_model_branches.user_model_id')
@@ -311,7 +305,7 @@ class BranchesController extends Controller
             ->where('users_models.user_package_id', $activepackage->id)
             ->where('branches.id', $branch_id);
         $count = $query->count();
-        $modelswithbranches = $query->get();
+
         if ($count < 1) {
             return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
         }
@@ -580,7 +574,6 @@ class BranchesController extends Controller
         $charts = [];
         $i = 0;
 
-
         if (count(array_filter($areatimes)) > 0) {
             foreach ($areatimes as $key => $value) {
                 $charts[$i]['area'] = "Area #$key";
@@ -589,7 +582,10 @@ class BranchesController extends Controller
             }
         }
 
-        return view('customer.preview.branch.plates', compact('charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
+        $invoice_chart = ReportService::invoiceComparisonReport('custom', [$current_branch->id]);
+        $duration_ratio = 0;
+
+        return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
     }
 
     public function platesshiftSettingSave(Request $request, $branch_id, $usermodelbranchid)
@@ -790,10 +786,11 @@ class BranchesController extends Controller
             }
         }
 
+        $invoice_chart = ReportService::invoiceComparisonReport('custom', [$current_branch->id], $start, $end);
+        $duration_ratio = 0;
 
-        return view('customer.preview.branch.plates', compact('charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
+        return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
 
     }
-
 
 }

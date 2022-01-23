@@ -332,6 +332,10 @@ class PlacesController extends Controller
 
         if ($request->date == 'all') {
             $query = AreaDuration::where('branch_id', $request->branch_id)->where('area', $request->area);
+            $data = $query->select('area',
+                DB::raw('SUM(work_by_minute) as work_by_minute'),
+                DB::raw('SUM(empty_by_minute) as empty_by_minute')
+            )->first();
 
         } else {
 
@@ -339,20 +343,31 @@ class PlacesController extends Controller
             $start = $date['start'];
             $end = $date['end'];
 
-            $query = AreaDurationDay::where('branch_id', $request->branch_id)->where('area', $request->area);
+            if ($start == $end) {
+                //do something
 
-            if ($start) {
-                $query = $query->whereDate('date', '>=', $start);
+                return (object)[
+                    'area' => $request->area,
+                    'work_by_minute' => '',
+                    'empty_by_minute' => '',
+                ];
+            } else {
+                $query = AreaDurationDay::where('branch_id', $request->branch_id)->where('area', $request->area);
+
+                if ($start) {
+                    $query = $query->whereDate('date', '>=', $start);
+                }
+                if ($end) {
+                    $query = $query->whereDate('date', '<=', $end);
+                }
+                $data = $query->select('area',
+                    DB::raw('SUM(work_by_minute) as work_by_minute'),
+                    DB::raw('SUM(empty_by_minute) as empty_by_minute')
+                )->first();
             }
-            if ($end) {
-                $query = $query->whereDate('date', '<=', $end);
-            }
+
         }
 
-        $data = $query->select('area',
-            DB::raw('SUM(work_by_minute) as work_by_minute'),
-            DB::raw('SUM(empty_by_minute) as empty_by_minute')
-        )->first();
 
         return response()->json(['data' => $data]);
     }

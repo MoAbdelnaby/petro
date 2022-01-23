@@ -448,10 +448,13 @@
                                                                 </td>
                                                                 <td>
                                                                     @if(!is_null($item->invoice))
-                                                                        {{--                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">--}}
-                                                                        {{--                                                                            <i class="fas fa-file-pdf text-success "></i>--}}
-                                                                        {{--                                                                        </a>--}}
-                                                                        <i class="fas fa-check text-success"></i>
+                                                                        <a id="download-{{$item->id}}" download
+                                                                           class="download_invoice"
+                                                                           onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"
+                                                                           data-toggle="popover" data-trigger="hover"
+                                                                           data-content="Preview Invoice">
+                                                                            <i class="fas fa-file-pdf text-success" style="font-size: 19px"></i>
+                                                                        </a>
                                                                     @endif
                                                                 </td>
 
@@ -837,6 +840,11 @@
             });
 
             $(".action_drop").on("click", e => e.stopPropagation())
+
+            $(".download_invoice").on('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+            });
 
             $('.btn-filter').on('click', function (e) {
                 e.stopPropagation();

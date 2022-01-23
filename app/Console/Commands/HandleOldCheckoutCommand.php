@@ -15,21 +15,21 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class AreaDurationDailyCommand extends Command
+class HandleOldCheckoutCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'area:duration-daily';
+    protected $signature = 'checkout:handle';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Calcluate area duration (work and minute) per minute daily';
+    protected $description = 'Handle Old Checkout Max 2 Hour';
 
     /**
      * Create a new command instance.
@@ -52,24 +52,18 @@ class AreaDurationDailyCommand extends Command
             $startTime = now();
             $this->comment('Processing');
 
-            if(env('AREA_STATUS_FIRST_UPDATE')){
-                $start = Carprofile::first();
-                if ($start) {
-                    $start = $start->checkInDate;
-                    $begin = new \DateTime($start);
-                    $end = new \DateTime();
-
-                    $areaDurationService = new AreaDurationDaily();
-
-                    for ($i = $begin; $i <= $end; $i->modify('+1 day')) {
-                        $areaDurationService->calculate($i->format("Y-m-d"));
+            Carprofile::where('status', 'completed')->chunk(500, function ($profiles) {
+                foreach ($profiles as $record) {
+                    $start = \Carbon\Carbon::parse($record->checkInDate);
+                    $end = Carbon::parse($record->checkOutDate);
+                    if ($end->diffInMinutes($start) > 120) {
+                        $record->checkOutDate = $start->addHour();
+                        $record->save();
                     }
                 }
-            }else{
-                (new AreaDurationDaily())->calculate(date('Y-m-d'));
-            }
+            });
 
-            $this->info('Successfully update duration time in each area');
+            $this->info('Successfully update Checkout');
             $time = $startTime->floatDiffInSeconds(now());
             $this->comment("Processed in " . round($time, 3) . " seconds");
 

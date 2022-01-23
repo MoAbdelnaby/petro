@@ -105,6 +105,7 @@
                                         </ul>
                                     </div>
                                 </div>
+
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
                                         @if(count($charts))
@@ -113,10 +114,10 @@
                                                 <div class="col-lg-6 col-md-6 mb-3">
                                                     <div class="card text-center col-12">
                                                         <div class="card-header row online">
-                                                            <div class="col-4"><img width="100" src="{{ asset("images/welcome.png") }}" alt=""></div>
+                                                            <div class="col-4"><img width="100" src="{{ asset("images/invoice.svg") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.Welcome')  }}</b></h5>
-                                                                <h3><b>{{$branches_check['welcome']??0}}</b></h3>
+                                                                <h3><b>{{$branches_check['invoice']??0}}</b></h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -124,10 +125,10 @@
                                                 <div class="col-lg-6 col-md-6">
                                                     <div class="card text-center col-12">
                                                         <div class="card-header row offline">
-                                                            <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_welcome.png") }}" alt=""></div>
+                                                            <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_invoice.png") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.no_welcome') }}</b></h5>
-                                                                <h3><b>{{$branches_check['no_welcome']??0}}</b></h3>
+                                                                <h3><b>{{$branches_check['no_invoice']??0}}</b></h3>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -33,7 +33,8 @@ class AreaDurationDaily
                     $areaavildura = 0;
                     Carprofile::where('branch_id', $branch->branch->id)
                         ->where('BayCode', $area)
-//                        ->whereDate('checkInDate', '=',$date)
+                        ->where('status', 'completed')
+                        ->whereDate('checkInDate', $date)
                         ->chunk(500, function ($profiles) use (&$areabusydura) {
                             foreach ($profiles as $record) {
                                 $start = Carbon::parse($record->checkInDate);
@@ -44,6 +45,7 @@ class AreaDurationDaily
                                 }
                             }
                         });
+
                     $branch_work = PlaceMaintenanceSetting::where('user_model_branch_id', $branch->id)->where('active', 1)->first();
                     if (!$branch_work) {
                         $branch_work = CarPLatesSetting::where('user_model_branch_id', $branch->id)->where('active', 1)->first();
@@ -54,7 +56,11 @@ class AreaDurationDaily
                         $end = Carbon::parse($branch_work->end_time);
                         if ($end > $start) {
                             $branch_work_time_in_minutes = $end->diffInMinutes($start);
-                            $areaavildura = (int)$branch_work_time_in_minutes - (int)$areabusydura;
+                            $result = 0;
+                            if ($branch_work_time_in_minutes > $areabusydura) {
+                                $result = $branch_work_time_in_minutes - $areabusydura;
+                            }
+                            $areaavildura = $result;
                         }
 
                         if ((int)$areaavildura == 0 && (int)$areabusydura == 0) {
@@ -64,10 +70,10 @@ class AreaDurationDaily
                         AreaDurationDay::updateOrCreate([
                             'branch_id' => $branch->branch->id,
                             'area' => $area,
-                            'date' => $date ?? Carbon::now()->toDateString()
+                            'date' => $date
                         ], [
-                            'work_by_minute' => $areaavildura,
-                            'empty_by_minute' => $areabusydura,
+                            'work_by_minute' => $areabusydura,
+                            'empty_by_minute' => $areaavildura,
                         ]);
                     }
 

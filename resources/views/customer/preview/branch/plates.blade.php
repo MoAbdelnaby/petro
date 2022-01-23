@@ -85,10 +85,10 @@
                             <span class="ml-1"> {{$branch->bname}}</span></a>
                     </li>
                 @endforeach
-                 <li class="nav-item no_data hide">
-                            <a href="javascript:void(0);" class="nav-link">
-                                {{__('app.no_data')}}
-                            </a>
+                <li class="nav-item no_data hide">
+                    <a href="javascript:void(0);" class="nav-link">
+                        {{__('app.no_data')}}
+                    </a>
                 </li>
             </div>
         </ul>
@@ -201,16 +201,18 @@
             </div>
         </ul>
 
-        <div id="back" >
+        <div id="back">
             <div class="backdash">
                 <a href="{{route('home')}}"> <i class="fas fa-home"></i></a>
             </div>
         </div>
-         <div class="search-cont dropright">
-            <button class='btn btn-icon ' data-toggle="dropdown" aria-expanded="false"><i class="fas fa-search"></i></button>
+        <div class="search-cont dropright">
+            <button class='btn btn-icon ' data-toggle="dropdown" aria-expanded="false"><i class="fas fa-search"></i>
+            </button>
             <div class="dropdown-menu">
                 <input autofocus type="text" class="form-control " aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
+                       aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}"
+                       id="branch_search">
             </div>
         </div>
         <div id="logout">
@@ -398,22 +400,30 @@
                                             <div class="door-open">
                                                 <div class="card model-card">
                                                     <div class="card-body p-0 ">
-                                                    <div class="setting-card-cont dropleft ">
-                                                            <a href="#"  type="button" data-toggle="dropdown" id="dropdownMenuCardSetting" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <div class="setting-card-cont dropleft ">
+                                                            <a href="#" type="button" data-toggle="dropdown"
+                                                               id="dropdownMenuCardSetting" data-bs-toggle="dropdown"
+                                                               aria-expanded="false">
                                                                 <i class="fas fa-cog"></i>
                                                             </a>
-                                                            <div class="dropdown-menu dropdown-menu-right custom-dropdown" aria-labelledby="dropdownMenuCardSetting">
-                                                                <button type="button" class="close close-1" data-dismiss="dropdown" aria-label="Close">
-                                                                    <span class='close-1' aria-hidden="true">&times;</span>
+                                                            <div
+                                                                class="dropdown-menu dropdown-menu-right custom-dropdown"
+                                                                aria-labelledby="dropdownMenuCardSetting">
+                                                                <button type="button" class="close close-1"
+                                                                        data-dismiss="dropdown" aria-label="Close">
+                                                                    <span class='close-1'
+                                                                          aria-hidden="true">&times;</span>
                                                                 </button>
-                                                               <div class="">
-                                                                <h6>{{__('app.duration')}}</h6>
+                                                                <div class="">
+                                                                    <h6>{{__('app.duration')}}</h6>
                                                                     <select name="filter_date" data-key="{{$key}}"
                                                                             class="filter_date custom-select">
                                                                         <option value="all">{{__('app.all')}}</option>
-                                                                        <option value="today">{{__('app.today')}}</option>
+                                                                        <option
+                                                                            value="today">{{__('app.today')}}</option>
                                                                         <option value="week">{{__('app.week')}}</option>
-                                                                        <option value="month">{{__('app.month')}}</option>
+                                                                        <option
+                                                                            value="month">{{__('app.month')}}</option>
                                                                     </select>
                                                                 </div>
 
@@ -578,10 +588,13 @@
 
                                                                 <td>
                                                                     @if(!is_null($item->invoice))
-                                                                        {{--                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="Invoice Sent">--}}
-                                                                        {{--                                                                            <i class="fas fa-file-pdf text-success "></i>--}}
-                                                                        {{--                                                                        </a>--}}
-                                                                        <i class="fas fa-check text-success"></i>
+                                                                        <a id="download-{{$item->id}}" download
+                                                                           class="download_invoice"
+                                                                           onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"
+                                                                           data-toggle="popover" data-trigger="hover"
+                                                                           data-content="Preview Invoice">
+                                                                            <i class="fas fa-file-pdf text-success" style="font-size: 19px"></i>
+                                                                        </a>
                                                                     @endif
                                                                 </td>
 
@@ -651,13 +664,11 @@
                                         </div>
                                     </div>
                                 @else
-
                                     <div class="col-12 text-center">
                                         <img src="{{ asset('images/no-results.webp') }}"
                                              class="no-results-image col-12 col-md-7  mt-5"
                                              alt="">
                                     </div>
-
                                 @endif
                                 @if(count($charts))
                                     <div class="iq-card mb-4">
@@ -701,8 +712,7 @@
                                                 <div class="pie-charts">
                                                     <div class="row d-flex justify-content-between align-items-center">
                                                         <div class="w-100">
-                                                            <div id="chart2" class="chartDiv"
-                                                                 style="min-height: 400px">
+                                                            <div id="chart2" class="chartDiv" style="min-height: 400px">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -710,9 +720,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="iq-card mb-4">
+                                        <div class="iq-card-body">
+                                            <div class="related-heading mb-5">
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center border-bottom">
+                                                    <h2 class="border-bottom-0">{{ __('app.invoice_chart') }}</h2>
+                                                </div>
+                                            </div>
+                                            <div class="p-4">
+                                                <div id="invoiceChart" class="chartDiv" style="min-height: 400px"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
-
-
                             </div>
 
                             <div class="col-lg-3 show-image">
@@ -844,9 +865,8 @@
 @section('scripts')
     <script src="{{asset('js/branchCharts.js')}}"></script>
     <script src="{{asset('js/config.js')}}"></script>
+    <script src="{{asset('js/report/invoice.js')}}"></script>
     <script>
-
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -932,8 +952,6 @@
                         customClass: {confirmButton: "btn fw-bold btn-primary"}
                     })
                 }
-
-
             });
         }
 
@@ -941,7 +959,10 @@
             $(function () {
                 $('[data-toggle="popover"]').popover()
             })
+
             var item_update = false;
+
+            comparisonInvoiceBar('invoiceChart',@json($invoice_chart));
 
             $('.put-error').on('click', function (e) {
                 e.stopPropagation();
@@ -980,13 +1001,16 @@
                             var data = `<span class="badge badge-pill success">${item_status}</span>`;
                             $("#status" + item_id).html(data);
                         }
-
                     }
                 });
-
             });
 
             $(".action_drop").on("click", e => e.stopPropagation())
+
+            $(".download_invoice").on('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+            });
 
             $('.btn-filter').on('click', function (e) {
                 e.stopPropagation();
@@ -1029,10 +1053,8 @@
             $('.chart-type.tables-type .dropdown-item').on("click", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-
                 $(this).closest('.tables-type ').find('.dropdown-item').removeClass('selected');
                 $(this).addClass('selected');
-
                 $('.custom-table table').removeClass().addClass('table');
 
                 if ($(this).hasClass('table-1')) {
@@ -1063,17 +1085,13 @@
                     $('#chart1').show();
                     branchPlateBar('chart1',@json($charts));
                     setUserSetting('chart_type', 'bar');
-
-
                 } else if ($(this).hasClass('chart-2')) {
                     $('#chart1').hide();
                     $('.pie-charts').show();
                     branchPlateCircle('chart2',@json($charts));
                     setUserSetting('chart_type', 'circle');
-
                 }
             });
-
         });
 
         @if($userSettings)
@@ -1091,9 +1109,8 @@
         @endif
 
         $(document).ready(function () {
-
             let filterDataFn = function () {
-                     var area = $(this).data('key');
+                var area = $(this).data('key');
                 var branch_id = "{{$current_branch->id}}";
                 var date = $(this).val();
 
@@ -1104,42 +1121,19 @@
                         area: area,
                         branch_id: branch_id,
                         date: date
-                   },
-                   success: function (res) {
-                       var count = res.data.count;
-                       $(`#times_value_${area}`).text(count);
-                 }
+                    },
+                    success: function (res) {
+                        var count = res.data.count;
+                        $(`#times_value_${area}`).text(count);
+                    }
 
                 })
             }
 
-            //
             slickCarouselCardEvents(filterDataFn);
-            $('.area-section.slider').on('afterChange', function(event, slick){
-                 cr && (slickCarouselCardEvents(filterDataFn), cr = false);
+            $('.area-section.slider').on('afterChange', function (event, slick) {
+                cr && (slickCarouselCardEvents(filterDataFn), cr = false);
             })
-
-           // $(".filter_date").on('change', function () {
-            //    var area = $(this).data('key');
-            //    var branch_id = "{{$current_branch->id}}";
-             //   var date = $(this).val();
-
-             //   $.ajax({
-             //       type: 'get',
-              //      url: "{{route('branch.plates.times')}}",
-               //     data: {
-               //         area: area,
-                //        branch_id: branch_id,
-                //        date: date
-               //     },
-              //      success: function (res) {
-                //        var count = res.data.count;
-               //         $(`#times_value_${area}`).text(count);
-               //     }
-
-              //  })
-
-           // });
         });
     </script>
 @endsection

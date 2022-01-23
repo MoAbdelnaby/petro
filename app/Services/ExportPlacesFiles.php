@@ -56,7 +56,6 @@ class ExportPlacesFiles implements IExportFile
                         ->save(storage_path( 'app/public/' . $file_path));
 
                 } catch (\Exception $e) {
-                    dd($e);
                 }
             } elseif ($type == 'xls') {
                 $check = Excel::store(new PlacesExcelExport($result), 'public/' . $file_path);

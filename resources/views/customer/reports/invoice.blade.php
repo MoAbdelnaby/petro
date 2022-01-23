@@ -45,6 +45,9 @@
                                                 <a class="nav-link active"
                                                    href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.index','invoice')}} @endif">{{ __('app.Invoice') }}</a>
                                             </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.index','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="col">

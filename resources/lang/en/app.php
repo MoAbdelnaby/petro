@@ -1569,5 +1569,7 @@ return [
     'no_data' => 'No Data',
     'Invoices_reports' => 'Invoices Reports',
     'Welcome_Message_reports' => 'Welcome Message Report',
-    'no_welcome' => 'No Welcome'
+    'no_welcome' => 'No Welcome',
+    'invoice_chart' => 'Invoice Chart',
+    'car_duration_area' => 'Car Duration in each Area',
 ];

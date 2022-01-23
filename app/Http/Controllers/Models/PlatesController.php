@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Models;
 
-use App\Exports\PlatesExcelExport;
+use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\PlatesRepo;
-use App\Models\AreaDuration;
-use App\Models\AreaDurationDay;
 use App\Models\Branch;
 use App\Models\BranchFiles;
 use App\Models\CarPLatesSetting;
@@ -13,9 +11,9 @@ use App\Models\Carprofile;
 use App\Models\FailedMessage;
 use App\Models\Invoice;
 use App\Models\UserModelBranch;
-use App\Http\Controllers\Controller;
 use App\Models\UserPackages;
 use App\Services\CustomerPhone;
+use App\Services\ReportService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +21,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use PDF;
-use Excel;
 
 class PlatesController extends Controller
 {
@@ -34,7 +30,6 @@ class PlatesController extends Controller
     {
         $this->repo = $repo;
     }
-
 
     public function index($usermodelbranchid)
     {
@@ -129,8 +124,10 @@ class PlatesController extends Controller
             }
         }
 
+        $invoice_chart = ReportService::invoiceComparisonReport('custom', [$usermodelbranch->branch_id]);
+        $duration_ratio = 0;
 
-        return view('customer.preview.plates.plates', compact('charts', 'starttime', 'branch', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
+        return view('customer.preview.plates.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'starttime', 'branch', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
     }
 
     public function platesfilter(Request $request, $usermodelbranchid)
@@ -285,7 +282,10 @@ class PlatesController extends Controller
             $i++;
         }
 
-        return view('customer.preview.plates.plates', compact('charts', 'starttime', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
+        $invoice_chart = ReportService::invoiceComparisonReport('custom', [$usermodelbranch->branch_id], $start, $end);
+        $duration_ratio = 0;
+
+        return view('customer.preview.plates.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'starttime', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
     }
 
     public function platesshiftSettingSave(Request $request, $usermodelbranchid)
@@ -405,7 +405,7 @@ class PlatesController extends Controller
         $query = DB::table('carprofiles')
             ->select(DB::raw('count(id) as count ,BayCode'))
             ->where('status', 'completed')
-            ->where('plate_status', '!=','error')
+            ->where('plate_status', '!=', 'error')
             ->where('branch_id', $request->branch_id)
             ->where('BayCode', $request->area);
 
