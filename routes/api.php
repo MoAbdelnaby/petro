@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AreaDurationDay;
 use App\Models\Carprofile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -113,7 +114,14 @@ Route::get('getphone', 'Api\AreaStatusController@handle');
 
 Route::post('invoices/download', 'Api\TemplateMessageController@downloadInvoice');
 
+Route::get('test',function (){
+    $total = AreaDurationDay::
+    select(['area','branch_id',DB::raw("SUM(empty_by_minute) as total_empty_by_minute"), DB::raw("SUM(work_by_minute) as total_work_by_minute")])
+        ->groupBy(['branch_id', 'area'])
+        ->get();
+    dd($total);
 
+});
 
 
 

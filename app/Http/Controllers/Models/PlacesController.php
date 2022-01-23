@@ -10,6 +10,8 @@ use App\Models\AreaDurationDay;
 use App\Models\AreaStatus;
 use App\Models\Branch;
 use App\Models\BranchFiles;
+use App\Models\CarPLatesSetting;
+use App\Models\Carprofile;
 use App\Models\PlaceMaintenance;
 use App\Models\PlaceMaintenanceSetting;
 use App\Models\UserModel;
@@ -344,12 +346,48 @@ class PlacesController extends Controller
             $end = $date['end'];
 
             if ($start == $end) {
-                //do something
+
+                $areabusydura = 0;
+                $areaavildura = 0;
+
+                Carprofile::where('branch_id', $request->branch_id)
+                    ->where('BayCode',  $request->area)
+                    ->where('status', 'completed')
+                    ->whereDate('checkInDate', $start)
+                    ->chunk(500, function ($profiles) use (&$areabusydura) {
+                        foreach ($profiles as $record) {
+                            $start = Carbon::parse($record->checkInDate);
+                            $end = Carbon::parse($record->checkOutDate);
+                            if ($end > $start) {
+                                $difference = $end->diffInMinutes($start);
+                                $areabusydura += $difference;
+                            }
+                        }
+                    });
+
+                $UserModelBranch = UserModelBranch::with('branch')->where('branch_id',$request->branch_id)->latest()->first();
+
+                $branch_work = PlaceMaintenanceSetting::where('user_model_branch_id', $UserModelBranch->id)->where('active', 1)->first();
+                if (!$branch_work) {
+                    $branch_work = CarPLatesSetting::where('user_model_branch_id', $UserModelBranch->id)->where('active', 1)->first();
+                }
+                if ($branch_work) {
+                    $start = Carbon::parse($branch_work->start_time);
+                    $end = Carbon::now();
+                    if ($end > $start) {
+                        $branch_work_time_in_minutes = $end->diffInMinutes($start);
+                        $result = 0;
+                        if ($branch_work_time_in_minutes > $areabusydura) {
+                            $result = $branch_work_time_in_minutes - $areabusydura;
+                        }
+                        $areaavildura = $result;
+                    }
+                }
 
                 return (object)[
                     'area' => $request->area,
-                    'work_by_minute' => '',
-                    'empty_by_minute' => '',
+                    'work_by_minute' =>$areabusydura,
+                    'empty_by_minute' => $areaavildura,
                 ];
             } else {
                 $query = AreaDurationDay::where('branch_id', $request->branch_id)->where('area', $request->area);

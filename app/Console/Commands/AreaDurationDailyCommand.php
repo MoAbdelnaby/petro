@@ -52,7 +52,7 @@ class AreaDurationDailyCommand extends Command
             $startTime = now();
             $this->comment('Processing');
 
-            if(env('AREA_STATUS_FIRST_UPDATE')){
+            if($_ENV['AREA_STATUS_FIRST_UPDATE']){
                 $start = Carprofile::first();
                 if ($start) {
                     $start = $start->checkInDate;
