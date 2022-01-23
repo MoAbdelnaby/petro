@@ -27,7 +27,7 @@ class ReportService
     {
         $charts = [];
 
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice','welcome'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome','backout','stayingRatio'])) {
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name('custom', $bracnh, $start, $end);
         }
@@ -49,7 +49,7 @@ class ReportService
     public static function branchReport(string $model = 'all', $bracnh, $start, $end): array
     {
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice','welcome'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome','backout','stayingRatio'])) {
             $fun_name = "{$model}BranchReport";
             return self::$fun_name($bracnh, $start, $end);
         }
@@ -73,7 +73,7 @@ class ReportService
         self::$topPlateBranch = DB::table('view_top_branch_plate')->pluck('branch_id')->toArray();
 
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice','welcome'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome','backout','stayingRatio'])) {
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name();
         }
@@ -511,7 +511,6 @@ class ReportService
         return $charts;
     }
 
-
     public static function invoiceComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
     {
         foreach (['invoice', 'no_invoice'] as $status) {
@@ -545,18 +544,13 @@ class ReportService
             }
 
             $result[$status] = json_decode($result[$status]->groupBy('branch')
-                ->get(),true, 512, JSON_THROW_ON_ERROR);
+                ->get(), true, 512, JSON_THROW_ON_ERROR);
         }
 
-        return self::prepareInvoiceChart($result);
-    }
-
-    public static function prepareInvoiceChart($data): array
-    {
-        $result = array_merge_recursive_distinct($data['invoice'], $data['no_invoice']);
+        $data = array_merge_recursive_distinct($result['invoice'], $result['no_invoice']);
 
         $columns = ['invoice', 'no_invoice'];
-        return collect($result)->map(function ($item) use ($columns) {
+        return collect($data)->map(function ($item) use ($columns) {
             foreach ($columns as $column) {
                 if (!isset($item[$column])) {
                     $item[$column] = 0;
@@ -599,19 +593,13 @@ class ReportService
             }
 
             $result[$status] = json_decode($result[$status]->groupBy('branch')
-                ->get(),true, 512, JSON_THROW_ON_ERROR);
+                ->get(), true, 512, JSON_THROW_ON_ERROR);
         }
 
-        return self::prepareWelcomeChart($result);
-    }
-
-
-    public static function prepareWelcomeChart($data): array
-    {
-        $result = array_merge_recursive_distinct($data['welcome'], $data['no_welcome']);
+        $data = array_merge_recursive_distinct($result['welcome'], $result['no_welcome']);
 
         $columns = ['welcome', 'no_welcome'];
-        return collect($result)->map(function ($item) use ($columns) {
+        return collect($data)->map(function ($item) use ($columns) {
             foreach ($columns as $column) {
                 if (!isset($item[$column])) {
                     $item[$column] = 0;
@@ -619,5 +607,63 @@ class ReportService
             }
             return $item;
         })->toArray();
+    }
+
+    public static function backoutComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
+    {
+        $result = DB::table('carprofiles')
+            ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
+            ->where('branches.active', true)
+            ->where('branches.user_id', parentID())
+            ->whereNull('branches.deleted_at');
+
+        if ($type == 'custom') {
+            if ($start) {
+                $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
+                $result->where('carprofiles.created_at', '>=', $start);
+            }
+            if ($end) {
+                $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
+                $result->where('carprofiles.created_at', '<=', $end);
+            }
+            $result->whereIn('branches.id', $branch);
+        } else {
+            $result->whereIn('branches.id', array_slice(self::$topPlaceBranch, 0, self::$branch_count));
+        }
+
+        $result = $result->whereNull('invoice')
+            ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as backout'))
+            ->groupBy('branch')->get();
+
+        return json_decode($result, true, 512, JSON_THROW_ON_ERROR);
+    }
+
+    public static function stayingRatioComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
+    {
+        $result = DB::table('carprofiles')
+            ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
+            ->where('branches.active', true)
+            ->where('branches.user_id', parentID())
+            ->whereNull('branches.deleted_at');
+
+        if ($type == 'custom') {
+            if ($start) {
+                $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
+                $result->where('carprofiles.created_at', '>=', $start);
+            }
+            if ($end) {
+                $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
+                $result->where('carprofiles.created_at', '<=', $end);
+            }
+            $result->whereIn('branches.id', $branch);
+        } else {
+            $result->whereIn('branches.id', array_slice(self::$topPlaceBranch, 0, self::$branch_count));
+        }
+
+        $result = $result->whereNull('backout')
+            ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as backout'))
+            ->groupBy('branch')->get();
+
+        return json_decode($result, true, 512, JSON_THROW_ON_ERROR);
     }
 }

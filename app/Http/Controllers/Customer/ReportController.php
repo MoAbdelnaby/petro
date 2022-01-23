@@ -57,12 +57,12 @@ class ReportController extends Controller
                 'filter_type' => 'required|string|in:comparison,branch',
                 'branch_comparison' => 'required_if:filter_type,comparison|array',
                 'branch_data' => 'required_if:filter_type,branch',
-                'start_date' => 'nullable|date|before_or_equal:end_date',
-                'end_date' => 'nullable|date|after_or_equal:start_date',
+                'start_date' => 'nullable',
+                'end_date' => 'nullable',
             ]);
 
             if ($valdaitor->errors()->count()) {
-                return redirect()->back()->withErrors($valdaitor->errors())->withInput();
+                return redirect()->back()->with('danger', $valdaitor->errors()->first());
             }
 
             $filter_type = $request->filter_type;
@@ -79,6 +79,14 @@ class ReportController extends Controller
                 $filter_key = 'branch';
                 $branch = \Arr::wrap($branch);
                 $branches_check = $this->handleReportCompare(['welcome', 'no_welcome']);
+            }elseif ($model_type == 'backout') {
+                $filter_type = 'comparison';
+                $filter_key = 'branch';
+                $branch = \Arr::wrap($branch);
+            }elseif ($model_type == 'stayingRatio') {
+                $filter_type = 'comparison';
+                $filter_key = 'branch';
+                $branch = \Arr::wrap($branch);
             }
 
             $func_name = $filter_type . 'Report';

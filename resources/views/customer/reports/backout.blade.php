@@ -46,20 +46,25 @@
                                                    href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.index','invoice')}} @endif">{{ __('app.Invoice') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link active"
-                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.index','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.index','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'backout'], request()->toArray()))}} @else {{ route('reports.index','backout')}} @endif">{{ __('app.backout') }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'stayingRatio'], request()->toArray()))}} @else {{ route('reports.index','stayingRatio')}} @endif">{{ __('app.staying_car_ratio') }}</a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="col">
                                         <div class="d-flex justify-content-end position-relative mt-2">
-                                            @include('customer.reports._filter',['type' => 'welcome'])
+                                            @include('customer.reports._filter',['type' => 'backout'])
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="related-heading mb-3 m-0 row col-12 related-heading--custom">
-                                    <h2 class="p-0 col">{{ __('app.Welcome_Message_reports') }}</h2>
+                                    <h2 class="p-0 col">{{ __('app.Backout_reports') }}</h2>
                                     <div class="duration-cont col py-0">
                                         <i>
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -100,7 +105,7 @@
                                         <h3>{{ __('app.Branches') }} : </h3>
                                         <ul>
                                             @foreach($branches_report as $branch_name)
-                                              <li>{{$branch_name}}</li>
+                                                <li>{{$branch_name}}</li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -109,46 +114,16 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
                                         @if(count($charts))
-                                            <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
-
-                                                <div class="col-lg-6 col-md-6 mb-3">
-                                                    <div class="card text-center col-12">
-                                                        <div class="card-header row online">
-                                                            <div class="col-4"><img width="100" src="{{ asset("images/invoice.svg") }}" alt=""></div>
-                                                            <div class="col-8">
-                                                                <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.Welcome')  }}</b></h5>
-                                                                <h3><b>{{$branches_check['invoice']??0}}</b></h3>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="card text-center col-12">
-                                                        <div class="card-header row offline">
-                                                            <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_invoice.png") }}" alt=""></div>
-                                                            <div class="col-8">
-                                                                <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.no_welcome') }}</b></h5>
-                                                                <h3><b>{{$branches_check['no_invoice']??0}}</b></h3>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="row">
-                                                <div class="pt-4 mb-5 col-md-12" id="BranceWelcomeLineCon" style="display: none">
-                                                    <div id="BranceWelcomeLine" class="chartDiv"
-                                                         style="min-height: 450px"></div>
+                                                <div class="pt-4 mb-5 col-md-12" id="BranceBackoutLineCon" style="display: none">
+                                                    <div id="BranceBackoutLine" class="chartDiv" style="min-height: 450px"></div>
                                                 </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchWelcomeBarCon"
+                                                <div class="pt-4 mb-5 col-md-12" id="BranchBackoutBarCon"
                                                      style="display: none">
-                                                    <div id="BranchWelcomeBar" class="chartDiv" style="min-height: 450px"></div>
+                                                    <div id="BranchBackoutBar" class="chartDiv" style="min-height: 450px"></div>
                                                 </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchWelcomeSmoothCon" style="display: none">
-                                                    <div id="BranchWelcomeSmooth" class="chartDiv"
-                                                         style="min-height: 450px"></div>
-                                                </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchWelcomeTrendLineCon" style="display: none">
-                                                    <div id="BranchWelcomeTrendLine" class="chartDiv"
+                                                <div class="pt-4 mb-5 col-md-12" id="BranchBackoutSmoothCon" style="display: none">
+                                                    <div id="BranchBackoutSmooth" class="chartDiv"
                                                          style="min-height: 450px"></div>
                                                 </div>
                                             </div>
@@ -170,28 +145,22 @@
     </div>
 @endsection
 @push('js')
-    <script src="{{asset('js/report/welcome.js')}}"></script>
+    <script src="{{asset('js/report/backout.js')}}"></script>
     <script>
         /****** Inovice Chart ******/
         @php $key_name = 'report'; @endphp
 
         /************* Start Bar Chart ****************/
         @if(count($charts))
-            $("#BranchWelcomeBarCon").show();
-            comparisonWelcomeBar('BranchWelcomeBar', @json($charts, JSON_THROW_ON_ERROR));
+        $("#BranchBackoutBarCon").show();
+            comparisonBackoutBar('BranchBackoutBar', @json($charts, JSON_THROW_ON_ERROR));
         @endif
         /**************** End Bar Chart****************/
 
         /**************** Start Line Chart ************/
         @if(count($charts))
-            $("#BranceWelcomeLineCon").show();
-            comparisonWelcomeLine('BranceWelcomeLine', @json($charts, JSON_THROW_ON_ERROR));
-        @endif
-        /************** End Line Chart ************/
-        /**************** Start Line Chart ************/
-        @if(count($charts))
-            $("#BranchWelcomeTrendLineCon").show();
-            comparisonWelcomeTrendLine('BranchWelcomeTrendLine', @json($charts, JSON_THROW_ON_ERROR));
+        $("#BranceBackoutLineCon").show();
+            comparisonBackoutLine('BranceBackoutLine', @json($charts, JSON_THROW_ON_ERROR));
         @endif
         /************** End Line Chart ************/
     </script>

@@ -784,8 +784,6 @@
                 e.preventDefault();
             });
 
-
-
             /***** Tables Show ******/
             $('.chart-type.tables-type .dropdown-item').on("click", function (e) {
                 e.stopPropagation();
@@ -853,7 +851,6 @@
         @endif
         @endif
 
-
         $(document).ready(function () {
              let filterDataFn = function () {
                 var key = $(this).data('key');
@@ -887,16 +884,6 @@
                      cr && (slickCarouselCardEvents(filterDataFn), cr = false);
                 })
         });
-
-
-
-
-
-
-
-
-
-
 
     </script>
 @endsection
