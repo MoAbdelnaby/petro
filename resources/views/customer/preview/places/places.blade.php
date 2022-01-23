@@ -70,6 +70,9 @@
                     aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
             </div>
         </div>
+        <div class="duration-ration-cont top">
+            <p><b>Duration Ratio : </b> 15 minute</p>
+        </div>
         <div id="logout">
             <span class="close-setting" style="cursor: pointer;">
                 <i class="fas fa-sign-out-alt"></i>
@@ -254,6 +257,7 @@
                                             <div class="door-open">
                                                 <div class="card model-card">
                                                     <div class="card-body p-0">
+                                                        <span class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">All</span>
                                                     <div class="setting-card-cont dropleft ">
                                                             <a href="#"  type="button" data-toggle="dropdown" id="dropdownMenuCardSetting" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fas fa-cog"></i>
@@ -783,7 +787,7 @@
                     var key = $(this).data('key');
                     var branch_id = "{{$usermodelbranch->branch_id}}";
                     var date = $(this).val();
-
+                    $(this.closest('.setting-card-cont')).dropdown('toggle');
                     console.log(key,branch_id,date)
 
                     $.ajax({
@@ -803,6 +807,7 @@
                             $(`#minutes_work_${key}`).text(work_val);
                             $(`#hours_empty_${key}`).text(Math.round(empty_val/60,0));
                             $(`#hours_work_${key}`).text(Math.round(work_val/60,0));
+                            $(`.filter-badge-${key}.badge`).text(date);
 
                         }
                     })

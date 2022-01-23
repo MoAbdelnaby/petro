@@ -99,6 +99,9 @@
                     aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
             </div>
         </div>
+        <div class="duration-ration-cont top">
+            <p><b>Duration Ratio : </b> 15 minute</p>
+        </div>
         <div id="logout">
             <span class="close-setting" style="cursor: pointer;"><i class="fas fa-sign-out-alt"></i>{{__('app.gym.Logout')}}</span>
 
@@ -278,6 +281,7 @@
                                             <div class="door-open">
                                                 <div class="card model-card">
                                                     <div class="card-body  p-0">
+                                                        <span class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">All</span>
                                                              <div class="setting-card-cont dropleft ">
                                                             <a href="#"  type="button" data-toggle="dropdown" id="dropdownMenuCardSetting" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fas fa-cog"></i>
@@ -954,7 +958,7 @@
                 var area = $(this).data('key');
                 var branch_id = "{{$usermodelbranch->branch->id}}";
                 var date = $(this).val();
-
+                $(this.closest('.setting-card-cont')).dropdown('toggle');
                 // console.log(area,branch_id,date);
                 $.ajax({
                     type: 'get',
@@ -967,6 +971,7 @@
                     success: function (res) {
                         var count = res.data.count;
                         $(`#times_value_${area}`).text(count);
+                        $(`.filter-badge-${area}.badge`).text(date);
                     }
 
                 })
