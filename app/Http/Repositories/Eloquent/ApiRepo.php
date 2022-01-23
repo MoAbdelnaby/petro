@@ -637,13 +637,13 @@ class ApiRepo implements ApiRepoInterface
             $str_time = date('Y-m-d H:i:s', strtotime("$date $time"));
             $branch_id = UserModelBranch::find($data['user_model_branch_id'])->branch_id;
 
-            if ($data['status'] == '1') {
-                $profile = Carprofile::where('BayCode', $data['area'])
-                    ->where('status', 'pending')
-                    ->where('branch_id', $branch_id)
-                    ->whereDate('checkInDate', '<=', $str_time)
-                    ->latest()->first();
+            $profile = Carprofile::where('BayCode', $data['area'])
+                ->where('status', 'pending')
+                ->where('branch_id', $branch_id)
+                ->whereDate('checkInDate', '<=', $str_time)
+                ->latest()->first();
 
+            if ($data['status'] == '1') {
                 if (!$profile) {
                     Carprofile::create([
                         'status' => 'pending',
@@ -655,12 +655,6 @@ class ApiRepo implements ApiRepoInterface
                 }
 
             } else {
-                $profile = Carprofile::where('BayCode', $data['area'])
-                    ->where('status', 'pending')
-                    ->where('branch_id', $branch_id)
-                    ->whereDate('checkInDate', '<=', $str_time)
-                    ->latest()->first();
-
                 if ($profile) {
                     if (is_null($profile->plateNumber)) {
                         $profile->update([
