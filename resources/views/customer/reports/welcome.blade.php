@@ -49,6 +49,12 @@
                                                 <a class="nav-link active"
                                                    href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.index','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
                                             </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'backout'], request()->toArray()))}} @else {{ route('reports.index','backout')}} @endif">{{ __('app.backout') }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'stayingAverage'], request()->toArray()))}} @else {{ route('reports.index','stayingAverage')}} @endif">{{ __('app.staying_car_average') }}</a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="col">
@@ -177,20 +183,20 @@
         /************* Start Bar Chart ****************/
         @if(count($charts))
             $("#BranchWelcomeBarCon").show();
-            comparisonWelcomeBar('BranchWelcomeBar', @json($charts, JSON_THROW_ON_ERROR));
+            comparisonWelcomeBar('BranchWelcomeBar', @json($charts));
         @endif
         /**************** End Bar Chart****************/
 
         /**************** Start Line Chart ************/
         @if(count($charts))
             $("#BranceWelcomeLineCon").show();
-            comparisonWelcomeLine('BranceWelcomeLine', @json($charts, JSON_THROW_ON_ERROR));
+            comparisonWelcomeLine('BranceWelcomeLine', @json($charts));
         @endif
         /************** End Line Chart ************/
         /**************** Start Line Chart ************/
         @if(count($charts))
             $("#BranchWelcomeTrendLineCon").show();
-            comparisonWelcomeTrendLine('BranchWelcomeTrendLine', @json($charts, JSON_THROW_ON_ERROR));
+            comparisonWelcomeTrendLine('BranchWelcomeTrendLine', @json($charts));
         @endif
         /************** End Line Chart ************/
     </script>

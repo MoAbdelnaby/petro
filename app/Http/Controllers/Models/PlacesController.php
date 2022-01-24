@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers\Models;
 
-use App\Exports\PlacesExcelExport;
-use App\Exports\RecieptionExcelExport;
+use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\PlacesRepo;
 use App\Models\AreaDuration;
 use App\Models\AreaDurationDay;
-use App\Models\AreaStatus;
 use App\Models\Branch;
 use App\Models\BranchFiles;
 use App\Models\CarPLatesSetting;
 use App\Models\Carprofile;
-use App\Models\PlaceMaintenance;
 use App\Models\PlaceMaintenanceSetting;
-use App\Models\UserModel;
 use App\Models\UserModelBranch;
-use App\Http\Controllers\Controller;
 use App\Models\UserPackages;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,9 +19,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use PDF;
-use Excel;
-use App\Exports\ExcelExport;
 
 class PlacesController extends Controller
 {
@@ -36,7 +28,6 @@ class PlacesController extends Controller
     {
         $this->repo = $repo;
     }
-
 
     public function index($usermodelbranchid)
     {
@@ -141,22 +132,22 @@ class PlacesController extends Controller
             $i = 0;
             foreach ($areas as $key => $value) {
                 $charts['bar'][$i]['area'] = "Area #$key";
-                $charts['bar'][$i]['work'] = $value['areaavildura'];
-                $charts['bar'][$i]['empty'] = $value['areabusydura'];
+                $charts['bar'][$i]['work'] = $value['areabusydura'];
+                $charts['bar'][$i]['empty'] = $value['areaavildura'];
                 $i++;
             }
 
             $k = 0;
             foreach ($areas as $key => $value) {
                 $charts['circle']['work'][$k]['area'] = "Area #$key";
-                $charts['circle']['work'][$k]['value'] = $value['areaavildura'];
+                $charts['circle']['work'][$k]['value'] = $value['areabusydura'];
                 $k++;
             }
 
             $j = 0;
             foreach ($areas as $key => $value) {
                 $charts['circle']['empty'][$j]['area'] = "Area #$key";
-                $charts['circle']['empty'][$j]['value'] = $value['areabusydura'];
+                $charts['circle']['empty'][$j]['value'] = $value['areaavildura'];
                 $j++;
             }
         }
@@ -168,8 +159,8 @@ class PlacesController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'end' => 'nullable|date',
-            'start' => 'nullable|date',
+            'end' => 'required|date',
+            'start' => 'required|date',
             'submittype' => 'required',
             'exportType' => 'required_if:submittype,2',
         ], [
@@ -286,22 +277,22 @@ class PlacesController extends Controller
             $i = 0;
             foreach ($areas as $key => $value) {
                 $charts['bar'][$i]['area'] = "Area #$key";
-                $charts['bar'][$i]['work'] = $value['areaavildura'];
-                $charts['bar'][$i]['empty'] = $value['areabusydura'];
+                $charts['bar'][$i]['work'] = $value['areabusydura'];
+                $charts['bar'][$i]['empty'] = $value['areaavildura'];
                 $i++;
             }
 
             $k = 0;
             foreach ($areas as $key => $value) {
                 $charts['circle']['work'][$k]['area'] = "Area #$key";
-                $charts['circle']['work'][$k]['value'] = $value['areaavildura'];
+                $charts['circle']['work'][$k]['value'] = $value['areabusydura'];
                 $k++;
             }
 
             $j = 0;
             foreach ($areas as $key => $value) {
                 $charts['circle']['empty'][$j]['area'] = "Area #$key";
-                $charts['circle']['empty'][$j]['value'] = $value['areabusydura'];
+                $charts['circle']['empty'][$j]['value'] = $value['areaavildura'];
                 $j++;
             }
         }
@@ -351,9 +342,9 @@ class PlacesController extends Controller
                 $areaavildura = 0;
 
                 Carprofile::where('branch_id', $request->branch_id)
-                    ->where('BayCode',  $request->area)
+                    ->where('BayCode', $request->area)
                     ->where('status', 'completed')
-                    ->whereDate('checkInDate', $start)
+                    ->whereDate('checkInDate','=', $start)
                     ->chunk(500, function ($profiles) use (&$areabusydura) {
                         foreach ($profiles as $record) {
                             $start = Carbon::parse($record->checkInDate);
@@ -365,49 +356,58 @@ class PlacesController extends Controller
                         }
                     });
 
-                $UserModelBranch = UserModelBranch::with('branch')->where('branch_id',$request->branch_id)->latest()->first();
+                $UserModelBranch = UserModelBranch::with('branch')->where('branch_id', $request->branch_id)->latest()->first();
 
                 $branch_work = PlaceMaintenanceSetting::where('user_model_branch_id', $UserModelBranch->id)->where('active', 1)->first();
                 if (!$branch_work) {
                     $branch_work = CarPLatesSetting::where('user_model_branch_id', $UserModelBranch->id)->where('active', 1)->first();
                 }
+
+
                 if ($branch_work) {
                     $start = Carbon::parse($branch_work->start_time);
+                    $endSetting = Carbon::parse($branch_work->end_time);
                     $end = Carbon::now();
-                    if ($end > $start) {
-                        $branch_work_time_in_minutes = $end->diffInMinutes($start);
-                        $result = 0;
-                        if ($branch_work_time_in_minutes > $areabusydura) {
-                            $result = $branch_work_time_in_minutes - $areabusydura;
-                        }
-                        $areaavildura = $result;
+
+                    if ($endSetting < $end) {
+                        $end = $endSetting;
                     }
+
+                    $branch_work_time_in_minutes = $end->diffInMinutes($start);
+                    $result = 0;
+                    if ($branch_work_time_in_minutes > $areabusydura) {
+                        $result = $branch_work_time_in_minutes - $areabusydura;
+                    }
+                    $areaavildura = $result;
                 }
 
-                return (object)[
-                    'area' => $request->area,
-                    'work_by_minute' =>$areabusydura,
-                    'empty_by_minute' => $areaavildura,
-                ];
+                return response()->json([
+                    'data' => [
+                        'area' => $request->area,
+                        'work_by_minute' => $areabusydura,
+                        'empty_by_minute' => $areaavildura,
+                    ]
+                ]);
+
             } else {
                 $query = AreaDurationDay::where('branch_id', $request->branch_id)->where('area', $request->area);
 
                 if ($start) {
-                    $query = $query->whereDate('date', '>=', $start);
+                    $query->where('date', '>=', $start);
                 }
+
                 if ($end) {
-                    $query = $query->whereDate('date', '<=', $end);
+                    $query->where('date', '<=', $end);
                 }
-                $data = $query->select('area',
+
+                $data = $query->select(
+                    'area',
                     DB::raw('SUM(work_by_minute) as work_by_minute'),
                     DB::raw('SUM(empty_by_minute) as empty_by_minute')
                 )->first();
             }
-
         }
-
 
         return response()->json(['data' => $data]);
     }
-
 }

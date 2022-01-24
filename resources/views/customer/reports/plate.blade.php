@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.index')
 @section('page_title')
-    {{__('app.gym.car_Plates')}}
+    {{__('app.gym.car_plates')}}
 @endsection
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -55,6 +55,12 @@
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.index','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'backout'], request()->toArray()))}} @else {{ route('reports.index','backout')}} @endif">{{ __('app.backout') }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'stayingAverage'], request()->toArray()))}} @else {{ route('reports.index','stayingAverage')}} @endif">{{ __('app.staying_car_average') }}</a>
                                             </li>
                                         </ul>
                                     </div>

@@ -189,10 +189,10 @@ class PlacesRepo extends AbstractRepo implements PlacesRepoInterface
 
         foreach ($areas_all->groupBy('area') as $key => $area) {
 
-            $result['areas'][$key]['areaavildura'] = isset($area_duration[$key])
+            $result['areas'][$key]['areabusydura'] = isset($area_duration[$key])
                 ? round($area_duration[$key]['work_by_minute'] / 60) : 0;
 
-            $result['areas'][$key]['areabusydura'] = isset($area_duration[$key])
+            $result['areas'][$key]['areaavildura'] = isset($area_duration[$key])
                 ? round($area_duration[$key]['empty_by_minute'] / 60) : 0;
 
             $result['areas'][$key]['areaavailable'] = $area[0];

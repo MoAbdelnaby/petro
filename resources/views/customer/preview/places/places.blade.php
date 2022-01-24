@@ -70,9 +70,9 @@
                     aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
             </div>
         </div>
-        <div class="duration-ration-cont top">
-            <p><b>Duration Ratio : </b> 15 minute</p>
-        </div>
+{{--        <div class="duration-ration-cont top">--}}
+{{--            <p><b>@lang('app.staying_car_average') : </b> 15 minute</p>--}}
+{{--        </div>--}}
         <div id="logout">
             <span class="close-setting" style="cursor: pointer;">
                 <i class="fas fa-sign-out-alt"></i>
@@ -799,9 +799,9 @@
                             date: date
                         },
                         success: function (res) {
-
-                            let empty_val = res.data.work_by_minute??0;
-                            let work_val = res.data.empty_by_minute??0;
+                            console.log(date)
+                            let empty_val = res.data.empty_by_minute??0;
+                            let work_val = res.data.work_by_minute??0;
 
                             $(`#minutes_empty_${key}`).text(empty_val);
                             $(`#minutes_work_${key}`).text(work_val);
@@ -815,14 +815,10 @@
 
                 slickCarouselCardEvents(filterDataFn)
 
-
                 $('.area-section.slider').on('afterChange', function(event, currentSlide){
                     cr && (slickCarouselCardEvents(filterDataFn), cr = false);
                 })
             });
-
-
-
     </script>
 @endsection
 

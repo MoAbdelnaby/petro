@@ -24,7 +24,6 @@ class BranchesController extends Controller
     protected $placesRepo;
     protected $platesRepo;
 
-
     public function __construct(PlacesRepo $placesRepo, PlatesRepo $platesRepo)
     {
         $this->placesRepo = $placesRepo;
@@ -116,7 +115,6 @@ class BranchesController extends Controller
             } else {
                 $branch_id = $activebranches[0]->b_id;
 
-
                 $query = DB::table('user_model_branches')
                     ->select(['user_model_branches.*', 'branches.name as bname', 'models.name as mname', 'lt_models.id as lt_id'])
                     ->join('users_models', 'users_models.id', '=', 'user_model_branches.user_model_id')
@@ -157,7 +155,6 @@ class BranchesController extends Controller
             }
         }
     }
-
 
     public function places($branch_id, $usermodelbranchid)
     {
@@ -261,22 +258,22 @@ class BranchesController extends Controller
             $i = 0;
             foreach ($areas as $key => $value) {
                 $charts['bar'][$i]['area'] = "Area #$key";
-                $charts['bar'][$i]['work'] = $value['areaavildura'];
-                $charts['bar'][$i]['empty'] = $value['areabusydura'];
+                $charts['bar'][$i]['work'] = $value['areabusydura'];
+                $charts['bar'][$i]['empty'] = $value['areaavildura'];
                 $i++;
             }
 
             $k = 0;
             foreach ($areas as $key => $value) {
                 $charts['circle']['work'][$k]['area'] = "Area #$key";
-                $charts['circle']['work'][$k]['value'] = $value['areaavildura'];
+                $charts['circle']['work'][$k]['value'] = $value['areabusydura'];
                 $k++;
             }
 
             $j = 0;
             foreach ($areas as $key => $value) {
                 $charts['circle']['empty'][$j]['area'] = "Area #$key";
-                $charts['circle']['empty'][$j]['value'] = $value['areabusydura'];
+                $charts['circle']['empty'][$j]['value'] = $value['areaavildura'];
                 $j++;
             }
         }
@@ -322,8 +319,8 @@ class BranchesController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'end' => 'nullable|date',
-            'start' => 'nullable|date',
+            'end' => 'required|date',
+            'start' => 'required|date',
             'submittype' => 'required',
             'exportType' => 'required_if:submittype,2',
         ], [
@@ -450,22 +447,22 @@ class BranchesController extends Controller
             $i = 0;
             foreach ($areas as $key => $value) {
                 $charts['bar'][$i]['area'] = "Area #$key";
-                $charts['bar'][$i]['work'] = $value['areaavildura'];
-                $charts['bar'][$i]['empty'] = $value['areabusydura'];
+                $charts['bar'][$i]['work'] = $value['areabusydura'];
+                $charts['bar'][$i]['empty'] = $value['areaavildura'];
                 $i++;
             }
 
             $k = 0;
             foreach ($areas as $key => $value) {
                 $charts['circle']['work'][$k]['area'] = "Area #$key";
-                $charts['circle']['work'][$k]['value'] = $value['areaavildura'];
+                $charts['circle']['work'][$k]['value'] = $value['areabusydura'];
                 $k++;
             }
 
             $j = 0;
             foreach ($areas as $key => $value) {
                 $charts['circle']['empty'][$j]['area'] = "Area #$key";
-                $charts['circle']['empty'][$j]['value'] = $value['areabusydura'];
+                $charts['circle']['empty'][$j]['value'] = $value['areaavildura'];
                 $j++;
             }
         }
@@ -583,7 +580,8 @@ class BranchesController extends Controller
         }
 
         $invoice_chart = ReportService::invoiceComparisonReport('custom', [$current_branch->id]);
-        $duration_ratio = 0;
+        $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$current_branch->id]);;
+        $duration_ratio =0;
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
     }
@@ -635,8 +633,8 @@ class BranchesController extends Controller
             return redirect()->back()->with('danger', __('app.gym.empty_model'));
         }
         $validator = Validator::make($request->all(), [
-            'end' => 'nullable|date',
-            'start' => 'nullable|date',
+            'end' => 'required|date',
+            'start' => 'required|date',
             'submittype' => 'required',
             'exportType' => 'required_if:submittype,2',
         ], [
@@ -787,6 +785,7 @@ class BranchesController extends Controller
         }
 
         $invoice_chart = ReportService::invoiceComparisonReport('custom', [$current_branch->id], $start, $end);
+        $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$current_branch->id], $start, $end);
         $duration_ratio = 0;
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));

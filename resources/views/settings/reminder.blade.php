@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.index')
 @section('page_title')
-    {{__('app.gym.car_Plates')}}
+    {{__('app.gym.car_plates')}}
 @endsection
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">

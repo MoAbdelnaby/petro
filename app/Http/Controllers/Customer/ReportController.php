@@ -46,7 +46,7 @@ class ReportController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'UnKnowm Error');
+            return redirect()->back()->with('danger', 'UnKnown Error');
         }
     }
 
@@ -83,7 +83,7 @@ class ReportController extends Controller
                 $filter_type = 'comparison';
                 $filter_key = 'branch';
                 $branch = \Arr::wrap($branch);
-            }elseif ($model_type == 'stayingRatio') {
+            }elseif ($model_type == 'stayingAverage') {
                 $filter_type = 'comparison';
                 $filter_key = 'branch';
                 $branch = \Arr::wrap($branch);
@@ -114,7 +114,7 @@ class ReportController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'UnKnowm Error');
+            return redirect()->back()->with('danger', 'UnKnown Error');
         }
     }
 

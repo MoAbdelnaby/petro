@@ -186,9 +186,9 @@
                     aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
             </div>
         </div>
-        <div class="duration-ration-cont">
-            <p><b>Duration Ratio : </b> 15 minute</p>
-        </div>
+{{--        <div class="duration-ration-cont">--}}
+{{--            <p><b>@lang('app.staying_car_average') : </b> 15 minute</p>--}}
+{{--        </div>--}}
         <div id="logout">
              <span class="close-setting" style="cursor: pointer;">
                  <i class="fas fa-sign-out-alt"></i>
@@ -440,11 +440,6 @@
                                                                 </div>
 
                                                             @endif
-                                                            {{-- <div>
-                                                                <input type="button"
-                                                                       class="btn btn-primary btn-sm change-btn"
-                                                                       id="btn-{{$key}}" value="Change to Minutes">
-                                                            </div> --}}
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
 
@@ -867,8 +862,8 @@
                     },
                     success: function (res) {
 
-                        let empty_val = res.data.work_by_minute??0;
-                        let work_val = res.data.empty_by_minute??0;
+                        let empty_val = res.data.empty_by_minute??0;
+                        let work_val = res.data.work_by_minute??0;
 
                         $(`#minutes_empty_${key}`).text(empty_val);
                         $(`#minutes_work_${key}`).text(work_val);

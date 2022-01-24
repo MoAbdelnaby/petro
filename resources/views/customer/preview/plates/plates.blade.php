@@ -100,8 +100,10 @@
             </div>
         </div>
         <div class="duration-ration-cont top">
-            <p><b>Duration Ratio : </b> 15 minute</p>
-        </div>
+            <p><b>
+                    @lang('app.staying_car_average') : </b>
+                {{$duration_ratio??0}} {{__('app.Minutes')}}
+                </p>        </div>
         <div id="logout">
             <span class="close-setting" style="cursor: pointer;"><i class="fas fa-sign-out-alt"></i>{{__('app.gym.Logout')}}</span>
 
@@ -522,6 +524,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="iq-card mb-4">
+                                        <div class="iq-card-body">
+                                            <div class="related-heading mb-5">
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center border-bottom">
+                                                    <h2 class="border-bottom-0">{{ __('app.invoice_chart') }}</h2>
+                                                </div>
+                                            </div>
+                                            <div class="p-4">
+                                                <div id="invoiceChart" class="chartDiv" style="min-height: 400px"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @else
 
                                     <div class="col-12 text-center">
@@ -706,7 +721,11 @@
 @section('scripts')
     <script src="{{asset('js/branchCharts.js')}}"></script>
     <script src="{{asset('js/config.js')}}"></script>
+    <script src="{{asset('js/report/invoice.js')}}"></script>
     <script>
+
+
+        comparisonInvoiceBar('invoiceChart',@json($invoice_chart));
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

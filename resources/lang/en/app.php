@@ -1573,6 +1573,6 @@ return [
     'invoice_chart' => 'Invoice Chart',
     'car_duration_area' => 'Car Duration in each Area',
     'backout' => 'Backout',
-    'staying_car_ratio' => 'Car Staying Ratio',
+    'staying_car_average' => 'Car Staying Average',
     'Backout_reports' => 'Backout Report',
 ];

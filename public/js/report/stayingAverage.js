@@ -1,9 +1,10 @@
-
 function comparisonStayingBar(id, data) {
     am4core.ready(function () {
+        // Themes begin
         am4core.useTheme(am4themes_animated);
-        var chart = am4core.create(id, am4charts.XYChart);
+        // Themes end
 
+        var chart = am4core.create(id, am4charts.XYChart);
         chart.colors.list = [
             am4core.color("#fc696e"),
             am4core.color("#EF1B2F"),
@@ -23,7 +24,7 @@ function comparisonStayingBar(id, data) {
         xAxis.renderer.grid.template.location = 0;
 
         var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        yAxis.title.text = "Record";
+        yAxis.title.text = "Staying Average";
         yAxis.min = 0;
 
         function createSeries(value, name) {
@@ -31,6 +32,7 @@ function comparisonStayingBar(id, data) {
             series.dataFields.valueY = value;
             series.dataFields.categoryX = "branch";
             series.name = name;
+            series.columns.template.width = am4core.percent(30);
 
             series.events.on("hidden", arrangeColumns);
             series.events.on("shown", arrangeColumns);
@@ -40,11 +42,9 @@ function comparisonStayingBar(id, data) {
             return series;
         }
 
-        console.log(data)
         chart.data = data;
 
-        createSeries("invoice", "Staying");
-        createSeries("no_invoice", "No Invocie");
+        createSeries("duration", "Staying Average");
 
         function arrangeColumns() {
             var series = chart.series.getIndex(0);
@@ -103,7 +103,7 @@ function comparisonStayingBar(id, data) {
         // Add cursor
         chart.cursor = new am4charts.XYCursor();
         chart.cursor.lineX.disabled = true;
-    }); // end am4core.ready()
+    }); // end am4core
 }
 
 function comparisonStayingLine(divId, data) {
@@ -124,25 +124,17 @@ function comparisonStayingLine(divId, data) {
         categoryAxis.dataFields.category = "branch";
 
         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        valueAxis.title.text = "Record";
+        valueAxis.title.text = "Staying Average";
         valueAxis.renderer.minLabelPosition = 0.01;
 
         var series1 = chart.series.push(new am4charts.LineSeries());
-        series1.dataFields.valueY = "invoice";
+        series1.dataFields.valueY = "duration";
         series1.dataFields.categoryX = "branch";
-        series1.name = "Invocie";
+        series1.name = "Staying Average";
         series1.bullets.push(new am4charts.CircleBullet());
-        series1.tooltipText = "Staying {categoryX}: {valueY} Record";
+        series1.tooltipText = "Staying Average {categoryX}: {valueY} Record";
         series1.legendSettings.valueText = "{valueY}";
         series1.visible = false;
-
-        var series2 = chart.series.push(new am4charts.LineSeries());
-        series2.dataFields.valueY = "no_invoice";
-        series2.dataFields.categoryX = "branch";
-        series2.name = "No Staying";
-        series2.bullets.push(new am4charts.CircleBullet());
-        series2.tooltipText = "No Staying {categoryX}: {valueY} Record";
-        series2.legendSettings.valueText = "{valueY}";
 
         // Add chart cursor
         chart.cursor = new am4charts.XYCursor();
@@ -151,10 +143,6 @@ function comparisonStayingLine(divId, data) {
         let hs1 = series1.segments.template.states.create("hover");
         hs1.properties.strokeWidth = 5;
         series1.segments.template.strokeWidth = 1;
-
-        let hs2 = series2.segments.template.states.create("hover");
-        hs2.properties.strokeWidth = 5;
-        series2.segments.template.strokeWidth = 1;
 
         chart.legend = new am4charts.Legend();
         chart.legend.itemContainers.template.events.on(
@@ -173,58 +161,5 @@ function comparisonStayingLine(divId, data) {
                 segment.isHover = false;
             });
         });
-    });
-}
-
-function comparisonStayingTrendLine(divId, data) {
-    console.log(data);
-    am4core.ready(function () {
-
-        am4core.useTheme(am4themes_animated);
-
-        var chart = am4core.create(divId, am4charts.XYChart);
-
-        chart.exporting.menu = new am4core.ExportMenu();
-
-        /* Create axes */
-        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-        categoryAxis.dataFields.category = "branch";
-        categoryAxis.renderer.minGridDistance = 30;
-
-        /* Create value axis */
-        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-        /* Create series */
-        var columnSeries = chart.series.push(new am4charts.ColumnSeries());
-        columnSeries.name = "Staying (Record)";
-        columnSeries.dataFields.valueY = "invoice";
-        columnSeries.dataFields.categoryX = "branch";
-        columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
-        columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
-        columnSeries.columns.template.propertyFields.stroke = "stroke";
-        columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
-        columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
-        columnSeries.tooltip.label.textAlign = "middle";
-
-        var lineSeries = chart.series.push(new am4charts.LineSeries());
-        lineSeries.name = "No Staying (Record)";
-        lineSeries.dataFields.valueY = "no_invoice";
-        lineSeries.dataFields.categoryX = "branch";
-
-        lineSeries.stroke = am4core.color("#fdd400");
-        lineSeries.strokeWidth = 3;
-        lineSeries.propertyFields.strokeDasharray = "lineDash";
-        lineSeries.tooltip.label.textAlign = "middle";
-
-        var bullet = lineSeries.bullets.push(new am4charts.Bullet());
-        bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
-        bullet.tooltipText = "[#fff font-size: 15px]{name} in {categoryX}:\n[/][#fff font-size: 20px]{valueY}[/] [#fff]{additional}[/]"
-        var circle = bullet.createChild(am4core.Circle);
-        circle.radius = 4;
-        circle.fill = am4core.color("#fff");
-        circle.strokeWidth = 3;
-
-        chart.data = data;
-
     });
 }

@@ -216,7 +216,10 @@
             </div>
         </div>
         <div class="duration-ration-cont">
-            <p><b>Duration Ratio : </b> 15 minute</p>
+            <p><b>
+                    @lang('app.staying_car_average') : </b>
+                {{$duration_ratio??0}} {{__('app.Minutes')}}
+            </p>
         </div>
         <div id="logout">
              <span class="close-setting" style="cursor: pointer;">
@@ -403,7 +406,8 @@
                                             <div class="door-open">
                                                 <div class="card model-card">
                                                     <div class="card-body p-0 ">
-                                                        <span class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">All</span>
+                                                        <span
+                                                            class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">All</span>
                                                         <div class="setting-card-cont dropleft ">
                                                             <a href="#" type="button" data-toggle="dropdown"
                                                                id="dropdownMenuCardSetting" data-bs-toggle="dropdown"
@@ -597,7 +601,8 @@
                                                                            onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"
                                                                            data-toggle="popover" data-trigger="hover"
                                                                            data-content="Preview Invoice">
-                                                                            <i class="fas fa-file-pdf text-success" style="font-size: 19px"></i>
+                                                                            <i class="fas fa-file-pdf text-success"
+                                                                               style="font-size: 19px"></i>
                                                                         </a>
                                                                     @endif
                                                                 </td>
@@ -871,6 +876,8 @@
     <script src="{{asset('js/config.js')}}"></script>
     <script src="{{asset('js/report/invoice.js')}}"></script>
     <script>
+        comparisonInvoiceBar('invoiceChart',@json($invoice_chart));
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -965,8 +972,6 @@
             })
 
             var item_update = false;
-
-            comparisonInvoiceBar('invoiceChart',@json($invoice_chart));
 
             $('.put-error').on('click', function (e) {
                 e.stopPropagation();
