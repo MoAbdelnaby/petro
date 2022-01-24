@@ -374,7 +374,7 @@ class ReportService
     {
         $plate_data = Db::table('carprofiles')
             ->select(['branches.name as branch', 'carprofiles.id', 'carprofiles.branch_id', 'carprofiles.checkInDate'])
-            ->where('carprofiles.status', 'completed')
+            ->where('carprofiles.status', '=','completed')
             ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
             ->where('branches.user_id', '=', parentID());
 
@@ -518,6 +518,7 @@ class ReportService
                 ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
                 ->where('branches.active', true)
                 ->where('branches.user_id', parentID())
+                ->where('carprofiles.status', '=','completed')
                 ->whereNull('branches.deleted_at');
 
             if ($type == 'custom') {
@@ -567,6 +568,7 @@ class ReportService
                 ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
                 ->where('branches.active', true)
                 ->where('branches.user_id', parentID())
+                ->where('carprofiles.status', '=','completed')
                 ->whereNull('branches.deleted_at');
 
             if ($type == 'custom') {
@@ -615,6 +617,7 @@ class ReportService
             ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
             ->where('branches.active', true)
             ->where('branches.user_id', parentID())
+            ->where('carprofiles.status', '=','completed')
             ->whereNull('branches.deleted_at');
 
         if ($type == 'custom') {
@@ -640,10 +643,10 @@ class ReportService
 
     public static function stayingAverageComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
     {
-        DB::enableQueryLog();
         $result = DB::table('carprofiles')->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
             ->where('branches.active', true)
             ->where('branches.user_id', parentID())
+            ->where('carprofiles.status', '=','completed')
             ->whereNull('branches.deleted_at');
 
         if ($type == 'custom') {
