@@ -30,7 +30,7 @@ class AreaDurationTotal
             ]);
 
             if (!$_ENV['AREA_STATUS_FIRST_UPDATE']) {
-                $query->whereDate('date', '>=', Carbon::now()->toDateString());
+                $query->whereDate('date', '>=', Carbon::now()->subDays(1)->toDateString());
             }
 
             $results = $query->groupBy(['branch_id', 'area'])->get();
