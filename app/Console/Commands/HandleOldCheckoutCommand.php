@@ -57,7 +57,7 @@ class HandleOldCheckoutCommand extends Command
                     $start = \Carbon\Carbon::parse($record->checkInDate);
                     $end = Carbon::parse($record->checkOutDate);
                     if ($end->diffInMinutes($start) > 120) {
-                        $record->checkOutDate = $start->addHour();
+                        $record->checkOutDate = $start->addMinutes(30);
                         $record->save();
                     }
                 }
