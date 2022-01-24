@@ -126,7 +126,7 @@ class PlatesController extends Controller
 
         $invoice_chart = ReportService::invoiceComparisonReport('custom', [$usermodelbranch->branch_id]);
         $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$usermodelbranch->id]);
-        $duration_ratio = 0;
+        $duration_ratio = $duration_ratio[0]['duration']??0;
 
         return view('customer.preview.plates.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'starttime', 'branch', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
     }
@@ -286,7 +286,7 @@ class PlatesController extends Controller
 
         $invoice_chart = ReportService::invoiceComparisonReport('custom', [$usermodelbranch->branch_id], $start, $end);
         $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$usermodelbranch->id], $start, $end);
-        $duration_ratio = 0;
+        $duration_ratio = $duration_ratio[0]['duration']??0;
 
         return view('customer.preview.plates.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'starttime', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
     }

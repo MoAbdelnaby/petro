@@ -132,7 +132,7 @@ function comparisonStayingLine(divId, data) {
         series1.dataFields.categoryX = "branch";
         series1.name = "Staying Average";
         series1.bullets.push(new am4charts.CircleBullet());
-        series1.tooltipText = "Staying Average {categoryX}: {valueY} Record";
+        series1.tooltipText = "Staying Average {categoryX}: {valueY} Minute";
         series1.legendSettings.valueText = "{valueY}";
         series1.visible = false;
 

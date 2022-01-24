@@ -79,11 +79,7 @@ class ReportController extends Controller
                 $filter_key = 'branch';
                 $branch = \Arr::wrap($branch);
                 $branches_check = $this->handleReportCompare(['welcome', 'no_welcome']);
-            }elseif ($model_type == 'backout') {
-                $filter_type = 'comparison';
-                $filter_key = 'branch';
-                $branch = \Arr::wrap($branch);
-            }elseif ($model_type == 'stayingAverage') {
+            }elseif ($model_type == 'backout' || $model_type == 'stayingAverage') {
                 $filter_type = 'comparison';
                 $filter_key = 'branch';
                 $branch = \Arr::wrap($branch);
