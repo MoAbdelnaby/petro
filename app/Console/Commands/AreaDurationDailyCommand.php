@@ -2,17 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\AreaDuration;
-use App\Models\AreaDurationDay;
-use App\Models\AreaStatus;
 use App\Models\Carprofile;
-use App\Models\PlaceMaintenance;
-use App\Models\UserModelBranch;
 use App\Services\AreaDurationDaily;
-use App\Services\AreaDurationTotal;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class AreaDurationDailyCommand extends Command
@@ -66,7 +59,7 @@ class AreaDurationDailyCommand extends Command
                     }
                 }
             }else{
-                (new AreaDurationDaily())->calculate(date('Y-m-d'));
+                (new AreaDurationDaily())->calculate(Carbon::now()->subDays(1)->toDateString());
             }
 
             $this->info('Successfully update duration time in each area');

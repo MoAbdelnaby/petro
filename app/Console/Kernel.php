@@ -34,8 +34,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//         $schedule->command('area:duration')->daily()->timezone('Asia/Riyadh');
-//         $schedule->command('area:duration-daily')->daily()->timezone('Asia/Riyadh');
+//         $schedule->command('area:duration')->dailyAt('01:10')->timezone('Asia/Riyadh');
+//         $schedule->command('area:duration-daily')->dailyAt('01:00')->timezone('Asia/Riyadh');
 //         $schedule->command('files:export')->everyFiveMinutes()->timezone('Asia/Riyadh');
 //         $schedule->command('welcome:send')->everyMinute()->timezone('Asia/Riyadh');
 //         $schedule->command('reminder:send')->daily()->timezone('Asia/Riyadh');

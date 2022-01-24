@@ -72,9 +72,11 @@ Route::get('reminder_message-work', function (){
     \Illuminate\Support\Facades\Artisan::call('reminder:send');
 });
 
-Route::get('get-duration-work-time', function (){
-    \Illuminate\Support\Facades\Artisan::call('area:duration');
+Route::get('handle-duration-daily', function (){
     \Illuminate\Support\Facades\Artisan::call('area:duration-daily');
+});
+Route::get('handle-duration-total', function (){
+    \Illuminate\Support\Facades\Artisan::call('area:duration');
 });
 
 Route::get('testcase',function(){
