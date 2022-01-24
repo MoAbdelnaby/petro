@@ -215,12 +215,7 @@
                        id="branch_search">
             </div>
         </div>
-        <div class="duration-ration-cont">
-            <p><b>
-                    @lang('app.staying_car_average') : </b>
-                {{$duration_ratio??0}} {{__('app.Minutes')}}
-            </p>
-        </div>
+
         <div id="logout">
              <span class="close-setting" style="cursor: pointer;">
                  <i class="fas fa-sign-out-alt"></i>
@@ -466,6 +461,16 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="duration-ration-cont">
+                                            <p><b>
+                                                    @lang('app.staying_car_average') : </b>
+                                                {{$duration_ratio??0}} {{__('app.Minutes')}}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                                 @if(count($data))
                                     <div class="iq-card mt-4 mb-4">
