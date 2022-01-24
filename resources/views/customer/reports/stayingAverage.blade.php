@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="d-flex justify-content-end position-relative mt-2">
-                                            @include('customer.reports._filter',['type' => 'backout'])
+                                            @include('customer.reports._filter',['type' => 'stayingAverage'])
                                         </div>
                                     </div>
                                 </div>
