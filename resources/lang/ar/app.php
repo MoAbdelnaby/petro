@@ -1541,4 +1541,11 @@ return array(
     'branch_search' => 'بحث باسم الفرع',
     'no_data' => 'لايوجد بيانات',
     'Invoices_reports' => 'تقارير الفواتير',
+    'Welcome_Message_reports' => 'تقرير رسالة لترحيب',
+    'no_welcome' => 'No Welcome',
+    'invoice_chart' => 'مخطط الفاتورة',
+    'car_duration_area' => 'مدة السيارة في كل منطقة',
+    'backout' => 'Backout',
+    'staying_car_average' => 'متوسط بقاء السيارة',
+    'Backout_reports' => 'Backout Report',
 );

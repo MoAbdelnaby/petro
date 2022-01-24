@@ -407,7 +407,7 @@
                                                 <div class="card model-card">
                                                     <div class="card-body p-0 ">
                                                         <span
-                                                            class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">All</span>
+                                                            class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">{{__('app.all')}}</span>
                                                         <div class="setting-card-cont dropleft ">
                                                             <a href="#" type="button" data-toggle="dropdown"
                                                                id="dropdownMenuCardSetting" data-bs-toggle="dropdown"
@@ -448,6 +448,11 @@
 
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
+                                                            <div class="spinner-cont d-none spinner-cont-{{$key}}">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                  </div>
+                                                            </div>
                                                             <div class=" text-center p-2 w-100">
                                                                 <h2>{{__('app.gym.car_plates')}}</h2>
                                                                 <h3 id="times_value_{{$key}}">{{$val}}</h3>
@@ -1118,11 +1123,14 @@
         @endif
 
         $(document).ready(function () {
-            let filterDataFn = function () {
+            let filterDataFn = function (e) {
                 var area = $(this).data('key');
                 var branch_id = "{{$current_branch->id}}";
                 var date = $(this).val();
+                let selectedText = e.target.options[e.target.selectedIndex].text.trim();
+                let spinnerCont = $(`.spinner-cont-${area}`);
                 $(this.closest('.setting-card-cont')).dropdown('toggle');
+                spinnerCont.removeClass('d-none');
                 $.ajax({
                     type: 'get',
                     url: "{{route('branch.plates.times')}}",
@@ -1134,7 +1142,27 @@
                     success: function (res) {
                         var count = res.data.count;
                         $(`#times_value_${area}`).text(count);
-                        $(`.filter-badge-${area}.badge`).text(date);
+                        $(`.filter-badge-${area}.badge`).text(selectedText);
+                    },
+                    error: function (xhr, status, error) {
+                        let customToast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+                        customToast.fire({
+                            icon: 'error',
+                            title: error || 'Failed To Load Data'
+                        });
+                    },
+                    complete: function(xhr, status){
+                        spinnerCont.addClass('d-none');
                     }
 
                 })

@@ -2559,3 +2559,11 @@ select.form-control:focus {
 #Combined-Shape{
     fill: #fff !important;
 }
+
+.spinner-cont {
+
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.setting-card-cont .custom-dropdown{
+    box-shadow: none !important;
+}

@@ -2787,6 +2787,7 @@ g[aria-labelledby$="title"] {
     top: 18px;
     font-size: 12px;
     text-transform: capitalize;
+    box-shadow: 0 1px 2px 0 #00000029, 0 2px 10px 0 #0000001f;
 }
 .duration-ration-cont{
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
@@ -2807,4 +2808,23 @@ g[aria-labelledby$="title"] {
 }
 .duration-ration-cont p {
     margin-bottom: 0;
+}
+.model-card .area-desc{
+    position: relative;
+
+}
+
+.spinner-cont{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 7px 7px;
+
+}
+.spinner-cont.d-none{
+    display: none;
 }

@@ -716,3 +716,11 @@ div.dataTables_wrapper div.dataTables_length select {
     right: auto;
     left: 0;
 }
+.duration-ration-cont.top{
+    left: auto;
+}
+.duration-ration-cont  {
+    left: auto !important;
+    right: 50px !important ;
+    top: 72px !important;
+}

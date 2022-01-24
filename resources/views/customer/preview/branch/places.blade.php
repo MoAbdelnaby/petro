@@ -372,7 +372,7 @@
                                             <div class="door-open">
                                                 <div class="card model-card">
                                                     <div class="card-body p-0">
-                                                        <span class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">All</span>
+                                                        <span class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">{{__('app.all')}}</span>
                                                         <div class="setting-card-cont dropleft ">
                                                             <a href="#"  type="button" data-toggle="dropdown" id="dropdownMenuCardSetting" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fas fa-cog"></i>
@@ -442,7 +442,11 @@
                                                             @endif
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
-
+                                                            <div class="spinner-cont d-none spinner-cont-{{$key}}">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                  </div>
+                                                            </div>
                                                             <div
                                                                 class="div-hours-btn-{{$key}} border-right text-center p-2 w-50">
                                                                 <h2>{{__('app.gym.DurationEmpty')}}</h2>
@@ -847,11 +851,15 @@
         @endif
 
         $(document).ready(function () {
-             let filterDataFn = function () {
+             let filterDataFn = function (e) {
                 var key = $(this).data('key');
                 var branch_id = "{{$current_branch->id}}";
                 var date = $(this).val();
-                 $(this.closest('.setting-card-cont')).dropdown('toggle');
+                let selectedText = e.target.options[e.target.selectedIndex].text.trim();
+                let spinnerCont = $(`.spinner-cont-${key}`);
+                $(this.closest('.setting-card-cont')).dropdown('toggle');
+                spinnerCont.removeClass('d-none');
+
                 $.ajax({
                     type: 'get',
                     url : "{{route('branch.filter.area')}}",
@@ -869,8 +877,29 @@
                         $(`#minutes_work_${key}`).text(work_val);
                         $(`#hours_empty_${key}`).text(Math.round(empty_val/60,0));
                         $(`#hours_work_${key}`).text(Math.round(work_val/60,0));
-                        $(`.filter-badge-${key}.badge`).text(date);
+                        $(`.filter-badge-${key}.badge`).text(selectedText);
 
+
+                    },
+                    error: function (xhr, status, error) {
+                        let customToast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+                        customToast.fire({
+                            icon: 'error',
+                            title: error || 'Failed To Load Data'
+                        });
+                    },
+                    complete: function(xhr, status){
+                        spinnerCont.addClass('d-none');
                     }
                 })
             }
