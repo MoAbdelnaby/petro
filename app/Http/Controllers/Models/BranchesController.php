@@ -580,8 +580,8 @@ class BranchesController extends Controller
         }
 
         $invoice_chart = ReportService::invoiceComparisonReport('custom', [$current_branch->id]);
-        $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$current_branch->id]);;
-        $duration_ratio =0;
+        $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$current_branch->id]);
+        $duration_ratio = $duration_ratio[0]['duration']??0;
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
     }
@@ -786,7 +786,7 @@ class BranchesController extends Controller
 
         $invoice_chart = ReportService::invoiceComparisonReport('custom', [$current_branch->id], $start, $end);
         $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$current_branch->id], $start, $end);
-        $duration_ratio = 0;
+        $duration_ratio = $duration_ratio[0]['duration']??0;
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
 

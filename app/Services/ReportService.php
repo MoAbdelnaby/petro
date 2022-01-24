@@ -27,7 +27,7 @@ class ReportService
     {
         $charts = [];
 
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome','backout','stayingAverage'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome', 'backout', 'stayingAverage'])) {
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name('custom', $bracnh, $start, $end);
         }
@@ -49,7 +49,7 @@ class ReportService
     public static function branchReport(string $model = 'all', $bracnh, $start, $end): array
     {
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome','backout','stayingAverage'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome', 'backout', 'stayingAverage'])) {
             $fun_name = "{$model}BranchReport";
             return self::$fun_name($bracnh, $start, $end);
         }
@@ -73,7 +73,7 @@ class ReportService
         self::$topPlateBranch = DB::table('view_top_branch_plate')->pluck('branch_id')->toArray();
 
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome','backout','stayingAverage'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome', 'backout', 'stayingAverage'])) {
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name();
         }
@@ -640,8 +640,8 @@ class ReportService
 
     public static function stayingAverageComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
     {
-        $result = DB::table('carprofiles')
-            ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
+        DB::enableQueryLog();
+        $result = DB::table('carprofiles')->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
             ->where('branches.active', true)
             ->where('branches.user_id', parentID())
             ->whereNull('branches.deleted_at');
@@ -660,9 +660,10 @@ class ReportService
             $result->whereIn('branches.id', array_slice(self::$topPlaceBranch, 0, self::$branch_count));
         }
 
-        $result = $result->whereNull('welcome')
-            ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as backout'))
-            ->groupBy('branch')->get();
+        $result = $result->select(
+            'branches.name as branch',
+            DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
+        )->groupBy('branch')->get();
 
         return json_decode($result, true, 512, JSON_THROW_ON_ERROR);
     }
