@@ -1547,5 +1547,6 @@ return array(
     'car_duration_area' => 'مدة السيارة في كل منطقة',
     'backout' => 'Backout',
     'staying_car_average' => 'متوسط بقاء السيارة',
-    'Backout_reports' => 'Backout Report',
+    'Backout_reports' => 'السيارات التي لم تستلم فواتير',
+    'StayingAverage_reports'=>'متوسط مدة بقاء السيارة'
 );

@@ -99,11 +99,7 @@
                     aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
             </div>
         </div>
-        <div class="duration-ration-cont top">
-            <p><b>
-                    @lang('app.staying_car_average') : </b>
-                {{$duration_ratio??0}} {{__('app.Minutes')}}
-                </p>        </div>
+
         <div id="logout">
             <span class="close-setting" style="cursor: pointer;"><i class="fas fa-sign-out-alt"></i>{{__('app.gym.Logout')}}</span>
 
@@ -277,7 +273,7 @@
 
                             <div class="col-lg-6">
                                 <div class="row area-section slider">
-                                    {{--                                    <h1></h1>--}}
+
                                     @foreach($areatimes as $key=>$val)
                                         <div class="col">
                                             <div class="door-open">
@@ -342,6 +338,15 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="duration-ration-cont ">
+                                            <p><b>
+                                                    @lang('app.staying_car_average') : </b>
+                                                {{$duration_ratio??0}} {{__('app.Minutes')}}
+                                                </p>        </div>
+                                    </div>
                                 </div>
                                 @if(count($data))
                                     <div class="iq-card mt-4 mb-4">

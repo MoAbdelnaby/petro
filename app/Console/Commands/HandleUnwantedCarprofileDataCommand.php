@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\AreaDuration;
+use App\Models\AreaDurationDay;
 use App\Models\AreaStatus;
 use App\Models\PlaceMaintenance;
 use App\Models\UserModelBranch;
@@ -11,21 +12,21 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class AreaDurationTotalCommand extends Command
+class HandleUnwantedCarprofileDataCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'area:duration';
+    protected $signature = 'unwanted:handle';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Calcluate area duration (work and minute) by minute for all total areas';
+    protected $description = 'handle unwanted data from carprofile before 8 - 4 - 2021 ';
 
     /**
      * Create a new command instance.
@@ -49,7 +50,7 @@ class AreaDurationTotalCommand extends Command
             $start = now();
             $this->comment('Processing');
 
-            (new AreaDurationTotal())->calculate();
+            DB::table('area_duration_days')->where('date','<','2021-04-08')->delete();
 
             $this->info('Successfully update duration time in each area');
             $time = $start->floatDiffInSeconds(now());
