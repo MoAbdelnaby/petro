@@ -32,7 +32,7 @@
                         <div class="iq-card-body">
 {{--                            <div class="related-heading mb-5 ">--}}
 {{--                                <form id="download_form" action="{{route('report.download','place')}}" method="get">--}}
-{{--                                    <h2 class="d-flex justify-content-between align-items-center">--}}
+{{--                                    <h2 class="d-flex justify-content-betweenfexport align-items-center">--}}
 {{--                                        <div><img src="{{ asset('gym/img/active.svg') }}" width="20" alt=""> Reports</div>--}}
 {{--                                        <a href="javascript:void(0)" class="cursor-pointer download d-flex align-items-center" title="download pdf">--}}
 {{--                                            <i class=" fas fa-download"></i> <h3>Download</h3>--}}
@@ -42,7 +42,7 @@
 {{--                            </div>--}}
                             <div>
                                 <div class="row col-12 p-0 m-0 mb-3 menu-and-filter menu-and-filter--custom">
-                                    <div class="col">
+                                    <div class="col-8">
                                         <ul class="nav nav-tabs nav-tabs--custom" id="myTab" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link active" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'place'], request()->toArray()))}} @else {{ route('reports.index','place')}} @endif">{{ __('app.Bay_Area') }}</a>
@@ -64,7 +64,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <div class="d-flex justify-content-end position-relative filter-cont">
                                             @include('customer.reports._filter',['type' => 'place'])
                                         </div>
@@ -365,16 +365,16 @@
         /**************** End Circle Chart ***************/
 
         /************* Start Range Slider Chart ****************/
-        @if(in_array($key_name ,array_values($config['chart']['trend_line']??[])))
-            @if(count($charts))
-                $("#BranchPLaceTrendLineCon").show();
-                @if($filter_type == 'comparison')
-                    comparisonPlaceTrendLine('BranchPLaceTrendLine', @json($charts['bar']));
-                    @else
-                    branchPlaceTrendLine('BranchPLaceTrendLine', @json($charts['bar']));
-                @endif
-            @endif
-        @endif
+{{--        @if(in_array($key_name ,array_values($config['chart']['trend_line']??[])))--}}
+{{--            @if(count($charts))--}}
+{{--                $("#BranchPLaceTrendLineCon").show();--}}
+{{--                @if($filter_type == 'comparison')--}}
+{{--                    comparisonPlaceTrendLine('BranchPLaceTrendLine', @json($charts['bar']));--}}
+{{--                    @else--}}
+{{--                    branchPlaceTrendLine('BranchPLaceTrendLine', @json($charts['bar']));--}}
+{{--                @endif--}}
+{{--            @endif--}}
+{{--        @endif--}}
         /**************** End Range Slider Chart****************/
 
         /************* Start Smooth Chart ****************/

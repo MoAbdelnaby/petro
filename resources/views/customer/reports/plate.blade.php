@@ -42,7 +42,7 @@
 {{--                            </div>--}}
                             <div>
                                 <div class="row col-12 p-0 m-0 mb-3 menu-and-filter menu-and-filter--custom">
-                                    <div class="col">
+                                    <div class="col-8">
                                         <ul class="nav nav-tabs nav-tabs--custom" id="myTab" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'place'], request()->toArray()))}} @else {{ route('reports.index','place')}} @endif">{{ __('app.Bay_Area') }}</a>
@@ -64,7 +64,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <div class="d-flex justify-content-end position-relative filter-cont">
                                             @include('customer.reports._filter',['type' => 'plate'])
                                         </div>
@@ -346,16 +346,16 @@
         /*************** End Line Chart *****************/
 
         /************* TrendLineChart ****************/
-        @if(in_array($key_name ,array_values($config['chart']['trend_line']??[])))
-            @if(count($charts))
-                $("#BranchPLateTrendLineCon").show();
-                @if($filter_type == 'comparison')
-                    comparisonPlateTrendLine('BranchPLateTrendLine', @json($charts['data']??[]));
-                @else
-                    branchPlateTrendLine('BranchPLateTrendLine', @json($charts['data']??[]));
-                @endif
-            @endif
-        @endif
+{{--        @if(in_array($key_name ,array_values($config['chart']['trend_line']??[])))--}}
+{{--            @if(count($charts))--}}
+{{--                $("#BranchPLateTrendLineCon").show();--}}
+{{--                @if($filter_type == 'comparison')--}}
+{{--                    comparisonPlateTrendLine('BranchPLateTrendLine', @json($charts['data']??[]));--}}
+{{--                @else--}}
+{{--                    branchPlateTrendLine('BranchPLateTrendLine', @json($charts['data']??[]));--}}
+{{--                @endif--}}
+{{--            @endif--}}
+{{--        @endif--}}
 
         /**************** TrendLine Chart****************/
 

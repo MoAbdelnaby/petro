@@ -1,8 +1,11 @@
 <div class="filter-dropdown">
-    <a class="btn btn-info waves-effect waves-light px-4 py-2" href="{{ route('reports.index', 'place') }}">
+    <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm" href="{{ route('reports.index', 'place') }}">
         <i class="fas fa-bookmark"></i> &nbsp;{{ __('app.Default_report') }}
     </a>
-    <a class="btn-filter btn btn-primary waves-effect waves-light px-4 py-2" data-toggle="dropdown" href="#">
+{{--    <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm btn_download">--}}
+{{--        <i class="fas fa-download"></i> &nbsp;{{ __('app.Download') }}--}}
+{{--    </a>--}}
+    <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2" data-toggle="dropdown" href="#">
         <i class="fas fa-sort-alt"></i> &nbsp;{{ __('app.Filter') }}
     </a>
     <div class="filter-content" aria-labelledby="dropdownMenuButton">
@@ -78,6 +81,15 @@
             $("#select_comparison, #select_branch").select2();
 
         });
+        $(function () {
+            $(window).scroll(function () {
+                var aTop = $('.ad').height();
+                if ($(this).scrollTop() >= 500) {
+
+                }
+            });
+        });
+
         $(function () {
             $(window).scroll(function () {
                 var aTop = $('.ad').height();

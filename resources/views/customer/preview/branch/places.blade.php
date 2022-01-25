@@ -22,7 +22,7 @@
         </div>
 
         <ul class="branch nav nav-pills scroll-vertical-custom main" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div">
+            <div class="scroll-vertical-custom-div" style="display: flex; justify-content: center">
                 @foreach ($activeRegions as $reg)
                     <li class="nav-item">
                         <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}" id="pills-home-tab"
@@ -66,7 +66,7 @@
 
         </ul>
         <ul class="model nav nav-pills scroll-vertical-custom" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div">
+            <div class="scroll-vertical-custom-div" style="display: flex; justify-content: center">
                 @foreach ($modelswithbranches as $model)
                     @if($model->lt_id==1)
 
