@@ -19,7 +19,7 @@ class MapController extends Controller
             return $q->where('user_id', parentID());
         }])->withCount(['branches' => function ($q) {
             return $q->where('user_id', parentID());
-        }])->get();
+        }])->where('active',true)->get();
 
         return view('customer.map.index', ['regions' => $regions]);
     }

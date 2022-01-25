@@ -22,7 +22,7 @@
         </div>
 
         <ul class="branch nav nav-pills scroll-vertical-custom main" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div">
+            <div class="scroll-vertical-custom-div" style="display: flex; justify-content: center">
                 @foreach ($activeRegions as $reg)
                     <li class="nav-item">
                         <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}" id="pills-home-tab"
@@ -66,7 +66,7 @@
 
         </ul>
         <ul class="model nav nav-pills scroll-vertical-custom" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div">
+            <div class="scroll-vertical-custom-div" style="display: flex; justify-content: center">
                 @foreach ($modelswithbranches as $model)
                     @if($model->lt_id==1)
 
@@ -672,14 +672,13 @@
                                             <div class="card-body text-center position-relative">
                                                 <h6>{{__('app.gym.Screenshots')}}</h6>
                                                 <ul class="nav nav-tabs  md-tabs mt-1" id="myTabJust" role="tablist">
-
                                                     @foreach($active_areas as $val)
                                                         <li class="nav-item">
                                                             <a class="nav-link {{ $val === 1 ? 'active':'' }} "
                                                                href="#home-just-{{$val}}"
                                                                id="home-tab-just-{{$val}}" data-toggle="tab"
                                                                role="tab" aria-controls="home-just-{{$val}}"
-                                                               aria-selected="true">{{__('app.gym.Area')}}</a>
+                                                               aria-selected="true">{{__('app.gym.Area')}} {{$val}}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>

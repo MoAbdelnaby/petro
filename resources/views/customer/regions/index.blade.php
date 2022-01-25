@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.index')
+    @extends('layouts.dashboard.index')
 @section('page_title')
     {{__('app.customers.regions.page_title.index')}}
 @endsection

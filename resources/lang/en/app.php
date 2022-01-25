@@ -1575,5 +1575,6 @@ return [
     'backout' => 'Backout',
     'staying_car_average' => 'Car Staying Average',
     'Backout_reports' => 'Backout Report',
-    'StayingAverage_reports'=>'Staying Average Reports'
+    'StayingAverage_reports' => 'Staying Average Reports',
+    'Default_report' => 'Default Report',
 ];

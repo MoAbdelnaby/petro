@@ -45,7 +45,7 @@ class RegionController extends Controller
      */
     public function index(): Renderable
     {
-        $items = Region::orderBy('id', 'DESC')->with('parent')->paginate(13);
+        $items = Region::orderBy('id', 'DESC')->with('parent')->get();
         $trashs = Region::onlyTrashed()->where('user_id', parentID())->get();
 
         if (Auth::check()) {

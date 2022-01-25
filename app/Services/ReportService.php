@@ -107,13 +107,11 @@ class ReportService
                 $query = AreaDurationDay::whereIn('branch_id', $branch);
 
                 if ($start) {
-                    $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
-
+                    $start = ($start > date('Y-m-d')) ? date('Y-m-d') : Carbon::parse($start);
                     $query->where('date', '>=', $start);
                 }
                 if ($end) {
-                    $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
-
+                    $end = ($end > date('Y-m-d')) ? date('Y-m-d') : Carbon::parse($end);
                     $query->where('date', '<=', $end);
                 }
 

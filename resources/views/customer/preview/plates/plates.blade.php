@@ -621,7 +621,8 @@
                                             <ul class="nav nav-tabs  md-tabs mt-1" id="myTabJust" role="tablist">
                                                 @foreach($areatimes as $key=>$val)
                                                     <li class="nav-item">
-                                                        <a class="nav-link {{ $key === 1 ? 'active':'' }} " href="#home-just-{{$key}}"
+                                                        <a class="nav-link {{ $key === 1 ? 'active':'' }} "
+                                                           href="#home-just-{{$key}}"
                                                            id="home-tab-just-{{$key}}" data-toggle="tab" role="tab"
                                                            aria-controls="home-just-{{$key}}"
                                                            aria-selected="true">{{__('app.gym.Area')}} {{$key}}</a>
@@ -630,47 +631,42 @@
                                             </ul>
                                             <div class="tab-content  pt-3" id="myTabContentJust">
                                                 @foreach($areatimes as $key=>$val)
-                                                    <div class="tab-pane fade {{ $key == 1 ? 'show active': '' }} {{ $key }}" id="home-just-{{$key}}"
-                                                         role="tabpanel" aria-labelledby="home-tab-just-{{$val}}">
+                                                    <div class="tab-pane fade {{ $key == 1 ? 'show active': '' }}"
+                                                         id="home-just-{{$key}}"
+                                                         role="tabpanel" aria-labelledby="home-tab-just-{{$key}}">
                                                         <div class="screenshoot-content">
                                                             @php
                                                                 $noImage=false;
                                                             @endphp
                                                             @foreach($data as $item)
-
-                                                                @if((int)$item->area === (int)$val)
+                                                                @if((int)$item->BayCode === (int)$key)
                                                                     @php
                                                                         $noImage=true;
                                                                     @endphp
                                                                     @if($item->screenshot != null)
                                                                         <div class="screenshot-img">
-                                                                            <img src="{{$item->path_screenshot}}" height="251" alt="" data-toggle="modal" data-target="#basicExampleModal">
+                                                                            <img src="{{$item->path_screenshot}}"
+                                                                                 height="251" alt=""
+                                                                                 data-toggle="modal"
+                                                                                 data-target="#basicExampleModal">
                                                                             <div class="img-overlay">
-                                                                                <span class="mr-1">{{$item->date}}</span>
-                                                                                <span>{{$item->time}}</span>
+                                                                                <span class="mr-1">{{$item->checkInDate}}</span>
                                                                             </div>
                                                                         </div>
                                                                     @endif
-
                                                                 @endif
-
                                                             @endforeach
-
                                                             @if($noImage == false)
-                                                                <img src="/assets/images/no_image.svg" class="mt-5 no_image" alt="" />
+                                                                <img src="/assets/images/no_image.svg" class="mt-5 no_image" alt=""/>
                                                             @endif
-
                                                         </div>
                                                     </div>
                                                 @endforeach
-
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

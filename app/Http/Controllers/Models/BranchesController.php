@@ -196,7 +196,7 @@ class BranchesController extends Controller
                 ->get();
         }
 
-        $activeRegions = Region::where('active', true)->where('user_id', parentID())->get();
+        $activeRegions = Region::latest()->where('active', true)->where('user_id', parentID())->get();
 
         $query = DB::table('user_model_branches')
             ->select(['user_model_branches.*', 'branches.id as b_id', 'branches.name as bname', 'models.name as mname', 'lt_models.id as lt_id'])
