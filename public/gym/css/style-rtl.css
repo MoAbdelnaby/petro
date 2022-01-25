@@ -724,3 +724,12 @@ div.dataTables_wrapper div.dataTables_length select {
     right: 50px !important ;
     top: 72px !important;
 }
+
+.related-heading .duration p:first-of-type {
+    margin-right: 0 !important;
+    margin-left: 1rem ;
+}
+.related-heading .duration i {
+    margin-right: 0 !important;
+    margin-left: 4px;
+}

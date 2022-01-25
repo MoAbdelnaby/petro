@@ -740,4 +740,20 @@ div.dataTables_wrapper div.dataTables_filter {
     color: #fff;
 }
 
+.menu-and-filter--custom.menu-and-filter .nav-tabs .nav-link{
+    border-bottom: none;
+
+}
+.menu-and-filter--custom.menu-and-filter .nav-tabs .nav-link.active,.menu-and-filter--custom.menu-and-filter .nav-tabs .nav-link:hover  {
+    border-bottom: 2px solid #0984cf !important;
+    height: 55px;
+}
+.menu-and-filter--custom  .filter-cont{
+    margin-bottom: 0 ;
+    height: 100%;
+    align-items: center;
+}
+.menu-and-filter--custom .nav-tabs .nav-item .nav-link{
+    height: 100%;
+}
 /* ****** */
