@@ -30,7 +30,7 @@
                     <div class="iq-card">
                         <div class="iq-card-body">
                             <div>
-                                <div class="row col-12 p-0 m-0 mb-3 menu-and-filter">
+                                <div class="row col-12 p-0 m-0 mb-3 menu-and-filter menu-and-filter--custom">
                                     <div class="col">
                                         <ul class="nav nav-tabs nav-tabs--custom" id="myTab" role="tablist">
                                             <li class="nav-item">
@@ -56,8 +56,8 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col">
-                                        <div class="d-flex justify-content-end position-relative mt-2">
+                                    <div class="col-3">
+                                        <div class="d-flex justify-content-end position-relative filter-cont">
                                             @include('customer.reports._filter',['type' => 'invoice'])
                                         </div>
                                     </div>

@@ -1282,20 +1282,25 @@ div.dataTables_wrapper div.dataTables_filter input {
 .related-heading--custom h3 {
     font-size: 18px;
     font-weight: 500;
+    min-width: fit-content;
 }
 .related-heading--custom .branches-cont {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 .related-heading--custom .branches-cont ul {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 0;
+    padding-left: 0;
 }
+
 .related-heading--custom .branches-cont ul li {
-    margin-right: 2rem;
+    margin-left: 2rem;
     list-style: disc inside;
+    line-height: 2.2;
 }
+
 
 .related-heading--custom h2 {
     text-transform: capitalize;
@@ -1314,4 +1319,21 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 .home_page .iq-card .related-heading{
     padding: .5rem 1rem;
+}
+.menu-and-filter--custom{
+    border-bottom: 2px solid #f2edff;
+}
+.menu-and-filter--custom .nav-tabs{
+    margin-bottom: 0;
+    border-bottom: none;
+    height: 100%;
+}
+.menu-and-filter--custom .nav-tabs .nav-item{
+    margin-bottom: -2px;
+}
+.menu-and-filter--custom .nav-tabs .nav-item .nav-link{
+    height: 100%;
+}
+.menu-and-filter--custom  .filter-cont{
+    margin-bottom: 8px;
 }
