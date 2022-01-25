@@ -1167,6 +1167,10 @@
             $('.area-section.slider').on('afterChange', function (event, slick) {
                 cr && (slickCarouselCardEvents(filterDataFn), cr = false);
             })
+            $('.area-section.slider').on('breakpoint', function(event, slick){
+                slickCarouselCardEvents(filterDataFn);
+                cr = false;
+            })
         });
     </script>
 @endsection

@@ -1258,7 +1258,11 @@ div.dataTables_wrapper div.dataTables_filter input {
     padding: 0.5rem;
     padding-right: 0;
 }
-.related-heading .duration p:first-child {
+.related-heading .duration i {
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+.related-heading .duration p:first-of-type {
     margin-right: 1rem;
 }
 .related-heading .duration p {
@@ -1275,6 +1279,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     box-shadow: 0px 0px 11px -8px rgb(45 69 95);
     border-radius: 8px;
     border-bottom: 0;
+
 }
 .related-heading--custom .duration-cont {
     justify-content: flex-end;
@@ -1330,6 +1335,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 .menu-and-filter--custom .nav-tabs .nav-item{
     margin-bottom: -2px;
+
 }
 .menu-and-filter--custom .nav-tabs .nav-item .nav-link{
     height: 100%;
