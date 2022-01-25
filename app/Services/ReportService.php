@@ -60,7 +60,7 @@ class ReportService
     }
 
     /**
-     * Get Default Report Data For Top 5 Or N Branch To comparison between them depend non modeltype
+     * Get Default Report Data For Top 5 Or N Branch To comparison between them depend on non modeltype
      *
      * @param string $model
      * @param int|null $count
