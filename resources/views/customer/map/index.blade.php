@@ -194,11 +194,7 @@
                                             <div class="tab-pane fade " id="{{ $tab_id }}" role="tabpanel" aria-labelledby="{{ $tab_id }}-tab">
                                                 <div class=" reg-img form-group" style="height: 530px;width: 700px;margin:0 auto;position: relative">
                                                     <img src="{{ asset("storage")."/".$region->full_photo }}" class="regionImage" style="display: block" >
-                                                    @php $branches  = $region->branches; @endphp
-                                                    @if($region->parent_id != null)
-                                                        @php $branches = optional($region->parent)->branches??''; @endphp
-                                                    @endif
-                                                    @foreach($branches as $branch)
+                                                    @foreach($region->branches as $branch)
                                                         <div class="markMap"  style="position: absolute;left:{{$branch->left}}% ; top: {{$branch->top}}%;">
                                                             <a href="{{ route('customerBranches.show',[$branch->id]) }}" target="_blank">
                                                                 <img src="{{ asset('images/mark_blue.png')}}" width="20" class="mark_black" rel="{{ $tab_id }}_{{ str_replace(' ','_',$branch->name) }}" title="{{ $branch->name }}" style="margin-left: 1px"  alt="">

@@ -559,9 +559,7 @@
                                             <ul class="nav nav-tabs  md-tabs mt-1" id="myTabJust"
                                                 role="tablist">
                                                 @foreach($active_areas as $val)
-
                                                     @if((int)$val === 1)
-
                                                         <li class="nav-item">
                                                             <a class="nav-link active" href="#home-just-{{$val}}"
                                                                id="home-tab-just-{{$val}}" data-toggle="tab" role="tab"
@@ -569,18 +567,15 @@
                                                                aria-selected="true">{{__('app.gym.Area')}} {{$val}}</a>
                                                         </li>
                                                     @else
-
                                                         <li class="nav-item">
                                                             <a class="nav-link" href="#home-just-{{$val}}"
                                                                id="home-tab-just-{{$val}}" data-toggle="tab" role="tab"
                                                                aria-controls="home-just-{{$val}}"
                                                                aria-selected="false">{{__('app.gym.Area')}} {{$val}}</a>
                                                         </li>
-
                                                     @endif
                                                 @endforeach
                                             </ul>
-{{--                                            @dd($active_areas)--}}
                                             <div class="tab-content  pt-3" id="myTabContentJust">
                                                 @foreach($active_areas as $key=>$val)
                                                         <div class="tab-pane fade {{ $key == 0 ? 'show active': '' }}" id="home-just-{{$val}}"
@@ -590,7 +585,6 @@
                                                                     $noImage=false;
                                                                  @endphp
                                                                 @foreach($data as $item)
-
                                                                         @if((int)$item->area === (int)$val)
                                                                         @php
                                                                             $noImage=true;

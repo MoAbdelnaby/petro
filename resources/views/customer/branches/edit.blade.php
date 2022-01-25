@@ -142,14 +142,9 @@
                                                 <label for="code">{{__('app.customers.branches.table.region')}}
                                                     *</label>
                                                 <select class="form-control branch-reg" required name='region_id'>
-                                                    <option value="">select</option>
+                                                    <option value="">Select</option>
                                                     @foreach ($regions as $reg)
-                                                        @php $branches  = $reg->branches; @endphp
-                                                        @if($reg->parent_id != null)
-                                                            @php $branches = optional($reg->parent)->branches??''; @endphp
-                                                        @endif
-
-                                                        <option data-reg="{{$branches}}"
+                                                        <option data-reg="{{$reg->branches}}"
                                                                 data-img="{{ $reg->full_photo?? '' }}"
                                                                 value="{{ $reg->id }}" {{ $item->region_id == $reg->id ? 'selected' : '' }}>{{ $reg->name}}</option>
                                                     @endforeach

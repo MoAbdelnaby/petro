@@ -1,4 +1,7 @@
 <div class="filter-dropdown">
+    <a class="btn btn-info waves-effect waves-light px-4 py-2" href="{{ route('reports.index', 'place') }}">
+        <i class="fas fa-bookmark"></i> &nbsp;{{ __('app.Default_report') }}
+    </a>
     <a class="btn-filter btn btn-primary waves-effect waves-light px-4 py-2" data-toggle="dropdown" href="#">
         <i class="fas fa-sort-alt"></i> &nbsp;{{ __('app.Filter') }}
     </a>
@@ -50,8 +53,7 @@
                 </div>
             </div>
             <div class="text-center mt-4">
-                <button type="submit"
-                        class="btn btn-secondary waves-effect waves-light px-4 py-2">{{ __('app.Filter') }}</button>
+                <button type="submit" class="btn btn-secondary waves-effect waves-light px-4 py-2">{{ __('app.Filter') }}</button>
             </div>
         </form>
     </div>

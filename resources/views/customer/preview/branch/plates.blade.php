@@ -786,42 +786,32 @@
                                                                 $noImage=false;
                                                             @endphp
                                                             @foreach($data as $item)
-
-                                                                @if((int)$item->area === (int)$val)
+                                                                @if((int)$item->BayCode === (int)$key)
                                                                     @php
                                                                         $noImage=true;
                                                                     @endphp
                                                                     @if($item->screenshot != null)
                                                                         <div class="screenshot-img">
                                                                             <img src="{{$item->path_screenshot}}"
-                                                                                 height="251" alt="" data-toggle="modal"
-                                                                                 data-target="#basicExampleModal2">
+                                                                                 height="251" alt=""
+                                                                                 data-toggle="modal"
+                                                                                 data-target="#basicExampleModal">
                                                                             <div class="img-overlay">
-                                                                                <span
-                                                                                    class="mr-1">{{$item->date}}</span>
-                                                                                <span>{{$item->time}}</span>
+                                                                                <span class="mr-1">{{$item->checkInDate}}</span>
                                                                             </div>
                                                                         </div>
                                                                     @endif
-
                                                                 @endif
-
                                                             @endforeach
-
                                                             @if($noImage == false)
-                                                                <img src="/assets/images/no_image.svg"
-                                                                     class="mt-5 no_image" alt=""/>
+                                                                <img src="/assets/images/no_image.svg" class="mt-5 no_image" alt=""/>
                                                             @endif
-
                                                         </div>
                                                     </div>
                                                 @endforeach
-
                                             </div>
-
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
 

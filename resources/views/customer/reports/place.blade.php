@@ -243,26 +243,26 @@
 
                                         <div class="p-4">
                                             <div class="custom-table mt-5">
-                                                <table class="table dataTable text-center {{handleTableConfig($config['table'],'report')}}"
-                                                       id="place_table" width="100%">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="th-sm">{{ucfirst($filter_key)}}
-                                                        </th>
-                                                        <th class="th-sm">{{ __('app.Duration_Work') }}</th>
-                                                        <th class="th-sm">{{ __('app.Duration_Empty') }}</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($charts['bar'] as $place)
-                                                        <tr style="cursor: pointer;" class="record">
-                                                            <td>{{$place[$filter_key]}}</td>
-                                                            <td class="open">{{$place['work']}} {{ __('app.Hours') }}</td>
-                                                            <td class="open warning">{{$place['empty']}} {{ __('app.Hours') }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
+{{--                                                <table class="table dataTable text-center {{handleTableConfig($config['table'],'report')}}"--}}
+{{--                                                       id="place_table" width="100%">--}}
+{{--                                                    <thead>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <th class="th-sm">{{ucfirst($filter_key)}}--}}
+{{--                                                        </th>--}}
+{{--                                                        <th class="th-sm">{{ __('app.Duration_Work') }}</th>--}}
+{{--                                                        <th class="th-sm">{{ __('app.Duration_Empty') }}</th>--}}
+{{--                                                    </tr>--}}
+{{--                                                    </thead>--}}
+{{--                                                    <tbody>--}}
+{{--                                                    @foreach($charts['bar'] as $place)--}}
+{{--                                                        <tr style="cursor: pointer;" class="record">--}}
+{{--                                                            <td>{{$place[$filter_key]}}</td>--}}
+{{--                                                            <td class="open">{{$place['work']}} {{ __('app.Hours') }}</td>--}}
+{{--                                                            <td class="open warning">{{$place['empty']}} {{ __('app.Hours') }}</td>--}}
+{{--                                                        </tr>--}}
+{{--                                                    @endforeach--}}
+{{--                                                    </tbody>--}}
+{{--                                                </table>--}}
                                             </div>
                                         </div>
                                         @else

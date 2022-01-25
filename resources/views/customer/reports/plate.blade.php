@@ -226,26 +226,26 @@
                                             </div>
 
                                             <div class="p-4">
-                                                <div class="custom-table mt-5"  >
-                                                    <table class="table dataTable text-center {{handleTableConfig($config['table'],'report')}}" id="Plate_table" width="100%">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="th-sm">{{ucfirst($filter_key)}}</th>
-                                                            <th class="th-sm">{{ __('app.Car_Count') }}</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @isset($charts['data'] )
-                                                            @foreach($charts['data'] as $Plate)
-                                                                <tr style="cursor: pointer;" class="record">
-                                                                    <td class="open">{{$Plate[$filter_key]}}</td>
-                                                                    <td class="open warning ">{{$Plate['count']}} {{ __('app.Times') }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+{{--                                                <div class="custom-table mt-5"  >--}}
+{{--                                                    <table class="table dataTable text-center {{handleTableConfig($config['table'],'report')}}" id="Plate_table" width="100%">--}}
+{{--                                                        <thead>--}}
+{{--                                                        <tr>--}}
+{{--                                                            <th class="th-sm">{{ucfirst($filter_key)}}</th>--}}
+{{--                                                            <th class="th-sm">{{ __('app.Car_Count') }}</th>--}}
+{{--                                                        </tr>--}}
+{{--                                                        </thead>--}}
+{{--                                                        <tbody>--}}
+{{--                                                        @isset($charts['data'] )--}}
+{{--                                                            @foreach($charts['data'] as $Plate)--}}
+{{--                                                                <tr style="cursor: pointer;" class="record">--}}
+{{--                                                                    <td class="open">{{$Plate[$filter_key]}}</td>--}}
+{{--                                                                    <td class="open warning ">{{$Plate['count']}} {{ __('app.Times') }}</td>--}}
+{{--                                                                </tr>--}}
+{{--                                                            @endforeach--}}
+{{--                                                        @endif--}}
+{{--                                                        </tbody>--}}
+{{--                                                    </table>--}}
+{{--                                                </div>--}}
                                             </div>
                                         @else
                                             <div class="col-12 text-center">
