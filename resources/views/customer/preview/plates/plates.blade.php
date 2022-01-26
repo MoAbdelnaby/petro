@@ -51,8 +51,8 @@
                                             style="width: 170px"></a>
             <span><img src="{{resolveDark()}}/img/list.png" alt=""></span>
         </div>
-        <ul class="branch nav nav-pills scroll-vertical-custom search_branch-ul top" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div" id='li-branches'>
+        <ul class="branch branch-2nd nav nav-pills scroll-horizontal search_branch-ul top" id="pills-tab" role="tablist">
+            <div class="scroll-horizontal--elm-cont" id='li-branches'>
                 @foreach ($final_branches as $branch)
                     <li class="nav-item" data-bName='{{$branch->name}}'>
                         <a class="nav-link {{$branch->name==$usermodelbranch->branch->name ? 'active':''}}"
@@ -100,8 +100,10 @@
             </div>
         </div>
 
-        <div id="logout">
-            <span class="close-setting" style="cursor: pointer;"><i class="fas fa-sign-out-alt"></i>{{__('app.gym.Logout')}}</span>
+        <div id="logout" class="top">
+            <span class="close-setting" style="cursor: pointer;"><i class="fas fa-sign-out-alt"></i>
+{{--                {{__('app.gym.Logout')}}--}}
+            </span>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf

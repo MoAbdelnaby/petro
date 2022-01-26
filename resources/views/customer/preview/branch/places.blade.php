@@ -21,50 +21,48 @@
             </span>
         </div>
 
-        <ul class="branch nav nav-pills scroll-vertical-custom main" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div" style="display: flex; justify-content: center">
-                @foreach ($activeRegions as $reg)
-                    <li class="nav-item">
-                        <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}" id="pills-home-tab"
+        <ul class="branch nav nav-pills scroll-horizontal main mb-1" id="pills-tab" role="tablist">
+           <div class="scroll-horizontal--elm-cont">
+               @foreach ($activeRegions as $reg)
+                   <li class="nav-item" >
+                       <a  class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}" id="pills-home-tab"
                            href="{{route('regionmodelpreview.index',[$reg->id])}}" aria-controls="pills-home"
                            aria-selected="true">
-                            <span class="ml-1"> {{$reg->name}}</span>
-                        </a>
-                    </li>
-                @endforeach
-            </div>
+                           <span class="ml-1"> {{$reg->name}}</span>
+                       </a>
+                   </li>
+               @endforeach
+           </div>
 
         </ul>
         <!-- //////////// -->
 
         {{--            here start --}}
 
-        <ul class="branch nav nav-pills scroll-vertical-custom search_branch-ul" id="pills-tab" role="tablist">
 
-                <div class="scroll-vertical-custom-div " id='li-branches'>
+            <ul class="branch branch-2nd nav nav-pills scroll-horizontal search_branch-ul" id="pills-tab" role="tablist">
+               <div class="scroll-horizontal--elm-cont" id="li-branches">
+                   @foreach ($activebranches as $branch)
+                       <li class="nav-item" data-bName='{{$branch->bname}}'>
+                           <a class="nav-link {{$branch->b_id==$branch_id ? 'active':''}}" id="pills-home-tab"
+                              href="{{route('branchmodelpreview.index',[$branch->b_id])}}"
+                              aria-controls="pills-home"
+                              aria-selected="true">
+                               <img
+                                   src="{{$branch->b_id==$branch_id ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
+                                   alt="">
+                               <span class="ml-1 b-name"> {{$branch->bname}}</span></a>
+                       </li>
+                   @endforeach
+                   <li class="nav-item no_data hide hidden">
+                       <a href="javascript:void(0);" class="nav-link">
+                           {{__('app.no_data')}}
+                       </a>
+                   </li>
+               </div>
 
+            </ul>
 
-                    @foreach ($activebranches as $branch)
-                        <li class="nav-item" data-bName='{{$branch->bname}}'>
-                            <a class="nav-link {{$branch->b_id==$branch_id ? 'active':''}}" id="pills-home-tab"
-                               href="{{route('branchmodelpreview.index',[$branch->b_id])}}"
-                               aria-controls="pills-home"
-                               aria-selected="true">
-                                <img
-                                    src="{{$branch->b_id==$branch_id ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
-                                    alt="">
-                                <span class="ml-1 b-name"> {{$branch->bname}}</span></a>
-                        </li>
-                    @endforeach
-                        <li class="nav-item no_data hide">
-                            <a href="javascript:void(0);" class="nav-link">
-                                 {{__('app.no_data')}}
-                            </a>
-                        </li>
-
-                </div>
-
-        </ul>
         <ul class="model nav nav-pills scroll-vertical-custom" id="pills-tab" role="tablist">
             <div class="scroll-vertical-custom-div" style="display: flex; justify-content: center">
                 @foreach ($modelswithbranches as $model)
@@ -176,7 +174,7 @@
 
         <div id="back">
             <div class="backdash">
-                <a href="{{route('home')}}"> <i class="fas fa-home"></i></a>
+                <a href="{{route('home')}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Home"> <i class="fas fa-home"></i></a>
             </div>
         </div>
          <div class="search-cont dropright">
@@ -190,9 +188,9 @@
 {{--            <p><b>@lang('app.staying_car_average') : </b> 15 minute</p>--}}
 {{--        </div>--}}
         <div id="logout">
-             <span class="close-setting" style="cursor: pointer;">
+             <span class="close-setting" style="cursor: pointer;" data-container="body" data-trigger="hover" data-toggle="popover" data-placement="top" data-content="Logout" data-original-title="" title="">
                  <i class="fas fa-sign-out-alt"></i>
-                 {{__('app.gym.Logout')}}
+{{--                 {{__('app.gym.Logout')}}--}}
              </span>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf

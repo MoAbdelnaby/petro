@@ -649,18 +649,14 @@ table.table td {
 #logout {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 40px;
 }
 #back {
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 40px;
 }
-.backdash {
-    background-color: #cd7f09;
-    padding: 5px 14px;
-    border-radius: 10px;
-}
+
 .backdash a {
     color: #ffffff;
     cursor: pointer;
@@ -2111,7 +2107,7 @@ section.cam1 {
     width: auto;
     display: inline-block;
     padding: 0px;
-    margin: 0px;
+    margin: 0 .3rem;
     float: inherit;
 }
 .scroll-vertical-custom::-webkit-scrollbar {
@@ -2208,7 +2204,7 @@ table.table td {
     height: 35px;
 }
 
-.backdash {
+.backdash,.close-setting  {
     background-color: #192734;
     padding: 0px 0px;
     border-radius: 0px;
@@ -2483,8 +2479,8 @@ select.form-control:focus {
 }
 .search-cont {
     position: absolute;
-    left: 10px;
-    top: 60px;
+    left: 40px;
+    top: 65px;
 }
 .search-cont.top {
     top: 10px;
@@ -2566,4 +2562,27 @@ select.form-control:focus {
 }
 .setting-card-cont .custom-dropdown{
     box-shadow: none !important;
+}
+.seacrh-open {
+    margin-left: 350px;
+}
+.seacrh-open.top{
+    margin-left: 395px;
+}
+
+
+.scroll-horizontal::-webkit-scrollbar-track {
+    background: #03294f;
+}
+.scroll-horizontal::-webkit-scrollbar-track:hover{
+    background-color: #03294f;
+}
+
+/* Handle */
+.scroll-horizontal::-webkit-scrollbar-thumb {
+    background: #d3d3d3;
+    border-radius: 3px;
+}
+.scroll-horizontal::-webkit-scrollbar-thumb:hover {
+    background: #189dd7;
 }

@@ -19,12 +19,12 @@
             <span><img src="{{resolveDark()}}/img/list.png" alt=""></span>
         </div>
         <!-- //////////// -->
-        <ul class="branch nav nav-pills scroll-vertical-custom search_branch-ul top" id="pills-tab" role="tablist">
+        <ul class="branch branch-2nd nav nav-pills scroll-horizontal search_branch-ul top " id="pills-tab" role="tablist">
             {{--          <li class="nav-item" style="width: 445px;">--}}
             {{--                <a class="nav-link active" id="pills-home-tab"  href="{{route('places.index',[$usermodelbranchid])}}" aria-controls="pills-home" aria-selected="true">--}}
             {{--                    <img src="{{resolveDark()}}/img/icon-location.svg" alt="">--}}
             {{--               <span class="ml-1"> {{$usermodelbranch->branch->name}}</span></a>--}}
-            <div class="scroll-vertical-custom-div" id='li-branches'>
+            <div class="scroll-horizontal--elm-cont" id='li-branches'>
                 @foreach ($final_branches as $branch)
                     @php
                         $branch = (object)$branch;
@@ -73,10 +73,10 @@
 {{--        <div class="duration-ration-cont top">--}}
 {{--            <p><b>@lang('app.staying_car_average') : </b> 15 minute</p>--}}
 {{--        </div>--}}
-        <div id="logout">
+        <div id="logout" class="top">
             <span class="close-setting" style="cursor: pointer;">
                 <i class="fas fa-sign-out-alt"></i>
-                {{__('app.gym.Logout')}}
+{{--                {{__('app.gym.Logout')}}--}}
             </span>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

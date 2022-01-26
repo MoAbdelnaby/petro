@@ -22,6 +22,13 @@ function comparisonStayingBar(id, data) {
         xAxis.renderer.cellStartLocation = 0.1;
         xAxis.renderer.cellEndLocation = 0.9;
         xAxis.renderer.grid.template.location = 0;
+        xAxis.events.on("sizechanged", function(ev) {
+            var axis = ev.target;
+            var cellWidth = axis.pixelWidth / (axis.endIndex - axis.startIndex);
+            axis.renderer.labels.template.maxWidth = cellWidth;
+        });
+        var label = xAxis.renderer.labels.template;
+        label.wrap = true;
 
         var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
         yAxis.title.text = "Staying Average";
@@ -122,6 +129,14 @@ function comparisonStayingLine(divId, data) {
 
         var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
         categoryAxis.dataFields.category = "branch";
+        categoryAxis.events.on("sizechanged", function(ev) {
+            var axis = ev.target;
+            var cellWidth = axis.pixelWidth / (axis.endIndex - axis.startIndex);
+            axis.renderer.labels.template.maxWidth = cellWidth;
+        });
+        var label = categoryAxis.renderer.labels.template;
+        label.wrap = true;
+
 
         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
         valueAxis.title.text = "Staying Average";
