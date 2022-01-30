@@ -21,6 +21,7 @@
             <td>{{$item['plate_ar']}}</td>
             <td>{{$item['plate_en']}}</td>
             <td>{{isset($item['invoice']) ? 'Cstomer' : 'Backout'}}</td>
+            <td>{{ str_replace('before','',\Carbon\Carbon::parse($item['checkInDate'])->diffForHumans($item['checkOutDate'])) }}</td>
             <td>{{$item['plate_status']}}</td>
             <td>{{isset($item['welcome']) ? 'Sent' : 'Failed'}}</td>
         </tr>
