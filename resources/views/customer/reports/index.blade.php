@@ -29,7 +29,7 @@
                         <div class="iq-card-body" style="padding: 25px 20px !important;">
                             <div>
                                 <div class="row col-12 p-0 m-0 mb-3 menu-and-filter menu-and-filter--custom">
-                                    <div class="col-8">
+                                    <div class="col-9">
                                         <ul class="nav nav-tabs nav-tabs--custom" id="myTab" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link active" href="{{ route('reports.index')}}">{{ __('app.most_statistics') }}</a>
@@ -54,7 +54,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <div class="d-flex justify-content-end position-relative filter-cont">
 {{--                                            @include('customer.reports.extra._filter',['type' => 'index'])--}}
                                         </div>
