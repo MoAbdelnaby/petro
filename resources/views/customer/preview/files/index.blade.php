@@ -88,8 +88,7 @@
                                                                 @if(auth()->user()->type=="customer")
                                                                     @if($item->status)
                                                                         <a class="btn btn-sm btn-primary"
-                                                                           href="http://104.211.179.36/files/{{$item->id}}/download">{{__('app.customers.branches.download')}}</a>
-{{--                                                                        href="{{ route('branchmodelpreview.files.download',[$item->id]) }}">{{__('app.customers.branches.download')}}</a>--}}
+                                                                           href="{{ route('branchmodelpreview.files.download',[$item->id]) }}">{{__('app.customers.branches.download')}}</a>
                                                                     @endif
                                                                     <a class="btn btn-sm btn-danger"
                                                                        data-toggle="tooltip" data-placement="top"
