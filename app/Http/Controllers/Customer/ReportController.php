@@ -7,211 +7,119 @@ use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\Region;
 use App\Services\ConfigService;
-use App\Services\ReportService;
-use App\User;
+use App\Services\Report\ReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
 {
-    public function index($type)
-    {
-        try {
-            // Get Top {5} Branch Report By Model Type
-            $charts = ReportService::defaultcomparison($type ?? 'place');
-            $config = ConfigService::get($type);
-            $regioncount = Region::where('active', true)->where('user_id', parentID())->count();
-            $userscount = User::where('parent_id', parentID())->count();
-            $branches = Branch::where('active', true)->where('user_id', parentID())->pluck('name', 'id')->toArray();
-            $branches_report = Branch::where('active', true)->where('user_id', parentID())->whereIn('id', DB::table('view_top_branch_place')->pluck('branch_id')->toArray())->take(6)->pluck('name');
+    public array $reportType = [];
 
-            if ($type == 'invoice') {
-                $branches_check = $this->handleReportCompare(['invoice', 'no_invoice']);
-            } elseif ($type == 'welcome') {
-                $branches_check = $this->handleReportCompare(['welcome', 'no_welcome']);
+    public function __construct()
+    {
+        $this->reportType = ['place', 'plate', 'invoice', 'welcome', 'backout', 'stayingAverage'];
+    }
+
+    public function index(Request $request)
+    {
+        return view("customer.reports.index", [
+            'statistics' => ReportService::statistics($request->start, $request->end)
+        ]);
+    }
+
+    public function show($type, Request $request)
+    {
+        if (!in_array($type, $this->reportType)) abort(404);
+
+        try {
+            $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
+            $regions = Region::active()->primary()->child()->select('id', 'name')->get();
+            $cities = Region::active()->primary()->parent()->select('id', 'name')->get();
+
+            $filter = (empty($request->except('_token')) || is_null($request->show_by))
+                ? $this->getTopBranch($type, $request->all())
+                : $request->except('_token');
+
+            $result = ReportService::handle($type, $filter);
+
+            if ($result['type'] == 'region' || $result['type'] == 'city') {
+                $list_report = Region::query();
+            } else {
+                $list_report = Branch::query();
             }
 
-            return view("customer.reports.{$type}", [
-                'regioncount' => $regioncount,
-                'branchcount' => count($branches),
+            $list_report = $list_report->active()->primary()->take(6)
+                ->whereIn('id', \Arr::wrap($result['list']))
+                ->pluck('name');
+
+            return view("customer.reports.type.$type", [
                 'branches_check' => $branches_check ?? [],
-                'userscount' => $userscount,
                 'branches' => $branches,
-                'branches_report' => $branches_report,
-                'modelscount' => 2,
-                'charts' => $charts,
-                'config' => $config,
+                'regions' => $regions,
+                'cities' => $cities,
+                'list_report' => $list_report ?? [],
+                'report' => $result,
+                'config' => ConfigService::get($type),
                 'filter_type' => 'comparison',
-                'filter_key' => 'branch',
             ]);
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'UnKnown Error');
+            return unKnownError($e->getMessage());
         }
     }
 
-    public function filter($model_type, Request $request)
+    public function getTopBranch($type, $filter): array
     {
-        try {
-            $valdaitor = Validator::make($request->all(), [
-                'filter_type' => 'required|string|in:comparison,branch',
-                'branch_comparison' => 'required_if:filter_type,comparison|array',
-                'branch_data' => 'required_if:filter_type,branch',
-                'start_date' => 'nullable',
-                'end_date' => 'nullable',
-            ]);
+        $branches = DB::table("view_top_branch_place")->pluck('branch_id')->toArray();
 
-            if ($valdaitor->errors()->count()) {
-                return redirect()->back()->with('danger', $valdaitor->errors()->first());
-            }
-
-            $filter_type = $request->filter_type;
-            $filter_key = ($filter_type != 'comparison') ? 'area' : 'branch';
-            $branch = ($filter_type != 'comparison') ? $request->branch_data : $request->branch_comparison;
-
-            if ($model_type == 'invoice') {
-                $filter_type = 'comparison';
-                $filter_key = 'branch';
-                $branch = \Arr::wrap($branch);
-                $branches_check = $this->handleReportCompare(['invoice', 'no_invoice']);
-            } elseif ($model_type == 'welcome') {
-                $filter_type = 'comparison';
-                $filter_key = 'branch';
-                $branch = \Arr::wrap($branch);
-                $branches_check = $this->handleReportCompare(['welcome', 'no_welcome']);
-            } elseif ($model_type == 'backout' || $model_type == 'stayingAverage') {
-                $filter_type = 'comparison';
-                $filter_key = 'branch';
-                $branch = \Arr::wrap($branch);
-            }
-
-            $func_name = $filter_type . 'Report';
-            $charts = ReportService::$func_name($model_type, $branch, $request->start_date, $request->end_date);
-            $config = ConfigService::get($model_type);
-
-            //Count in statistics
-            $regioncount = Region::where('active', true)->where('user_id', parentID())->count();
-            $userscount = User::where('parent_id', parentID())->count();
-            $branches = Branch::where('active', true)->where('user_id', parentID())->pluck('name', 'id')->toArray();
-            $branches_report = Branch::where('active', true)->where('user_id', parentID())->whereIn('id', \Arr::wrap($branch))->take(6)->pluck('name');
-
-            return view("customer.reports.{$model_type}", [
-                'regioncount' => $regioncount,
-                'branchcount' => count($branches),
-                'userscount' => $userscount,
-                'branches' => $branches,
-                'branches_check' => $branches_check ?? [],
-                'branches_report' => $branches_report,
-                'modelscount' => 2,
-                'charts' => $charts,
-                'config' => $config,
-                'filter_type' => $filter_type,
-                'filter_key' => $filter_key,
-            ]);
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'UnKnown Error');
-        }
-    }
-
-    public function handleReportCompare($items = []): array
-    {
-        $branches_check = [];
-
-        foreach ($items as $status) {
-            $branches_check[$status] = DB::table('carprofiles')
-                ->select('branches.id')
-                ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
-                ->where('branches.user_id', parentID())
-                ->where('branches.active', true)
-                ->whereNull('branches.deleted_at')
-                ->distinct();
-
-            if ($status === 'no_invoice') {
-                $branches_check[$status] = $branches_check[$status]->whereNull('invoice')->get()->toArray();
-            } elseif ($status == 'invoice') {
-                $branches_check[$status] = $branches_check[$status]->whereNotNull('invoice')->get()->toArray();
-            } elseif ($status == 'no_welcome') {
-                $branches_check[$status] = $branches_check[$status]->whereNotNull('welcome')->get()->toArray();
-            } elseif ($status == 'welcome') {
-                $branches_check[$status] = $branches_check[$status]->whereNotNull('welcome')->get()->toArray();
-            }
-        }
-        if (in_array('invoice', $items) || in_array('no_invoice', $items)) {
-            $invoices = array_column($branches_check['invoice'], 'id');
-            $no_invoices = array_column($branches_check['no_invoice'], 'id');
-            $no_invoices = array_values(array_diff($no_invoices, $invoices));
-            $branches_check['invoice'] = count($invoices);
-            $branches_check['no_invoice'] = count($no_invoices);
-
-        } elseif (in_array('welcome', $items) || in_array('no_welcome', $items)) {
-
-            $welcomes = array_column($branches_check['welcome'], 'id');
-            $no_welcomes = array_column($branches_check['no_welcome'], 'id');
-            $no_welcomes = array_values(array_diff($no_welcomes, $welcomes));
-            $branches_check['welcome'] = count($welcomes);
-            $branches_check['no_welcome'] = count($no_welcomes);
-        }
-
-        return $branches_check;
+        return [
+            'start' => $filter['start'] ?? "2022-01-01",
+            'end' => $filter['end'] ?? null,
+            'show_by' => 'branch',
+            'branch_type' => 'comparison',
+            'branch_comparison' => $branches,
+        ];
     }
 
     public function download($type, Request $request)
     {
+        $filter = (empty($request->except('_token')) || is_null($request->show_by))
+            ? $this->getTopBranch($type, $request->all())
+            : $request->except('_token');
+        $data = ReportService::handle($type, $filter);
 
-        $filter_type = $request->filter_type;
-
-        if ($filter_type != null) {
-            $branch = ($filter_type != 'comparison') ? $request->branch_data : $request->branch_comparison;
-
-            if ($type == 'invoice') {
-                $filter_type = 'comparison';
-                $branch = \Arr::wrap($branch);
-            } elseif ($type == 'welcome') {
-                $filter_type = 'comparison';
-                $branch = \Arr::wrap($branch);
-            } elseif ($type == 'backout' || $type == 'stayingAverage') {
-                $filter_type = 'comparison';
-                $branch = \Arr::wrap($branch);
-            }
-
-            $func_name = $filter_type . 'Report';
-            $charts = ReportService::$func_name($type, $branch, $request->start_date, $request->end_date);
-
-        } else {
-            $charts = ReportService::defaultcomparison($type ?? 'place');
-        }
-
-        if ($type == 'place') {
-            $result = $charts['bar'];
-        } elseif ($type == 'plate') {
-            $result = $charts['data'];
-        } else {
-            $result = $charts;
-        }
-
-        $start = $request->start_date ?? 'First_Date';
+        $result = $data['charts']['bar'];
+        $start = $request->start ?? '2022-01-01';
         $end = $request->end_date ?? now()->toDateString();
         $name = "{$type}_excel_file_{$start}_to_{$end}.xls";
 
         $path = "reports/$type/files";
         $file_path = $path . '/' . $name;
         if (!is_dir(storage_path("/app/public/" . $path))) {
-            \File::makeDirectory(storage_path("/app/public/" . $path), 0777, true, true);
+            \File::makeDirectory(storage_path("/app/public/" . $path), 777, true, true);
         }
 
         $check = \Excel::store(new ExportFiles($result), 'public/' . $file_path);
 
         if ($check) {
             $file = public_path() . "/storage/$file_path";
-
-            $headers = ['Content-Type: application/xls'];
-
-            return \Response::download($file, $name, $headers);
+            return \Response::download($file, $name, ['Content-Type: application/xls']);
         }
 
         return redirect()->back()->with('danger', "Fail To Download File");
+    }
+
+    public function getBranchByRegion($region)
+    {
+        $branches = Branch::active()->primary()->where('region_id', $region)->select('id', 'name')->get();
+
+        return view('customer.reports.extra._branch_by_region', ['branches' => $branches]);
+    }
+
+    public function getRegionByCity($city)
+    {
+        $regions = Region::active()->primary()->where('parent_id', $city)->select('id', 'name')->get();
+
+        return view('customer.reports.extra._region_by_city', ['regions' => $regions]);
     }
 }

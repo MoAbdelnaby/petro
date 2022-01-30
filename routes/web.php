@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('testjob', 'HomeController@jobTest');
-
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('lang/{lang}', 'HomeController@select')->name('select');
 Route::get('dark/{code}', 'HomeController@dark')->name('dark');
@@ -113,8 +111,10 @@ Route::group(['middleware' => ['auth','speed']], function () {
         Route::get('config/{type}/get', 'ConfigController@index')->name('config.index');
         Route::post('config/update', 'ConfigController@update')->name('config.update');
 
-        Route::get('reports/{type}/get', 'ReportController@index')->name('reports.index');
-        Route::get('reports/{type}/filter', 'ReportController@filter')->name('report.filter');
+        Route::get('reports', 'ReportController@index')->name('reports.index');
+        Route::get('report/region/{region}/show-branches', 'ReportController@getBranchByRegion');
+        Route::get('report/city/{region}/show-regions', 'ReportController@getRegionByCity');
+        Route::get('reports/{type}/show', 'ReportController@show')->name('reports.show');
         Route::get('reports/{type}/download', 'ReportController@download')->name('report.download');
 
         Route::get('error-mangment/{id}', 'ErrorManagementController@index')->name('error_mangment.index');

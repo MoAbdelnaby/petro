@@ -46,7 +46,9 @@ class SendWelcomeMessageCommand extends Command
                 ->where('plate_status', 'success')
                 ->whereNotNull('plate_en')
                 ->whereIn('tries',[0,1,2])
-                ->whereNull('welcome')->get();
+                ->whereNull('welcome')
+                ->get();
+
             if (count($data) > 0) {
                 foreach ($data as $row) {
                     dispatch(new SendWelcomeMessage($row->plate_en, $row->branch_id, $row->id));

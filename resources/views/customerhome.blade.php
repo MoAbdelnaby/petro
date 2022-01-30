@@ -144,7 +144,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <div class="mb-5 bg-gray" id="BranchPlaceDynamicBarCon">
+                                    <div class="mb-5 bg-gray" id="BranchPlaceDynamicBarCon" style="display: none">
                                             <div id="BranchPLaceDynamicBar" class="chartDiv" style="min-height: 450px"></div>
                                             <h4 class="text-center">{{ __('app.Duration_Work_Flow') }}</h4>
                                         </div>
@@ -224,7 +224,7 @@
                                               </div>
                                             </div>
                                         </div>
-                                        <div class="pt-4 mb-5 bg-gray" id="BranchPlateDynamicBarCon">
+                                        <div class="pt-4 mb-5 bg-gray" id="BranchPlateDynamicBarCon" style="display: none">
                                             <div id="BranchPlateDynamicBar" class="chartDiv" style="min-height: 450px"></div>
                                         </div>
                                         <div class="pt-4 bg-gray">
@@ -384,8 +384,8 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('js/branchCharts.js')}}"></script>
-    <script src="{{asset('js/comparisonChart.js')}}"></script>
+    <script src="{{asset('js/report/branchCharts.js')}}"></script>
+    <script src="{{asset('js/report/comparisonChart.js')}}"></script>
     <script>
         var imageAddr = "/images/to-download.jpg";
         var downloadSize = 2936012.8; //bytes
@@ -534,7 +534,7 @@
             /*********************** Plate Charts *********************/
             @if(!empty($charts['plate']))
             /************* Start Bar Chart **********/
-            @if(!in_array($key_name ,array_values($config['plate']['chart']['bar'])))
+            @if(!in_array($key_name ,array_values($config['place']['chart']['bar'])))
                 $("#comparisonPlateBarCon").hide();
             @else
                 comparisonPlateBar('comparisonPlateBar', @json($charts['plate']['data']));
@@ -542,7 +542,7 @@
             /************* End Bar Chart **********/
 
             /************* Start Bar Chart **********/
-            @if(!in_array($key_name ,array_values($config['plate']['chart']['circle'])))
+            @if(!in_array($key_name ,array_values($config['place']['chart']['circle'])))
                 $("#comparisonPlateCircleCon").hide();
             @else
                 comparisonPlateCircle('comparisonPlateCircle', @json($charts['plate']['data']));
@@ -550,7 +550,7 @@
             /************* End Bar Chart **********/
 
             /************* Start Line Chart **********/
-            @if(!in_array($key_name ,array_values($config['plate']['chart']['line'])))
+            @if(!in_array($key_name ,array_values($config['place']['chart']['line'])))
                 $("#comparisonPlateLineCon").hide();
             @else
                 comparisonPlateLine('comparisonPlateLine', @json($charts['plate']['data']));

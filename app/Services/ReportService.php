@@ -27,7 +27,7 @@ class ReportService
     {
         $charts = [];
 
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome', 'backout', 'stayingAverage'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome','backout','stayingAverage'])) {
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name('custom', $bracnh, $start, $end);
         }
@@ -49,7 +49,7 @@ class ReportService
     public static function branchReport(string $model = 'all', $bracnh, $start, $end): array
     {
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome', 'backout', 'stayingAverage'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome','backout','stayingAverage'])) {
             $fun_name = "{$model}BranchReport";
             return self::$fun_name($bracnh, $start, $end);
         }
@@ -60,7 +60,7 @@ class ReportService
     }
 
     /**
-     * Get Default Report Data For Top 5 Or N Branch To comparison between them depend on non modeltype
+     * Get Default Report Data For Top 5 Or N Branch To comparison between them depend non modeltype
      *
      * @param string $model
      * @param int|null $count
@@ -73,7 +73,7 @@ class ReportService
         self::$topPlateBranch = DB::table('view_top_branch_plate')->pluck('branch_id')->toArray();
 
         $charts = [];
-        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome', 'backout', 'stayingAverage'])) {
+        if ($model != 'all' && in_array($model, ['place', 'plate', 'invoice', 'welcome','backout','stayingAverage'])) {
             $fun_name = "{$model}ComparisonReport";
             return self::$fun_name();
         }
@@ -107,11 +107,13 @@ class ReportService
                 $query = AreaDurationDay::whereIn('branch_id', $branch);
 
                 if ($start) {
-                    $start = ($start > date('Y-m-d')) ? date('Y-m-d') : Carbon::parse($start);
+                    $start = ($start > date('Y-m-d')) ? date('Y-m-d') : $start;
+
                     $query->where('date', '>=', $start);
                 }
                 if ($end) {
-                    $end = ($end > date('Y-m-d')) ? date('Y-m-d') : Carbon::parse($end);
+                    $end = ($end > date('Y-m-d')) ? date('Y-m-d') : $end;
+
                     $query->where('date', '<=', $end);
                 }
 
@@ -372,7 +374,7 @@ class ReportService
     {
         $plate_data = Db::table('carprofiles')
             ->select(['branches.name as branch', 'carprofiles.id', 'carprofiles.branch_id', 'carprofiles.checkInDate'])
-            ->where('carprofiles.status', '=','completed')
+            ->where('carprofiles.status', 'completed')
             ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
             ->where('branches.user_id', '=', parentID());
 
@@ -516,7 +518,6 @@ class ReportService
                 ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
                 ->where('branches.active', true)
                 ->where('branches.user_id', parentID())
-                ->where('carprofiles.status', '=','completed')
                 ->whereNull('branches.deleted_at');
 
             if ($type == 'custom') {
@@ -566,7 +567,6 @@ class ReportService
                 ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
                 ->where('branches.active', true)
                 ->where('branches.user_id', parentID())
-                ->where('carprofiles.status', '=','completed')
                 ->whereNull('branches.deleted_at');
 
             if ($type == 'custom') {
@@ -615,7 +615,6 @@ class ReportService
             ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
             ->where('branches.active', true)
             ->where('branches.user_id', parentID())
-            ->where('carprofiles.status', '=','completed')
             ->whereNull('branches.deleted_at');
 
         if ($type == 'custom') {
@@ -641,10 +640,10 @@ class ReportService
 
     public static function stayingAverageComparisonReport(string $type = 'default', array $branch = [], $start = null, $end = null): array
     {
-        $result = DB::table('carprofiles')->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
+        $result = DB::table('carprofiles')
+            ->join('branches', 'branches.id', '=', 'carprofiles.branch_id')
             ->where('branches.active', true)
             ->where('branches.user_id', parentID())
-            ->where('carprofiles.status', '=','completed')
             ->whereNull('branches.deleted_at');
 
         if ($type == 'custom') {
@@ -661,10 +660,9 @@ class ReportService
             $result->whereIn('branches.id', array_slice(self::$topPlaceBranch, 0, self::$branch_count));
         }
 
-        $result = $result->select(
-            'branches.name as branch',
-            DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
-        )->groupBy('branch')->get();
+        $result = $result->whereNull('welcome')
+            ->select('branches.name as branch', DB::raw('COUNT(carprofiles.id) as backout'))
+            ->groupBy('branch')->get();
 
         return json_decode($result, true, 512, JSON_THROW_ON_ERROR);
     }

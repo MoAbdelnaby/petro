@@ -14,14 +14,20 @@ class Branch extends Model
     protected $table = 'branches';
     protected $guarded = [];
 
+    public function scopePrimary($query)
+    {
+        return $query->where('user_id', parentID());
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'branches_users');
     }
-
-    protected $hidden = [
-
-    ];
 
     protected static function booted()
     {
@@ -55,22 +61,10 @@ class Branch extends Model
                 }
             }
         });
-
     }
-
-//    protected static $logAttributes = ['name', 'photo', 'description','active','code', 'area_count','region_id'];
-    //    protected static $submitEmptyLogs = false;
-    //    protected static $logOnlyDirty = true;
-    //    protected static $logName = 'branch';
-
-//    public function  getDescriptionForEvent(string $eventName): string
-    //    {
-    //        return "you Have {$eventName} branch";
-    //    }
 
     public function user()
     {
-
         return $this->belongsTo('App\User', 'user_id');
     }
 
@@ -86,13 +80,11 @@ class Branch extends Model
 
     public function models()
     {
-
         return $this->hasMany('App\Models\UserModel', 'branch_id', 'id');
     }
 
     public function modelsBranches()
     {
-
         return $this->hasMany('App\Models\UserModelBranch', 'branch_id', 'id');
     }
 

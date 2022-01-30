@@ -162,15 +162,15 @@
                     </div>
                     <div class="border-bottom clearfix"></div>
                     <div
-                        class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/reports/place/get' ? 'active' : '' }}">
+                        class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/reports' ? 'active' : '' }}">
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
-                                <a href="{{ route('reports.index', 'place') }}" class="iq-waves-effect"><img
+                                <a href="{{ route('reports.index') }}" class="iq-waves-effect"><img
                                         src="{{ resolveDark() }}/img/icon_menu/report.svg" alt="Reports"
                                         class="img-fluid"></a>
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center"><a
-                                    href="{{ route('reports.index', 'place') }}"
+                                    href="{{ route('reports.index') }}"
                                     class="iq-waves-effect menutext">{{ __('app.Reports') }}</a></div>
                         </div>
                     </div>

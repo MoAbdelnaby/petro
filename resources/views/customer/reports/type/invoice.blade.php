@@ -1,6 +1,6 @@
-.@extends('layouts.dashboard.index')
+@extends('layouts.dashboard.index')
 @section('page_title')
-    {{__('app.gym.places_maintenence')}}
+    {{__('app.Invoices_reports')}}
 @endsection
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -11,11 +11,9 @@
         .select2-container {
             width: 100% !important;
         }
-
         .select2-selection.select2-selection--multiple {
             min-height: 40px !important;
         }
-
         .select-model h3 {
             width: 230px;
         }
@@ -31,42 +29,41 @@
                         <div class="iq-card-body">
                             <div>
                                 <div class="row col-12 p-0 m-0 mb-3 menu-and-filter menu-and-filter--custom">
-                                    <div class="col">
+                                    <div class="col-8">
                                         <ul class="nav nav-tabs nav-tabs--custom" id="myTab" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link"
-                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'place'], request()->toArray()))}} @else {{ route('reports.index','place')}} @endif">{{ __('app.Bay_Area') }}</a>
+                                                <a class="nav-link" href="{{ route('reports.index')}}">{{ __('app.most_statistics') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link"
-                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'plate'], request()->toArray()))}} @else {{ route('reports.index','plate')}} @endif">{{ __('app.Car_Plate') }}</a>
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'place'], request()->toArray()))}} @else {{ route('reports.show','place')}} @endif">{{ __('app.Bay_Area') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link active"
-                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.index','invoice')}} @endif">{{ __('app.Invoice') }}</a>
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'plate'], request()->toArray()))}} @else {{ route('reports.show','plate')}} @endif">{{ __('app.Car_Plate') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.index','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
+                                                <a class="nav-link active" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.show','invoice')}} @endif">{{ __('app.Invoice') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'backout'], request()->toArray()))}} @else {{ route('reports.index','backout')}} @endif">{{ __('app.backout') }}</a>
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.show','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'stayingAverage'], request()->toArray()))}} @else {{ route('reports.index','stayingAverage')}} @endif">{{ __('app.staying_car_average') }}</a>
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'backout'], request()->toArray()))}} @else {{ route('reports.show','backout')}} @endif">{{ __('app.backout') }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'stayingAverage'], request()->toArray()))}} @else {{ route('reports.show','stayingAverage')}} @endif">{{ __('app.staying_car_average') }}</a>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <div class="d-flex justify-content-end position-relative filter-cont">
-                                            @include('customer.reports._filter',['type' => 'invoice'])
+                                            @include('customer.reports.extra._filter',['type' => 'invoice'])
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="related-heading mb-3 m-0 row col-12 related-heading--custom">
-                                    <h2 class="p-0 col">{{ __('app.Invoices_reports') }}</h2>
+                                <div class="related-heading mb-3 m-0 row col-12 related-heading--custom" >
+                                    <h2 class="p-0 col ml-2">{{ __('app.Invoice_report') }}</h2>
                                     <div class="duration-cont col py-0">
-
                                         <div class="duration">
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -82,7 +79,7 @@
                                             </i>
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start_date')??"First Date"}}
+                                                {{request('start')??"2022-01-01"}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -98,70 +95,55 @@
                                             </i>
                                             <p>
                                                 <b>{{ __('app.to') }} : </b>
-                                                {{request('end_date')??now()->toDateString()}}
+                                                {{request('end')??now()->toDateString()}}
                                             </p>
                                         </div>
                                     </div>
                                     <div class="col-12 branches-cont pb-4">
-                                        <h3>{{ __('app.Branches') }} : </h3>
+                                        <h3>{{ __("app.".\Str::plural($report['type'])) }} : </h3>
                                         <ul>
-                                            @foreach($branches_report as $branch_name)
-                                              <li>{{$branch_name}}</li>
+                                            @foreach($list_report as $elemnt)
+                                                <li>{{$elemnt}}</li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
-
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
-                                        @if(count($charts))
-                                            <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
-
-                                                <div class="col-lg-6 col-md-6 mb-3">
-                                                    <div class="card text-center col-12">
-                                                        <div class="card-header row online">
-                                                            <div class="col-4"><img width="100" src="{{ asset("images/invoice.svg") }}" alt=""></div>
-                                                            <div class="col-8">
-                                                                <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.Invoice')  }}</b></h5>
-                                                                <h3><b>{{$branches_check['invoice']??0}}</b></h3>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="card text-center col-12">
-                                                        <div class="card-header row offline">
-                                                            <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_invoice.png") }}" alt=""></div>
-                                                            <div class="col-8">
-                                                                <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.no_invoice') }}</b></h5>
-                                                                <h3><b>{{$branches_check['no_invoice']??0}}</b></h3>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        @if(count($report['charts']))
+                                            <div class="pt-4 mb-5" id="BranchInvoiceBarCon"  style="display: none">
+                                                <div id="BranchInvoiceBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
-                                            <div class="row">
-                                                <div class="pt-4 mb-5 col-md-12" id="BranceInvoiceLineCon" style="display: none">
-                                                    <div id="BranceInvoiceLine" class="chartDiv"
-                                                         style="min-height: 450px"></div>
-                                                </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceBarCon"
-                                                     style="display: none">
-                                                    <div id="BranchInvoiceBar" class="chartDiv" style="min-height: 450px"></div>
-                                                </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceSmoothCon" style="display: none">
-                                                    <div id="BranchInvoiceSmooth" class="chartDiv"
-                                                         style="min-height: 450px"></div>
-                                                </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchInvoiceTrendLineCon" style="display: none">
-                                                    <div id="BranchInvoiceTrendLine" class="chartDiv"
-                                                         style="min-height: 450px"></div>
-                                                </div>
+
+                                            <div class="row pb-5" id="InvoiceCircleCon" style="display: none">
+                                                @foreach($report['charts']['info']['columns']??[] as $column)
+                                                    @if(count($report['charts']['info']['columns']) <2)
+                                                        <div class="col-md-3"></div>
+                                                    @else
+                                                        <div class="col-md-1"></div>
+                                                    @endif
+                                                    <div class="col-lg-5">
+                                                        <div class="pt-8">
+                                                            <div id="InvoiceCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
+                                                        </div>
+                                                        <h4 class="text-center">
+                                                            {{$report['charts']['info']['display_key'][$column]}}&nbsp;({{$report['charts']['info']['unit']}})
+                                                        </h4>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <div class="pt-4 mb-5" id="BranchInvoiceTrendLineCon" style="display: none">
+                                                <div id="BranchInvoiceTrendLine" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
+                                            <div class="pt-4 mb-5" id="BranchInvoiceSideBarCon" style="display: none">
+                                                <div id="BranchInvoiceSideBar" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
+                                            <div class="pt-4 mb-5" id="BranchInvoiceLineCon" style="display: none">
+                                                <div id="BranchInvoiceLine" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
                                         @else
                                             <div class="col-12 text-center">
-                                                <img src="{{ asset('images/no-results.webp') }}"
-                                                     class="no-results-image col-12 col-md-7  mt-5"
+                                                <img src="{{ asset('images/no-results.webp') }}" class="no-results-image col-12 col-md-7  mt-5"
                                                      alt="">
                                             </div>
                                         @endif
@@ -175,30 +157,47 @@
         </div>
     </div>
 @endsection
+@php $key_name = 'report'; @endphp
 @push('js')
-    <script src="{{asset('js/report/invoice.js')}}"></script>
+    <script src="{{asset('js/report/report.js')}}"></script>
     <script>
-        /****** Inovice Chart ******/
-        @php $key_name = 'report'; @endphp
-
+        let charts = @json($report['charts']);
+        let info = @json($report['charts']['info']);
         /************* Start Bar Chart ****************/
-        @if(count($charts))
+        @if(count($report['charts']))
             $("#BranchInvoiceBarCon").show();
-            comparisonInvoiceBar('BranchInvoiceBar', @json($charts));
+            barChart('BranchInvoiceBar',charts.bar, info);
         @endif
         /**************** End Bar Chart****************/
 
         /**************** Start Line Chart ************/
-        @if(count($charts))
-            $("#BranceInvoiceLineCon").show();
-            comparisonInvoiceLine('BranceInvoiceLine', @json($charts));
+        @if(count($report['charts']))
+            $("#BranchInvoiceLineCon").show();
+            lineChart('BranchInvoiceLine',charts.bar, info);
         @endif
         /************** End Line Chart ************/
-        /**************** Start Line Chart ************/
-        @if(count($charts))
+
+        /**************** Start SideBar Chart ************/
+        @if(count($report['charts']))
+            $("#BranchInvoiceSideBarCon").show();
+            sideBarChart('BranchInvoiceSideBar',charts.bar, info);
+        @endif
+        /************** End SideBar Chart ************/
+
+        /********************** Start Circle Chart ************/
+        @if(count($report['charts']))
+            $("#InvoiceCircleCon").show();
+            info.columns.forEach(function (col) {
+                pieChart(`InvoiceCircle${col}`,charts.circle[col],info)
+            });
+        @endif
+        /**************** End Circle Chart ***************/
+
+        /************* Start TrendLine Chart ****************/
+        @if(count($report['charts']))
             $("#BranchInvoiceTrendLineCon").show();
-            comparisonInvoiceTrendLine('BranchInvoiceTrendLine', @json($charts));
+            trendLineChart('BranchInvoiceTrendLine',charts.bar, info);
         @endif
-        /************** End Line Chart ************/
+        /**************** End TrendLine Chart****************/
     </script>
 @endpush

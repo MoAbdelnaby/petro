@@ -3,7 +3,7 @@
         <i class="fas fa-sort-alt"></i> &nbsp;{{ __('app.Filter') }}
     </a>
     <div class="filter-content" aria-labelledby="dropdownMenuButton">
-        <form action="{{route('report.filter',$type)}}" method="Get">
+        <form action="{{route('report.show',$type)}}" method="Get">
             @csrf
             <label>{{ __('app.type') }}:</label>
             <select name="filter_type" class="form-control filter-select">

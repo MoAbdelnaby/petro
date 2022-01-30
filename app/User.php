@@ -24,9 +24,13 @@ class User extends Authenticatable implements JWTSubject
 
     protected $guarded = [];
 
+    public function scopePrimary($query)
+    {
+        return $query->where('parent_id', parentID());
+    }
+
     public function getAuthPassword()
     {
-
         if (auth()->getDefaultDriver() == 'web') {
 
             return $this->password;
