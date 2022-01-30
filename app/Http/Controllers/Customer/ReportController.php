@@ -202,6 +202,7 @@ class ReportController extends Controller
             \File::makeDirectory(storage_path("/app/public/" . $path), 0777, true, true);
         }
 
+
         $check = \Excel::store(new ExportFiles($result), 'public/' . $file_path);
 
         if ($check) {
