@@ -1396,7 +1396,8 @@ input.increment { text-align: center; }
 .sidebar-main .iq-sidebar .iq-product-cover img{
     border-radius: 0;
     width:25px;
-    height: auto;
+    /*height: auto;*/
+    height: 25px;
     transition: all ease-in-out .4s;
 }
 .menutext,.menutext:hover{

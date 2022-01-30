@@ -215,9 +215,9 @@
                                                            name="notification_end" class="form-control">
                                                 </div>
 
-                                                <div class="text-center" style="margin-top: -30px">
+                                                <div class="text-center" >
                                                     <button type="submit"
-                                                            class="btn close-setting">{{__('app.gym.Save')}}</button>
+                                                            class="btn close-setting mt-0">{{__('app.gym.Save')}}</button>
                                                 </div>
                                             </form>
                                             <div class="bor"></div>
@@ -727,7 +727,7 @@
 
 
 @section('scripts')
-    <script src="{{asset('js/branchCharts.js')}}"></script>
+    <script src="{{asset('js/report/branchCharts.js')}}"></script>
     <script src="{{asset('js/config.js')}}"></script>
     <script src="{{asset('js/report/invoice.js')}}"></script>
     <script>

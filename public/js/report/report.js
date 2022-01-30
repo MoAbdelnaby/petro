@@ -209,6 +209,10 @@ function trendLineChart(id, data, info) {
     am4core.ready(function () {
         am4core.useTheme(am4themes_animated);
         var chart = am4core.create(id, am4charts.XYChart);
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "bottom";
+        chart.legend.paddingBottom = 20;
+        chart.legend.labels.template.maxWidth = 95;
         chart.exporting.menu = new am4core.ExportMenu();
         var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
         categoryAxis.dataFields.category = "list";

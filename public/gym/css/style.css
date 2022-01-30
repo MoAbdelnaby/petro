@@ -998,6 +998,10 @@ ul.nav-pills {
     text-align: center;
 }
 
+.header .setting .card .card-body > small{
+    margin-top: 16px;
+    margin-bottom: 4px;
+}
 .header .setting .card small {
     font-size: 16px;
     color: #29abe2;
@@ -1048,8 +1052,7 @@ ul.nav-pills {
     color: #fff;
     border-radius: 30px;
     padding: 9px 42px;
-    margin-top: 25px;
-    margin-bottom: 20px;
+    margin: 20px auto;
     font-size: 16px;
 }
 
@@ -2901,3 +2904,26 @@ g[aria-labelledby$="title"] {
     width: 6px;
     height: 7px;
 }
+#searchRecord.btn{
+    width: auto;
+    height: auto;
+    line-height: 1.5;
+
+}
+.setting-icon-sho i {
+    width: 16px;
+    height: 16px;
+    line-height: 18px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+
+    width: 14px;
+    padding: 0px;
+    margin: 0px;
+}
+.setting input[type="date"]{
+    font-size: 14px;
+    height: 38px;
+}
+

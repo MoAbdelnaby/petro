@@ -168,6 +168,7 @@ document
 
 function slickCarouselCardEvents(fn) {
     $(".setting-card-cont .custom-dropdown").on("click", function (e) {
+
         if (!e.target.classList.contains("close-1")) e.stopPropagation();
     });
     $(".custom-dropdown input[type=radio]").click(function (e) {

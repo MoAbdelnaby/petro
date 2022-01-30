@@ -335,7 +335,7 @@
                                                 </div>
 
 
-                                                <div class="text-center" style="margin-top: -30px">
+                                                <div class="text-center" >
                                                     <button type="submit"
                                                             class="btn close-setting">{{__('app.gym.Save')}}</button>
                                                 </div>
@@ -378,7 +378,7 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                                <br>
+                                              <br>
                                                 <div class="d-flex justify-content-center btn-cont">
                                                     <button type="button" value="1" id="searchRecord"
                                                             class="btn close-setting">{{__('app.gym.search')}}
@@ -872,7 +872,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('js/branchCharts.js')}}"></script>
+    <script src="{{asset('js/report/branchCharts.js')}}"></script>
     <script src="{{asset('js/config.js')}}"></script>
     <script src="{{asset('js/report/invoice.js')}}"></script>
     <script>

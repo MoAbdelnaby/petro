@@ -213,7 +213,10 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ route('connection-speed.index') }}" class="iq-waves-effect">
-                                    <i class="fas fa-wifi fa-2x"></i>
+{{--                                    <i class="fas fa-wifi fa-2x"></i>--}}
+                                    <img
+                                        src="{{ resolveDark() }}/img/icon_menu/wifi.svg" alt="Settings"
+                                        class="img-fluid">
                                 </a>
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center"><a
@@ -229,7 +232,10 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a target="_blank" href="{{route('branch.register')}}" class="iq-waves-effect">
-                                    <i class="fas fa-building fa-2x"></i>
+{{--                                    <i class="fas fa-building fa-2x"></i>--}}
+                                    <img
+                                        src="{{ resolveDark() }}/img/icon_menu/building.svg" alt="Settings"
+                                        class="img-fluid">
                                 </a>
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center"><a
@@ -246,7 +252,10 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ route('branch.message_log') }}" class="iq-waves-effect">
-                                    <i class="fa fa-envelope-open fa-2x"></i>
+{{--                                    <i class="fa fa-envelope-open fa-2x"></i>--}}
+                                    <img
+                                        src="{{ resolveDark() }}/img/icon_menu/envelope.svg" alt="Settings"
+                                        class="img-fluid">
                                 </a>
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center">
@@ -262,7 +271,10 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ route('service.index') }}" class="iq-waves-effect">
-                                    <i class="fab fa-servicestack fa-2x"></i>
+{{--                                    <i class="fab fa-servicestack fa-2x"></i>--}}
+                                    <img
+                                        src="{{ resolveDark() }}/img/icon_menu/servicestack.svg" alt="Settings"
+                                        class="img-fluid">
                                 </a>
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center">
@@ -294,7 +306,10 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ route('branches_status') }}" class="iq-waves-effect">
-                                    <i class="fas fa-building fa-2x"></i>
+{{--                                    <i class="fas fa-building fa-2x"></i>--}}
+                                    <img
+                                        src="{{ resolveDark() }}/img/icon_menu/building.svg" alt="Settings"
+                                        class="img-fluid">
                                 </a>
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center">

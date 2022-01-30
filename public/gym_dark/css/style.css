@@ -2586,3 +2586,7 @@ select.form-control:focus {
 .scroll-horizontal::-webkit-scrollbar-thumb:hover {
     background: #189dd7;
 }
+
+.setting .onemaincolor .btn.close-setting{
+    width: auto;
+}

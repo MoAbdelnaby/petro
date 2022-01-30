@@ -305,7 +305,7 @@
                                                            name="notification_end" class="form-control">
 
                                                 </div>
-                                                <div class="text-center" style="margin-top: -30px">
+                                                <div class="text-center" >
                                                     <button type="submit"
                                                             class="btn close-setting">{{__('app.gym.Save')}}</button>
                                                 </div>
@@ -348,7 +348,7 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                                <br>
+
                                                 <div class="d-flex justify-content-center btn-cont">
                                                     <button type="button" value="1" id="searchRecord"
                                                             class="btn close-setting">{{__('app.gym.search')}}
@@ -764,7 +764,7 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{asset('js/branchCharts.js')}}"></script>
+    <script src="{{asset('js/report/branchCharts.js')}}"></script>
     <script src="{{asset('js/config.js')}}"></script>
     <script>
         $(document).ready(function () {
@@ -828,27 +828,8 @@
                 @endif
             });
         });
-        @if(count($charts))
-        @if($userSettings)
-        @if($userSettings->chart_type == 'bar')
-        $('.pie-charts').hide();
-        $('#chart1').show();
-        branchPlaceBar('chart1',@json($charts['bar']));
-        @else
-        $('#chart1').hide();
-        $('.pie-charts').show();
-        branchPlaceCircleWork('chart2',@json($charts['circle']['work']));
-        branchPlaceCircleEmpty('chart3',@json($charts['circle']['empty']));
-        @endif
-        @else
-        $('.pie-charts').hide();
-        $('#chart1').show();
-        branchPlaceBar('chart1',@json($charts['bar']));
-        @endif
-        @endif
-
         $(document).ready(function () {
-             let filterDataFn = function (e) {
+            let filterDataFn = function (e) {
                 var key = $(this).data('key');
                 var branch_id = "{{$current_branch->id}}";
                 var date = $(this).val();
@@ -900,15 +881,35 @@
                     }
                 })
             }
-               slickCarouselCardEvents(filterDataFn);
-                $('.area-section.slider').on('afterChange', function(event, slick){
-                     cr && (slickCarouselCardEvents(filterDataFn), cr = false);
-                })
+            slickCarouselCardEvents(filterDataFn);
+            $('.area-section.slider').on('afterChange', function(event, slick){
+                cr && (slickCarouselCardEvents(filterDataFn), cr = false);
+            })
             $('.area-section.slider').on('breakpoint', function(event, slick){
                 slickCarouselCardEvents(filterDataFn);
                 cr = false;
             })
         });
+        @if(count($charts))
+        @if($userSettings)
+        @if($userSettings->chart_type == 'bar')
+        $('.pie-charts').hide();
+        $('#chart1').show();
+        branchPlaceBar('chart1',@json($charts['bar']));
+        @else
+        $('#chart1').hide();
+        $('.pie-charts').show();
+        branchPlaceCircleWork('chart2',@json($charts['circle']['work']));
+        branchPlaceCircleEmpty('chart3',@json($charts['circle']['empty']));
+        @endif
+        @else
+        $('.pie-charts').hide();
+        $('#chart1').show();
+        branchPlaceBar('chart1',@json($charts['bar']));
+        @endif
+        @endif
+
+
 
     </script>
 @endsection
