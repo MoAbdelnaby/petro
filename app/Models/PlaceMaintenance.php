@@ -37,7 +37,7 @@ class PlaceMaintenance extends Model
             return config('app.azure_storage').config('app.azure_container')."/storage".$this->screenshot;
 
         } else {
-            return 'http://104.211.179.36/'.'/storage'. $this->screenshot;
+            return 'http://104.211.179.36'.'/storage'. $this->screenshot;
 //            return url('/storage'. $this->screenshot);
         }
     }
