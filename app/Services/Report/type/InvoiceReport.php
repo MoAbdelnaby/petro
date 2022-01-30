@@ -11,25 +11,6 @@ class InvoiceReport extends BaseReport
     public $query;
     public string $mainTable = "carprofiles";
 
-    /**
-     * @param $filter
-     * @return array
-     * @throws JsonException
-     */
-    public function prepare($filter): array
-    {
-        $data = $this->handleListQuery($filter);
-        $key = ucfirst($data["type"]);
-        $func_name = "get{$key}Query";
-
-        //Prepare Base Query to get This report base On List Type
-        $this->$func_name($data["list"]);
-
-        $data["charts"] = $this->getReport($key, $filter);
-
-        return $data;
-    }
-
     public function getCityQuery($list)
     {
         foreach (['invoice', 'no_invoice'] as $type) {
@@ -121,6 +102,7 @@ class InvoiceReport extends BaseReport
 
         $result = array_merge_recursive_distinct($result['invoice'], $result['no_invoice']);
         $report = $this->prepareChart($result, $key);
+        $report["branch_check"] = $this->handleReportCompare($filter);
         $report["info"] = [
             "list" => ucfirst($key),
             "unit" => config('app.report.type.invoice.unit'),
@@ -130,7 +112,6 @@ class InvoiceReport extends BaseReport
 
         return $report;
     }
-
 
     /**
      * Prepare Format of Place Data Chart
@@ -143,9 +124,9 @@ class InvoiceReport extends BaseReport
     {
         $charts = [];
         $filter_key = '';
-        if ($key_name == "Area") {
+        if ($key_name == "area") {
             $filter_key = 'Area# ';
-        } elseif ($key_name == 'Compare_area') {
+        } elseif ($key_name == 'compare_area') {
             $filter_key = 'Area# ';
         }
 
@@ -173,7 +154,40 @@ class InvoiceReport extends BaseReport
             }
         }
 
-
         return $charts;
+    }
+
+    /**
+     * @param $filter
+     * @return array
+     */
+    public function handleReportCompare($filter): array
+    {
+        $result = [];
+        foreach (['invoice', 'no_invoice'] as $status) {
+            $query[$status] = DB::table($this->mainTable)
+                ->select('branches.id')
+                ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
+                ->where('branches.user_id', parentID())
+                ->where('branches.active', true)
+                ->whereNull('branches.deleted_at')
+                ->distinct();
+
+            $query[$status] = $this->handleDateFilter($query[$status], $filter, true);
+
+            if ($status == 'no_invoice') {
+                $result[$status] = $query[$status]->whereNull('invoice')->get()->toArray();
+            } else {
+                $result[$status] = $query[$status]->whereNotNull('invoice')->get()->toArray();
+            }
+        }
+
+        $invoices = array_column($result['invoice'], 'id');
+        $no_invoices = array_column($result['no_invoice'], 'id');
+        $no_invoices = array_values(array_diff($no_invoices, $invoices));
+        $result['invoice'] = count($invoices);
+        $result['no_invoice'] = count($no_invoices);
+
+        return $result;
     }
 }

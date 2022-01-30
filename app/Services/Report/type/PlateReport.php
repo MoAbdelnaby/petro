@@ -11,25 +11,6 @@ class PlateReport extends BaseReport
     public $query;
     public string $mainTable = "carprofiles";
 
-    /**
-     * @param $filter
-     * @return array
-     * @throws JsonException
-     */
-    public function prepare($filter): array
-    {
-        $data = $this->handleListQuery($filter);
-        $key = ucfirst($data["type"]);
-        $func_name = "get{$key}Query";
-
-        //Prepare Base Query to get This report base On List Type
-        $this->$func_name($data["list"]);
-
-        $data["charts"] = $this->getReport($data['type'], $filter);
-
-        return $data;
-    }
-
     public function getCityQuery($list)
     {
         $query = DB::table($this->mainTable)

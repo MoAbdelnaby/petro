@@ -114,6 +114,9 @@
                                             <div class="pt-4 mb-5" id="BranchBackoutBarCon"  style="display: none">
                                                 <div id="BranchBackoutBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
+                                            <div class="pt-4 mb-5" id="BranchBackoutLineCon" style="display: none">
+                                                <div id="BranchBackoutLine" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
                                             <div class="row pb-5" id="BackoutCircleCon" style="display: none">
                                                 @foreach($report['charts']['info']['columns']??[] as $column)
                                                     @if(count($report['charts']['info']['columns']) <2)
@@ -125,7 +128,7 @@
                                                         <div class="pt-8">
                                                             <div id="BackoutCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
                                                         </div>
-                                                        <h4 class="text-center">
+                                                        <h4 class="text-center"  style="margin-left: 30%">
                                                             {{$report['charts']['info']['display_key'][$column]}}&nbsp;({{$report['charts']['info']['unit']}})
                                                         </h4>
                                                     </div>
@@ -133,9 +136,6 @@
                                             </div>
                                             <div class="pt-4 mb-5" id="BranchBackoutSideBarCon" style="display: none">
                                                 <div id="BranchBackoutSideBar" class="chartDiv" style="min-height: 450px"></div>
-                                            </div>
-                                            <div class="pt-4 mb-5" id="BranchBackoutLineCon" style="display: none">
-                                                <div id="BranchBackoutLine" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
                                         @else
                                             <div class="col-12 text-center">

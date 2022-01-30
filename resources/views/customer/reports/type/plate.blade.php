@@ -114,6 +114,9 @@
                                             <div class="pt-4 mb-5" id="BranchPlateBarCon"  style="display: none">
                                                 <div id="BranchPlateBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
+                                            <div class="pt-4 mb-5" id="BranchPlateLineCon" style="display: none">
+                                                <div id="BranchPlateLine" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
                                             <div class="row pb-5" id="PlateCircleCon" style="display: none">
                                                 @foreach($report['charts']['info']['columns']??[] as $column)
                                                     @if(count($report['charts']['info']['columns']) <2)
@@ -125,7 +128,7 @@
                                                         <div class="pt-8">
                                                             <div id="PlateCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
                                                         </div>
-                                                        <h4 class="text-center">
+                                                        <h4 class="text-center"  style="margin-left: 33%">
                                                             {{$report['charts']['info']['display_key'][$column]}}&nbsp;({{$report['charts']['info']['unit']}})
                                                         </h4>
                                                     </div>
@@ -133,9 +136,6 @@
                                             </div>
                                             <div class="pt-4 mb-5" id="BranchPlateSideBarCon" style="display: none">
                                                 <div id="BranchPlateSideBar" class="chartDiv" style="min-height: 450px"></div>
-                                            </div>
-                                            <div class="pt-4 mb-5" id="BranchPlateLineCon" style="display: none">
-                                                <div id="BranchPlateLine" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
                                         @else
                                             <div class="col-12 text-center">
@@ -159,6 +159,7 @@
     <script>
         let charts = @json($report['charts']);
         let info = @json($report['charts']['info']);
+
         /************* Start Bar Chart ****************/
         @if(in_array($key_name ,array_values($config['chart']['bar'])))
             @if(count($report['charts']))

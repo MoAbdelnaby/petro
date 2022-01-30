@@ -162,7 +162,6 @@
                                                     </a>
                                                 </div>
                                             </div>
-
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                     <a href="{{route('customerUsers.index')}}" class="iq-card-body" style="padding: 25px 20px !important;">

@@ -1586,4 +1586,8 @@ return [
     'Backout_report' => 'Backout Report',
     'Staying_report' => 'Car Serving Average Report',
     'minute' => 'Minute',
+    'welcome_integration_branch' => 'Welcome Integration Branches',
+    'welcome_non_integration_branch' => 'Welcome Non Integration Branches',
+    'invoice_integration_branch' => 'Invoice Integration Branches',
+    'invoice_non_integration_branch' => 'Invoice Non Integration Branches',
 ];

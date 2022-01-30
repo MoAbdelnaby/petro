@@ -114,6 +114,9 @@
                                             <div class="pt-4 mb-5" id="BranchStayingBarCon"  style="display: none">
                                                 <div id="BranchStayingBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
+                                            <div class="pt-4 mb-5" id="BranchStayingLineCon" style="display: none">
+                                                <div id="BranchStayingLine" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
                                             <div class="row pb-5" id="StayingCircleCon" style="display: none">
                                                 @foreach($report['charts']['info']['columns']??[] as $column)
                                                     @if(count($report['charts']['info']['columns']) <2)
@@ -125,7 +128,7 @@
                                                         <div class="pt-8">
                                                             <div id="StayingCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
                                                         </div>
-                                                        <h4 class="text-center">
+                                                        <h4 class="text-center"  style="margin-left: 30%">
                                                             {{$report['charts']['info']['display_key'][$column]}}&nbsp;({{$report['charts']['info']['unit']}})
                                                         </h4>
                                                     </div>
@@ -133,9 +136,6 @@
                                             </div>
                                             <div class="pt-4 mb-5" id="BranchStayingSideBarCon" style="display: none">
                                                 <div id="BranchStayingSideBar" class="chartDiv" style="min-height: 450px"></div>
-                                            </div>
-                                            <div class="pt-4 mb-5" id="BranchStayingLineCon" style="display: none">
-                                                <div id="BranchStayingLine" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
                                         @else
                                             <div class="col-12 text-center">
@@ -159,40 +159,41 @@
     <script>
         let charts = @json($report['charts']);
         let info = @json($report['charts']['info']);
+
         /************* Start Bar Chart ****************/
         @if(count($report['charts']))
-        $("#BranchStayingBarCon").show();
-        barChart('BranchStayingBar',charts.bar, info);
+            $("#BranchStayingBarCon").show();
+            barChart('BranchStayingBar',charts.bar, info);
         @endif
         /**************** End Bar Chart****************/
 
         /**************** Start Line Chart ************/
         @if(count($report['charts']))
-        $("#BranchStayingLineCon").show();
-        lineChart('BranchStayingLine',charts.bar, info);
+            $("#BranchStayingLineCon").show();
+            lineChart('BranchStayingLine',charts.bar, info);
         @endif
         /************** End Line Chart ************/
 
         /**************** Start SideBar Chart ************/
         @if(count($report['charts']))
-        $("#BranchStayingSideBarCon").show();
-        sideBarChart('BranchStayingSideBar',charts.bar, info);
+            $("#BranchStayingSideBarCon").show();
+            sideBarChart('BranchStayingSideBar',charts.bar, info);
         @endif
         /************** End SideBar Chart ************/
 
         /********************** Start Circle Chart ************/
         @if(count($report['charts']))
-        $("#StayingCircleCon").show();
-        info.columns.forEach(function (col) {
-            pieChart(`StayingCircle${col}`,charts.bar,info)
-        });
+            $("#StayingCircleCon").show();
+            info.columns.forEach(function (col) {
+                pieChart(`StayingCircle${col}`,charts.bar,info)
+            });
         @endif
         /**************** End Circle Chart ***************/
 
         /************* Start TrendLine Chart ****************/
         @if(count($report['charts']))
-        $("#BranchStayingTrendLineCon").show();
-        trendLineChart('BranchStayingTrendLine',charts.bar, info);
+            $("#BranchStayingTrendLineCon").show();
+            trendLineChart('BranchStayingTrendLine',charts.bar, info);
         @endif
         /**************** End TrendLine Chart****************/
     </script>

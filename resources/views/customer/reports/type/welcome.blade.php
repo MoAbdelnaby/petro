@@ -111,23 +111,49 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
                                         @if(count($report['charts']))
+                                            <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+                                                <div class="col-lg-6 col-md-6 mb-3">
+                                                    <div class="card text-center col-12">
+                                                        <div class="card-header row online">
+                                                            <div class="col-4"><img width="100" src="{{ asset("images/welcome.png") }}" alt=""></div>
+                                                            <div class="col-8">
+                                                                <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.welcome_integration_branch')  }}</b></h5>
+                                                                <h3><b>{{$report['charts']['branch_check']['welcome']??0}}</b></h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="card text-center col-12">
+                                                        <div class="card-header row offline">
+                                                            <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_welcome.png") }}" alt=""></div>
+                                                            <div class="col-8">
+                                                                <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.welcome_non_integration_branch') }}</b></h5>
+                                                                <h3><b>{{$report['charts']['branch_check']['no_welcome']??0}}</b></h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="pt-4 mb-5" id="BranchWelcomeBarCon"  style="display: none">
                                                 <div id="BranchWelcomeBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
-
+                                            <div class="pt-4 mb-5" id="BranchWelcomeLineCon" style="display: none">
+                                                <div id="BranchWelcomeLine" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
                                             <div class="row pb-5" id="WelcomeCircleCon" style="display: none">
                                                 @foreach($report['charts']['info']['columns']??[] as $column)
                                                     @if(count($report['charts']['info']['columns']) <2)
                                                         <div class="col-md-3"></div>
                                                     @else
-                                                        <div class="col-md-1"></div>
+                                                        <div class="col-md-1" style="margin-right: -55px"></div>
                                                     @endif
                                                     <div class="col-lg-5">
                                                         <div class="pt-8">
                                                             <div id="WelcomeCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
                                                         </div>
-                                                        <h4 class="text-center">
-                                                            {{$report['charts']['info']['display_key'][$column]}}&nbsp;({{$report['charts']['info']['unit']}})
+                                                        <h4 class="text-center" style="margin-left: 37%">
+                                                            {{$report['charts']['info']['display_key'][$column]}}&nbsp;( {{$report['charts']['info']['unit']}} )
                                                         </h4>
                                                     </div>
                                                 @endforeach
@@ -137,9 +163,6 @@
                                             </div>
                                             <div class="pt-4 mb-5" id="BranchWelcomeSideBarCon" style="display: none">
                                                 <div id="BranchWelcomeSideBar" class="chartDiv" style="min-height: 450px"></div>
-                                            </div>
-                                            <div class="pt-4 mb-5" id="BranchWelcomeLineCon" style="display: none">
-                                                <div id="BranchWelcomeLine" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
                                         @else
                                             <div class="col-12 text-center">

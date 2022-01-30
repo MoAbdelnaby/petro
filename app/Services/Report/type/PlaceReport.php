@@ -11,25 +11,6 @@ class PlaceReport extends BaseReport
     public $query;
     public string $mainTable = "area_duration_days";
 
-    /**
-     * @param $filter
-     * @return array
-     * @throws JsonException
-     */
-    public function prepare($filter): array
-    {
-        $data = $this->handleListQuery($filter);
-        $key = ucfirst($data["type"]);
-        $func_name = "get{$key}Query";
-
-        //Prepare Base Query to get This report base On List Type
-        $this->$func_name($data["list"]);
-
-        $data["charts"] = $this->getReport($key, $filter);
-
-        return $data;
-    }
-
     public function getCityQuery($list)
     {
         $query = DB::table($this->mainTable)
@@ -113,7 +94,7 @@ class PlaceReport extends BaseReport
                 return [$item->list_name => $item];
             }), true);
 
-        $report = $this->prepareChart($result,$key);
+        $report = $this->prepareChart($result, $key);
         $report["info"] = [
             "list" => ucfirst($key),
             "unit" => "Hours",
@@ -136,11 +117,11 @@ class PlaceReport extends BaseReport
     {
         $charts = [];
         $filter_key = '';
-         if($key_name == "Area") {
-             $filter_key = 'Area# ';
-         }elseif ($key_name == 'Compare_area'){
-             $filter_key = 'Area# ';
-         }
+        if ($key_name == "area") {
+            $filter_key = 'Area# ';
+        } elseif ($key_name == 'compare_area') {
+            $filter_key = 'Area# ';
+        }
 
         if (count(array_filter(array_values($data))) > 0) {
             $i = 0;

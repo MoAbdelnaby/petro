@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Http\Controllers\Api\AreaStatusController;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\BranchRepo;
 use App\Http\Repositories\Eloquent\CustomerRepo;
@@ -10,13 +9,10 @@ use App\Models\Branch;
 use App\Models\ModelFeature;
 use App\Models\Package;
 use App\Models\PackageRequest;
-use App\Models\Region;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
-use App\Phonetics\Phonetics;
 use App\Services\ConfigService;
-use App\Services\PlateServices;
-use App\Services\ReportService;
+use App\Services\Report\ReportService;
 use App\User;
 use App\userSetting;
 use Carbon\Carbon;
@@ -48,27 +44,14 @@ class CustomerPackagesController extends Controller
 
     public function statistics()
     {
-        $charts = ReportService::defaultcomparison('all');
-
-        $config = ConfigService::get('all');
-
-        $regioncount = Region::where('active', true)->where('user_id', parentID())->count();
-
-        $branchcount = Branch::where('active', true)->where('user_id', parentID())->count();
-
-        $userscount = User::where('parent_id', parentID())->count();
-
-
-
+        $config = ConfigService::get();
         $query = DB::table('last_error_branch_views');
         $branches = $query->get();
-        $on = $query
-            ->where('created_at', '>=', Carbon::now()->subMinutes(15))
-            ->where('created_at', '<=', Carbon::now())
-            ->count();
+        $on = $query->where('created_at', '>=', Carbon::now()->subMinutes(15))
+            ->where('created_at', '<=', Carbon::now())->count();
 
-        Branch::whereNotIn('code', $branches->pluck('branch_code'))->get()->map(function($item) use ($branches) {
-            $branches->push((object) [
+        Branch::whereNotIn('code', $branches->pluck('branch_code'))->get()->map(function ($item) use ($branches) {
+            $branches->push((object)[
                 'id' => 111,
                 'branch_code' => $item->code,
                 'user_id' => $item->user_id,
@@ -80,13 +63,15 @@ class CustomerPackagesController extends Controller
 
         $off = $branches->count() - $on;
 
+        $report = [];
+        foreach (['place', 'plate', 'stayingAverage', 'invoice'] as $type) {
+            $filter = $this->getTopBranch($type, request()->all());
+            $report[$type] = ReportService::handle($type, $filter);
+        }
 
         return view('customerhome', [
-            'regioncount' => $regioncount,
-            'branchcount' => $branchcount,
-            'userscount' => $userscount,
-            'modelscount' => 2,
-            'charts' => $charts,
+            'statistics' => ReportService::statistics(),
+            'report' => $report,
             'config' => $config,
             'off' => $off,
             'on' => $on
@@ -350,5 +335,19 @@ class CustomerPackagesController extends Controller
         ]);
         return redirect()->back()->with('success', 'Your request has been send Successfully');
 
+    }
+
+    public function getTopBranch($type, $filter): array
+    {
+        $type = !in_array($type, ['place', 'plate']) ? 'place' : $type;
+        $branches = DB::table("view_top_branch_$type")->pluck('branch_id')->toArray();
+
+        return [
+            'start' => $filter['start'] ?? "2022-01-01",
+            'end' => $filter['end'] ?? null,
+            'show_by' => 'branch',
+            'branch_type' => 'comparison',
+            'branch_comparison' => $branches,
+        ];
     }
 }

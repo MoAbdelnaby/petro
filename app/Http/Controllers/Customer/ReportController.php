@@ -37,8 +37,7 @@ class ReportController extends Controller
             $cities = Region::active()->primary()->parent()->select('id', 'name')->get();
 
             $filter = (empty($request->except('_token')) || is_null($request->show_by))
-                ? $this->getTopBranch($type, $request->all())
-                : $request->except('_token');
+                ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
 
             $result = ReportService::handle($type, $filter);
 
@@ -48,19 +47,16 @@ class ReportController extends Controller
                 $list_report = Branch::query();
             }
 
-            $list_report = $list_report->active()->primary()->take(6)
-                ->whereIn('id', \Arr::wrap($result['list']))
-                ->pluck('name');
+            $list_report = $list_report->active()->primary()->take(6)->whereIn('id', \Arr::wrap($result['list']))->pluck('name');
 
             return view("customer.reports.type.$type", [
-                'branches_check' => $branches_check ?? [],
                 'branches' => $branches,
                 'regions' => $regions,
                 'cities' => $cities,
-                'list_report' => $list_report ?? [],
                 'report' => $result,
                 'config' => ConfigService::get($type),
                 'filter_type' => 'comparison',
+                'list_report' => $list_report ?? [],
             ]);
 
         } catch (\Exception $e) {
@@ -70,7 +66,8 @@ class ReportController extends Controller
 
     public function getTopBranch($type, $filter): array
     {
-        $branches = DB::table("view_top_branch_place")->pluck('branch_id')->toArray();
+        $type = !in_array($type, ['place', 'plate']) ? 'place' : $type;
+        $branches = DB::table("view_top_branch_$type")->pluck('branch_id')->toArray();
 
         return [
             'start' => $filter['start'] ?? "2022-01-01",
@@ -83,31 +80,35 @@ class ReportController extends Controller
 
     public function download($type, Request $request)
     {
-        $filter = (empty($request->except('_token')) || is_null($request->show_by))
-            ? $this->getTopBranch($type, $request->all())
-            : $request->except('_token');
-        $data = ReportService::handle($type, $filter);
+        try {
+            $filter = (empty($request->except('_token')) || is_null($request->show_by))
+                ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
 
-        $result = $data['charts']['bar'];
-        $start = $request->start ?? '2022-01-01';
-        $end = $request->end_date ?? now()->toDateString();
-        $name = "{$type}_excel_file_{$start}_to_{$end}.xls";
+            $data = ReportService::handle($type, $filter);
 
-        $path = "reports/$type/files";
-        $file_path = $path . '/' . $name;
-        if (!is_dir(storage_path("/app/public/" . $path))) {
-            \File::makeDirectory(storage_path("/app/public/" . $path), 777, true, true);
+            $result = $data['charts']['bar'];
+            $start = $request->start ?? '2022-01-01';
+            $end = $request->end_date ?? now()->toDateString();
+            $name = "{$type}_excel_file_{$start}_to_{$end}.xls";
+
+            $path = "reports/$type/files";
+            $file_path = $path . '/' . $name;
+            if (!is_dir(storage_path("/app/public/" . $path))) {
+                \File::makeDirectory(storage_path("/app/public/" . $path), 777, true, true);
+            }
+
+            $check = \Excel::store(new ExportFiles($result), 'public/' . $file_path);
+
+            if ($check) {
+                $file = public_path() . "/storage/$file_path";
+                return \Response::download($file, $name, ['Content-Type: application/xls']);
+            }
+
+            return redirect()->back()->with('danger', "Fail To Download File");
+
+        } catch (\Exception $e) {
+            return unKnownError($e->getMessage());
         }
-
-
-        $check = \Excel::store(new ExportFiles($result), 'public/' . $file_path);
-
-        if ($check) {
-            $file = public_path() . "/storage/$file_path";
-            return \Response::download($file, $name, ['Content-Type: application/xls']);
-        }
-
-        return redirect()->back()->with('danger', "Fail To Download File");
     }
 
     public function getBranchByRegion($region)

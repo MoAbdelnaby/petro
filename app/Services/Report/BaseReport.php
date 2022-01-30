@@ -12,7 +12,24 @@ abstract class BaseReport
      * @param $filter
      * @return void
      */
-    abstract public function prepare($filter);
+    public function prepare($filter): array
+    {
+        $data = $this->handleListQuery($filter);
+        $key = ucfirst($data["type"]);
+        $func_name = "get{$key}Query";
+        $list = $data["list"];
+
+        if (!is_array($list)) {
+            $list = str_contains($list, ',') ? explode(',', $list) : $list;
+        }
+
+        //Prepare Base Query to get This report base On List Type
+        $this->$func_name($list);
+
+        $data["charts"] = $this->getReport($data["type"], $filter);
+
+        return $data;
+    }
 
     /**
      * Helper Function Use to handle time range
@@ -24,7 +41,7 @@ abstract class BaseReport
      */
     public function handleDateFilter($query, $filter, bool $timeStamp = false)
     {
-        if ($filter['start']??false) {
+        if ($filter['start'] ?? false) {
             $start = ($filter['start'] > date('Y-m-d')) ? now()->subDay() : Carbon::parse($filter['start']);
             if ($timeStamp) {
                 $query->where($filter['column'], '>=', $start->format('Y-m-d h:i:s'));
@@ -33,7 +50,7 @@ abstract class BaseReport
             }
         }
 
-        if ($filter['end']??false) {
+        if ($filter['end'] ?? false) {
             $end = ($filter['end'] > date('Y-m-d')) ? now() : Carbon::parse($filter['end']);
             if ($timeStamp) {
                 $query->where($filter['column'], '<=', $end->format('Y-m-d h:i:s'));
