@@ -154,9 +154,11 @@ document
         branchesElm.forEach((elm) => {
             if (elm.dataset.bname.trim().match(filterReg)) {
                 elm.style.display = "inline-block";
+                elm.classList.remove("hidden")
                 flag++;
             } else {
                 elm.style.display = "none";
+                elm.classList.add("hidden")
             }
         });
         if (!flag) {

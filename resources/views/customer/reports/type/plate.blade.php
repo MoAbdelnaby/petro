@@ -1,6 +1,6 @@
-.@extends('layouts.dashboard.index')
+@extends('layouts.dashboard.index')
 @section('page_title')
-    {{__('app.gym.places_maintenence')}}
+    {{__('app.Car_Plate_Report')}}
 @endsection
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -11,11 +11,9 @@
         .select2-container {
             width: 100% !important;
         }
-
         .select2-selection.select2-selection--multiple {
             min-height: 40px !important;
         }
-
         .select-model h3 {
             width: 230px;
         }
@@ -31,43 +29,41 @@
                         <div class="iq-card-body">
                             <div>
                                 <div class="row col-12 p-0 m-0 mb-3 menu-and-filter menu-and-filter--custom">
-                                    <div class="col">
+                                    <div class="col-8">
                                         <ul class="nav nav-tabs nav-tabs--custom" id="myTab" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link"
-                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'place'], request()->toArray()))}} @else {{ route('reports.index','place')}} @endif">{{ __('app.Bay_Area') }}</a>
+                                                <a class="nav-link" href="{{ route('reports.index')}}">{{ __('app.most_statistics') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link"
-                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'plate'], request()->toArray()))}} @else {{ route('reports.index','plate')}} @endif">{{ __('app.Car_Plate') }}</a>
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'place'], request()->toArray()))}} @else {{ route('reports.show','place')}} @endif">{{ __('app.Bay_Area') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link"
-                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.index','invoice')}} @endif">{{ __('app.Invoice') }}</a>
+                                                <a class="nav-link active" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'plate'], request()->toArray()))}} @else {{ route('reports.show','plate')}} @endif">{{ __('app.Car_Plate') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link active"
-                                                   href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.index','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'invoice'], request()->toArray()))}} @else {{ route('reports.show','invoice')}} @endif">{{ __('app.Invoice') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'backout'], request()->toArray()))}} @else {{ route('reports.index','backout')}} @endif">{{ __('app.backout') }}</a>
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'welcome'], request()->toArray()))}} @else {{ route('reports.show','welcome')}} @endif">{{ __('app.Welcome_Message') }}</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="@if(request('filter_type') != null) {{route('report.filter',array_merge(['type'=>'stayingAverage'], request()->toArray()))}} @else {{ route('reports.index','stayingAverage')}} @endif">{{ __('app.staying_car_average') }}</a>
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'backout'], request()->toArray()))}} @else {{ route('reports.show','backout')}} @endif">{{ __('app.backout') }}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@if(request('show_by') != null) {{route('reports.show',array_merge(['type'=>'stayingAverage'], request()->toArray()))}} @else {{ route('reports.show','stayingAverage')}} @endif">{{ __('app.staying_car_average') }}</a>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <div class="d-flex justify-content-end position-relative filter-cont">
-                                            @include('customer.reports._filter',['type' => 'welcome'])
+                                            @include('customer.reports.extra._filter',['type' => 'plate'])
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="related-heading mb-3 m-0 row col-12 related-heading--custom">
-                                    <h2 class="p-0 col">{{ __('app.Welcome_Message_reports') }}</h2>
+                                <div class="related-heading mb-3 m-0 row col-12 related-heading--custom" >
+                                    <h2 class="p-0 col ml-2">{{ __('app.Car_Plate_Report') }}</h2>
                                     <div class="duration-cont col py-0">
-
                                         <div class="duration">
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -83,7 +79,7 @@
                                             </i>
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start_date')??"First Date"}}
+                                                {{request('start')??"2022-01-01"}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -99,69 +95,51 @@
                                             </i>
                                             <p>
                                                 <b>{{ __('app.to') }} : </b>
-                                                {{request('end_date')??now()->toDateString()}}
+                                                {{request('end')??now()->toDateString()}}
                                             </p>
                                         </div>
                                     </div>
                                     <div class="col-12 branches-cont pb-4">
-                                        <h3>{{ __('app.Branches') }} : </h3>
+                                        <h3>{{ __("app.".\Str::plural($report['type'])) }} : </h3>
                                         <ul>
-                                            @foreach($branches_report as $branch_name)
-                                              <li>{{$branch_name}}</li>
+                                            @foreach($list_report as $elemnt)
+                                                <li>{{$elemnt}}</li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
-                                        @if(count($charts))
-                                            <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
-
-                                                <div class="col-lg-6 col-md-6 mb-3">
-                                                    <div class="card text-center col-12">
-                                                        <div class="card-header row online">
-                                                            <div class="col-4"><img width="100" src="{{ asset("images/welcome.png") }}" alt=""></div>
-                                                            <div class="col-8">
-                                                                <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.Welcome')  }}</b></h5>
-                                                                <h3><b>{{$branches_check['welcome']??0}}</b></h3>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="card text-center col-12">
-                                                        <div class="card-header row offline">
-                                                            <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_welcome.png") }}" alt=""></div>
-                                                            <div class="col-8">
-                                                                <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.no_welcome') }}</b></h5>
-                                                                <h3><b>{{$branches_check['no_welcome']??0}}</b></h3>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        @if(count($report['charts']))
+                                            <div class="pt-4 mb-5" id="BranchPlateBarCon"  style="display: none">
+                                                <div id="BranchPlateBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
-                                            <div class="row">
-                                                <div class="pt-4 mb-5 col-md-12" id="BranceWelcomeLineCon" style="display: none">
-                                                    <div id="BranceWelcomeLine" class="chartDiv"
-                                                         style="min-height: 450px"></div>
-                                                </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchWelcomeBarCon"
-                                                     style="display: none">
-                                                    <div id="BranchWelcomeBar" class="chartDiv" style="min-height: 450px"></div>
-                                                </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchWelcomeSmoothCon" style="display: none">
-                                                    <div id="BranchWelcomeSmooth" class="chartDiv"
-                                                         style="min-height: 450px"></div>
-                                                </div>
-                                                <div class="pt-4 mb-5 col-md-12" id="BranchWelcomeTrendLineCon" style="display: none">
-                                                    <div id="BranchWelcomeTrendLine" class="chartDiv"
-                                                         style="min-height: 450px"></div>
-                                                </div>
+                                            <div class="row pb-5" id="PlateCircleCon" style="display: none">
+                                                @foreach($report['charts']['info']['columns']??[] as $column)
+                                                    @if(count($report['charts']['info']['columns']) <2)
+                                                        <div class="col-md-3"></div>
+                                                    @else
+                                                        <div class="col-md-1"></div>
+                                                    @endif
+                                                    <div class="col-lg-6">
+                                                        <div class="pt-8">
+                                                            <div id="PlateCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
+                                                        </div>
+                                                        <h4 class="text-center">
+                                                            {{$report['charts']['info']['display_key'][$column]}}&nbsp;({{$report['charts']['info']['unit']}})
+                                                        </h4>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <div class="pt-4 mb-5" id="BranchPlateSideBarCon" style="display: none">
+                                                <div id="BranchPlateSideBar" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
+                                            <div class="pt-4 mb-5" id="BranchPlateLineCon" style="display: none">
+                                                <div id="BranchPlateLine" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
                                         @else
                                             <div class="col-12 text-center">
-                                                <img src="{{ asset('images/no-results.webp') }}"
-                                                     class="no-results-image col-12 col-md-7  mt-5"
+                                                <img src="{{ asset('images/no-results.webp') }}" class="no-results-image col-12 col-md-7  mt-5"
                                                      alt="">
                                             </div>
                                         @endif
@@ -175,30 +153,48 @@
         </div>
     </div>
 @endsection
+@php $key_name = 'report'; @endphp
 @push('js')
-    <script src="{{asset('js/report/welcome.js')}}"></script>
+    <script src="{{asset('js/report/report.js')}}"></script>
     <script>
-        /****** Inovice Chart ******/
-        @php $key_name = 'report'; @endphp
-
+        let charts = @json($report['charts']);
+        let info = @json($report['charts']['info']);
         /************* Start Bar Chart ****************/
-        @if(count($charts))
-            $("#BranchWelcomeBarCon").show();
-            comparisonWelcomeBar('BranchWelcomeBar', @json($charts));
+        @if(in_array($key_name ,array_values($config['chart']['bar'])))
+            @if(count($report['charts']))
+                $("#BranchPlateBarCon").show();
+                barChart('BranchPlateBar',charts.bar, info);
+            @endif
         @endif
         /**************** End Bar Chart****************/
 
         /**************** Start Line Chart ************/
-        @if(count($charts))
-            $("#BranceWelcomeLineCon").show();
-            comparisonWelcomeLine('BranceWelcomeLine', @json($charts));
+        @if(in_array($key_name ,array_values($config['chart']['line'])))
+            @if(count($report['charts']))
+                $("#BranchPlateLineCon").show();
+                lineChart('BranchPlateLine',charts.bar, info);
+            @endif
         @endif
         /************** End Line Chart ************/
-        /**************** Start Line Chart ************/
-        @if(count($charts))
-            $("#BranchWelcomeTrendLineCon").show();
-            comparisonWelcomeTrendLine('BranchWelcomeTrendLine', @json($charts));
+
+        /**************** Start SideBar Chart ************/
+        @if(in_array($key_name ,array_values($config['chart']['side_bar'])))
+            @if(count($report['charts']))
+                $("#BranchPlateSideBarCon").show();
+                sideBarChart('BranchPlateSideBar',charts.bar, info);
+            @endif
         @endif
-        /************** End Line Chart ************/
+        /************** End SideBar Chart ************/
+
+        /********************** Start Circle Chart ************/
+        @if(in_array($key_name ,array_values($config['chart']['circle'])))
+            @if(count($report['charts']))
+                $("#PlateCircleCon").show();
+                info.columns.forEach(function (col) {
+                    pieChart(`PlateCircle${col}`,charts.bar,info)
+                });
+            @endif
+        @endif
+        /**************** End Circle Chart ***************/
     </script>
 @endpush

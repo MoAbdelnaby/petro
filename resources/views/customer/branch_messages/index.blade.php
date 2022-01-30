@@ -28,6 +28,14 @@
         .select-model h3 {
             width: 230px;
         }
+
+        div.dataTables_wrapper div.dataTables_paginate,div.dataTables_wrapper div.dataTables_info{
+            display: none !important;
+        }
+        ul.pagination {
+            padding-left: 50%;
+            margin-bottom: 15px;
+        }
     </style>
 @endpush
 
@@ -35,10 +43,10 @@
     <script>
         $(".submit_form").on('click', function (e) {
             var type = $(this).data('type');
-            $("#form").submit( function(eventObj) {
+            $("#form").submit(function (eventObj) {
                 $("<input />").attr("type", "hidden")
                     .attr("name", "type")
-                    .attr("value",type)
+                    .attr("value", type)
                     .appendTo("#form");
                 return true;
             });
@@ -107,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class=" my-4">
-                                    <form method="get"  id="form" action="{{route('branch.message_log')}}">
+                                    <form method="get" id="form" action="{{route('branch.message_log')}}">
                                         @csrf
                                         <div class="row">
                                             <div class="col-3">
@@ -141,6 +149,19 @@
                                                     <strong>{{$errors->has('end_date')?$errors->first('end_date'):''}}</strong>
                                                 </div>
                                             </div>
+                                            <div class="col-3">
+                                                <label>{{__('app.type')}}</label>
+                                                <select class="form-control"  name='message_type'>
+                                                    <option value="">@lang('app.all')</option>
+                                                    <option
+                                                        value="welcome" {{ request('message_type') == 'welcome' ? 'selected' : '' }}>@lang('app.Welcome')</option>
+                                                    <option
+                                                        value="invoice" {{ request('message_type') == 'invoice' ? 'selected' : '' }}>@lang('app.Invoice')</option>
+                                                </select>
+                                                <div class="invalid-feedback name-feedback">
+                                                    <strong>{{$errors->has('message_type')?$errors->first('message_type'):''}}</strong>
+                                                </div>
+                                            </div>
                                             <div class="col-4" style="padding-top: 34px">
                                                 <label for=""></label>
                                                 <button type="submit" id="export_excel" data-type="xls"
@@ -163,13 +184,14 @@
                             </div>
                             <div class="tables text-center">
                                 <div class="custom-table error-mg-table">
-                                    <table id="paginationSimpleNumbers" class="table dataTable mt-4 table-striped" width="100%">
+                                    <table id="paginationSimpleNumbers" class="table dataTable mt-4 table-striped"
+                                           width="100%">
                                         <thead>
                                         <tr>
                                             <th class="th-sm">#</th>
                                             <th class="th-sm">{{__('app.type')}}</th>
                                             <th class="th-sm">{{__('app.branch')}}</th>
-{{--                                            <th class="th-sm">{{__('app.message')}}</th>--}}
+                                            {{--                                            <th class="th-sm">{{__('app.message')}}</th>--}}
                                             <th class="th-sm">{{__('app.gym.plate_no')}}</th>
                                             <th class="th-sm">{{__('app.auth.phone')}}</th>
                                             <th class="th-sm">{{__('app.Invoice')}}</th>
@@ -178,37 +200,37 @@
                                         </thead>
                                         <tbody>
                                         @if(count($data) > 0)
-                                        @foreach($data as $index=>$item)
-                                            <tr>
-                                                <td>{{++$index}}</td>
-                                                <td>{{$item->type}}</td>
-                                                <td>{{$item->branch ? $item->branch->name :''}}</td>
-{{--                                                <td>{{$item->message}}</td>--}}
-                                                <td>{{$item->plateNumber}}</td>
-                                                <td>{{str_replace('whatsapp:+','',$item->phone)}}</td>
-                                                <td>
-                                                    @if($item->invoiceUrl)
-                                                        <a target="_blank" style="padding: 0 5px 0 5px" href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceUrl}}"
-                                                           class="btn btn-info">
-                                                            @lang('app.View')
-                                                        </a>
-                                                    @else --- @endif
-                                                </td>
-                                                <td>{{optional($item->created_at)->format('d-M-Y')}}</td>
-                                            </tr>
-                                        @endforeach
-                                            @endif
+                                            @foreach($data as $index=>$item)
+                                                <tr>
+                                                    <td>{{++$index}}</td>
+                                                    <td>{{$item->type}}</td>
+                                                    <td>{{$item->branch ? $item->branch->name :''}}</td>
+                                                    {{--                                                <td>{{$item->message}}</td>--}}
+                                                    <td>{{$item->plateNumber}}</td>
+                                                    <td>{{str_replace('whatsapp:+','',$item->phone)}}</td>
+                                                    <td>
+                                                        @if($item->invoiceUrl)
+                                                            <a target="_blank" style="padding: 0 5px 0 5px"
+                                                               href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceUrl}}"
+                                                               class="btn btn-info">
+                                                                @lang('app.View')
+                                                            </a>
+                                                        @else --- @endif
+                                                    </td>
+                                                    <td>{{optional($item->created_at)->format('d-M-Y')}}</td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                         </tbody>
                                     </table>
+                                    <div class="col-md-6">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-end mb-0">
+                                                {{ $data->links() }}
+                                            </ul>
+                                        </nav>
+                                    </div>
                                 </div>
-
-{{--                                <nav aria-label="Page navigation example">--}}
-{{--                                    <ul class="pagination pg-blue">--}}
-{{--                                        @if($data != [])--}}
-{{--                                            {!! $data->appends(request()->query())->links() !!}--}}
-{{--                                        @endif--}}
-{{--                                    </ul>--}}
-{{--                                </nav>--}}
                             </div>
                         </div>
                     </div>

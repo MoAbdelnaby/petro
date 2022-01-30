@@ -14,10 +14,43 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'report' => [
+        'type' => [
+            'place' => [
+                'data' => ['work', 'empty'],
+                'unit' => 'Hours',
+                'className' => 'PlaceReport'
+            ],
+            'plate' => [
+                'data' => ['value'],
+                'unit' => 'Car',
+                'className' => 'PlateReport'
+            ],
+            'invoice' => [
+                'data' => ['invoice', 'no_invoice'],
+                'unit' => 'Record',
+                'className' => 'InvoiceReport'
+            ],
+            'welcome' => [
+                'data' => ['welcome', 'no_welcome'],
+                'unit' => 'Record',
+                'className' => 'WelcomeReport'
+            ],
+            'backout' => [
+                'data' => ['value'],
+                'unit' => 'Record',
+                'className' => 'BackoutReport'
+            ],
+            'stayingAverage' => [
+                'data' => ['value'],
+                'unit' => 'Minute',
+                'className' => 'StayingAverageReport'
+            ],
+        ]
+    ],
 
-
-    'azure_storage'     => env('AZURE_STORAGE_LOCAL_ADDRESS',''),
-    'azure_container'     => env('AZURE_STORAGE_CONTAINER',''),
+    'azure_storage' => env('AZURE_STORAGE_LOCAL_ADDRESS', ''),
+    'azure_container' => env('AZURE_STORAGE_CONTAINER', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +76,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------

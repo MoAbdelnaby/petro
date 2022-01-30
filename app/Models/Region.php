@@ -13,6 +13,26 @@ class Region extends Model
 
     protected $guarded = [];
 
+    public function scopePrimary($query)
+    {
+        return $query->where('user_id', parentID());
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
+
+    public function scopeChild($query)
+    {
+        return $query->where('parent_id', '<>', null);
+    }
+
+    public function scopeParent($query)
+    {
+        return $query->where('parent_id', '=', null);
+    }
+
     public function branches()
     {
         return $this->hasMany(Branch::class);

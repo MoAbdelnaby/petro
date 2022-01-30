@@ -12,14 +12,10 @@ return [
     'downloadSpeed' => 'Download Speed',
     'uploadSpeed' => 'Upload Speed',
     'Show' => 'Show',
-
     'No_Thing_TO_Show_Here' => 'No Thing To Show Here',
     'No_thing_to_paragraph' => 'Please Go To Config and change some thing to display in home page',
-
     'Create_New_Service' => 'Create New Service',
     'not_connected_yet' => 'Not Connected Yet',
-
-
     'connection_speed' => 'Connection Speed',
     'Internet_status' => 'Internet Status',
     'branchSetting' => 'Branch Status Mail',
@@ -55,7 +51,6 @@ return [
     'copyrights' => 'Copyright 2020 wakeb All Rights Reserved.',
     'Dark' => 'Dark Mode',
     'Default' => 'Light',
-    'TO' => 'TO',
     'overall' => 'Overall',
     'Today' => 'Today',
     'active' => 'Active',
@@ -131,7 +126,6 @@ return [
     'Cancel' => 'Cancel',
     'Apply' => 'Apply',
     'Showing' => 'Showing',
-    'to' => 'to',
     'TO' => 'TO',
     'entries' => 'entries',
     'Place' => 'Place',
@@ -144,7 +138,7 @@ return [
     'Area' => 'Area',
     'Id_Camera' => 'Id Camera',
     'Busy' => 'Busy',
-    'Comparison_Branch_data' => 'Comparison Branch data',
+    'Comparison_Branch_data' => 'Comparison Branch Data',
     'Branch_data' => 'Branch data',
     'Select_branches' => 'Select branches',
     'Select_branch' => 'Select branch',
@@ -343,8 +337,6 @@ return [
     'No_Results_Found' => 'No Results Found',
     'PrevP' => 'Prev',
     'NextP' => 'Next',
-    '' => '',
-
     'auth' => [
         'login' => 'Sign In',
         'register' => 'Sign up',
@@ -352,7 +344,6 @@ return [
         'email' => 'Email',
         'password' => 'Password',
         'oldpassword' => 'Old Password',
-        'password_confirmation' => 'Password Confirmation',
         'Forgot' => 'Forgot password?',
         'Remember' => 'Remember Me',
         'donothaveaccount' => "Don\'t have an account ? ",
@@ -590,7 +581,6 @@ return [
             'description' => 'Description',
             'causer' => 'Causer',
             'subject_id' => 'Subject ID',
-            'subject_id' => 'Subject ID',
             'changes' => 'Changes',
         ],
     ],
@@ -620,7 +610,6 @@ return [
             'image' => 'Image',
             'description' => 'Description',
             'causer' => 'Causer',
-            'subject_id' => 'Subject ID',
             'subject_id' => 'Subject ID',
             'changes' => 'Changes',
         ],
@@ -951,7 +940,6 @@ return [
     ],
     'customers' => [
         'second' => 'Second',
-
         'packages' => [
             'page_title' => [
                 'index' => 'Package',
@@ -1152,9 +1140,7 @@ return [
         ],
 
     ],
-
     'gym' => [
-
         'page_title' => [
             'dashboard' => 'Model Dashboard',
             'index' => 'Model',
@@ -1229,7 +1215,6 @@ return [
         'Duration_door_closed' => 'Duration door closed',
         'seconds' => 'Seconds',
         'hours' => 'hours',
-        'Duration_door_closed' => 'Door was closed for',
         'search' => 'Search',
         'Status' => 'Status',
         'Timing' => 'Timing',
@@ -1245,7 +1230,6 @@ return [
         'Monthly' => 'Monthly',
         'Weekly' => 'Weekly',
         'Daily' => 'Daily',
-        'minutes' => 'Minutes',
 
     ],
     'languages' => [
@@ -1379,7 +1363,6 @@ return [
         'delete_title' => 'Delete',
         'updated_at' => 'Last update at : ',
         'created_at' => 'Created at :',
-        'created_at' => 'Created at :',
         'activate_title' => 'Chatbot Activate',
         'unactive_title' => 'Chatbot UnActivate',
         'activate_msg' => 'Are You sure You want To Activate This Chat ?',
@@ -1414,7 +1397,6 @@ return [
         ],
 
     ],
-
     'categories' => [
         'page_title_index' => 'Categories',
         'change_image_desc' => 'Please Upload Category Image',
@@ -1435,14 +1417,12 @@ return [
         'cancel' => 'Cancel',
         'storing' => 'Storing ...',
         'save' => 'Save',
-        'save' => 'Save',
         'select' => 'Select',
         'back' => 'Back',
         'delete' => 'Delete',
         'edit' => 'Edit',
         'delete_title' => 'Delete',
         'updated_at' => 'Last update at : ',
-        'created_at' => 'Created at :',
         'created_at' => 'Created at :',
         'activate_title' => 'Category Activate',
         'unactive_title' => 'Category UnActivate',
@@ -1462,7 +1442,6 @@ return [
             'delete_selected' => 'Delete selected Users',
         ],
     ],
-
     'products' => [
         'page_title_index' => 'Products',
         'change_image_desc' => 'Please Upload Product Image',
@@ -1483,7 +1462,6 @@ return [
         'cancel' => 'Cancel',
         'storing' => 'Storing ...',
         'save' => 'Save',
-        'save' => 'Save',
         'categories' => 'Product Categories',
         'images' => 'Product Images',
         'select' => 'Select',
@@ -1493,7 +1471,6 @@ return [
         'edit' => 'Edit',
         'delete_title' => 'Delete',
         'updated_at' => 'Last update at : ',
-        'created_at' => 'Created at :',
         'created_at' => 'Created at :',
         'activate_title' => 'Product Featured',
         'unactive_title' => 'Product UnFeatured',
@@ -1513,7 +1490,6 @@ return [
             'delete_selected' => 'Delete selected Users',
         ],
     ],
-
     'places' => [
         'file_will_prepare_soon' => 'File wil be prepare soon in prepared files',
         'files_prepared_successfully' => 'File will start downloading now',
@@ -1523,7 +1499,6 @@ return [
     'plates' => [
         'plate_put_in_error' => 'Plate moved to error successfully',
     ],
-
     'service' => [
         'service' => 'service',
         'index' => 'index',
@@ -1573,8 +1548,42 @@ return [
     'invoice_chart' => 'Invoice Chart',
     'car_duration_area' => 'Car Duration in each Area',
     'backout' => 'Backout',
-    'staying_car_average' => 'Car Staying Average',
+    'staying_car_average' => 'Car Serving Average',
     'Backout_reports' => 'Backout Report',
-    'StayingAverage_reports' => 'Staying Average Reports',
+    'StayingAverage_reports' => 'Car Serving Average Reports',
     'Default_report' => 'Default Report',
+    'area_count' => 'Area Count',
+    'most_data_statistics' => 'Most Data Statistics',
+    'most_statistics' => 'Most Statistics',
+    'something_error' => 'Something Error',
+    'city' => 'City',
+    'show_by' => 'Show By',
+    'branch_type' => 'Branch Type',
+    'select_type' => 'Select Type',
+    'specific_branch_data' => 'Specific Branch Data',
+    'compare_branch_area' => 'Compare Branches Area',
+    'select_branch_area' => 'Select Branches Area',
+    'comparison_region_data' => 'Comparison Region Data',
+    'branch_by_region' => 'Branch By Region',
+    'region_type' => 'Region Type',
+    'select_regions' => 'Select Regions',
+    'select_region' => 'Select Region',
+    'comparison_city_data' => 'Comparison Cities Data',
+    'region_by_city' => 'Region By City',
+    'select_cities' => 'Select Cities',
+    'select_city' => 'Select City',
+    'city_type' => 'City Type',
+    'branches' => 'Branches',
+    'regions' => 'Regions',
+    'cities' => 'Cities',
+    'areas' => 'Areas',
+    'work_duration' => 'Work Duration',
+    'empty_duration' => 'Empty Duration',
+    'Invoice_report' => 'Invoice Report',
+    'Welcome_report' => 'Welcome Report',
+    'Bay_area_report' => 'Bay Area Report',
+    'Car_Plate_Report' => 'Car Plate Report',
+    'Backout_report' => 'Backout Report',
+    'Staying_report' => 'Car Serving Average Report',
+    'minute' => 'Minute',
 ];

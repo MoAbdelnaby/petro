@@ -163,6 +163,9 @@ function branchPlaceCircleWork(divId, data) {
         pieSeries.hiddenState.properties.endAngle = -90;
         pieSeries.hiddenState.properties.startAngle = -90;
         chart.hiddenState.properties.radius = am4core.percent(0);
+        pieSeries.labels.template.disabled = true;
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "left"
     }); // end am4core.ready()
 }
 
@@ -189,7 +192,9 @@ function branchPlaceCircleEmpty(divId, data) {
         pieSeries.hiddenState.properties.opacity = 1;
         pieSeries.hiddenState.properties.endAngle = -90;
         pieSeries.hiddenState.properties.startAngle = -90;
-
+        pieSeries.labels.template.disabled = true;
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "left"
         chart.hiddenState.properties.radius = am4core.percent(0);
     }); // end am4core.ready()
 }

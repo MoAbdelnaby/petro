@@ -58,8 +58,8 @@
             </span>
         </div>
 
-        <ul class="branch nav nav-pills scroll-vertical-custom main" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div" style="display: flex; justify-content: center">
+        <ul class="branch nav nav-pills scroll-horizontal main" id="pills-tab" role="tablist">
+            <div class="scroll-horizontal--elm-cont" >
                 @foreach ($activeRegions as $reg)
                     <li class="nav-item">
                         <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}" id="pills-home-tab"
@@ -72,8 +72,8 @@
             </div>
         </ul>
         <!-- //////////// -->
-        <ul class="branch nav nav-pills scroll-vertical-custom search_branch-ul" id="pills-tab" role="tablist">
-            <div class="scroll-vertical-custom-div" id='li-branches'>
+        <ul class="branch branch-2nd nav nav-pills scroll-horizontal search_branch-ul" id="pills-tab" role="tablist">
+            <div class="scroll-horizontal--elm-cont" id='li-branches'>
                 @foreach ($activebranches as $branch)
                     <li class="nav-item" data-bName='{{$branch->bname}}'>
                         <a class="nav-link {{$branch->b_id==$branch_id ? 'active':''}}" id="pills-home-tab"
@@ -219,7 +219,7 @@
         <div id="logout">
              <span class="close-setting" style="cursor: pointer;">
                  <i class="fas fa-sign-out-alt"></i>
-                 {{__('app.gym.Logout')}}
+{{--                 {{__('app.gym.Logout')}}--}}
              </span>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf

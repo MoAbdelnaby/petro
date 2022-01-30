@@ -17,14 +17,6 @@ class HomeController extends Controller
     public function welcome()
     {
         return redirect()->route('login');
-//            return view('home');
-    }
-
-    public function jobTest()
-    {
-        dispatch(new SendWelcomeMessage('2455JZJ'));
-        dd('ok');
-
     }
 
     public function select($lang)

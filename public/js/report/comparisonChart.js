@@ -121,7 +121,15 @@ function comparisonPlaceBar(id, data) {
         xAxis.renderer.cellStartLocation = 0.1;
         xAxis.renderer.cellEndLocation = 0.9;
         xAxis.renderer.grid.template.location = 0;
-
+        xAxis.events.on("sizechanged", function(ev) {
+            var axis = ev.target;
+            var cellWidth = axis.pixelWidth / (axis.endIndex - axis.startIndex);
+            axis.renderer.labels.template.maxWidth = cellWidth;
+        });
+        var label = xAxis.renderer.labels.template;
+        label.wrap = true;
+        // label.truncate = true;
+        // label.maxWidth = 140;
         var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
         yAxis.title.text = "Hours";
         yAxis.min = 0;
@@ -227,6 +235,9 @@ function comparisonPlaceCircleWork(divId, data) {
         pieSeries.hiddenState.properties.endAngle = -90;
         pieSeries.hiddenState.properties.startAngle = -90;
         chart.hiddenState.properties.radius = am4core.percent(0);
+        pieSeries.labels.template.disabled = true;
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "left"
 
     }); // end am4core.ready()
 }
@@ -260,6 +271,9 @@ function comparisonPlaceCircleEmpty(divId, data) {
         pieSeries.hiddenState.properties.startAngle = -90;
 
         chart.hiddenState.properties.radius = am4core.percent(0);
+        pieSeries.labels.template.disabled = true;
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "left"
     }); // end am4core.ready()
 }
 
@@ -279,6 +293,13 @@ function comparisonPlaceLine(divId, data) {
 
         var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
         categoryAxis.dataFields.category = "branch";
+        categoryAxis.events.on("sizechanged", function(ev) {
+            var axis = ev.target;
+            var cellWidth = axis.pixelWidth / (axis.endIndex - axis.startIndex);
+            axis.renderer.labels.template.maxWidth = cellWidth;
+        });
+        var label = categoryAxis.renderer.labels.template;
+        label.wrap = true;
 
         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
         valueAxis.title.text = "Hours";
@@ -915,6 +936,13 @@ function comparisonPlaceTrendLine(divId, data) {
         var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
         categoryAxis.dataFields.category = "branch";
         categoryAxis.renderer.minGridDistance = 30;
+        categoryAxis.events.on("sizechanged", function(ev) {
+            var axis = ev.target;
+            var cellWidth = axis.pixelWidth / (axis.endIndex - axis.startIndex);
+            axis.renderer.labels.template.maxWidth = cellWidth;
+        });
+        var label = categoryAxis.renderer.labels.template;
+        label.wrap = true;
 
         /* Create value axis */
         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
@@ -968,6 +996,13 @@ function comparisonPlateTrendLine(divId, data) {
         var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
         categoryAxis.dataFields.category = "branch";
         categoryAxis.renderer.minGridDistance = 30;
+        categoryAxis.events.on("sizechanged", function(ev) {
+            var axis = ev.target;
+            var cellWidth = axis.pixelWidth / (axis.endIndex - axis.startIndex);
+            axis.renderer.labels.template.maxWidth = cellWidth;
+        });
+        var label = categoryAxis.renderer.labels.template;
+        label.wrap = true;
 
         /* Create value axis */
         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());

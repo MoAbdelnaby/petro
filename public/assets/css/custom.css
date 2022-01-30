@@ -962,7 +962,7 @@ g[aria-labelledby$="title"] {
     border-radius: 0;
     border: 0;
     box-shadow: 1px 2px 5px #c7c6c6;
-    min-width: 300px;
+    /*min-width: 00px;*/
     position: absolute;
     z-index: 10;
     background: #fff;
@@ -1343,3 +1343,4 @@ div.dataTables_wrapper div.dataTables_filter input {
 .menu-and-filter--custom  .filter-cont{
     margin-bottom: 8px;
 }
+

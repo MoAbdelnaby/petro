@@ -26,6 +26,7 @@ if (!function_exists('active')) {
     }
 }
 
+
 if (!function_exists('phoneHandeler')) {
 
     function phoneHandeler(string $phoneNumber)
@@ -311,11 +312,11 @@ if (!function_exists('str_contains')) {
 if (!function_exists('unKnownError')) {
     function unKnownError($message = null)
     {
-        $message = trans('dashboard.something_error') . '' . (env('APP_DEBUG') ? " : $message" : '');
+        $message = trans('app.something_error') . '' . (env('APP_DEBUG') ? " : $message" : '');
 
         return request()->expectsJson()
             ? response()->json(['message' => $message], 400)
-            : redirect()->back()->with(['status' => 'error', 'message' => $message]);
+            : redirect()->back()->with(['danger' => $message]);
     }
 }
 if (!function_exists('getStartEndDate')) {

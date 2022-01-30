@@ -25,67 +25,14 @@ var customFunction = function () {
 
 jQuery(document).ready(function () {
     customFunction.init();
-    var today = new Date();
     $('.userroles').select2();
     $('.packagefeature').select2();
-    var logoW = 1;
-    // jQuery(document).on('mouseenter', '.sidebar-main .iq-sidebar', function() {
-    //     if($('#checkbox:checked').length > 0){
-    //         jQuery('.sidebar-main .mainlogo').attr("src",app_url+"/images/wakeball/wakebwhitetext.png").height(30).width(140);
-    //     }else{
-    //         jQuery('.sidebar-main .mainlogo').attr("src",app_url+"/images/wakeball/wakebdarktext.png").height(30).width(140);
-    //     }
-    //     $(".menutext").show();
-    //
-    // });
 
-    // jQuery(document).on('mouseleave', '.sidebar-main .iq-sidebar', function() {
-    //     if($('#checkbox:checked').length > 0){
-    //         jQuery('.sidebar-main .mainlogo').attr("src",app_url+"/images/wakeball/wakebwhite.png").height(30).width(50);
-    //     }else{
-    //         jQuery('.sidebar-main .mainlogo').attr("src",app_url+"/images/wakeball/wakebdark.png").height(30).width(50);
-    //     }
-    //
-    //     $(".menutext").hide();
-    //
-    // });
+    $('.select_2').select2({});
 
-    // jQuery(document).on('click', '.wrapper-menu', function() {
-    //         if ( jQuery( this ).hasClass( "open" ) ) {
-    //             if($('#checkbox:checked').length > 0){
-    //                 if(logoW == 0){
-    //                     jQuery('.mainlogo').attr("src", app_url+"/images/wakeball/wakebwhite.png").height(30).width(50);
-    //                 }
-    //                 else{
-    //                     jQuery('.mainlogo').attr("src", app_url+"/images/wakeball/wakebwhitetext.png").height(30).width(140);
-    //                 }
-    //
-    //             }else{
-    //                 if(logoW == 0){
-    //                     jQuery('.mainlogo').attr("src", app_url+"/images/wakeball/wakebdark.png").height(30).width(50);
-    //                 }
-    //                 else{
-    //                     jQuery('.mainlogo').attr("src", app_url+"/images/wakeball/wakebdarktext.png").height(30).width(140);
-    //                 }
-    //
-    //             }
-    //             $(".menutext").hide();
-    //         }
-    //         else {
-    //             if($('#checkbox:checked').length > 0){
-    //                 jQuery('.mainlogo').attr("src",app_url+"/images/wakeball/wakebwhitetext.png").height(30).width(140);
-    //             }else{
-    //                 jQuery('.mainlogo').attr("src",app_url+"/images/wakeball/wakebdarktext.png").height(30).width(140);
-    //             }
-    //
-    //             $(".menutext").show();
-    //         }
-    //
-    //
-    //     logoW = !logoW;
-    //
-    // });
-
+    $('.nice-select').select2({
+        minimumResultsForSearch: -1
+    });
 
     var currenttype = $('#usertype').val();
     if (currenttype == 'customer' || currenttype == 'subcustomer') {

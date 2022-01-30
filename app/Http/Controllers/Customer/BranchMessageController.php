@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BranchMessageRequest;
 use App\Models\Branch;
 use App\Models\BranchFiles;
+use App\Models\Carprofile;
 use App\Models\MessageLog;
+use App\Models\Reminder;
+use App\Services\CustomerPhone;
 use App\Services\ExportFileFactory;
 use App\UserSetting;
 use Illuminate\Http\Request;
@@ -17,10 +20,6 @@ class BranchMessageController extends Controller
 {
     public function index(BranchMessageRequest $request)
     {
-        if (in_array($request->type, ['xls', 'pdf'])) {
-            return $this->export($request->all());
-        }
-
         $branches = DB::table('branches')
             ->select('branches.*')
             ->whereNull('branches.deleted_at')
@@ -42,6 +41,10 @@ class BranchMessageController extends Controller
 
         if ($request->end_date) {
             $query->whereDate('created_at', '>=', $request->end_date);
+        }
+
+        if ($request->message_type) {
+            $query->where('type',  $request->message_type);
         }
 
         $data = $query->paginate(10);

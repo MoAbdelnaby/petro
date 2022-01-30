@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Models\Carprofile;
-use App\Models\Customer;
 use App\Models\FailedMessage;
 use App\Models\MessageLog;
 use App\Services\CustomerPhone;
@@ -13,9 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
 
 class SendWelcomeMessage implements ShouldQueue
 {
@@ -46,17 +43,17 @@ class SendWelcomeMessage implements ShouldQueue
      */
     public function handle()
     {
-
 //        Http::post('https://whatsapp-wakeb.azurewebsites.net/api/petro_template', [
 //            'template_id' => '0',
 //            'phone' => 'whatsapp:+201093565730',
 //        ]);
+
         $contacts = (new CustomerPhone($this->plate))->handle();
 
-//        Log::info('phone',$contacts);
         $whatsapp_url = $_ENV['WHATSAPP_TEMPLATE_URL'] ?? 'https://whatsapp-wakeb.azurewebsites.net/api/petro_template';
 
         $carprofile = Carprofile::find($this->rowid);
+
         if (!empty($contacts)) {
             $contacts = array_unique($contacts);
             foreach ($contacts as $phone) {
@@ -66,50 +63,50 @@ class SendWelcomeMessage implements ShouldQueue
                         'phone' => $phone,
                     ]);
 
-                if ($message['success'] === false) {
-                    FailedMessage::updateOrCreate([
-                        'plateNumber' => $this->plate,
-                        'carprofile_id' => $this->rowid
-                    ], [
-                        'branch_id' => $this->branch_id,
-                        'status' => 'twillo'
-                    ]);
-                    MessageLog::create([
-                        'PlateNumber' => $this->plate,
-                        'type' => 'welcome',
-                        'branch_id' => $this->branch_id,
-                        'message' => WELCOME,
-                        'phone' => str_replace('whatsapp:+', '', $phone),
-                        'status' => 'failed',
-                        'error_reason' => 'Twillo Error'
-                    ]);
-                    if ($carprofile) {
-                        $carprofile->increment('tries');
-                    }
-                } else {
+                    if ($message['success'] === false) {
+                        FailedMessage::updateOrCreate([
+                            'plateNumber' => $this->plate,
+                            'carprofile_id' => $this->rowid
+                        ], [
+                            'branch_id' => $this->branch_id,
+                            'status' => 'twillo'
+                        ]);
+                        MessageLog::create([
+                            'PlateNumber' => $this->plate,
+                            'type' => 'welcome',
+                            'branch_id' => $this->branch_id,
+                            'message' => WELCOME,
+                            'phone' => str_replace('whatsapp:+', '', $phone),
+                            'status' => 'failed',
+                            'error_reason' => 'Twillo Error'
+                        ]);
 
-                    if ($carprofile) {
-                        $carprofile->update([
-                            'welcome' => Carbon::now(),
+                        if ($carprofile) {
+                            $carprofile->increment('tries');
+                        }
+
+                    } else {
+                        if ($carprofile) {
+                            $carprofile->update([
+                                'welcome' => Carbon::now(),
+                            ]);
+                        }
+
+                        MessageLog::create([
+                            'PlateNumber' => $this->plate,
+                            'type' => 'welcome',
+                            'message' => WELCOME,
+                            'phone' => str_replace('whatsapp:+', '', $phone),
+                            'branch_id' => $this->branch_id
                         ]);
                     }
-                    MessageLog::create([
-                        'PlateNumber' => $this->plate,
-                        'type' => 'welcome',
-                        'message' => WELCOME,
-                        'phone' => str_replace('whatsapp:+', '', $phone),
-                        'branch_id' => $this->branch_id
-                    ]);
                 }
             }
-
-         }
-
-
         } else {
             if ($carprofile) {
                 $carprofile->increment('tries');
             }
+
             FailedMessage::updateOrCreate([
                 'plateNumber' => $this->plate,
                 'carprofile_id' => $this->rowid
@@ -117,6 +114,7 @@ class SendWelcomeMessage implements ShouldQueue
                 'branch_id' => $this->branch_id,
                 'status' => 'noNumber'
             ]);
+
             MessageLog::create([
                 'PlateNumber' => $this->plate,
                 'type'=> 'welcome',
@@ -126,6 +124,5 @@ class SendWelcomeMessage implements ShouldQueue
                 'error_reason'=>'No Number'
             ]);
         }
-
     }
 }
