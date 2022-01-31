@@ -5,7 +5,7 @@
         @foreach($regions as $region)
             <option value="{{$region->id}}" @if(in_array($region->id,request('city_region_comparison')??[])) selected @endif>
                 {{$region->name}}
-            </option>required
+            </option>
         @endforeach
     </select>
 </div>
