@@ -196,7 +196,7 @@ class BranchesController extends Controller
                 ->get();
         }
 
-        $activeRegions = Region::latest()->where('active', true)->where('user_id', parentID())->get();
+        $activeRegions = Region::latest()->where('active', true)->child()->where('user_id', parentID())->get();
 
         $query = DB::table('user_model_branches')
             ->select(['user_model_branches.*', 'branches.id as b_id', 'branches.name as bname', 'models.name as mname', 'lt_models.id as lt_id'])
@@ -347,7 +347,7 @@ class BranchesController extends Controller
             ->whereNull('users_models.deleted_at')
             ->where('users_models.user_package_id', $activepackage->id)->distinct()->get();
 
-        $activeRegions = Region::where('active', true)->where('user_id', parentID())->get();
+        $activeRegions = Region::where('active', true)->where('user_id', parentID())->child()->get();
 
         $query = DB::table('user_model_branches')
             ->select(['user_model_branches.*', 'branches.id as b_id', 'branches.name as bname', 'models.name as mname', 'lt_models.id as lt_id'])
@@ -514,7 +514,7 @@ class BranchesController extends Controller
         }
 
 
-        $activeRegions = Region::where('active', true)->where('user_id', parentID())->get();
+        $activeRegions = Region::where('active', true)->where('user_id', parentID())->child()->get();
 
         $query = DB::table('user_model_branches')
             ->select(['user_model_branches.*', 'branches.id as b_id', 'branches.name as bname', 'models.name as mname', 'lt_models.id as lt_id'])
@@ -660,7 +660,7 @@ class BranchesController extends Controller
             ->where('regions.active', true)
             ->whereNull('users_models.deleted_at')
             ->where('users_models.user_package_id', $activepackage->id)->distinct()->get();
-        $activeRegions = Region::where('active', true)->where('user_id', parentID())->get();
+        $activeRegions = Region::where('active', true)->where('user_id', parentID())->child()->get();
 
         $query = DB::table('user_model_branches')
             ->select(['user_model_branches.*', 'branches.id as b_id', 'branches.name as bname', 'models.name as mname', 'lt_models.id as lt_id'])
