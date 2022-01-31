@@ -9,4 +9,3 @@
         @endforeach
     </select>
 </div>
-</div>
