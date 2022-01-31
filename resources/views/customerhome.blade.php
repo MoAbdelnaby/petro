@@ -8,216 +8,256 @@
     <div id="content-page" class="content-page home_page" style="margin-top: -30px">
         <div class="container-fluid">
             @if(in_array('home' ,array_values($config['place']['statistics'][1])) || in_array('home' ,array_values($config['place']['chart']['dynamic_bar'])) || in_array('home' ,array_values($config['plate']['chart']['dynamic_bar'])) || in_array('home' ,Arr::flatten(array_values($config['place']['table']))) || in_array('home' ,Arr::flatten(array_values($config['plate']['table']))) || in_array('home' ,array_values($config['place']['InternetStatus'][1])))
-                @if(in_array('home' ,array_values($config['place']['InternetStatus'][1])))
-                    <div class="row pt-3 " id="sortable" data-sortable-id="0" aria-dropeffect="move">
-                        <div class="col-lg-6 col-md-6 mb-3">
-                            <div class="card text-center col-12">
-                                <div class="card-header row online">
-                                    <div class="col-4 d-flex justify-content-center align-items-center"><img width="60"
-                                                                                                             src="{{ asset("images/online-svgrepo-com.svg") }}"
-                                                                                                             alt="">
-                                    </div>
-                                    <div class="col-8 d-flex flex-column justify-content-center align-items-center">
-                                        <h5><b><i class="fas fa-circle"
-                                                  style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
-                                        <h3><b>{{ $on }}</b></h3>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-0">
+                            <div class="iq-card-body p-0">
+                                <div class="custom-head mb-2 c-flex">
+                                    <h2>{{ __('app.most_statistics') }}</h2>
+                                    <div class="filter-pills-cont">
+                                        <ul class="nav nav-pills  ">
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">
+                                                    <span class="nav-text">This Year</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">
+                                                    <span class="nav-text">This Month</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="13">
+                                                    <span class="nav-text ">Last Week</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">
+                                                    <span class="nav-text ">This Week</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="today">
+                                                    <span class="nav-text font-size-sm">Today</span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="card text-center col-12">
-                                <div class="card-header row offline">
-                                    <div class="col-4 d-flex justify-content-center align-items-center"><img width="60"
-                                                                                                             fill="red"
-                                                                                                             src="{{ asset("images/offline-svgrepo-com.svg") }}"
-                                                                                                             alt="">
-                                    </div>
-                                    <div class="col-8 d-flex flex-column justify-content-center align-items-center">
-                                        <h5><b><i class="fas fa-circle"
-                                                  style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
-                                        <h3><b>{{ $off }}</b></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @if(in_array('home' ,array_values($config['place']['statistics'][1])))
-                    <div class="row" id="statistic">
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                <a href="{{route('customerRegions.index')}}" class="iq-card-body"
-                                   style="padding: 25px 20px !important;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h6 class='iq-card-title'>{{ __('app.Regions') }}</h6>
-                                    </div>
-                                    <div
-                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
-                                                <i class="fa fa-id-card"></i></div>
-                                            <h3>{{$statistics['regions']}}</h3>
-                                        </div>
-                                        <div
-                                            class="iq-map text-primary font-size-32">
-                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                <a href="{{route('customerBranches.index')}}" class="iq-card-body"
-                                   style="padding: 25px 20px !important;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h6 class='iq-card-title'>{{ __('app.Branches') }}</h6>
-                                    </div>
-                                    <div
-                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                <i class="fa fa-subway"></i></div>
-                                            <h3>{{$statistics['branches']}}</h3></div>
-                                        <div
-                                            class="iq-map text-danger font-size-32">
-                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                <a href="{{url('customer/customerPackages')}}" class="iq-card-body"
-                                   style="padding: 25px 20px !important;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h6 class='iq-card-title'>{{ __('app.Models') }}</h6>
-                                    </div>
-                                    <div
-                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="rounded-circle iq-card-icon iq-bg-warning mr-2">
-                                                <i class="fa fa-bars"></i></div>
-                                            <h3>2</h3>
-                                        </div>
-                                        <div
-                                            class="iq-map text-warning font-size-32">
-                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                <a href="{{route('customerUsers.index')}}" class="iq-card-body"
-                                   style="padding: 25px 20px !important;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h6 class='iq-card-title'>{{ __('app.Users') }}</h6>
-                                    </div>
-                                    <div
-                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="rounded-circle iq-card-icon iq-bg-info mr-2">
-                                                <i class="fa fa-users"></i></div>
-                                            <h3>{{$statistics['users']}}</h3></div>
-                                        <div class="iq-map text-info font-size-32">
-                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                <a href="{{route('reports.show','plate')}}" class="iq-card-body"
-                                   style="padding: 25px 20px !important;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h6 class='iq-card-title'>{{ __('app.Car_Count') }}</h6>
-                                    </div>
-                                    <div
-                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="rounded-circle iq-card-icon iq-bg-info mr-2">
-                                                <i class="fa fa-car"></i></div>
-                                            <h3>{{$statistics['cars']}}</h3></div>
-                                        <div class="iq-map text-info font-size-32">
-                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                <a href="{{route('reports.show','invoice')}}" class="iq-card-body"
-                                   style="padding: 25px 20px !important;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h6 class='iq-card-title'>{{ __('app.staying_car_average') }}</h6>
-                                    </div>
-                                    <div
-                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
-                                                <i class="fa fa-clock-o"></i></div>
-                                            <h3>{{$statistics['serving']}}</h3>&nbsp;<h4>@lang('app.minute')</h4>
-                                        </div>
-                                        <div
-                                            class="iq-map text-primary font-size-32">
-                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                <a href="{{route('reports.show','invoice')}}" class="iq-card-body"
-                                   style="padding: 25px 20px !important;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h6 class='iq-card-title'>{{ __('app.Invoice') }}</h6>
-                                    </div>
-                                    <div
-                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="rounded-circle iq-card-icon iq-bg-warning mr-2">
-                                                <i class="fa fa-file-text"></i>
+                                @if(in_array('home' ,array_values($config['place']['InternetStatus'][1])))
+                                    <div class="row pt-3 px-3 " id="sortable" data-sortable-id="0" aria-dropeffect="move">
+                                        <div class="col-lg-6 col-md-6 mb-3">
+                                            <div class="card text-center col-12">
+                                                <div class="card-header row online">
+                                                    <div class="col-4 d-flex justify-content-center align-items-center"><img width="60"
+                                                                                                                             src="{{ asset("images/online-svgrepo-com.svg") }}"
+                                                                                                                             alt="">
+                                                    </div>
+                                                    <div class="col-8 d-flex flex-column justify-content-center align-items-center">
+                                                        <h5><b><i class="fas fa-circle"
+                                                                  style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
+                                                        <h3><b>{{ $on }}</b></h3>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <h3>{{$statistics['invoice']}}</h3>
                                         </div>
-                                        <div
-                                            class="iq-map text-warning font-size-32">
-                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="card text-center col-12">
+                                                <div class="card-header row offline">
+                                                    <div class="col-4 d-flex justify-content-center align-items-center"><img width="60"
+                                                                                                                             fill="red"
+                                                                                                                             src="{{ asset("images/offline-svgrepo-com.svg") }}"
+                                                                                                                             alt="">
+                                                    </div>
+                                                    <div class="col-8 d-flex flex-column justify-content-center align-items-center">
+                                                        <h5><b><i class="fas fa-circle"
+                                                                  style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
+                                                        <h3><b>{{ $off }}</b></h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-3">
-                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                <a href="{{route('reports.show','backout')}}" class="iq-card-body"
-                                   style="padding: 25px 20px !important;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h6 class='iq-card-title'>{{ __('app.backout') }}</h6>
+                                @endif
+                                @if(in_array('home' ,array_values($config['place']['statistics'][1])))
+                                    <div class="row px-3" id="statistic">
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{route('customerRegions.index')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.Regions') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
+                                                                <i class="fa fa-id-card"></i></div>
+                                                            <h3>{{$statistics['regions']}}</h3>
+                                                        </div>
+                                                        <div
+                                                            class="iq-map text-primary font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{route('customerBranches.index')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.Branches') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                <i class="fa fa-subway"></i></div>
+                                                            <h3>{{$statistics['branches']}}</h3></div>
+                                                        <div
+                                                            class="iq-map text-danger font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{url('customer/customerPackages')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.Models') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-warning mr-2">
+                                                                <i class="fa fa-bars"></i></div>
+                                                            <h3>2</h3>
+                                                        </div>
+                                                        <div
+                                                            class="iq-map text-warning font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{route('customerUsers.index')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.Users') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-info mr-2">
+                                                                <i class="fa fa-users"></i></div>
+                                                            <h3>{{$statistics['users']}}</h3></div>
+                                                        <div class="iq-map text-info font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{route('reports.show','plate')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.Car_Count') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-info mr-2">
+                                                                <i class="fa fa-car"></i></div>
+                                                            <h3>{{$statistics['cars']}}</h3></div>
+                                                        <div class="iq-map text-info font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{route('reports.show','invoice')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.staying_car_average') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
+                                                                <i class="fa fa-clock-o"></i></div>
+                                                            <h3>{{$statistics['serving']}}</h3>&nbsp;<h4>@lang('app.minute')</h4>
+                                                        </div>
+                                                        <div
+                                                            class="iq-map text-primary font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{route('reports.show','invoice')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.Invoice') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-warning mr-2">
+                                                                <i class="fa fa-file-text"></i>
+                                                            </div>
+                                                            <h3>{{$statistics['invoice']}}</h3>
+                                                        </div>
+                                                        <div
+                                                            class="iq-map text-warning font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{route('reports.show','backout')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.backout') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                <i class="fa fa-outdent"></i></div>
+                                                            <h3>{{$statistics['backout']}}</h3></div>
+                                                        <div
+                                                            class="iq-map text-danger font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div
-                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                <i class="fa fa-outdent"></i></div>
-                                            <h3>{{$statistics['backout']}}</h3></div>
-                                        <div
-                                            class="iq-map text-danger font-size-32">
-                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                    </div>
-                                </a>
+                                @endif
                             </div>
                         </div>
                     </div>
-                @endif
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-0">

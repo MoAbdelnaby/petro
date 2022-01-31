@@ -18,7 +18,7 @@
 <!-- Typography CSS -->
     <link rel="stylesheet" href="{{resolveLang()}}/css/typography.css">
     <link rel="stylesheet" href="{{ asset("/asset_en/css/style.css") }}">
-    <link rel="stylesheet" href="{{resolveLang()}}/css/style.css">
+{{--    <link rel="stylesheet" href="{{resolveLang()}}/css/style.css">--}}
     <link rel="stylesheet" href="{{resolveLang()}}/css/responsive.css">
     <link rel="stylesheet" href="{{url('/css')}}/avatar.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
