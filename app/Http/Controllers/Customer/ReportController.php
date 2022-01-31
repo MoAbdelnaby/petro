@@ -85,8 +85,12 @@ class ReportController extends Controller
             $filter = (empty($request->except('_token')) || is_null($request->show_by))
                 ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
 
+            $filter['extra'] = true;
             $data = ReportService::handle($type, $filter);
+
             $result = $data['charts']['bar'];
+//            $extra = $data['charts']['extra']??[];
+
             $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : '2022-01-01';
             $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();
             $name = "{$type}_excel_file_{$start}_to_{$end}.xls";

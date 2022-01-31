@@ -14,7 +14,7 @@
     <div class="mt-4 col-md-12 " id="city_comparison"
          @if(request('city_type') == 'region') style="display: none" @else style="display: block" @endif >
         <lebel>{{ __('app.select_cities') }}:</lebel>
-        <select class="form-control select_2" multiple name="city_comparison[]">
+        <select class="form-control select_2" multiple name="city_comparison[]" required>
             @foreach($cities as $city)
                 <option value="{{$city->id}}" @if(in_array($city->id,request('city_comparison')??[])) selected @endif>
                     {{$city->name}}
@@ -26,7 +26,7 @@
     <div class="col-md-12 mt-4" id="specific_city"
          @if(request('city_type') == 'region') style="display: block" @else style="display: none" @endif>
         <lebel>{{ __('app.select_city') }}:</lebel>
-        <select class="form-control nice-select" name="city_data" id="region_city">
+        <select class="form-control nice-select" name="city_data" id="region_city" required>
             <option value="">{{ __('app.select_city') }}</option>
             @foreach($cities as $city)
                 <option value="{{$city->id}}">{{$city->name}}</option>
