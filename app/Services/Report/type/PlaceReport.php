@@ -129,21 +129,11 @@ class PlaceReport extends BaseReport
                 $charts["bar"][$i]['list'] = $filter_key . $key;
                 $charts["bar"][$i]["work"] = round($value["work"] / 60);
                 $charts["bar"][$i]["empty"] = round($value["empty"] / 60);
+                $charts["circle"]["work"][$i]['list'] = $filter_key . $key;
+                $charts["circle"]["work"][$i]["value"] = round($value["work"] / 60);
+                $charts["circle"]["empty"][$i]['list'] = $filter_key . $key;
+                $charts["circle"]["empty"][$i]["value"] = round($value["empty"] / 60);
                 $i++;
-            }
-
-            $k = 0;
-            foreach ($data as $key => $value) {
-                $charts["circle"]["work"][$k]['list'] = $filter_key . $key;
-                $charts["circle"]["work"][$k]["value"] = round($value["work"] / 60);
-                $k++;
-            }
-
-            $j = 0;
-            foreach ($data as $key => $value) {
-                $charts["circle"]["empty"][$j]['list'] = $filter_key . $key;
-                $charts["circle"]["empty"][$j]["value"] = round($value["empty"] / 60);
-                $j++;
             }
         }
 

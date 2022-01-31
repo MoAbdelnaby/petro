@@ -136,21 +136,11 @@ class InvoiceReport extends BaseReport
                 $charts["bar"][$i]['list'] = $filter_key . $key;
                 $charts["bar"][$i]["invoice"] = round($value["invoice"] ?? 0 / 60);
                 $charts["bar"][$i]["no_invoice"] = round($value["no_invoice"] ?? 0 / 60);
+                $charts["circle"]["invoice"][$i]['list'] = $filter_key . $key;
+                $charts["circle"]["invoice"][$i]["value"] = round($value["invoice"] ?? 0 / 60);
+                $charts["circle"]["no_invoice"][$i]['list'] = $filter_key . $key;
+                $charts["circle"]["no_invoice"][$i]["value"] = round($value["no_invoice"] ?? 0 / 60);
                 $i++;
-            }
-
-            $k = 0;
-            foreach ($data as $key => $value) {
-                $charts["circle"]["invoice"][$k]['list'] = $filter_key . $key;
-                $charts["circle"]["invoice"][$k]["value"] = round($value["invoice"] ?? 0 / 60);
-                $k++;
-            }
-
-            $j = 0;
-            foreach ($data as $key => $value) {
-                $charts["circle"]["no_invoice"][$j]['list'] = $filter_key . $key;
-                $charts["circle"]["no_invoice"][$j]["value"] = round($value["no_invoice"] ?? 0 / 60);
-                $j++;
             }
         }
 

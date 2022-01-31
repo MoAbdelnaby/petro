@@ -136,21 +136,11 @@ class WelcomeReport extends BaseReport
                 $charts["bar"][$i]['list'] = $filter_key . $key;
                 $charts["bar"][$i]["welcome"] = round($value["welcome"] ?? 0 / 60);
                 $charts["bar"][$i]["no_welcome"] = round($value["no_welcome"] ?? 0 / 60);
+                $charts["circle"]["welcome"][$i]['list'] = $filter_key . $key;
+                $charts["circle"]["welcome"][$i]["value"] = round($value["welcome"] ?? 0 / 60);
+                $charts["circle"]["no_welcome"][$i]['list'] = $filter_key . $key;
+                $charts["circle"]["no_welcome"][$i]["value"] = round($value["no_welcome"] ?? 0 / 60);
                 $i++;
-            }
-
-            $k = 0;
-            foreach ($data as $key => $value) {
-                $charts["circle"]["welcome"][$k]['list'] = $filter_key . $key;
-                $charts["circle"]["welcome"][$k]["value"] = round($value["welcome"] ?? 0 / 60);
-                $k++;
-            }
-
-            $j = 0;
-            foreach ($data as $key => $value) {
-                $charts["circle"]["no_welcome"][$j]['list'] = $filter_key . $key;
-                $charts["circle"]["no_welcome"][$j]["value"] = round($value["no_welcome"] ?? 0 / 60);
-                $j++;
             }
         }
 
