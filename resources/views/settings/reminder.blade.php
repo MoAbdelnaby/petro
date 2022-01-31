@@ -32,33 +32,33 @@
                 <div class="col-sm-12">
                     <div class="iq-card mt-4 mb-4">
                         <div class="iq-card-body">
-                            <div class="related-heading plates-car-cont">
-                                <div class="d-flex justify-content-between align-items-center border-bottom">
+                            <div class="related-heading plates-car-cont border-0">
+                                <div class="d-flex justify-content-between align-items-center setting-heading border-bottom">
                                     <h2 class="border-bottom-0" style="text-transform: capitalize;">
-                                        {{ __('app.Settings') }}
+                                        <img
+                                            src="{{ resolveDark() }}/img/icon_menu/settings.svg" alt="Settings"
+                                            class="tab_icon-img">
+                                    {{ __('app.Settings') }}
                                     </h2>
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="v-pills-reminder-tab" data-toggle="pill"
+                                               href="#v-pills-reminder"
+                                               role="tab" aria-controls="v-pills-reminder"
+                                               aria-selected="true">{{ __('app.Reminder') }}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="v-pills-branch-tab" data-toggle="pill"
+                                               href="#v-pills-branch"
+                                               role="tab" aria-controls="v-pills-reminder"
+                                               aria-selected="true">{{ __('app.branchSetting') }}</a>
+                                        </li>
+                                    </ul>
 
                                 </div>
                                 <div class=" my-4">
                                     <div class="row">
-                                        <div class="col-2">
-                                            <div class="nav flex-column nav-pills setting-nav px-3" id="v-pills-tab"
-                                                 role="tablist"
-                                                 aria-orientation="vertical">
-                                                <a class="nav-link active" id="v-pills-reminder-tab" data-toggle="pill"
-                                                   href="#v-pills-reminder"
-                                                   role="tab" aria-controls="v-pills-reminder"
-                                                   aria-selected="true">{{ __('app.Reminder') }}</a>
-                                                <a class="nav-link" id="v-pills-branch-tab" data-toggle="pill"
-                                                   href="#v-pills-branch"
-                                                   role="tab" aria-controls="v-pills-reminder"
-                                                   aria-selected="true">{{ __('app.branchSetting') }}</a>
-                                                {{--                      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"--}}
-                                                {{--                        aria-controls="v-pills-profile" aria-selected="false">Profile</a>--}}
-
-                                            </div>
-                                        </div>
-                                        <div class="col-10">
+                                        <div class="col-12 ">
                                             <div class="tab-content" id="v-pills-tabContent">
                                                 <div class="tab-pane fade show active  py-3" id="v-pills-reminder"
                                                      role="tabpanel"

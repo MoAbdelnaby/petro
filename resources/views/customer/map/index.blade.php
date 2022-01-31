@@ -36,7 +36,7 @@
                         <div class="iq-card-body">
                             <div class="related-heading mb-5">
                                 <h2>
-                                    <img src="{{ session()->has('darkMode') ? '/gym_dark' : '/gym' }}/img/icon_menu/map.svg" width="20" alt=""> {{ __('app.Map') }}
+                                    <img src="{{ session()->has('darkMode') ? '/gym_dark' : '/gym' }}/img/icon_menu/map.svg" width="20" class="tab_icon-img" alt=""> {{ __('app.Map') }}
                                 </h2>
                             </div>
                             <div class="related-product-block position-relative row col-12 m-0 p-0">

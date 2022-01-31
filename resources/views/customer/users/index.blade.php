@@ -112,7 +112,7 @@
                         <div class="iq-card-body">
                             <div class="related-heading mb-5">
                                 <h2>
-                                    <img src="{{resolveDark()}}/img/icon_menu/users.svg" width="20" alt=""> {{__('app.users.users')}}
+                                    <img src="{{resolveDark()}}/img/icon_menu/users.svg" class="tab_icon-img" width="20" alt=""> {{__('app.users.users')}}
                                 </h2>
                                 <span>
                                     <form action="{{ route('user_settings',['show_items']) }}" method="post">

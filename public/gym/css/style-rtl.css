@@ -749,7 +749,10 @@ div.dataTables_wrapper div.dataTables_length select {
     text-align: right !important;
 }
 
-/*.scroll-horizontal.branch-2nd.seacrh-open div{*/
-/*    margin-left: auto;*/
-/*    margin-right: unset;*/
-/*}*/
+.setting-heading .nav{
+    margin-bottom: -9px;
+}
+.tab_icon-img{
+    margin-right: 0;
+    margin-left: 5px;
+}

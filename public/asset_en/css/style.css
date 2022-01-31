@@ -2160,4 +2160,30 @@ div.dataTables_wrapper div.dataTables_paginate {
     right: 10px;
 }
 
+.tab_icon-img{
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+}
+.setting-heading .nav{
+    margin-bottom: -5px;
+}
+.setting-heading  h2{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.setting-heading .nav.nav-tabs .nav-item .nav-link{
+    height: 100%;
+    font-size: 16px;
+    vertical-align: center;
+    border-bottom: 1px solid #ccc;
+}
+.setting-heading .nav.nav-tabs .nav-item .nav-link.active{
+    font-weight: 700;
+    border-bottom: 3px solid var(--iq-primary);
+}
+.setting-heading .nav.nav-tabs .nav-item .nav-link.active:hover{
+    color: var(--iq-primary);
+}
+
 

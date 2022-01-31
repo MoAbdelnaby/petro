@@ -26,7 +26,8 @@
                         <div class="iq-card-body">
                             <div class="related-heading mb-5">
                                 <h2>
-                                    <i class="fab fa-servicestack fa-1x"></i> {{ __('app.service.service') }}
+                                    <img src="{{resolveDark()}}/img/icon_menu/servicestack.svg"  width="24" class="tab_icon-img" alt="">
+                                     {{ __('app.service.service') }}
                                 </h2>
                             </div>
                             <div class="related-product-block position-relative col-12">

@@ -26,8 +26,11 @@
 
                 <div class="col-lg-12">
                     <div class="iq-card">
-                        <div class="card-header">
-                            <h2>{{ __('app.Branch_Status_Header') }}</h2>
+                        <div class="card-header related-heading">
+
+                            <h2>
+                                <img src="{{resolveDark()}}/img/icon_menu/building.svg"  width="24" class="tab_icon-img" alt="">
+                                {{ __('app.Branch_Status_Header') }}</h2>
                         </div>
                         <div class="container-fluid">
                             <div class="row mb-3 mt-3 justify-content-center">

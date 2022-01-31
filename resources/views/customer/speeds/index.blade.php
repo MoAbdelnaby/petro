@@ -15,7 +15,8 @@
                         <div class="iq-card-body">
                             <div class="related-heading mb-5">
                                 <h2>
-                                   <i class="fas fa-wifi"></i> {{__('app.connection_speed')}}
+                                    <img src="{{resolveDark()}}/img/icon_menu/wifi.svg"  width="24" class="tab_icon-img" alt="">
+                                    {{__('app.connection_speed')}}
                                 </h2>
                             </div>
                             <div class="related-product-block position-relative col-12">

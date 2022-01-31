@@ -28,7 +28,7 @@
                             <div class="related-heading mb-5">
                                 <h2>
 
-                                    <img src="{{resolveDark()}}/img/icon_menu/work-time.svg" width="20" alt="">
+                                    <img src="{{resolveDark()}}/img/icon_menu/work-time.svg"  width="20" class="tab_icon-img" alt="">
 
                                         {{ __('app.activities.activities') }}
 

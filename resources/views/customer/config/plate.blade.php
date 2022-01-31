@@ -37,22 +37,22 @@
                 <div class="col-sm-12">
                     <div class="iq-card">
                         <div class="iq-card-body">
-                            <div class="related-heading mb-5">
-                                <h2>
-                                    <img src="{{resolveDark()}}/img/icon_menu/config.png" width="20" alt=""> {{ __('app.config') }}
+                            <div class="related-heading mb-5 d-flex justify-content-between align-items-center setting-heading">
+                                <h2 class="pb-0">
+                                    <img
+                                        src="{{ resolveDark() }}/img/icon_menu/config.svg" alt="Config"
+                                        class="tab_icon-img"> {{ __('app.config') }}
                                 </h2>
-                            </div>
-                            <div class="row col-12 p-0 m-0 mb-3 menu-and-filter">
-                                <div class="col mx-0 px-0">
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link " href="{{route('config.index','place')}}">{{ __('app.Place') }}</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link active" href="{{route('config.index','plate')}}">{{ __('app.Plate') }}</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link"
+                                           href="{{route('config.index','place')}}">{{ __('app.Bay_Area') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active"
+                                           href="{{route('config.index','plate')}}">{{ __('app.Car_Plate') }}</a>
+                                    </li>
+                                </ul>
                             </div>
                             <div>
 

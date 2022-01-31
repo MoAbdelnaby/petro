@@ -1,7 +1,7 @@
 <div class="tab-pane fade show active" id="model1" role="tabpanel" aria-labelledby="model1-tab">
     <div class="row mt-4">
-        <div class="col-lg-12">
-            <div class="iq-card secondary-custom-card mb-4">
+        <div class="col-lg-12 mb-4">
+            <div class="iq-card secondary-custom-card ">
                 <div class="iq-card-body">
                     <div class="related-heading mb-5">
                         <div class="d-flex justify-content-between align-items-center border-bottom config_key_parent">
