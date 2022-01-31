@@ -118,13 +118,12 @@ class StayingAverageReport extends BaseReport
         } elseif ($key_name == 'compare_area') {
             $filter_key = 'Area# ';
         }
-
-        $x = 0;
+        $i = 0;
         if (count(array_filter(array_values($data))) > 0) {
             foreach ($data as $key => $value) {
-                $charts['bar'][$x]['list'] = $filter_key . ' ' . $key;
-                $charts['bar'][$x]['value'] = $value['duration'];
-                $x++;
+                $charts['bar'][$i]['list'] = $filter_key . ' ' . $key;
+                $charts['bar'][$i]['value'] = $value['duration'];
+                $i++;
             }
         }
         return $charts;

@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\Region;
 use App\Services\ConfigService;
 use App\Services\Report\ReportService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -85,19 +86,18 @@ class ReportController extends Controller
                 ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
 
             $data = ReportService::handle($type, $filter);
-
             $result = $data['charts']['bar'];
-            $start = $request->start ?? '2022-01-01';
-            $end = $request->end_date ?? now()->toDateString();
+            $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : '2022-01-01';
+            $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();
             $name = "{$type}_excel_file_{$start}_to_{$end}.xls";
 
             $path = "reports/$type/files";
             $file_path = $path . '/' . $name;
             if (!is_dir(storage_path("/app/public/" . $path))) {
-                \File::makeDirectory(storage_path("/app/public/" . $path), 777, true, true);
+                \File::makeDirectory(storage_path("/app/public/" . $path), 0777, true, true);
             }
 
-            $check = \Excel::store(new ExportFiles($result), 'public/' . $file_path);
+            $check = \Excel::store(new ExportFiles($result), '/public/' . $file_path);
 
             if ($check) {
                 $file = public_path() . "/storage/$file_path";
