@@ -17,11 +17,12 @@ class BackoutReport extends BaseReport
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->join("regions", "regions.id", '=', "branches.region_id")
             ->join("regions as city", "city.id", '=', "regions.parent_id")
-            ->where("invoice", '=',null)
+            ->where("invoice", '=', null)
             ->where("branches.user_id", '=', parentID())
             ->where("regions.user_id", '=', parentID())
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
+            ->where("$this->mainTable.status", '=', 'completed')
             ->whereIn("regions.parent_id", $list)
             ->select("city.id as list_id", "city.name as list_name",
                 DB::raw('COUNT(carprofiles.id) as backout')
@@ -34,11 +35,12 @@ class BackoutReport extends BaseReport
         $query = DB::table($this->mainTable)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->join("regions", "regions.id", '=', "branches.region_id")
-            ->where("invoice", '=',null)
+            ->where("invoice", '=', null)
             ->where("branches.user_id", '=', parentID())
             ->where("regions.user_id", '=', parentID())
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
+            ->where("$this->mainTable.status", '=', 'completed')
             ->whereIn("regions.id", $list)
             ->select("regions.id as list_id", "regions.name as list_name",
                 DB::raw('COUNT(carprofiles.id) as backout')
@@ -49,8 +51,9 @@ class BackoutReport extends BaseReport
     public function getBranchQuery($list)
     {
         $query = DB::table($this->mainTable)
+            ->where("$this->mainTable.status", '=', 'completed')
             ->whereIn("branch_id", $list)
-            ->where("invoice", '=',null)
+            ->where("invoice", '=', null)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
@@ -65,7 +68,8 @@ class BackoutReport extends BaseReport
     {
         $query = DB::table($this->mainTable)
             ->where("$this->mainTable.branch_id", $list)
-            ->where("invoice", '=',null)
+            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("invoice", '=', null)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
@@ -90,12 +94,15 @@ class BackoutReport extends BaseReport
 
         $result = json_decode($query->groupBy("list_id")
             ->get()
-            ->mapWithKeys(function ($item) use ($filter) {
+            ->mapWithKeys(function ($item) {
                 return [$item->list_name => $item];
-            }), true);
+            }), true, 512, JSON_THROW_ON_ERROR);
 
         $report = $this->prepareChart($result, $key);
-        $report["dynamic_bar"] = [];
+
+        if($filter['extra']??false){
+            $report["extra"] = $this->loadExtraReport('plate', $filter);
+        }
         $report["info"] = [
             "list" => ucfirst($key),
             "unit" => config('app.report.type.backout.unit'),
@@ -113,7 +120,7 @@ class BackoutReport extends BaseReport
      * @param string $key_name
      * @return array
      */
-    public static function prepareChart($data, string $key_name = "list"): array
+    public function prepareChart($data, string $key_name = "list"): array
     {
         $charts = [];
         $filter_key = '';
@@ -132,5 +139,30 @@ class BackoutReport extends BaseReport
         }
 
         return $charts;
+    }
+
+    /**
+     * @param $type
+     * @param $filter
+     * @return array
+     */
+    protected function loadExtraReport($type, $filter): array
+    {
+        $result = [];
+        if ($type == 'plate') {
+            $query = DB::table($this->mainTable)
+                ->where("invoice", '=', null)
+                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+                ->where("branches.user_id", '=', parentID())
+                ->where("branches.active", '=', true)
+                ->where("$this->mainTable.status", '=', 'completed')
+                ->select('plate_en', 'plate_ar', 'branches.name', 'checkInDate');
+
+            $query = $this->handleDateFilter($query, $filter, true);
+
+            $result = $query->get()->toArray();
+        }
+
+        return $result;
     }
 }

@@ -90,9 +90,9 @@ class PlaceReport extends BaseReport
 
         $result = json_decode($query->groupBy("list_id")
             ->get()
-            ->mapWithKeys(function ($item) use ($filter) {
+            ->mapWithKeys(function ($item) {
                 return [$item->list_name => $item];
-            }), true);
+            }), true, 512, JSON_THROW_ON_ERROR);
 
         $report = $this->prepareChart($result, $key);
         $report["info"] = [
@@ -105,7 +105,6 @@ class PlaceReport extends BaseReport
         return $report;
     }
 
-
     /**
      * Prepare Format of Place Data Chart
      *
@@ -113,7 +112,7 @@ class PlaceReport extends BaseReport
      * @param string $key_name
      * @return array
      */
-    public static function prepareChart($data, string $key_name = "list"): array
+    public function prepareChart($data, string $key_name = "list"): array
     {
         $charts = [];
         $filter_key = '';

@@ -19,6 +19,7 @@ class InvoiceReport extends BaseReport
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->join("regions as city", "city.id", '=', "regions.parent_id")
                 ->where("$this->mainTable.invoice", $type == 'invoice' ? '<>' : '=', null)
+                ->where("$this->mainTable.status", '=', 'completed')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
@@ -38,6 +39,7 @@ class InvoiceReport extends BaseReport
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->where("$this->mainTable.invoice", $type == 'invoice' ? '<>' : '=', null)
+                ->where("$this->mainTable.status", '=', 'completed')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
@@ -55,6 +57,7 @@ class InvoiceReport extends BaseReport
         foreach (['invoice', 'no_invoice'] as $type) {
             $query[$type] = DB::table($this->mainTable)
                 ->whereIn("branch_id", $list)
+                ->where("$this->mainTable.status", '=', 'completed')
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.invoice", $type == 'invoice' ? '<>' : '=', null)
                 ->where("branches.user_id", '=', parentID())
@@ -71,6 +74,7 @@ class InvoiceReport extends BaseReport
         foreach (['invoice', 'no_invoice'] as $type) {
             $query[$type] = DB::table($this->mainTable)
                 ->where("$this->mainTable.branch_id", $list)
+                ->where("$this->mainTable.status", '=', 'completed')
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.invoice", $type == 'invoice' ? '<>' : '=', null)
                 ->where("branches.user_id", '=', parentID())
@@ -95,9 +99,9 @@ class InvoiceReport extends BaseReport
             $query = $this->handleDateFilter($this->query[$type], $filter, true);
             $result[$type] = json_decode($query->groupBy("list_id")
                 ->get()
-                ->mapWithKeys(function ($item) use ($filter) {
+                ->mapWithKeys(function ($item) {
                     return [$item->list_name => $item];
-                }), true);
+                }), true, 512, JSON_THROW_ON_ERROR);
         }
 
         $result = array_merge_recursive_distinct($result['invoice'], $result['no_invoice']);
@@ -120,7 +124,7 @@ class InvoiceReport extends BaseReport
      * @param string $key_name
      * @return array
      */
-    public static function prepareChart($data, string $key_name = "list"): array
+    public function prepareChart($data, string $key_name = "list"): array
     {
         $charts = [];
         $filter_key = '';
@@ -156,6 +160,7 @@ class InvoiceReport extends BaseReport
         $result = [];
         foreach (['invoice', 'no_invoice'] as $status) {
             $query[$status] = DB::table($this->mainTable)
+                ->where("$this->mainTable.status", '=', 'completed')
                 ->select('branches.id')
                 ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
                 ->where('branches.user_id', parentID())

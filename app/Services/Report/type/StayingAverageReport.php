@@ -22,6 +22,7 @@ class StayingAverageReport extends BaseReport
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
             ->whereIn("regions.parent_id", $list)
+            ->where("$this->mainTable.status", '=', 'completed')
             ->select("city.id as list_id", "city.name as list_name",
                 DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
             );
@@ -38,6 +39,7 @@ class StayingAverageReport extends BaseReport
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
             ->whereIn("regions.id", $list)
+            ->where("$this->mainTable.status", '=', 'completed')
             ->select("regions.id as list_id", "regions.name as list_name",
                 DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
             );
@@ -51,6 +53,7 @@ class StayingAverageReport extends BaseReport
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
+            ->where("$this->mainTable.status", '=', 'completed')
             ->select("branch_id as list_id", "branches.name as list_name",
                 DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
             );
@@ -65,6 +68,7 @@ class StayingAverageReport extends BaseReport
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
+            ->where("$this->mainTable.status", '=', 'completed')
             ->select("$this->mainTable.BayCode as list_id", "$this->mainTable.BayCode as list_name",
                 DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
             );
@@ -88,7 +92,7 @@ class StayingAverageReport extends BaseReport
             ->get()
             ->mapWithKeys(function ($item) use ($filter) {
                 return [$item->list_name => $item];
-            }), true);
+            }), true, 512, JSON_THROW_ON_ERROR);
 
         $report = $this->prepareChart($result, $key);
         $report["info"] = [
@@ -109,7 +113,7 @@ class StayingAverageReport extends BaseReport
      * @param string $key_name
      * @return array
      */
-    public static function prepareChart($data, string $key_name = "list"): array
+    public function prepareChart($data, string $key_name = "list"): array
     {
         $charts = [];
         $filter_key = '';

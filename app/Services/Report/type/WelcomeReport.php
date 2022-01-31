@@ -19,6 +19,7 @@ class WelcomeReport extends BaseReport
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->join("regions as city", "city.id", '=', "regions.parent_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
+                ->where("$this->mainTable.status", '=', 'completed')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
@@ -38,6 +39,7 @@ class WelcomeReport extends BaseReport
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
+                ->where("$this->mainTable.status", '=', 'completed')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
@@ -57,6 +59,7 @@ class WelcomeReport extends BaseReport
                 ->whereIn("branch_id", $list)
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
+                ->where("$this->mainTable.status", '=', 'completed')
                 ->where("branches.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
                 ->select("branch_id as list_id", "branches.name as list_name",
@@ -73,6 +76,7 @@ class WelcomeReport extends BaseReport
                 ->where("$this->mainTable.branch_id", $list)
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
+                ->where("$this->mainTable.status", '=', 'completed')
                 ->where("branches.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
                 ->select("$this->mainTable.BayCode as list_id", "$this->mainTable.BayCode as list_name",
@@ -95,9 +99,9 @@ class WelcomeReport extends BaseReport
             $query = $this->handleDateFilter($this->query[$type], $filter, true);
             $result[$type] = json_decode($query->groupBy("list_id")
                 ->get()
-                ->mapWithKeys(function ($item) use ($filter) {
+                ->mapWithKeys(function ($item) {
                     return [$item->list_name => $item];
-                }), true);
+                }), true, 512, JSON_THROW_ON_ERROR);
         }
 
         $result = array_merge_recursive_distinct($result['welcome'], $result['no_welcome']);
@@ -120,7 +124,7 @@ class WelcomeReport extends BaseReport
      * @param string $key_name
      * @return array
      */
-    public static function prepareChart($data, string $key_name = "list"): array
+    public function prepareChart($data, string $key_name = "list"): array
     {
         $charts = [];
         $filter_key = '';
