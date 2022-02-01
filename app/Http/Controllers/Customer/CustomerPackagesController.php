@@ -60,17 +60,22 @@ class CustomerPackagesController extends Controller
                 'updated_at' => Carbon::now()->subYear(),
             ]);
         });
-
         $off = $branches->count() - $on;
+
+        if (request('time_range')) {
+            $date = getStartEndDate(request('time_range'));
+        }
 
         $report = [];
         foreach (['place', 'plate', 'stayingAverage', 'invoice'] as $type) {
             $filter = $this->getTopBranch($type, request()->all());
+            $filter['start'] = $date['start'] ?? "2022-01-01";
+            $filter['end'] = $date['end'] ?? now()->toDateString();
             $report[$type] = ReportService::handle($type, $filter);
         }
 
         return view('customerhome', [
-            'statistics' => ReportService::statistics(),
+            'statistics' => ReportService::statistics($date['start'] ?? '2022-01-01', $date['end'] ?? null),
             'report' => $report,
             'config' => $config,
             'off' => $off,

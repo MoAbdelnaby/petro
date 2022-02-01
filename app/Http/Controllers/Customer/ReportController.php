@@ -23,8 +23,22 @@ class ReportController extends Controller
 
     public function index(Request $request)
     {
+        $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
+        $statics = ReportService::statistics($request->start??'2022-01-01', $request->end, $request->lists);
+
+        if (!empty(request('lists'))) {
+            $lists = request('lists');
+            if (!is_array($lists)) {
+                $lists = str_contains($lists, ',') ? explode(',', (string)$lists) : $lists;
+            }
+            $lists = \Arr::wrap($lists);
+            $list_report = Branch::whereIn('id', $lists)->pluck('name')->toArray();
+        }
+
         return view("customer.reports.index", [
-            'statistics' => ReportService::statistics($request->start, $request->end)
+            'statistics' => $statics,
+            'branches' => $branches,
+            'list_report' => $list_report ?? false
         ]);
     }
 
@@ -127,5 +141,29 @@ class ReportController extends Controller
         $regions = Region::active()->primary()->where('parent_id', $city)->select('id', 'name')->get();
 
         return view('customer.reports.extra._region_by_city', ['regions' => $regions]);
+    }
+
+    public function downloadStatistics(Request $request)
+    {
+        $data = ReportService::downloadStatistics($request->start ?? '2022-01-01', $request->end ?? null, $request->lists ?? null);
+        $type = "statistics";
+        $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : '2022-01-01';
+        $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();
+        $name = "{$type}_excel_file_{$start}_to_{$end}.xls";
+
+        $path = "reports/$type/files";
+        $file_path = $path . '/' . $name;
+        if (!is_dir(storage_path("/app/public/" . $path))) {
+            \File::makeDirectory(storage_path("/app/public/" . $path), 777, true, true);
+        }
+
+        $check = \Excel::store(new ExportFiles($data), '/public/' . $file_path);
+
+        if ($check) {
+            $file = public_path() . "/storage/$file_path";
+            return \Response::download($file, $name, ['Content-Type: application/xls']);
+        }
+
+        return redirect()->back()->with('danger', "Fail To Download File");
     }
 }

@@ -323,7 +323,6 @@ if (!function_exists('getStartEndDate')) {
     function getStartEndDate($time = null): array
     {
         if ($time == "today") {
-
             $start_name = Carbon::today()->format("Y-m-d");
             $last_name = Carbon::today()->format("Y-m-d");
 
@@ -331,6 +330,11 @@ if (!function_exists('getStartEndDate')) {
 
             $start_name = Carbon::now()->startOfWeek()->subDays(1)->format("Y-m-d");
             $last_name = Carbon::now()->endOfWeek()->subDays(1)->format("Y-m-d");
+        }
+        elseif ($time == 'last_week') {
+
+            $start_name = Carbon::now()->subWeek(1)->startOfWeek()->addDays(1)->format("Y-m-d");
+            $last_name = Carbon::now()->subWeek(1)->endOfWeek()->subDays(1)->format("Y-m-d");
 
         } elseif ($time == 'month') {
 

@@ -21,7 +21,6 @@ class ReportService
      */
     public static function statistics($start = "2022-01-01", $end = null, $lists = null): array
     {
-        $areas = AreaStatus::count();
         $users = User::primary()->count();
         $branches = Branch::active()->primary()->count();
         $regions = Region::active()->primary()->count();
@@ -34,41 +33,43 @@ class ReportService
         $serving = Carprofile::where('status', 'completed');
         $work = AreaDurationDay::query();
         $empty = AreaDurationDay::query();
+        $areas = AreaStatus::query();
 
         if ($start) {
             $cars->whereDate('checkInDate', '>=', $start);
             $invoice->whereDate('checkInDate', '>=', $start);
             $welcome->whereDate('checkInDate', '>=', $start);
             $backout->whereDate('checkInDate', '>=', $start);
-            $work->whereDate('checkInDate', '>=', $start);
-            $empty->whereDate('checkInDate', '>=', $start);
             $serving->whereDate('checkInDate', '>=', $start);
+            $work->whereDate('date', '>=', $start);
+            $empty->whereDate('date', '>=', $start);
         }
         if ($end) {
             $cars->whereDate('checkInDate', '<=', $end);
             $invoice->whereDate('checkInDate', '<=', $end);
             $welcome->whereDate('checkInDate', '<=', $end);
             $backout->whereDate('checkInDate', '<=', $end);
-            $work->whereDate('checkInDate', '<=', $end);
-            $empty->whereDate('checkInDate', '<=', $end);
             $serving->whereDate('checkInDate', '<=', $end);
+            $work->whereDate('date', '<=', $end);
+            $empty->whereDate('date', '<=', $end);
         }
 
-        if ($lists) {
+        if (!empty($lists)) {
             if (!is_array($lists)) {
                 $lists = str_contains($lists, ',') ? explode(',', (string)$lists) : $lists;
             }
             $lists = \Arr::wrap($lists);
-
-//            $cars->whereIn('brannch_id', $lists);
-//            $invoice->whereIn('brannch_id', $lists);
-//            $welcome->whereIn('brannch_id', $lists);
-//            $backout->whereIn('brannch_id', $lists);
-//            $work->whereIn('brannch_id', $lists);
-//            $empty->whereIn('brannch_id', $lists);
-//            $serving->whereIn('brannch_id', $lists);
+            $cars->whereIn('branch_id', $lists);
+            $invoice->whereIn('branch_id', $lists);
+            $welcome->whereIn('branch_id', $lists);
+            $backout->whereIn('branch_id', $lists);
+            $work->whereIn('branch_id', $lists);
+            $empty->whereIn('branch_id', $lists);
+            $serving->whereIn('branch_id', $lists);
+            $areas->whereIn('branch_id', $lists);
         }
 
+        $areas = $areas->count();
         $cars = $cars->count();
         $invoice = $invoice->where('invoice', '<>', null)->count();
         $welcome = $welcome->where('welcome', '<>', null)->count();
@@ -107,5 +108,87 @@ class ReportService
         }
 
         return $reportObject->prepare($filter);
+    }
+
+    /**
+     * @param string $start
+     * @param null $end
+     * @param null $lists
+     * @return array
+     */
+    public static function downloadStatistics($start = "2022-01-01", $end = null, $lists = null)
+    {
+        if (!is_array($lists)) {
+            $lists = str_contains($lists, ',') ? explode(',', (string)$lists) : $lists;
+        }
+        $branches = \Arr::wrap($lists);
+
+        if (empty($branches)) {
+            $branches = Branch::active()->primary()->pluck('id')->toArray();
+        }
+
+        foreach ($branches as $branch) {
+            //Systm Models Staticis
+            $cars = Carprofile::where('status', 'completed');
+            $invoice = Carprofile::where('status', 'completed');
+            $welcome = Carprofile::where('status', 'completed');
+            $backout = Carprofile::where('status', 'completed');
+            $serving = Carprofile::where('status', 'completed');
+            $work = AreaDurationDay::query();
+            $empty = AreaDurationDay::query();
+            $areas = AreaStatus::query();
+
+            if ($start) {
+                $cars->whereDate('checkInDate', '>=', $start);
+                $invoice->whereDate('checkInDate', '>=', $start);
+                $welcome->whereDate('checkInDate', '>=', $start);
+                $backout->whereDate('checkInDate', '>=', $start);
+                $serving->whereDate('checkInDate', '>=', $start);
+                $work->whereDate('date', '>=', $start);
+                $empty->whereDate('date', '>=', $start);
+            }
+            if ($end) {
+                $cars->whereDate('checkInDate', '<=', $end);
+                $invoice->whereDate('checkInDate', '<=', $end);
+                $welcome->whereDate('checkInDate', '<=', $end);
+                $backout->whereDate('checkInDate', '<=', $end);
+                $serving->whereDate('checkInDate', '<=', $end);
+                $work->whereDate('date', '<=', $end);
+                $empty->whereDate('date', '<=', $end);
+            }
+
+            $cars->where('branch_id', $branch);
+            $invoice->where('branch_id', $branch);
+            $welcome->where('branch_id', $branch);
+            $backout->where('branch_id', $branch);
+            $work->where('branch_id', $branch);
+            $empty->where('branch_id', $branch);
+            $serving->where('branch_id', $branch);
+            $areas->where('branch_id', $branch);
+
+            $branch_name = Branch::where('id', $branch)->first()['name'];
+            $areas_count = $areas->count();
+            $cars_count = $cars->count();
+            $invoice_count = $invoice->where('invoice', '<>', null)->count();
+            $welcome_count = $welcome->where('welcome', '<>', null)->count();
+            $backout_count = $backout->where('invoice', '=', null)->count();
+            $work_cout = round($work->sum('work_by_minute') / 60, 2);
+            $empty_count = round($empty->sum('empty_by_minute') / 60, 2);
+            $serving_count = $serving->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
+
+            $result[] = [
+                'branch_name' => $branch_name ?? 0,
+                'Area Count' => $cars_count ?? 0,
+                'Car Count' => $areas_count ?? 0,
+                'Invoice' => $invoice_count ?? 0,
+                'Backout' => $backout_count ?? 0,
+                'Welcome Message' => $welcome_count ?? 0,
+                'Work By Hour' => $work_cout ?? 0,
+                'Empty By Hour' => $empty_count ?? 0,
+                'Serving Average By Minute' => $serving_count ?? 0
+            ];
+        }
+
+        return $result ?? [];
     }
 }

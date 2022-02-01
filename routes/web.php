@@ -116,6 +116,7 @@ Route::group(['middleware' => ['auth','speed']], function () {
         Route::get('report/city/{region}/show-regions', 'ReportController@getRegionByCity');
         Route::get('reports/{type}/show', 'ReportController@show')->name('reports.show');
         Route::get('reports/{type}/download', 'ReportController@download')->name('report.download');
+        Route::get('reports/download-statistics', 'ReportController@downloadStatistics')->name('report.downloadStatistics');
 
         Route::get('error-mangment/{id}', 'ErrorManagementController@index')->name('error_mangment.index');
         Route::get('error-mangment/{id}/filter', 'ErrorManagementController@filter')->name('error_mangment.filter');

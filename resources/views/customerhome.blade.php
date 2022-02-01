@@ -14,43 +14,57 @@
                             <div class="iq-card-body p-0">
                                 <div class="custom-head mb-2 c-flex">
                                     <h2>{{ __('app.most_statistics') }}</h2>
-{{--                                    <div class="filter-pills-cont">--}}
-{{--                                        <ul class="nav nav-pills  ">--}}
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">--}}
-{{--                                                    <span class="nav-text">This Year</span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">--}}
-{{--                                                    <span class="nav-text">This Month</span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">--}}
-{{--                                                    <span class="nav-text ">This Week</span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="today">--}}
-{{--                                                    <span class="nav-text font-size-sm">Today</span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
+                                    <div class="filter-pills-cont">
+                                        <ul class="nav nav-pills ">
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'year' ? 'active' : '' }}"
+                                                   data-value="year">
+                                                    <span class="nav-text">{{__('app.this_year')}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'month' ? 'active' : ''}}"
+                                                   data-value="month">
+                                                    <span class="nav-text">{{__('app.this_month')}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'last_week' ? 'active' : '' }}"
+                                                   data-value="last_week">
+                                                    <span class="nav-text ">{{__('app.last_week')}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'week' ? 'active' : '' }}"
+                                                   data-value="week">
+                                                    <span class="nav-text ">{{__('app.this_week')}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'today' ? 'active' : ''}}"
+                                                   data-value="today">
+                                                    <span class="nav-text font-size-sm">{{__('app.today')}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 @if(in_array('home' ,array_values($config['place']['InternetStatus'][1])))
-                                    <div class="row pt-3 px-3 " id="sortable" data-sortable-id="0" aria-dropeffect="move">
+                                    <div class="row pt-3 px-3 " id="sortable" data-sortable-id="0"
+                                         aria-dropeffect="move">
                                         <div class="col-lg-6 col-md-6 mb-3">
                                             <div class="card text-center col-12">
                                                 <div class="card-header row online">
-                                                    <div class="col-4 d-flex justify-content-center align-items-center"><img width="60"
-                                                                                                                             src="{{ asset("images/online-svgrepo-com.svg") }}"
-                                                                                                                             alt="">
+                                                    <div class="col-4 d-flex justify-content-center align-items-center">
+                                                        <img width="60"
+                                                             src="{{ asset("images/online-svgrepo-com.svg") }}"
+                                                             alt="">
                                                     </div>
-                                                    <div class="col-8 d-flex flex-column justify-content-center align-items-center">
+                                                    <div
+                                                        class="col-8 d-flex flex-column justify-content-center align-items-center">
                                                         <h5><b><i class="fas fa-circle"
-                                                                  style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
+                                                                  style="color: green"></i> {{ __('app.branch_online')  }}
+                                                            </b></h5>
                                                         <h3><b>{{ $on }}</b></h3>
                                                     </div>
                                                 </div>
@@ -59,14 +73,17 @@
                                         <div class="col-lg-6 col-md-6">
                                             <div class="card text-center col-12">
                                                 <div class="card-header row offline">
-                                                    <div class="col-4 d-flex justify-content-center align-items-center"><img width="60"
-                                                                                                                             fill="red"
-                                                                                                                             src="{{ asset("images/offline-svgrepo-com.svg") }}"
-                                                                                                                             alt="">
+                                                    <div class="col-4 d-flex justify-content-center align-items-center">
+                                                        <img width="60"
+                                                             fill="red"
+                                                             src="{{ asset("images/offline-svgrepo-com.svg") }}"
+                                                             alt="">
                                                     </div>
-                                                    <div class="col-8 d-flex flex-column justify-content-center align-items-center">
+                                                    <div
+                                                        class="col-8 d-flex flex-column justify-content-center align-items-center">
                                                         <h5><b><i class="fas fa-circle"
-                                                                  style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
+                                                                  style="color: red"></i> {{ __('app.branch_offline') }}
+                                                            </b></h5>
                                                         <h3><b>{{ $off }}</b></h3>
                                                     </div>
                                                 </div>
@@ -174,7 +191,7 @@
                                                             <div
                                                                 class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
                                                                 <i class="fa fa-clock-o"></i></div>
-                                                            <h3>{{$statistics['serving']}}</h3>&nbsp;<h4>@lang('app.minute')</h4>
+                                                            <h3>{{$statistics['serving']??0}}</h3>&nbsp;<h4>@lang('app.minute')</h4>
                                                         </div>
                                                         <div
                                                             class="iq-map text-primary font-size-32">
@@ -365,10 +382,12 @@
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                     height="24px"
                                                      viewBox="0 0 24 24" version="1.1">
                                                     <defs/>
-                                                    <g id="Stockholm-icons-/-Home-/-Timer" stroke="none" stroke-width="1"
+                                                    <g id="Stockholm-icons-/-Home-/-Timer" stroke="none"
+                                                       stroke-width="1"
                                                        fill="none" fill-rule="evenodd">
                                                         <rect id="bound" x="0" y="0" width="24" height="24"/>
                                                         <path
@@ -438,10 +457,12 @@
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                     height="24px"
                                                      viewBox="0 0 24 24" version="1.1">
                                                     <defs/>
-                                                    <g id="Stockholm-icons-/-Home-/-Timer" stroke="none" stroke-width="1"
+                                                    <g id="Stockholm-icons-/-Home-/-Timer" stroke="none"
+                                                       stroke-width="1"
                                                        fill="none" fill-rule="evenodd">
                                                         <rect id="bound" x="0" y="0" width="24" height="24"/>
                                                         <path
@@ -511,10 +532,12 @@
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                     height="24px"
                                                      viewBox="0 0 24 24" version="1.1">
                                                     <defs/>
-                                                    <g id="Stockholm-icons-/-Home-/-Timer" stroke="none" stroke-width="1"
+                                                    <g id="Stockholm-icons-/-Home-/-Timer" stroke="none"
+                                                       stroke-width="1"
                                                        fill="none" fill-rule="evenodd">
                                                         <rect id="bound" x="0" y="0" width="24" height="24"/>
                                                         <path
@@ -573,6 +596,16 @@
 @section('scripts')
     <script src="{{asset('js/report/report.js')}}"></script>
     <script>
+        $(".home_filter").on('click', function (e) {
+            e.preventDefault();
+            let time_range = $(this).data("value")
+            let url = '{{url('/customerhome')}}';
+            let inputs = [];
+            inputs += `<input name="time_range" value=${time_range} >`;
+
+            $(`<form action=${url}>${inputs}</form>`).appendTo('body').submit().remove();
+        });
+
         var imageAddr = "/images/to-download.jpg";
         var downloadSize = 2936012.8; //bytes
         function ShowProgressMessage(msg) {
@@ -705,6 +738,7 @@
             lineChart('BranchInvoiceLine', invoice.bar, invoice_info);
             @endif
             /************** End Line Chart ************/
+
         });
     </script>
 @endsection

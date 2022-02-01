@@ -1590,4 +1590,8 @@ return [
     'welcome_non_integration_branch' => 'Welcome Non Integration Branches',
     'invoice_integration_branch' => 'Invoice Integration Branches',
     'invoice_non_integration_branch' => 'Invoice Non Integration Branches',
+    'this_year' => 'This year',
+    'this_month' => 'This Month',
+    'last_week' => 'Last Week',
+    'this_week' => 'This Week',
 ];
