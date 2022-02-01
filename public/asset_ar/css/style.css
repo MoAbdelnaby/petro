@@ -2313,3 +2313,12 @@ div.dataTables_wrapper div.dataTables_filter {
     margin-right: 0;
     margin-left: 1rem;
 }
+
+.navbar-list.ml-auto{
+    margin-left:  0 !important;
+    margin-right: 15px !important;
+}
+
+.custom-head h2{
+    margin-bottom: 0;
+}

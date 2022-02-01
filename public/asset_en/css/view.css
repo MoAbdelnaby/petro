@@ -23,13 +23,7 @@
 .plates-car-cont span {
     position: static !important;
 }
-.plates-car-cont
-    .select2-container--default
-    .select2-selection--single
-    .select2-selection__arrow
-    b {
-    left: 90%;
-}
+
 .plates-car-cont .select2-container .select2-selection--single {
     width: 100% !important;
     /* padding-right: 0; */

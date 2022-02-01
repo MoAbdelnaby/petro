@@ -2225,3 +2225,49 @@ div.dataTables_wrapper div.dataTables_paginate {
     background: hsl(251deg 85% 20% / 10%) !important;
     color: var(--iq-primary) !important;
 }
+
+.actions-cont{
+    gap: 10px;
+}
+.select-cont{
+    position: relative;
+}
+.select-cont .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    left: auto;
+    right: 15px;
+    top: 50%;
+}
+.filter-content h6{
+    font-weight: bold;
+    padding: 0 10px;
+}
+.export-dropdown .filter-content {
+    min-width: 280px;
+    padding: 20px 0 !important;
+    transform: translate3d(20px, 36px, 0px) !important;
+
+}
+.filter-dropdown .filter-content{
+    min-width: 480px;
+    transform: translate3d(15px, 36px, 0px) !important;
+}
+.export-dropdown .filter-content .form-check:hover{
+    background: #f7f7f7;
+}
+.export-dropdown .filter-content .form-check .form-check-label{
+    width: 100%;
+    padding-left: 2rem;
+}
+.export-dropdown .filter-content .form-check .form-check-input{
+    margin-top: 8px;
+    margin-left: 0.5rem;
+}
+.submit-cont{
+    padding: 0 10px;
+}
+.filter-dropdown .filter-content.open{
+    top: 0;
+}
+/*.filter-content .form-check:first-of-type{*/
+/*    border-bottom: 1px solid #ccc;*/
+/*}*/
