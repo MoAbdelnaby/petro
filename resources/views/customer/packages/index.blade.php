@@ -84,14 +84,14 @@
                     <div class="iq-card">
                         <div class="iq-card-body">
                             <div class="row">
-                                <div class="col-sm-12 mt-3 related-product">
-                                    <div class="related-heading mb-5">
-                                        <h2>
+                                <div class="col-sm-12  related-product">
+                                    <div class="related-heading mb-5 c-flex">
+                                        <h2 class="pb-2">
                                             <img src="{{resolveDark()}}/img/icon_menu/package.svg" alt="product-image"
                                                  width="20" class="img-fluid">
                                             {{__('app.customers.packages.itemslist')}}
                                         </h2>
-                                        <span>
+                                        <span class="position-static pb-2">
                                             <form action="{{ route('user_settings',['show_items']) }}" method="post">
                                               @csrf
                                               <input type="hidden" name="value" value="table">

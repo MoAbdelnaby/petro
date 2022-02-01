@@ -10,7 +10,7 @@
     </a>
 
     <div class="filter-content" aria-labelledby="dropdownMenuButton">
-        <form action="{{route('reports.show',$type)}}" method="get">
+        <form action="{{route('reports.show',$type)}}" method="get" class="filter-form">
             @csrf
             <div class="row">
                 <div class="col-md-12">
@@ -29,15 +29,15 @@
                     </select>
                 </div>
 
-                <div id="city_container" class="col-md-12"  @if(request('show_by') == 'city') style="display: block" @else style="display: none" @endif >
+                <div id="city_container" class="col-md-12 "  @if(request('show_by') == 'city') style="display: block" @else style="display: none" @endif >
                     @include('customer.reports.extra._city')
                 </div>
 
-                <div id="region_container" class="col-md-12"  @if(request('show_by') == 'region') style="display: block" @else style="display: none" @endif >
+                <div id="region_container" class="col-md-12 "  @if(request('show_by') == 'region') style="display: block" @else style="display: none" @endif >
                     @include('customer.reports.extra._region')
                 </div>
 
-                <div id="branch_container" class="col-md-12"  @if(request('show_by') == 'branch') style="display: block" @else style="display: none" @endif >
+                <div id="branch_container" class="col-md-12 "  @if(request('show_by') == 'branch') style="display: block" @else style="display: none" @endif >
                     @include('customer.reports.extra._branch')
                 </div>
             </div>
@@ -64,7 +64,7 @@
             </div>
 
             <div class="text-center mt-4">
-                <button type="submit" class="btn btn-secondary waves-effect waves-light px-4 py-2">
+                <button type="submit" class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
                     {{ __('app.Filter') }}
                 </button>
             </div>
@@ -76,30 +76,30 @@
     <script>
         $(document).ready(function () {
             let type = "{{$type}}";
-
+            let show_by = ""
             $('.btn-filter').on('click', function () {
                 $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');
             })
 
             $("#show_by").on('change', function (e) {
-                let show_by = $(this).val();
+                 show_by = $(this).val();
 
                 if (show_by === 'city') {
-                    $("#region_container").hide();
-                    $("#branch_container").hide();
-                    $("#city_container").show();
+                    $("#region_container").hide().removeClass('active');
+                    $("#branch_container").hide().removeClass('active');
+                    $("#city_container").show().addClass('active');
                 } else if (show_by === 'region') {
-                    $("#region_container").show();
-                    $("#branch_container").hide();
-                    $("#city_container").hide();
+                    $("#region_container").show().addClass('active');
+                    $("#branch_container").hide().removeClass('active');
+                    $("#city_container").hide().removeClass('active');
                 } else if (show_by === 'branch') {
-                    $("#region_container").hide();
-                    $("#branch_container").show();
-                    $("#city_container").hide();
+                    $("#region_container").hide().removeClass('active');
+                    $("#branch_container").show().addClass('active');
+                    $("#city_container").hide().removeClass('active');
                 } else {
-                    $("#region_container").hide();
-                    $("#branch_container").hide();
-                    $("#city_container").hide();
+                    $("#region_container").hide().removeClass('active');
+                    $("#branch_container").hide().removeClass('active');
+                    $("#city_container").hide().removeClass('active');
                 }
             });
 
@@ -117,6 +117,25 @@
 
                 $(`<form action=${url}>${inputs}</form>`).appendTo('body').submit().remove();
             });
+
+            $(".filter-form").on("submit", function (e) {
+                if(!show_by){
+                    return;
+                }
+                e.preventDefault();
+                let requiredInputs = $(this).find('.active .show .required');
+                let invalidElm = 0;
+                requiredInputs.each(function(){
+                    let selectElm = $(this);
+                    if(!selectElm.find(":selected").val()){
+                        console.log(selectElm)
+                        invalidElm++;
+                        selectElm.closest(".show").find(".invalid-feedback").show()
+                    }
+                })
+                !invalidElm && this.submit();
+
+            })
         });
     </script>
 @endpush

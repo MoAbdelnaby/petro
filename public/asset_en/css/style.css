@@ -2186,4 +2186,42 @@ div.dataTables_wrapper div.dataTables_paginate {
     color: var(--iq-primary);
 }
 
+.filter-pills-cont .nav.nav-pills{
+    gap: 5px;
+}
+.filter-pills-cont .nav.nav-pills .nav-item .nav-link{
+    border-radius: .42rem;
+}
 
+.filter-pills-cont .btn.btn-outline-secondary.focus:not(.btn-text), .filter-pills-cont .btn.btn-outline-secondary:focus:not(.btn-text), .filter-pills-cont .btn.btn-outline-secondary:hover:not(.btn-text):not(:disabled):not(.disabled) {
+    background-color: #e4e6ef;
+    border: 1px solid transparent;
+    color: #393c52;
+}
+
+.filter-pills-cont .nav.nav-pills .nav-item .nav-link.btn.btn-outline-secondary.active{
+    background-color: var(--iq-primary);
+    color: #fff;
+}
+.filter-form .invalid-feedback{
+    display: none;
+}
+
+.custom-head{
+    padding: .5rem 1rem;
+    border-bottom: 1px solid #ccc;
+
+}
+.custom-head h2{
+    font-size: 20px;
+    color: #565555;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+    line-height: 50px;
+    font-weight: bold;
+}
+
+.iq-card-icon.iq-bg-primary{
+    background: hsl(251deg 85% 20% / 10%) !important;
+    color: var(--iq-primary) !important;
+}

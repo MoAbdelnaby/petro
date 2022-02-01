@@ -26,10 +26,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="iq-card">
-                        <div class="iq-card-body" style="padding: 25px 20px !important;">
+                        <div class="iq-card-body" >
                             <div>
-                                <div class="row col-12 p-0 m-0 mb-3 menu-and-filter menu-and-filter--custom">
-                                    <div class="col-9">
+                                <div class="row col-12 p-0 m-0 mb-3  menu-and-filter menu-and-filter--custom">
+                                    <div class="col">
                                         <ul class="nav nav-tabs nav-tabs--custom" id="myTab" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link active" href="{{ route('reports.index')}}">{{ __('app.most_statistics') }}</a>
@@ -54,10 +54,29 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-3">
-                                        <div class="d-flex justify-content-end position-relative filter-cont">
-{{--                                            @include('customer.reports.extra._filter',['type' => 'index'])--}}
-                                        </div>
+                                    <div class="mb-2 filter-pills-cont">
+                                        <ul class="nav nav-pills  ">
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">
+                                                    <span class="nav-text">This Year</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">
+                                                    <span class="nav-text">This Month</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">
+                                                    <span class="nav-text ">This Week</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="today">
+                                                    <span class="nav-text font-size-sm">Today</span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="related-heading mb-3 m-0 row col-12 related-heading--custom" style="padding: 15px">
