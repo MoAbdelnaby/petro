@@ -54,30 +54,30 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="mb-2 filter-pills-cont">
-                                        <ul class="nav nav-pills  ">
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">
-                                                    <span class="nav-text">This Year</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">
-                                                    <span class="nav-text">This Month</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">
-                                                    <span class="nav-text ">This Week</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="today">
-                                                    <span class="nav-text font-size-sm">Today</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+{{--                                    <div class="mb-2 filter-pills-cont">--}}
+{{--                                        <ul class="nav nav-pills  ">--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">--}}
+{{--                                                    <span class="nav-text">This Year</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">--}}
+{{--                                                    <span class="nav-text">This Month</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">--}}
+{{--                                                    <span class="nav-text ">This Week</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="today">--}}
+{{--                                                    <span class="nav-text font-size-sm">Today</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="related-heading mb-3 m-0 row col-12 related-heading--custom" style="padding: 15px">
                                     <h2 class="p-0 col ml-2">{{ __('app.most_data_statistics') }}</h2>
@@ -296,6 +296,25 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{route('reports.show','backout')}}" class="iq-card-body" style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.backout') }}</h6>
+                                                        </div>
+                                                        <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                    <i class="fa fa-outdent"></i></div>
+                                                                <h3>{{$statistics['backout']}}</h3></div>
+                                                            <div
+                                                                class="iq-map text-danger font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                     <a href="{{route('reports.show','invoice')}}" class="iq-card-body" style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.Invoice') }}</h6>
@@ -331,25 +350,6 @@
                                                             </div>
                                                             <div
                                                                 class="iq-map text-warning font-size-32">
-                                                                <i class="ri-bar-chart-grouped-line"></i></div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','backout')}}" class="iq-card-body" style="padding: 25px 20px !important;">
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <h6 class='iq-card-title'>{{ __('app.backout') }}</h6>
-                                                        </div>
-                                                        <div class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                                            <div class="d-flex align-items-center">
-                                                                <div
-                                                                    class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                                    <i class="fa fa-outdent"></i></div>
-                                                                <h3>{{$statistics['backout']}}</h3></div>
-                                                            <div
-                                                                class="iq-map text-danger font-size-32">
                                                                 <i class="ri-bar-chart-grouped-line"></i></div>
                                                         </div>
                                                     </a>

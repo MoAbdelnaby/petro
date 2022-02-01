@@ -67,7 +67,7 @@ class BackoutReport extends BaseReport
     public function getAreaQuery($list)
     {
         $query = DB::table($this->mainTable)
-            ->where("$this->mainTable.branch_id", $list)
+            ->whereIn("$this->mainTable.branch_id", $list)
             ->where("$this->mainTable.status", '=', 'completed')
             ->where("invoice", '=', null)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
@@ -100,7 +100,7 @@ class BackoutReport extends BaseReport
 
         $report = $this->prepareChart($result, $key);
 
-        if($filter['extra']??false){
+        if ($filter['extra'] ?? false) {
             $report["extra"] = $this->loadExtraReport('plate', $filter);
         }
         $report["info"] = [

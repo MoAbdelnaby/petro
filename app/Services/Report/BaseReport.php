@@ -23,10 +23,12 @@ abstract class BaseReport
             $list = str_contains($list, ',') ? explode(',', $list) : $list;
         }
 
+        $list = \Arr::wrap($list);
         //Prepare Base Query to get This report base On List Type
         $this->$func_name($list);
 
         $data["charts"] = $this->getReport($data["type"], $filter);
+
 
         return $data;
     }
@@ -44,7 +46,7 @@ abstract class BaseReport
         if ($filter['start'] ?? false) {
             $start = ($filter['start'] > date('Y-m-d')) ? now()->subDay() : Carbon::parse($filter['start']);
             if ($timeStamp) {
-                $query->where($filter['column'], '>=', $start->format('Y-m-d h:i:s'));
+                $query->whereDate($filter['column'], '>=', $start->format('Y-m-d h:i:s'));
             } else {
                 $query->whereDate($filter['column'], '>=', $start->format('Y-m-d'));
             }
@@ -53,7 +55,7 @@ abstract class BaseReport
         if ($filter['end'] ?? false) {
             $end = ($filter['end'] > date('Y-m-d')) ? now() : Carbon::parse($filter['end']);
             if ($timeStamp) {
-                $query->where($filter['column'], '<=', $end->format('Y-m-d h:i:s'));
+                $query->whereDate($filter['column'], '<=', $end->format('Y-m-d h:i:s'));
             } else {
                 $query->whereDate($filter['column'], '<=', $end->format('Y-m-d'));
             }

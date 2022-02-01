@@ -14,30 +14,30 @@
                             <div class="iq-card-body p-0">
                                 <div class="custom-head mb-2 c-flex">
                                     <h2>{{ __('app.most_statistics') }}</h2>
-                                    <div class="filter-pills-cont">
-                                        <ul class="nav nav-pills  ">
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">
-                                                    <span class="nav-text">This Year</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">
-                                                    <span class="nav-text">This Month</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">
-                                                    <span class="nav-text ">This Week</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="today">
-                                                    <span class="nav-text font-size-sm">Today</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+{{--                                    <div class="filter-pills-cont">--}}
+{{--                                        <ul class="nav nav-pills  ">--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">--}}
+{{--                                                    <span class="nav-text">This Year</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">--}}
+{{--                                                    <span class="nav-text">This Month</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">--}}
+{{--                                                    <span class="nav-text ">This Week</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="today">--}}
+{{--                                                    <span class="nav-text font-size-sm">Today</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </div>--}}
                                 </div>
                                 @if(in_array('home' ,array_values($config['place']['InternetStatus'][1])))
                                     <div class="row pt-3 px-3 " id="sortable" data-sortable-id="0" aria-dropeffect="move">
@@ -163,6 +163,28 @@
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-3">
                                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{route('reports.show','invoice')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.staying_car_average') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
+                                                                <i class="fa fa-clock-o"></i></div>
+                                                            <h3>{{$statistics['serving']}}</h3>&nbsp;<h4>@lang('app.minute')</h4>
+                                                        </div>
+                                                        <div
+                                                            class="iq-map text-primary font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                 <a href="{{route('reports.show','plate')}}" class="iq-card-body"
                                                    style="padding: 25px 20px !important;">
                                                     <div class="d-flex align-items-center justify-content-between">
@@ -183,21 +205,20 @@
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-3">
                                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                <a href="{{route('reports.show','invoice')}}" class="iq-card-body"
+                                                <a href="{{route('reports.show','backout')}}" class="iq-card-body"
                                                    style="padding: 25px 20px !important;">
                                                     <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class='iq-card-title'>{{ __('app.staying_car_average') }}</h6>
+                                                        <h6 class='iq-card-title'>{{ __('app.backout') }}</h6>
                                                     </div>
                                                     <div
                                                         class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                                         <div class="d-flex align-items-center">
                                                             <div
-                                                                class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
-                                                                <i class="fa fa-clock-o"></i></div>
-                                                            <h3>{{$statistics['serving']}}</h3>&nbsp;<h4>@lang('app.minute')</h4>
-                                                        </div>
+                                                                class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                <i class="fa fa-outdent"></i></div>
+                                                            <h3>{{$statistics['backout']}}</h3></div>
                                                         <div
-                                                            class="iq-map text-primary font-size-32">
+                                                            class="iq-map text-danger font-size-32">
                                                             <i class="ri-bar-chart-grouped-line"></i></div>
                                                     </div>
                                                 </a>
@@ -221,27 +242,6 @@
                                                         </div>
                                                         <div
                                                             class="iq-map text-warning font-size-32">
-                                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                <a href="{{route('reports.show','backout')}}" class="iq-card-body"
-                                                   style="padding: 25px 20px !important;">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class='iq-card-title'>{{ __('app.backout') }}</h6>
-                                                    </div>
-                                                    <div
-                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                                        <div class="d-flex align-items-center">
-                                                            <div
-                                                                class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                                <i class="fa fa-outdent"></i></div>
-                                                            <h3>{{$statistics['backout']}}</h3></div>
-                                                        <div
-                                                            class="iq-map text-danger font-size-32">
                                                             <i class="ri-bar-chart-grouped-line"></i></div>
                                                     </div>
                                                 </a>

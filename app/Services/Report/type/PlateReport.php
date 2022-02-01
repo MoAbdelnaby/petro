@@ -64,8 +64,7 @@ class PlateReport extends BaseReport
     public function getAreaQuery($list)
     {
         $query = DB::table($this->mainTable)
-            ->where("$this->mainTable.branch_id", $list)
-            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+            ->whereIn("$this->mainTable.branch_id", $list)            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
             ->where("$this->mainTable.status", '=', 'completed')
