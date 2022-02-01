@@ -25,7 +25,7 @@ class ReportService
         $branches = Branch::active()->primary()->count();
         $regions = Region::active()->primary()->count();
 
-        //Systm Models Staticis
+        //System Models Staticis
         $cars = Carprofile::where('status', 'completed');
         $invoice = Carprofile::where('status', 'completed');
         $welcome = Carprofile::where('status', 'completed');
@@ -128,7 +128,7 @@ class ReportService
         }
 
         foreach ($branches as $branch) {
-            //Systm Models Staticis
+            //System Models Staticis
             $cars = Carprofile::where('status', 'completed');
             $invoice = Carprofile::where('status', 'completed');
             $welcome = Carprofile::where('status', 'completed');
@@ -172,20 +172,22 @@ class ReportService
             $invoice_count = $invoice->where('invoice', '<>', null)->count();
             $welcome_count = $welcome->where('welcome', '<>', null)->count();
             $backout_count = $backout->where('invoice', '=', null)->count();
-            $work_cout = round($work->sum('work_by_minute') / 60, 2);
-            $empty_count = round($empty->sum('empty_by_minute') / 60, 2);
+            $work_count = round($work->sum('work_by_minute') / 60);
+            $empty_count = round($empty->sum('empty_by_minute') / 60);
             $serving_count = $serving->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
 
             $result[] = [
-                'branch_name' => $branch_name ?? 0,
-                'Area Count' => $cars_count ?? 0,
-                'Car Count' => $areas_count ?? 0,
+                'Branch Name' => $branch_name ?? 0,
+                'Start Date' => $start ?? "2022-01-01",
+                'End Date' => $end ?? now()->toDateString(),
+                'Area Count' => $areas_count ?? 0,
+                'Car Count' => $cars_count ?? 0,
                 'Invoice' => $invoice_count ?? 0,
                 'Backout' => $backout_count ?? 0,
                 'Welcome Message' => $welcome_count ?? 0,
-                'Work By Hour' => $work_cout ?? 0,
-                'Empty By Hour' => $empty_count ?? 0,
-                'Serving Average By Minute' => $serving_count ?? 0
+                'Work Duration(Hours)' => $work_count ?? 0,
+                'Empty Duration(Hours)' => $empty_count ?? 0,
+                'Serving Average(Minutes)' => $serving_count ?? 0
             ];
         }
 
