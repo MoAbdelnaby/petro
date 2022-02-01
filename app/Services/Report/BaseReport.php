@@ -22,8 +22,8 @@ abstract class BaseReport
         if (!is_array($list)) {
             $list = str_contains($list, ',') ? explode(',', $list) : $list;
         }
-
         $list = \Arr::wrap($list);
+
         //Prepare Base Query to get This report base On List Type
         $this->$func_name($list);
 
