@@ -73,7 +73,7 @@ class InvoiceReport extends BaseReport
     {
         foreach (['invoice', 'no_invoice'] as $type) {
             $query[$type] = DB::table($this->mainTable)
-                ->where("$this->mainTable.branch_id", $list)
+                ->whereIn("$this->mainTable.branch_id", $list)
                 ->where("$this->mainTable.status", '=', 'completed')
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.invoice", $type == 'invoice' ? '<>' : '=', null)

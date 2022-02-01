@@ -57,6 +57,7 @@ class ReportService
     {
         try {
             $reportObject = BaseReportFactory::handle($type);
+
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

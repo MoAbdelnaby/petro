@@ -73,8 +73,7 @@ class WelcomeReport extends BaseReport
     {
         foreach (['welcome', 'no_welcome'] as $type) {
             $query[$type] = DB::table($this->mainTable)
-                ->where("$this->mainTable.branch_id", $list)
-                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+                ->whereIn("$this->mainTable.branch_id", $list)                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
                 ->where("$this->mainTable.status", '=', 'completed')
                 ->where("branches.user_id", '=', parentID())
