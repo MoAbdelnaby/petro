@@ -163,26 +163,6 @@
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-3">
                                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                <a href="{{route('reports.show','plate')}}" class="iq-card-body"
-                                                   style="padding: 25px 20px !important;">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class='iq-card-title'>{{ __('app.Car_Count') }}</h6>
-                                                    </div>
-                                                    <div
-                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                                        <div class="d-flex align-items-center">
-                                                            <div
-                                                                class="rounded-circle iq-card-icon iq-bg-info mr-2">
-                                                                <i class="fa fa-car"></i></div>
-                                                            <h3>{{$statistics['cars']}}</h3></div>
-                                                        <div class="iq-map text-info font-size-32">
-                                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                 <a href="{{route('reports.show','invoice')}}" class="iq-card-body"
                                                    style="padding: 25px 20px !important;">
                                                     <div class="d-flex align-items-center justify-content-between">
@@ -198,6 +178,26 @@
                                                         </div>
                                                         <div
                                                             class="iq-map text-primary font-size-32">
+                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                <a href="{{route('reports.show','plate')}}" class="iq-card-body"
+                                                   style="padding: 25px 20px !important;">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h6 class='iq-card-title'>{{ __('app.Car_Count') }}</h6>
+                                                    </div>
+                                                    <div
+                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                        <div class="d-flex align-items-center">
+                                                            <div
+                                                                class="rounded-circle iq-card-icon iq-bg-info mr-2">
+                                                                <i class="fa fa-car"></i></div>
+                                                            <h3>{{$statistics['cars']}}</h3></div>
+                                                        <div class="iq-map text-info font-size-32">
                                                             <i class="ri-bar-chart-grouped-line"></i></div>
                                                     </div>
                                                 </a>
