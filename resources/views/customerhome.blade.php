@@ -14,40 +14,40 @@
                             <div class="iq-card-body p-0">
                                 <div class="custom-head mb-2 c-flex">
                                     <h2>{{ __('app.most_statistics') }}</h2>
-                                    <div class="filter-pills-cont">
-                                        <ul class="nav nav-pills ">
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'year' ? 'active' : '' }}"
-                                                   data-value="year">
-                                                    <span class="nav-text">{{__('app.this_year')}}</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'month' ? 'active' : ''}}"
-                                                   data-value="month">
-                                                    <span class="nav-text">{{__('app.this_month')}}</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'last_week' ? 'active' : '' }}"
-                                                   data-value="last_week">
-                                                    <span class="nav-text ">{{__('app.last_week')}}</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'week' ? 'active' : '' }}"
-                                                   data-value="week">
-                                                    <span class="nav-text ">{{__('app.this_week')}}</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'today' ? 'active' : ''}}"
-                                                   data-value="today">
-                                                    <span class="nav-text font-size-sm">{{__('app.today')}}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+{{--                                    <div class="filter-pills-cont">--}}
+{{--                                        <ul class="nav nav-pills ">--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'year' ? 'active' : '' }}"--}}
+{{--                                                   data-value="year">--}}
+{{--                                                    <span class="nav-text">{{__('app.this_year')}}</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'month' ? 'active' : ''}}"--}}
+{{--                                                   data-value="month">--}}
+{{--                                                    <span class="nav-text">{{__('app.this_month')}}</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'last_week' ? 'active' : '' }}"--}}
+{{--                                                   data-value="last_week">--}}
+{{--                                                    <span class="nav-text ">{{__('app.last_week')}}</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'week' ? 'active' : '' }}"--}}
+{{--                                                   data-value="week">--}}
+{{--                                                    <span class="nav-text ">{{__('app.this_week')}}</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'today' ? 'active' : ''}}"--}}
+{{--                                                   data-value="today">--}}
+{{--                                                    <span class="nav-text font-size-sm">{{__('app.today')}}</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </div>--}}
                                 </div>
                                 @if(in_array('home' ,array_values($config['place']['InternetStatus'][1])))
                                     <div class="row pt-3 px-3 " id="sortable" data-sortable-id="0"
