@@ -23,14 +23,14 @@ class ReportService
         $branches = Branch::active()->primary()->count();
         $regions = Region::active()->primary()->count();
         $users = User::primary()->count();
-        $cars = Carprofile::whereDate('checkInDate', '2022-01-01')->count();
         $areas = AreaStatus::count();
-        $invoice = Carprofile::whereDate('checkInDate', '2022-01-01')->where('invoice', '<>', null)->count();
-        $welcome = Carprofile::whereDate('checkInDate', '2022-01-01')->where('welcome', '<>', null)->count();
-        $backout = Carprofile::whereDate('checkInDate', '2022-01-01')->where('invoice', '=', null)->count();
-        $work = AreaDurationDay::whereDate('date', '2022-01-01')->sum('work_by_minute');
-        $empty = AreaDurationDay::whereDate('date', '2022-01-01')->sum('empty_by_minute');
-        $serving = Carprofile::select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
+        $cars = Carprofile::where('status', 'completed')->whereDate('checkInDate', '>=', '2022-01-01')->count();
+        $invoice = Carprofile::where('status', 'completed')->whereDate('checkInDate', '>=', '2022-01-01')->where('invoice', '<>', null)->count();
+        $welcome = Carprofile::where('status', 'completed')->whereDate('checkInDate', '>=', '2022-01-01')->where('welcome', '<>', null)->count();
+        $backout = Carprofile::where('status', 'completed')->whereDate('checkInDate', '>=', '2022-01-01')->where('invoice', '=', null)->count();
+        $work = AreaDurationDay::whereDate('date', '>=', '2022-01-01')->sum('work_by_minute');
+        $empty = AreaDurationDay::whereDate('date', '>=', '2022-01-01')->sum('empty_by_minute');
+        $serving = Carprofile::where('status', 'completed')->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
 
         return [
             'branches' => $branches,
@@ -57,7 +57,6 @@ class ReportService
     {
         try {
             $reportObject = BaseReportFactory::handle($type);
-
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
