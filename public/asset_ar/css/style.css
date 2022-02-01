@@ -2322,3 +2322,7 @@ div.dataTables_wrapper div.dataTables_filter {
 .custom-head h2{
     margin-bottom: 0;
 }
+.select-cont .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    right: auto;
+    left: 15px;
+}

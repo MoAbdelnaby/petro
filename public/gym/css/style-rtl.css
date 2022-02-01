@@ -480,8 +480,8 @@ body.sidebar-main .iq-footer {
 .select2-container--default[dir="rtl"]
     .select2-selection--single
     .select2-selection__arrow {
-    right: 1px;
-    left: auto;
+    right: auto;
+    left: 10px;
 }
 #myModalAssign .nav-tabs .nav-link.active::after {
     display: none;

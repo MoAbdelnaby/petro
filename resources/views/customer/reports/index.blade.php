@@ -55,28 +55,89 @@
                                         </ul>
                                     </div>
                                     <div class="mb-2 filter-pills-cont">
-                                        <ul class="nav nav-pills  ">
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">
-                                                    <span class="nav-text">This Year</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">
-                                                    <span class="nav-text">This Month</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">
-                                                    <span class="nav-text ">This Week</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="today">
-                                                    <span class="nav-text font-size-sm">Today</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <div class="filter-dropdown">
+                                            <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm" href="">
+                                                <i class="fas fa-bookmark"></i> &nbsp;{{ __('app.Default_report') }}
+                                            </a>
+                                            <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm btn_download">
+                                                <i class="fas fa-download"></i> &nbsp;{{ __('app.Download') }}
+                                            </a>
+                                            <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2" data-toggle="dropdown" href="#">
+                                                <i class="fas fa-sort-alt"></i> &nbsp;{{ __('app.Filter') }}
+                                            </a>
+                                            <div class="filter-content" aria-labelledby="dropdownMenuButton">
+                                                <form action="" method="get" class="filter-form">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div id="branch_container" class="col-md-12 "  >
+                                                            <div class="row">
+                                                                <div class=" col-md-12 " id="branch_selection">
+                                                                    <lebel>{{ __('app.Select_branches') }}:</lebel>
+                                                                    <select class="form-control select_2 required nice-select" multiple name="branch_selection">
+                                                                        <option value="11">branch 1</option>
+                                                                        <option value="11">branch 2</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                        Please select branch.
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="form-group input-group input-daterange">
+                                                        <div class="d-flex align-items-end row">
+                                                            <div class="col-md-12 mt-2">
+                                                                <label class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
+                                                                <input type="datetime-local" value="{{request('start')}}" name="start"
+                                                                       class="form-control" max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                       oninput="if (this.value >= this.max) this.value = this.max;"
+                                                                />
+                                                            </div>
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
+                                                                <input type="datetime-local" value="{{request('end')}}" name="end"
+                                                                       class="form-control" max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                       oninput="if (this.value >= this.max) this.value = this.max;"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="text-center mt-4">
+                                                        <button type="submit" class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
+                                                            {{ __('app.Filter') }}
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+{{--                                        <ul class="nav nav-pills  ">--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">--}}
+{{--                                                    <span class="nav-text">This Year</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">--}}
+{{--                                                    <span class="nav-text">This Month</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">--}}
+{{--                                                    <span class="nav-text ">This Week</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="today">--}}
+{{--                                                    <span class="nav-text font-size-sm">Today</span>--}}
+{{--                                                </a>--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
                                     </div>
                                 </div>
                                 <div class="related-heading mb-3 m-0 row col-12 related-heading--custom" style="padding: 15px">
@@ -366,4 +427,19 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        $(document).ready(function () {
+            $('.btn-filter').on('click', function () {
+                $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');
+            })
+            $('.filter-form').on('submit', function(e){
+                if(!$(this).find('#branch_selection select').val().length){
+                    e.preventDefault();
+                    $(this).find('.invalid-feedback').show()
+                }
+            })
+        })
+    </script>
+@endpush
 
