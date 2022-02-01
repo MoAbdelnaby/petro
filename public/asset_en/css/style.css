@@ -2220,3 +2220,8 @@ div.dataTables_wrapper div.dataTables_paginate {
     line-height: 50px;
     font-weight: bold;
 }
+
+.iq-card-icon.iq-bg-primary{
+    background: hsl(251deg 85% 20% / 10%) !important;
+    color: var(--iq-primary) !important;
+}

@@ -28,8 +28,8 @@
                     <div class="iq-card">
                         <div class="iq-card-body" >
                             <div>
-                                <div class=" col-12 p-0 m-0 mb-3 d-flex justify-content-between align-items-center menu-and-filter menu-and-filter--custom">
-                                    <div >
+                                <div class="row col-12 p-0 m-0 mb-3  menu-and-filter menu-and-filter--custom">
+                                    <div class="col">
                                         <ul class="nav nav-tabs nav-tabs--custom" id="myTab" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link active" href="{{ route('reports.index')}}">{{ __('app.most_statistics') }}</a>
@@ -54,7 +54,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="filter-pills-cont">
+                                    <div class="mb-2 filter-pills-cont">
                                         <ul class="nav nav-pills  ">
                                             <li class="nav-item">
                                                 <a class="nav-link btn btn-outline-secondary home_filter" data-value="17">
@@ -64,11 +64,6 @@
                                             <li class="nav-item">
                                                 <a class="nav-link btn btn-outline-secondary home_filter " data-value="16">
                                                     <span class="nav-text">This Month</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="13">
-                                                    <span class="nav-text ">Last Week</span>
                                                 </a>
                                             </li>
                                             <li class="nav-item">

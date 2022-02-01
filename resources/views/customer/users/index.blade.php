@@ -110,11 +110,11 @@
                 <div class="col-sm-12">
                     <div class="iq-card">
                         <div class="iq-card-body">
-                            <div class="related-heading mb-5">
-                                <h2>
+                            <div class="related-heading c-flex mb-5">
+                                <h2 class="pb-2">
                                     <img src="{{resolveDark()}}/img/icon_menu/users.svg" class="tab_icon-img" width="20" alt=""> {{__('app.users.users')}}
                                 </h2>
-                                <span>
+                                <span class="position-static pb-2">
                                     <form action="{{ route('user_settings',['show_items']) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="value" value="table">

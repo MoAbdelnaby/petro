@@ -27,11 +27,6 @@
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link btn btn-outline-secondary home_filter " data-value="13">
-                                                    <span class="nav-text ">Last Week</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
                                                 <a class="nav-link btn btn-outline-secondary home_filter " data-value="14">
                                                     <span class="nav-text ">This Week</span>
                                                 </a>
