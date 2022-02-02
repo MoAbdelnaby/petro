@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\Carprofile;
 use App\Models\Region;
 use App\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -36,6 +37,7 @@ class ReportService
         $areas = AreaStatus::query();
 
         if ($start) {
+            $start = Carbon::parse($start)->format('Y-m-d');
             $cars->whereDate('checkInDate', '>=', $start);
             $invoice->whereDate('checkInDate', '>=', $start);
             $welcome->whereDate('checkInDate', '>=', $start);
@@ -45,6 +47,7 @@ class ReportService
             $empty->whereDate('date', '>=', $start);
         }
         if ($end) {
+            $end = Carbon::parse($end)->format('Y-m-d');
             $cars->whereDate('checkInDate', '<=', $end);
             $invoice->whereDate('checkInDate', '<=', $end);
             $welcome->whereDate('checkInDate', '<=', $end);
@@ -139,6 +142,7 @@ class ReportService
             $areas = AreaStatus::query();
 
             if ($start) {
+                $start = Carbon::parse($start)->format('Y-m-d');
                 $cars->whereDate('checkInDate', '>=', $start);
                 $invoice->whereDate('checkInDate', '>=', $start);
                 $welcome->whereDate('checkInDate', '>=', $start);
@@ -148,6 +152,7 @@ class ReportService
                 $empty->whereDate('date', '>=', $start);
             }
             if ($end) {
+                $end = Carbon::parse($end)->format('Y-m-d');
                 $cars->whereDate('checkInDate', '<=', $end);
                 $invoice->whereDate('checkInDate', '<=', $end);
                 $welcome->whereDate('checkInDate', '<=', $end);

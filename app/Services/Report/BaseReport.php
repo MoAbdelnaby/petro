@@ -46,7 +46,7 @@ abstract class BaseReport
         if ($filter['start'] ?? false) {
             $start = ($filter['start'] > date('Y-m-d')) ? now()->subDay() : Carbon::parse($filter['start']);
             if ($timeStamp) {
-                $query->whereDate($filter['column'], '>=', $start->format('Y-m-d h:i:s'));
+                $query->where($filter['column'], '>=', $start->format('Y-m-d h:i:s'));
             } else {
                 $query->whereDate($filter['column'], '>=', $start->format('Y-m-d'));
             }
@@ -55,7 +55,7 @@ abstract class BaseReport
         if ($filter['end'] ?? false) {
             $end = ($filter['end'] > date('Y-m-d')) ? now() : Carbon::parse($filter['end']);
             if ($timeStamp) {
-                $query->whereDate($filter['column'], '<=', $end->format('Y-m-d h:i:s'));
+                $query->where($filter['column'], '<=', $end->format('Y-m-d h:i:s'));
             } else {
                 $query->whereDate($filter['column'], '<=', $end->format('Y-m-d'));
             }
