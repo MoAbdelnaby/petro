@@ -104,7 +104,7 @@ class WelcomeReport extends BaseReport
         }
 
         $result = array_merge_recursive_distinct($result['welcome'], $result['no_welcome']);
-        $report = $this->prepareChart($result, $key);
+        $report['charts'] = $this->prepareChart($result, $key);
         $report["branch_check"] = $this->handleReportCompare($filter);
         $report["info"] = [
             "list" => ucfirst($key),

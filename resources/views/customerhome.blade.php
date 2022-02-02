@@ -670,10 +670,10 @@
             let plate = @json($report['plate']['charts']);
             let staying = @json($report['stayingAverage']['charts']);
             let invoice = @json($report['invoice']['charts']);
-            let place_info = @json($report['place']['charts']['info']);
-            let plate_info = @json($report['plate']['charts']['info']);
-            let staying_info = @json($report['stayingAverage']['charts']['info']);
-            let invoice_info = @json($report['invoice']['charts']['info']);
+            let place_info = @json($report['place']['info']);
+            let plate_info = @json($report['plate']['info']);
+            let staying_info = @json($report['stayingAverage']['info']);
+            let invoice_info = @json($report['invoice']['info']);
 
             /************* Start Bar Chart ****************/
             @if(in_array($key_name ,array_values($config['place']['chart']['bar'])))

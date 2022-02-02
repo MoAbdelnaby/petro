@@ -118,8 +118,8 @@
                                                 <div id="BranchPlateLine" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
                                             <div class="row pb-5" id="PlateCircleCon" style="display: none">
-                                                @foreach($report['charts']['info']['columns']??[] as $column)
-                                                    @if(count($report['charts']['info']['columns']) <2)
+                                                @foreach($report['info']['columns']??[] as $column)
+                                                    @if(count($report['info']['columns']) <2)
                                                         <div class="col-md-3"></div>
                                                     @else
                                                         <div class="col-md-1"></div>
@@ -129,7 +129,7 @@
                                                             <div id="PlateCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
                                                         </div>
                                                         <h4 class="text-center"  style="margin-left: 33%">
-                                                            {{$report['charts']['info']['display_key'][$column]}}&nbsp;({{$report['charts']['info']['unit']}})
+                                                            {{$report['info']['display_key'][$column]}}&nbsp;({{$report['info']['unit']}})
                                                         </h4>
                                                     </div>
                                                 @endforeach
@@ -158,7 +158,7 @@
     <script src="{{asset('js/report/report.js')}}"></script>
     <script>
         let charts = @json($report['charts']);
-        let info = @json($report['charts']['info']);
+        let info = @json($report['info']);
 
         /************* Start Bar Chart ****************/
         @if(in_array($key_name ,array_values($config['chart']['bar'])))

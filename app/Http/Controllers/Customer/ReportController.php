@@ -9,8 +9,14 @@ use App\Models\Region;
 use App\Services\ConfigService;
 use App\Services\Report\ReportService;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ReportController extends Controller
 {
@@ -24,7 +30,7 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
-        $statics = ReportService::statistics($request->start??'2022-01-01', $request->end, $request->lists);
+        $statics = ReportService::statistics($request->start ?? '2022-01-01', $request->end, $request->lists);
 
         if (!empty(request('lists'))) {
             $lists = request('lists');
@@ -42,6 +48,11 @@ class ReportController extends Controller
         ]);
     }
 
+    /**
+     * @param $type
+     * @param Request $request
+     * @return Application|Factory|JsonResponse|RedirectResponse|View
+     */
     public function show($type, Request $request)
     {
         if (!in_array($type, $this->reportType)) abort(404);
@@ -52,15 +63,12 @@ class ReportController extends Controller
             $cities = Region::active()->primary()->parent()->select('id', 'name')->get();
 
             $filter = (empty($request->except('_token')) || is_null($request->show_by))
-                ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
+                ? $this->getTopBranch($type, $request->all())
+                : $request->except('_token');
 
             $result = ReportService::handle($type, $filter);
 
-            if ($result['type'] == 'region' || $result['type'] == 'city') {
-                $list_report = Region::query();
-            } else {
-                $list_report = Branch::query();
-            }
+            $list_report = in_array($result['type'], ['region', 'city']) ? Region::query() : Branch::query();
 
             $list_report = $list_report->active()->primary()->take(6)->whereIn('id', \Arr::wrap($result['list']))->pluck('name');
 
@@ -93,17 +101,22 @@ class ReportController extends Controller
         ];
     }
 
+    /**
+     * @param $type
+     * @param Request $request
+     * @return JsonResponse|RedirectResponse|BinaryFileResponse
+     */
     public function download($type, Request $request)
     {
         try {
             $filter = (empty($request->except('_token')) || is_null($request->show_by))
                 ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
 
-            $filter['extra'] = true;
+            $filter['download'] = true;
             $data = ReportService::handle($type, $filter);
+            $download = $data['download'] ?? [];
 
-            $result = $data['charts']['bar'];
-//            $extra = $data['charts']['extra']??[];
+            dd($download);
 
             $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : '2022-01-01';
             $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();
@@ -115,7 +128,7 @@ class ReportController extends Controller
                 \File::makeDirectory(storage_path("/app/public/" . $path), 0777, true, true);
             }
 
-            $check = \Excel::store(new ExportFiles($result), '/public/' . $file_path);
+            $check = \Excel::store(new ExportFiles($download), '/public/' . $file_path);
 
             if ($check) {
                 $file = public_path() . "/storage/$file_path";
@@ -129,6 +142,10 @@ class ReportController extends Controller
         }
     }
 
+    /**
+     * @param $region
+     * @return Application|Factory|View
+     */
     public function getBranchByRegion($region)
     {
         $branches = Branch::active()->primary()->where('region_id', $region)->select('id', 'name')->get();
@@ -136,6 +153,10 @@ class ReportController extends Controller
         return view('customer.reports.extra._branch_by_region', ['branches' => $branches]);
     }
 
+    /**
+     * @param $city
+     * @return Application|Factory|View
+     */
     public function getRegionByCity($city)
     {
         $regions = Region::active()->primary()->where('parent_id', $city)->select('id', 'name')->get();
@@ -143,6 +164,10 @@ class ReportController extends Controller
         return view('customer.reports.extra._region_by_city', ['regions' => $regions]);
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse|BinaryFileResponse
+     */
     public function downloadStatistics(Request $request)
     {
         $data = ReportService::downloadStatistics($request->start ?? '2022-01-01', $request->end ?? null, $request->lists ?? null);

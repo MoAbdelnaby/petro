@@ -18,6 +18,7 @@ class BaseReportFactory
 
             $full_name = "\App\\Services\\Report\\type\\" . $className;
 
+            //Prepare Class Report BaseOn Report type
             return new $full_name();
 
         } catch (\Error $e) {

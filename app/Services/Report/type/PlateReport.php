@@ -94,7 +94,7 @@ class PlateReport extends BaseReport
                 return [$item->list_name => $item];
             }), true, 512, JSON_THROW_ON_ERROR);
 
-        $report = $this->prepareChart($result, $key);
+        $report['charts'] = $this->prepareChart($result, $key);
         $report["info"] = [
             "list" => ucfirst($key),
             "unit" => config('app.report.type.plate.unit'),

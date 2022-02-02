@@ -24,11 +24,16 @@ abstract class BaseReport
         }
         $list = \Arr::wrap($list);
 
+        //Check If Download only
+        if (($filter['download'] ?? false) && method_exists($this, 'loadDownloadReport')) {
+            $report["download"] = $this->loadDownloadReport($filter);
+            return $report;
+        }
+
         //Prepare Base Query to get This report base On List Type
         $this->$func_name($list);
 
-        $data["charts"] = $this->getReport($data["type"], $filter);
-
+        $data += $this->getReport($data["type"], $filter);
 
         return $data;
     }
@@ -103,4 +108,5 @@ abstract class BaseReport
         }
         return $result;
     }
+
 }

@@ -119,7 +119,7 @@ class ReportService
      * @param null $lists
      * @return array
      */
-    public static function downloadStatistics($start = "2022-01-01", $end = null, $lists = null)
+    public static function downloadStatistics($start = "2022-01-01", $end = null, $lists = null): array
     {
         if (!is_array($lists)) {
             $lists = str_contains($lists, ',') ? explode(',', (string)$lists) : $lists;

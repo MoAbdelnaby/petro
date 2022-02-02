@@ -142,8 +142,8 @@
                                                 <div id="BranchWelcomeLine" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
                                             <div class="row pb-5" id="WelcomeCircleCon" style="display: none">
-                                                @foreach($report['charts']['info']['columns']??[] as $column)
-                                                    @if(count($report['charts']['info']['columns']) <2)
+                                                @foreach($report['info']['columns']??[] as $column)
+                                                    @if(count($report['info']['columns']) <2)
                                                         <div class="col-md-3"></div>
                                                     @else
                                                         <div class="col-md-1" style="margin-right: -55px"></div>
@@ -153,7 +153,7 @@
                                                             <div id="WelcomeCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
                                                         </div>
                                                         <h4 class="text-center" style="margin-left: 37%">
-                                                            {{$report['charts']['info']['display_key'][$column]}}&nbsp;( {{$report['charts']['info']['unit']}} )
+                                                            {{$report['info']['display_key'][$column]}}&nbsp;( {{$report['info']['unit']}} )
                                                         </h4>
                                                     </div>
                                                 @endforeach
@@ -185,7 +185,7 @@
     <script src="{{asset('js/report/report.js')}}"></script>
     <script>
         let charts = @json($report['charts']);
-        let info = @json($report['charts']['info']);
+        let info = @json($report['info']);
         /************* Start Bar Chart ****************/
         @if(count($report['charts']))
         $("#BranchWelcomeBarCon").show();

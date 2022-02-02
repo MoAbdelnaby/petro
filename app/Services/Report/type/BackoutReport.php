@@ -98,11 +98,7 @@ class BackoutReport extends BaseReport
                 return [$item->list_name => $item];
             }), true, 512, JSON_THROW_ON_ERROR);
 
-        $report = $this->prepareChart($result, $key);
-
-        if ($filter['extra'] ?? false) {
-            $report["extra"] = $this->loadExtraReport('plate', $filter);
-        }
+        $report['charts'] = $this->prepareChart($result, $key);
         $report["info"] = [
             "list" => ucfirst($key),
             "unit" => config('app.report.type.backout.unit'),
@@ -129,6 +125,7 @@ class BackoutReport extends BaseReport
         } elseif ($key_name == 'compare_area') {
             $filter_key = 'Area# ';
         }
+
         $i = 0;
         if (count(array_filter(array_values($data))) > 0) {
             foreach ($data as $key => $value) {
@@ -142,27 +139,27 @@ class BackoutReport extends BaseReport
     }
 
     /**
-     * @param $type
      * @param $filter
      * @return array
+     * @throws JsonException
      */
-    protected function loadExtraReport($type, $filter): array
+    protected function loadDownloadReport($filter): array
     {
-        $result = [];
-        if ($type == 'plate') {
-            $query = DB::table($this->mainTable)
-                ->where("invoice", '=', null)
-                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-                ->where("branches.user_id", '=', parentID())
-                ->where("branches.active", '=', true)
-                ->where("$this->mainTable.status", '=', 'completed')
-                ->select('plate_en', 'plate_ar', 'branches.name', 'checkInDate');
+        $query = DB::table($this->mainTable)
+            ->where("invoice", '=', null)
+            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+            ->where("branches.user_id", '=', parentID())
+            ->where("branches.active", '=', true)
+            ->where("$this->mainTable.status", '=', 'completed')
+            ->select('branches.name as brnach_name', 'checkInDate', 'checkOutDate', 'plate_en');
 
-            $query = $this->handleDateFilter($query, $filter, true);
+        $filter['column'] = "$this->mainTable.checkInDate";
+        $data = $this->handleDateFilter($query, $filter, true)
+            ->take(10)->get()->map(function ($item) {
 
-            $result = $query->get()->toArray();
-        }
+                return json_decode($item, true, 512, JSON_THROW_ON_ERROR);
+            });
 
-        return $result;
+        dd($data);
     }
 }
