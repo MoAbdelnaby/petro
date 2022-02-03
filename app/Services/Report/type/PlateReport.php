@@ -21,7 +21,7 @@ class PlateReport extends BaseReport
             ->where("regions.user_id", '=', parentID())
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
             ->whereIn("regions.parent_id", $list)
             ->select("city.id as list_id", "city.name as list_name",
                 DB::raw('COUNT(carprofiles.id) as count')
@@ -37,7 +37,7 @@ class PlateReport extends BaseReport
             ->where("branches.user_id", '=', parentID())
             ->where("regions.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
             ->where("regions.active", '=', true)
             ->whereIn("regions.id", $list)
             ->select("regions.id as list_id", "regions.name as list_name",
@@ -53,7 +53,7 @@ class PlateReport extends BaseReport
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
             ->select("branch_id as list_id", "branches.name as list_name",
                 DB::raw('COUNT(carprofiles.id) as count')
             );
@@ -68,7 +68,7 @@ class PlateReport extends BaseReport
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
             ->select("$this->mainTable.BayCode as list_id", "$this->mainTable.BayCode as list_name",
                 DB::raw('COUNT(carprofiles.id) as count')
             );
@@ -133,5 +133,26 @@ class PlateReport extends BaseReport
         }
 
         return $charts;
+    }
+
+
+    /**
+     * @param $filter
+     * @return array
+     * @throws JsonException
+     */
+    protected function loadDownloadReport($filter): array
+    {
+        $data = $this->handleListQuery($filter);
+        $func_name = "get" . ucfirst($data["type"]) . "Query";
+        $list = $data["list"];
+
+        if (!is_array($list)) {
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
+        }
+
+        $this->$func_name($list);
+
+        return [$this->getReport($data["type"], $filter)['charts']['bar']];
     }
 }

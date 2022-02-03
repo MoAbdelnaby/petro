@@ -45,7 +45,7 @@ class HandleCarprofileCommand extends Command
         $pendings = Carprofile::whereIn('status', ['pending', 'semi-completed'])->get();
 
         foreach ($pendings as $row) {
-            if (!is_null($row->plate_en)) {
+            if ($row->plate_status == 'success') {
                 $row->update([
                     'checkOutDate' => Carbon::now('Asia/Riyadh'),
                     'status' => 'completed'
@@ -54,7 +54,6 @@ class HandleCarprofileCommand extends Command
                 $row->delete();
             }
         }
-
     }
 
 }

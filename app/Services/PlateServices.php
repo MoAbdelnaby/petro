@@ -62,8 +62,9 @@ class PlateServices
     /**
      * @param $plate_ar
      * @param $plate_en
+     * @return array
      */
-    public function getChar($plate_ar, $plate_en)
+    public function getChar($plate_ar, $plate_en): array
     {
         $plate_char_ar = trim(preg_replace("/[0-9,]/", "", $this->phonetic->convertNumbers($plate_ar, 'en')));
         $plate_char_en = trim(preg_replace("/[0-9,]/", "", $plate_en));
@@ -80,7 +81,7 @@ class PlateServices
      * @param $plate_en
      * @return array
      */
-    public function getNumber($plate_ar, $plate_en)
+    public function getNumber($plate_ar, $plate_en): array
     {
         $plate_number_ar = trim(preg_replace("/[aA-zZ,]/", "", $this->phonetic->convertLetters($plate_ar, 'en')));
         $plate_number_en = trim(preg_replace("/[aA-zZ,]/", "", $plate_en));

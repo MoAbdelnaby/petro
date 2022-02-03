@@ -19,7 +19,7 @@ class WelcomeReport extends BaseReport
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->join("regions as city", "city.id", '=', "regions.parent_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
@@ -39,7 +39,7 @@ class WelcomeReport extends BaseReport
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
@@ -59,7 +59,7 @@ class WelcomeReport extends BaseReport
                 ->whereIn("branch_id", $list)
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
                 ->select("branch_id as list_id", "branches.name as list_name",
@@ -75,7 +75,7 @@ class WelcomeReport extends BaseReport
             $query[$type] = DB::table($this->mainTable)
                 ->whereIn("$this->mainTable.branch_id", $list)                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
                 ->select("$this->mainTable.BayCode as list_id", "$this->mainTable.BayCode as list_name",
@@ -182,5 +182,26 @@ class WelcomeReport extends BaseReport
         $result['no_welcome'] = count($no_welcomes);
 
         return $result;
+    }
+
+
+    /**
+     * @param $filter
+     * @return array
+     * @throws JsonException
+     */
+    protected function loadDownloadReport($filter): array
+    {
+        $data = $this->handleListQuery($filter);
+        $func_name = "get" . ucfirst($data["type"]) . "Query";
+        $list = $data["list"];
+
+        if (!is_array($list)) {
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
+        }
+
+        $this->$func_name($list);
+
+        return [$this->getReport($data["type"], $filter)['charts']['bar']];
     }
 }

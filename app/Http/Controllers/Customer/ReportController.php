@@ -113,10 +113,8 @@ class ReportController extends Controller
                 ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
 
             $filter['download'] = true;
-            $data = ReportService::handle($type, $filter);
-            $download = $data['download'] ?? [];
-
-            dd($download);
+            $data = ReportService::handle($type, $filter)??[];
+            $list = \Arr::flatten($data,1);
 
             $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : '2022-01-01';
             $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();
@@ -128,7 +126,7 @@ class ReportController extends Controller
                 \File::makeDirectory(storage_path("/app/public/" . $path), 0777, true, true);
             }
 
-            $check = \Excel::store(new ExportFiles($download), '/public/' . $file_path);
+            $check = \Excel::store(new ExportFiles($list), '/public/' . $file_path);
 
             if ($check) {
                 $file = public_path() . "/storage/$file_path";

@@ -118,7 +118,7 @@
                                                             <div class="col-4"><img width="100" src="{{ asset("images/invoice.svg") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.invoice_integration_branch')  }}</b></h5>
-                                                                <h3><b>{{$report['charts']['branch_check']['invoice']??0}}</b></h3>
+                                                                <h3><b>{{$report['branch_check']['invoice']??0}}</b></h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -129,7 +129,7 @@
                                                             <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_invoice.png") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.invoice_non_integration_branch') }}</b></h5>
-                                                                <h3><b>{{$report['charts']['branch_check']['no_invoice']??0}}</b></h3>
+                                                                <h3><b>{{$report['branch_check']['no_invoice']??0}}</b></h3>
                                                             </div>
                                                         </div>
                                                     </div>

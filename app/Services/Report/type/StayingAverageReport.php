@@ -22,7 +22,7 @@ class StayingAverageReport extends BaseReport
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
             ->whereIn("regions.parent_id", $list)
-            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
             ->select("city.id as list_id", "city.name as list_name",
                 DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
             );
@@ -39,7 +39,7 @@ class StayingAverageReport extends BaseReport
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
             ->whereIn("regions.id", $list)
-            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
             ->select("regions.id as list_id", "regions.name as list_name",
                 DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
             );
@@ -53,7 +53,7 @@ class StayingAverageReport extends BaseReport
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
             ->select("branch_id as list_id", "branches.name as list_name",
                 DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
             );
@@ -67,7 +67,7 @@ class StayingAverageReport extends BaseReport
             ->whereIn("$this->mainTable.branch_id", $list)            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
             ->select("$this->mainTable.BayCode as list_id", "$this->mainTable.BayCode as list_name",
                 DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration')
             );
@@ -130,5 +130,26 @@ class StayingAverageReport extends BaseReport
             }
         }
         return $charts;
+    }
+
+
+    /**
+     * @param $filter
+     * @return array
+     * @throws JsonException
+     */
+    protected function loadDownloadReport($filter): array
+    {
+        $data = $this->handleListQuery($filter);
+        $func_name = "get" . ucfirst($data["type"]) . "Query";
+        $list = $data["list"];
+
+        if (!is_array($list)) {
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
+        }
+
+        $this->$func_name($list);
+
+        return [$this->getReport($data["type"], $filter)['charts']['bar']];
     }
 }

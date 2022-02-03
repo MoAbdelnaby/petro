@@ -138,4 +138,25 @@ class PlaceReport extends BaseReport
 
         return $charts;
     }
+
+
+    /**
+     * @param $filter
+     * @return array
+     * @throws JsonException
+     */
+    protected function loadDownloadReport($filter): array
+    {
+        $data = $this->handleListQuery($filter);
+        $func_name = "get" . ucfirst($data["type"]) . "Query";
+        $list = $data["list"];
+
+        if (!is_array($list)) {
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
+        }
+
+        $this->$func_name($list);
+
+        return [$this->getReport($data["type"], $filter)['charts']['bar']];
+    }
 }

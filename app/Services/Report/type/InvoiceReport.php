@@ -8,18 +8,21 @@ use JsonException;
 
 class InvoiceReport extends BaseReport
 {
+    public $selectQuery = 'COUNT($this->mainTable.id) as invoice';
     public $query;
     public string $mainTable = "carprofiles";
 
-    public function getCityQuery($list)
+    public function getCityQuery($list,$selectQuery = null): void
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         foreach (['invoice', 'no_invoice'] as $type) {
             $query[$type] = DB::table($this->mainTable)
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->join("regions as city", "city.id", '=', "regions.parent_id")
                 ->where("$this->mainTable.invoice", $type == 'invoice' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
@@ -28,60 +31,64 @@ class InvoiceReport extends BaseReport
                 ->select("city.id as list_id", "city.name as list_name",
                     DB::raw("COUNT($this->mainTable.id) as $type"),
                 );
+
         }
         $this->query = $query;
     }
 
-    public function getRegionQuery($list)
+    public function getRegionQuery($list, $selectQuery = null): void
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         foreach (['invoice', 'no_invoice'] as $type) {
             $query[$type] = DB::table($this->mainTable)
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->where("$this->mainTable.invoice", $type == 'invoice' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
                 ->where("regions.active", '=', true)
                 ->whereIn("regions.id", $list)
-                ->select("regions.id as list_id", "regions.name as list_name",
-                    DB::raw("COUNT($this->mainTable.id) as $type"),
-                );
+                ->selectRaw("regions.id as list_id, regions.name as list_name, COUNT($this->mainTable.id) as $type");
         }
+
         $this->query = $query;
     }
 
-    public function getBranchQuery($list)
+    public function getBranchQuery($list, $selectQuery = null): void
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         foreach (['invoice', 'no_invoice'] as $type) {
             $query[$type] = DB::table($this->mainTable)
                 ->whereIn("branch_id", $list)
-                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.invoice", $type == 'invoice' ? '<>' : '=', null)
                 ->where("branches.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
-                ->select("branch_id as list_id", "branches.name as list_name",
-                    DB::raw("COUNT($this->mainTable.id) as $type"),
-                );
+                ->selectRaw("branch_id as list_id,branches.name as list_name,COUNT($this->mainTable.id) as $type");
+
         }
         $this->query = $query;
     }
 
-    public function getAreaQuery($list)
+    public function getAreaQuery($list, $selectQuery): void
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         foreach (['invoice', 'no_invoice'] as $type) {
             $query[$type] = DB::table($this->mainTable)
                 ->whereIn("$this->mainTable.branch_id", $list)
-                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.invoice", $type == 'invoice' ? '<>' : '=', null)
                 ->where("branches.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
-                ->select("$this->mainTable.BayCode as list_id", "$this->mainTable.BayCode as list_name",
-                    DB::raw("COUNT($this->mainTable.id) as $type"),
-                );
+                ->selectRaw("BayCode as list_id,BayCode as list_name,status,COUNT($this->mainTable.id) as $type");
+
         }
         $this->query = $query;
     }
@@ -157,16 +164,26 @@ class InvoiceReport extends BaseReport
      */
     public function handleReportCompare($filter): array
     {
+        $data = $this->handleListQuery($filter);
+        $list = $data['list'];
+        if (!is_array($list)) {
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
+        }
+
         $result = [];
         foreach (['invoice', 'no_invoice'] as $status) {
             $query[$status] = DB::table($this->mainTable)
-                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->select('branches.id')
                 ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
                 ->where('branches.user_id', parentID())
                 ->where('branches.active', true)
                 ->whereNull('branches.deleted_at')
                 ->distinct();
+
+            if ($data['type'] == 'branch') {
+                $query[$status] = $query[$status]->whereIn('branches.id', $list);
+            }
 
             $query[$status] = $this->handleDateFilter($query[$status], $filter, true);
 
@@ -184,5 +201,25 @@ class InvoiceReport extends BaseReport
         $result['no_invoice'] = count($no_invoices);
 
         return $result;
+    }
+
+    /**
+     * @param $filter
+     * @return array
+     * @throws JsonException
+     */
+    protected function loadDownloadReport($filter): array
+    {
+        $data = $this->handleListQuery($filter);
+        $func_name = "get" . ucfirst($data["type"]) . "Query";
+        $list = $data["list"];
+
+        if (!is_array($list)) {
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
+        }
+
+        $this->$func_name($list);
+
+        return [$this->getReport($data["type"], $filter)['charts']['bar']];
     }
 }

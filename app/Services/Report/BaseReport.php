@@ -20,14 +20,12 @@ abstract class BaseReport
         $list = $data["list"];
 
         if (!is_array($list)) {
-            $list = str_contains($list, ',') ? explode(',', $list) : $list;
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
         }
-        $list = \Arr::wrap($list);
 
         //Check If Download only
         if (($filter['download'] ?? false) && method_exists($this, 'loadDownloadReport')) {
-            $report["download"] = $this->loadDownloadReport($filter);
-            return $report;
+            return $this->loadDownloadReport($filter, $data);
         }
 
         //Prepare Base Query to get This report base On List Type
@@ -48,6 +46,8 @@ abstract class BaseReport
      */
     public function handleDateFilter($query, $filter, bool $timeStamp = false)
     {
+        $filter['start'] = empty($filter['start']) ? "2022-01-01" : $filter['start'];
+
         if ($filter['start'] ?? false) {
             $start = ($filter['start'] > date('Y-m-d')) ? now()->subDay() : Carbon::parse($filter['start']);
             if ($timeStamp) {

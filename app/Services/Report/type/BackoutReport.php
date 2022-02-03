@@ -3,16 +3,25 @@
 namespace App\Services\Report\type;
 
 use App\Services\Report\BaseReport;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use JsonException;
 
 class BackoutReport extends BaseReport
 {
     public $query;
+    public $selectQuery;
     public string $mainTable = "carprofiles";
 
-    public function getCityQuery($list)
+    public function __construct()
     {
+        $this->selectQuery = 'COUNT(carprofiles.id) as backout';
+    }
+
+    public function getCityQuery($list, $selectQuery = null)
+    {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         $query = DB::table($this->mainTable)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->join("regions", "regions.id", '=', "branches.region_id")
@@ -23,15 +32,17 @@ class BackoutReport extends BaseReport
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
             ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.plate_status", '=', 'success')
             ->whereIn("regions.parent_id", $list)
-            ->select("city.id as list_id", "city.name as list_name",
-                DB::raw('COUNT(carprofiles.id) as backout')
-            );
+            ->selectRaw("city.id as list_id, city.name as list_name,$selectQuery");
+
         $this->query = $query;
     }
 
-    public function getRegionQuery($list)
+    public function getRegionQuery($list, $selectQuery = null)
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         $query = DB::table($this->mainTable)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->join("regions", "regions.id", '=', "branches.region_id")
@@ -41,41 +52,43 @@ class BackoutReport extends BaseReport
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
             ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.plate_status", '=', 'success')
             ->whereIn("regions.id", $list)
-            ->select("regions.id as list_id", "regions.name as list_name",
-                DB::raw('COUNT(carprofiles.id) as backout')
-            );
+            ->selectRaw("regions.id as list_id, regions.name as list_name, $selectQuery");
+
         $this->query = $query;
     }
 
-    public function getBranchQuery($list)
+    public function getBranchQuery($list, $selectQuery = null)
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         $query = DB::table($this->mainTable)
             ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.plate_status", '=', 'success')
             ->whereIn("branch_id", $list)
             ->where("invoice", '=', null)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->select("branch_id as list_id", "branches.name as list_name",
-                DB::raw('COUNT(carprofiles.id) as backout')
-            );
+            ->selectRaw("branch_id as list_id,branches.name as list_name, $selectQuery");
 
         $this->query = $query;
     }
 
-    public function getAreaQuery($list)
+    public function getAreaQuery($list, $selectQuery = null)
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         $query = DB::table($this->mainTable)
             ->whereIn("$this->mainTable.branch_id", $list)
             ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.plate_status", '=', 'success')
             ->where("invoice", '=', null)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->select("$this->mainTable.BayCode as list_id", "$this->mainTable.BayCode as list_name",
-                DB::raw('COUNT(carprofiles.id) as backout')
-            );
+            ->selectRaw("BayCode as list_id,BayCode as list_name, $selectQuery");
 
         $this->query = $query;
     }
@@ -91,6 +104,25 @@ class BackoutReport extends BaseReport
         $filter["column"] = "$this->mainTable.checkInDate";
 
         $query = $this->handleDateFilter($this->query, $filter, true);
+
+        if ($filter['download'] ?? false) {
+            return collect($query->get())->groupBy("list_id")
+                ->mapWithKeys(function ($item) use ($key) {
+                    return [$item[0]->list_name => array_map(static function ($el) use ($key) {
+                        return array_unique([
+                            ucfirst($key) . " Name" => $el->list_name,
+                            'Branch Name' => $el->branch_name,
+                            'Area Name' => "Area# $el->BayCode",
+                            'Plate En' => $el->plate_en,
+                            'Plate Ar' => $el->plate_ar,
+                            'CheckIn Date' => $el->checkInDate,
+                            'CheckOutDate' => $el->checkOutDate,
+                            'Backout' => "Yes"
+                        ]);
+
+                    }, $item->toArray())];
+                })->toArray();
+        }
 
         $result = json_decode($query->groupBy("list_id")
             ->get()
@@ -145,21 +177,18 @@ class BackoutReport extends BaseReport
      */
     protected function loadDownloadReport($filter): array
     {
-        $query = DB::table($this->mainTable)
-            ->where("invoice", '=', null)
-            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-            ->where("branches.user_id", '=', parentID())
-            ->where("branches.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')
-            ->select('branches.name as brnach_name', 'checkInDate', 'checkOutDate', 'plate_en');
+        $data = $this->handleListQuery($filter);
+        $func_name = "get" . ucfirst($data["type"]) . "Query";
+        $list = $data["list"];
 
-        $filter['column'] = "$this->mainTable.checkInDate";
-        $data = $this->handleDateFilter($query, $filter, true)
-            ->take(10)->get()->map(function ($item) {
+        if (!is_array($list)) {
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
+        }
 
-                return json_decode($item, true, 512, JSON_THROW_ON_ERROR);
-            });
+        $selectQuery = 'branches.name as branch_name,BayCode,plate_en,plate_ar,checkInDate,checkOutDate';
 
-        dd($data);
+        $this->$func_name($list, $selectQuery);
+
+        return $this->getReport($data["type"], $filter);
     }
 }
