@@ -3,7 +3,6 @@
 namespace App\Services\Report\type;
 
 use App\Services\Report\BaseReport;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use JsonException;
 
@@ -18,7 +17,7 @@ class BackoutReport extends BaseReport
         $this->selectQuery = 'COUNT(carprofiles.id) as backout';
     }
 
-    public function getCityQuery($list, $selectQuery = null)
+    public function getCityQuery($list, $selectQuery = null): void
     {
         $selectQuery = $selectQuery ?? $this->selectQuery;
 
@@ -39,7 +38,7 @@ class BackoutReport extends BaseReport
         $this->query = $query;
     }
 
-    public function getRegionQuery($list, $selectQuery = null)
+    public function getRegionQuery($list, $selectQuery = null): void
     {
         $selectQuery = $selectQuery ?? $this->selectQuery;
 
@@ -59,7 +58,7 @@ class BackoutReport extends BaseReport
         $this->query = $query;
     }
 
-    public function getBranchQuery($list, $selectQuery = null)
+    public function getBranchQuery($list, $selectQuery = null): void
     {
         $selectQuery = $selectQuery ?? $this->selectQuery;
 
@@ -76,7 +75,7 @@ class BackoutReport extends BaseReport
         $this->query = $query;
     }
 
-    public function getAreaQuery($list, $selectQuery = null)
+    public function getAreaQuery($list, $selectQuery = null): void
     {
         $selectQuery = $selectQuery ?? $this->selectQuery;
 
@@ -117,6 +116,7 @@ class BackoutReport extends BaseReport
                             'Plate Ar' => $el->plate_ar,
                             'CheckIn Date' => $el->checkInDate,
                             'CheckOutDate' => $el->checkOutDate,
+                            'Duration' => str_replace('before', '', \Carbon\Carbon::parse($el->checkInDate)->diffForHumans($el->checkOutDate)),
                             'Backout' => "Yes"
                         ]);
 

@@ -96,6 +96,7 @@ class ReportController extends Controller
             'start' => $filter['start'] ?? "2022-01-01",
             'end' => $filter['end'] ?? null,
             'show_by' => 'branch',
+            'default' => true,
             'branch_type' => 'comparison',
             'branch_comparison' => $branches,
         ];

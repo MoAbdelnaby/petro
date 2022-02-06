@@ -11,8 +11,15 @@ class PlateReport extends BaseReport
     public $query;
     public string $mainTable = "carprofiles";
 
-    public function getCityQuery($list)
+    public function __construct()
     {
+        $this->selectQuery = 'COUNT(carprofiles.id) as count';
+    }
+
+    public function getCityQuery($list, $selectQuery = null): void
+    {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         $query = DB::table($this->mainTable)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->join("regions", "regions.id", '=', "branches.region_id")
@@ -21,57 +28,61 @@ class PlateReport extends BaseReport
             ->where("regions.user_id", '=', parentID())
             ->where("branches.active", '=', true)
             ->where("regions.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
+            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.plate_status", '=', 'success')
             ->whereIn("regions.parent_id", $list)
-            ->select("city.id as list_id", "city.name as list_name",
-                DB::raw('COUNT(carprofiles.id) as count')
-            );
+            ->selectRaw("city.id as list_id, city.name as list_name,$selectQuery");
+
         $this->query = $query;
     }
 
-    public function getRegionQuery($list)
+    public function getRegionQuery($list, $selectQuery = null): void
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         $query = DB::table($this->mainTable)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->join("regions", "regions.id", '=', "branches.region_id")
             ->where("branches.user_id", '=', parentID())
             ->where("regions.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
+            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.plate_status", '=', 'success')
             ->where("regions.active", '=', true)
             ->whereIn("regions.id", $list)
-            ->select("regions.id as list_id", "regions.name as list_name",
-                DB::raw('COUNT(carprofiles.id) as count')
-            );
+            ->selectRaw("regions.id as list_id, regions.name as list_name, $selectQuery");
+
         $this->query = $query;
     }
 
-    public function getBranchQuery($list)
+    public function getBranchQuery($list, $selectQuery = null): void
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         $query = DB::table($this->mainTable)
             ->whereIn("branch_id", $list)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
-            ->select("branch_id as list_id", "branches.name as list_name",
-                DB::raw('COUNT(carprofiles.id) as count')
-            );
+            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.plate_status", '=', 'success')
+            ->selectRaw("branch_id as list_id,branches.name as list_name, $selectQuery");
 
         $this->query = $query;
     }
 
-    public function getAreaQuery($list)
+    public function getAreaQuery($list, $selectQuery = null): void
     {
+        $selectQuery = $selectQuery ?? $this->selectQuery;
+
         $query = DB::table($this->mainTable)
             ->whereIn("$this->mainTable.branch_id", $list)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
-            ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
-            ->select("$this->mainTable.BayCode as list_id", "$this->mainTable.BayCode as list_name",
-                DB::raw('COUNT(carprofiles.id) as count')
-            );
+            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.plate_status", '=', 'success')
+            ->selectRaw("BayCode as list_id,BayCode as list_name, $selectQuery");
 
         $this->query = $query;
     }
@@ -87,6 +98,26 @@ class PlateReport extends BaseReport
         $filter["column"] = "$this->mainTable.checkInDate";
 
         $query = $this->handleDateFilter($this->query, $filter, true);
+
+        if ($filter['download'] ?? false) {
+            return collect($query->get())->groupBy("list_id")
+                ->mapWithKeys(function ($item) use ($key) {
+                    return [$item[0]->list_name => array_map(static function ($el) use ($key) {
+                        return array_unique([
+                            ucfirst($key) . " Name" => $el->list_name,
+                            'Branch Name' => $el->branch_name,
+                            'Area Name' => "Area# $el->BayCode",
+                            'Plate En' => $el->plate_en,
+                            'Plate Ar' => $el->plate_ar,
+                            'CheckIn Date' => $el->checkInDate,
+                            'CheckOutDate' => $el->checkOutDate,
+                            'Duration' => str_replace('before', '', \Carbon\Carbon::parse($el->checkInDate)->diffForHumans($el->checkOutDate)),
+                            'Invoice' => $el->invoice,
+                            'Welcome' => $el->welcome,
+                        ]);
+                    }, $item->toArray())];
+                })->toArray();
+        }
 
         $result = json_decode($query->groupBy("list_id")
             ->get()
@@ -151,8 +182,10 @@ class PlateReport extends BaseReport
             $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
         }
 
-        $this->$func_name($list);
+        $selectQuery = 'branches.name as branch_name,BayCode,plate_en,plate_ar,invoice,welcome,checkInDate,checkOutDate';
 
-        return [$this->getReport($data["type"], $filter)['charts']['bar']];
+        $this->$func_name($list, $selectQuery);
+
+        return $this->getReport($data["type"], $filter);
     }
 }

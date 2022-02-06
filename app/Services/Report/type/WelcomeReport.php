@@ -11,7 +11,7 @@ class WelcomeReport extends BaseReport
     public $query;
     public string $mainTable = "carprofiles";
 
-    public function getCityQuery($list)
+    public function getCityQuery($list, $selectQuery = null): void
     {
         foreach (['welcome', 'no_welcome'] as $type) {
             $query[$type] = DB::table($this->mainTable)
@@ -19,68 +19,87 @@ class WelcomeReport extends BaseReport
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->join("regions as city", "city.id", '=', "regions.parent_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
+                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
                 ->where("regions.active", '=', true)
-                ->whereIn("regions.parent_id", $list)
-                ->select("city.id as list_id", "city.name as list_name",
-                    DB::raw("COUNT($this->mainTable.id) as $type"),
-                );
+                ->whereIn("regions.parent_id", $list);
+
+            if ($type == 'welcome' && !is_null($selectQuery)) {
+                $query[$type]->selectRaw("city.id as list_id,city.name as list_name, $selectQuery");
+            } else {
+                $query[$type]->selectRaw("city.id as list_id,city.name as list_name,COUNT($this->mainTable.id) as $type");
+            }
         }
         $this->query = $query;
     }
 
-    public function getRegionQuery($list)
+    public function getRegionQuery($list, $selectQuery = null): void
     {
         foreach (['welcome', 'no_welcome'] as $type) {
             $query[$type] = DB::table($this->mainTable)
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->join("regions", "regions.id", '=', "branches.region_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
+                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
                 ->where("regions.user_id", '=', parentID())
                 ->where("branches.active", '=', true)
                 ->where("regions.active", '=', true)
-                ->whereIn("regions.id", $list)
-                ->select("regions.id as list_id", "regions.name as list_name",
-                    DB::raw("COUNT($this->mainTable.id) as $type"),
-                );
+                ->whereIn("regions.id", $list);
+
+            if ($type == 'welcome' && !is_null($selectQuery)) {
+                $query[$type]->selectRaw("regions.id as list_id, regions.name as list_name, $selectQuery");
+            } else {
+                $query[$type]->selectRaw("regions.id as list_id, regions.name as list_name,COUNT($this->mainTable.id) as $type");
+            }
         }
+
         $this->query = $query;
     }
 
-    public function getBranchQuery($list)
+    public function getBranchQuery($list, $selectQuery = null): void
     {
         foreach (['welcome', 'no_welcome'] as $type) {
             $query[$type] = DB::table($this->mainTable)
                 ->whereIn("branch_id", $list)
+                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.plate_status", '=', 'success')
                 ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
-                ->where("branches.active", '=', true)
-                ->select("branch_id as list_id", "branches.name as list_name",
-                    DB::raw("COUNT($this->mainTable.id) as $type"),
-                );
+                ->where("branches.active", '=', true);
+
+            if ($type == 'welcome' && !is_null($selectQuery)) {
+                $query[$type]->selectRaw("branch_id as list_id,branches.name as list_name, $selectQuery");
+            } else {
+                $query[$type]->selectRaw("branch_id as list_id,branches.name as list_name,COUNT($this->mainTable.id) as $type");
+            }
         }
+
         $this->query = $query;
     }
 
-    public function getAreaQuery($list)
+    public function getAreaQuery($list, $selectQuery = null): void
     {
         foreach (['welcome', 'no_welcome'] as $type) {
             $query[$type] = DB::table($this->mainTable)
-                ->whereIn("$this->mainTable.branch_id", $list)                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+                ->whereIn("$this->mainTable.branch_id", $list)
+                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.plate_status", '=', 'success')
+                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
                 ->where("$this->mainTable.welcome", $type == 'welcome' ? '<>' : '=', null)
-                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->where("branches.user_id", '=', parentID())
-                ->where("branches.active", '=', true)
-                ->select("$this->mainTable.BayCode as list_id", "$this->mainTable.BayCode as list_name",
-                    DB::raw("COUNT($this->mainTable.id) as $type"),
-                );
+                ->where("branches.active", '=', true);
+
+            if ($type == 'welcome' && !is_null($selectQuery)) {
+                $query[$type]->selectRaw("BayCode as list_id,BayCode as list_name, $selectQuery");
+            } else {
+                $query[$type]->selectRaw("BayCode as list_id,BayCode as list_name,COUNT($this->mainTable.id) as $type");
+            }
         }
         $this->query = $query;
     }
@@ -93,6 +112,25 @@ class WelcomeReport extends BaseReport
      */
     public function getReport($key, $filter): array
     {
+        if ($filter['download'] ?? false) {
+            return collect($this->query['welcome']->get())->groupBy("list_id")
+                ->mapWithKeys(function ($item) use ($key) {
+                    return [$item[0]->list_name => array_map(static function ($el) use ($key) {
+                        return array_unique([
+                            ucfirst($key) . " Name" => $el->list_name,
+                            'Branch Name' => $el->branch_name,
+                            'Area Name' => "Area# $el->BayCode",
+                            'Plate En' => $el->plate_en,
+                            'Plate Ar' => $el->plate_ar,
+                            'CheckIn Date' => $el->checkInDate,
+                            'CheckOutDate' => $el->checkOutDate,
+                            'Duration' => str_replace('before', '', \Carbon\Carbon::parse($el->checkInDate)->diffForHumans($el->checkOutDate)),
+                            'Welcome' => $el->welcome,
+                        ]);
+                    }, $item->toArray())];
+                })->toArray();
+        }
+
         foreach (['welcome', 'no_welcome'] as $type) {
             $filter["column"] = "$this->mainTable.checkInDate";
             $query = $this->handleDateFilter($this->query[$type], $filter, true);
@@ -156,15 +194,26 @@ class WelcomeReport extends BaseReport
      */
     public function handleReportCompare($filter): array
     {
+        $data = $this->handleListQuery($filter);
+        $list = $data['list'];
+        if (!is_array($list)) {
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
+        }
+
         $result = [];
         foreach (['welcome', 'no_welcome'] as $status) {
             $query[$status] = DB::table($this->mainTable)
+                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
                 ->select('branches.id')
                 ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
                 ->where('branches.user_id', parentID())
                 ->where('branches.active', true)
                 ->whereNull('branches.deleted_at')
                 ->distinct();
+
+            if ($data['type'] == 'branch' && ($filter['default'] ?? false) == false) {
+                $query[$status] = $query[$status]->whereIn('branches.id', $list);
+            }
 
             $query[$status] = $this->handleDateFilter($query[$status], $filter, true);
 
@@ -184,7 +233,6 @@ class WelcomeReport extends BaseReport
         return $result;
     }
 
-
     /**
      * @param $filter
      * @return array
@@ -200,8 +248,10 @@ class WelcomeReport extends BaseReport
             $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
         }
 
-        $this->$func_name($list);
+        $selectQuery = 'branches.name as branch_name,BayCode,welcome,plate_en,plate_ar,checkInDate,checkOutDate';
 
-        return [$this->getReport($data["type"], $filter)['charts']['bar']];
+        $this->$func_name($list, $selectQuery);
+
+        return $this->getReport($data["type"], $filter);
     }
 }
