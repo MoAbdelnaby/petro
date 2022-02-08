@@ -25,7 +25,12 @@ abstract class BaseReport
 
         //Check If Download only
         if (($filter['download'] ?? false) && method_exists($this, 'loadDownloadReport')) {
-            return $this->loadDownloadReport($filter, $data);
+            return $this->loadDownloadReport($filter);
+        }
+
+        //Check If Branch Check only
+        if ((request('branch_check') ?? false) && method_exists($this, 'loadBranchCheckTable')) {
+            return $this->loadBranchCheckTable($filter);
         }
 
         //Prepare Base Query to get This report base On List Type

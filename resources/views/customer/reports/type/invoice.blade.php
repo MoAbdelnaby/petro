@@ -100,32 +100,34 @@
                                         </div>
                                     </div>
                                     <div class="col-12 branches-cont pb-4">
-                                        <h3>{{ __("app.".\Str::plural($report['type'])) }} : </h3>
-                                        <ul>
-                                            @foreach($list_report as $elemnt)
-                                                <li>{{$elemnt}}</li>
-                                            @endforeach
-                                        </ul>
+                                        @if(isset($report['type']))
+                                            <h3>{{ __("app.".\Str::plural($report['type'])) }} : </h3>
+                                            <ul>
+                                                @foreach($list_report as $elemnt)
+                                                    <li>{{$elemnt}}</li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
-                                        @if(count($report['charts']))
+                                        @if(count($report['charts']??[]))
                                             <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
                                                 <div class="col-lg-6 col-md-6 mb-3">
                                                     <div class="card text-center col-12">
-                                                        <div class="card-header row online">
+                                                        <a href="{{route('reports.show',['type'=>'invoice','branch_check'=> true])}}" class="card-header row online">
                                                             <div class="col-4"><img width="100" src="{{ asset("images/invoice.svg") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.invoice_integration_branch')  }}</b></h5>
                                                                 <h3><b>{{$report['branch_check']['invoice']??0}}</b></h3>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6">
                                                     <div class="card text-center col-12">
-                                                        <div class="card-header row offline">
+                                                        <a href="{{route('reports.show',['type'=>'invoice','branch_check'=> true])}}" class="card-header row offline">
                                                             <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_invoice.png") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.invoice_non_integration_branch') }}</b></h5>
@@ -143,27 +145,48 @@
                                             </div>
                                             <div class="row pb-5" id="InvoiceCircleCon" style="display: none">
                                                 @foreach($report['info']['columns']??[] as $column)
-                                                        @if(count($report['info']['columns']) <2)
-                                                            <div class="col-md-3"></div>
-                                                        @else
-                                                            <div class="col-md-1" style="margin-right: -55px"></div>
-                                                        @endif
-                                                        <div class="col-lg-5">
-                                                            <div class="pt-8">
-                                                                <div id="InvoiceCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
-                                                            </div>
-                                                            <h4 class="text-center" style="margin-left: 37%">
-                                                                {{$report['info']['display_key'][$column]}}&nbsp;( {{$report['info']['unit']}} )
-                                                            </h4>
+                                                    @if(count($report['info']['columns']) <2)
+                                                        <div class="col-md-3"></div>
+                                                    @else
+                                                        <div class="col-md-1" style="margin-right: -55px"></div>
+                                                    @endif
+                                                    <div class="col-lg-5">
+                                                        <div class="pt-8">
+                                                            <div id="InvoiceCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
                                                         </div>
-                                                    @endforeach
-                                                </div>
-                                                <div class="pt-4 mb-5" id="BranchInvoiceTrendLineCon" style="display: none">
-                                                    <div id="BranchInvoiceTrendLine" class="chartDiv" style="min-height: 450px"></div>
-                                                </div>
-                                                <div class="pt-4 mb-5" id="BranchInvoiceSideBarCon" style="display: none">
-                                                    <div id="BranchInvoiceSideBar" class="chartDiv" style="min-height: 450px"></div>
-                                                </div>
+                                                        <h4 class="text-center" style="margin-left: 37%">
+                                                            {{$report['info']['display_key'][$column]}}&nbsp;( {{$report['info']['unit']}} )
+                                                        </h4>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <div class="pt-4 mb-5" id="BranchInvoiceTrendLineCon" style="display: none">
+                                                <div id="BranchInvoiceTrendLine" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
+                                            <div class="pt-4 mb-5" id="BranchInvoiceSideBarCon" style="display: none">
+                                                <div id="BranchInvoiceSideBar" class="chartDiv" style="min-height: 450px"></div>
+                                            </div>
+                                        @elseif(count($report['branch_check']['table']??[]))
+                                            <table class="table dataTable text-center no-footer">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th>{{ __('app.Name') }}</th>
+                                                    <th>{{ __('app.customers.branches.table.code') }}</th>
+                                                    <th>{{ __('app.customers.branches.table.area_count') }}</th>
+                                                    <th>{{ __('app.invoice_integration_branch') }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($report['branch_check']['table'] as $item)
+                                                    <tr class="item{{ $item['id'] }}">
+                                                        <td>{{ $item['name'] }}</td>
+                                                        <td>{{ $item['code'] }}</td>
+                                                        <td>{{ $item['area_count'] }}</td>
+                                                        <td>{{ $item['area_count'] }}</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
                                         @else
                                             <div class="col-12 text-center">
                                                 <img src="{{ asset('images/no-results.webp') }}" class="no-results-image col-12 col-md-7  mt-5"
@@ -184,44 +207,45 @@
 @push('js')
     <script src="{{asset('js/report/report.js')}}"></script>
     <script>
-        let charts = @json($report['charts']);
-        let info = @json($report['info']);
+        @if($report['charts']??false)
+            let charts = @json($report['charts']);
+            let info = @json($report['info']);
+            /************* Start Bar Chart ****************/
+            @if(count($report['charts']))
+                $("#BranchInvoiceBarCon").show();
+                barChart('BranchInvoiceBar',charts.bar, info);
+            @endif
+            /**************** End Bar Chart****************/
 
-        /************* Start Bar Chart ****************/
-        @if(count($report['charts']))
-            $("#BranchInvoiceBarCon").show();
-            barChart('BranchInvoiceBar',charts.bar, info);
-        @endif
-        /**************** End Bar Chart****************/
+            /**************** Start Line Chart ************/
+            @if(count($report['charts']))
+                $("#BranchInvoiceLineCon").show();
+                lineChart('BranchInvoiceLine',charts.bar, info);
+            @endif
+            /************** End Line Chart ************/
 
-        /**************** Start Line Chart ************/
-        @if(count($report['charts']))
-            $("#BranchInvoiceLineCon").show();
-            lineChart('BranchInvoiceLine',charts.bar, info);
-        @endif
-        /************** End Line Chart ************/
+            /**************** Start SideBar Chart ************/
+            @if(count($report['charts']))
+                $("#BranchInvoiceSideBarCon").show();
+                sideBarChart('BranchInvoiceSideBar',charts.bar, info);
+            @endif
+            /************** End SideBar Chart ************/
 
-        /**************** Start SideBar Chart ************/
-        @if(count($report['charts']))
-            $("#BranchInvoiceSideBarCon").show();
-            sideBarChart('BranchInvoiceSideBar',charts.bar, info);
-        @endif
-        /************** End SideBar Chart ************/
+            /********************** Start Circle Chart ************/
+            @if(count($report['charts']))
+                $("#InvoiceCircleCon").show();
+                info.columns.forEach(function (col) {
+                    pieChart(`InvoiceCircle${col}`,charts.circle[col],info)
+                });
+            @endif
+            /**************** End Circle Chart ***************/
 
-        /********************** Start Circle Chart ************/
-        @if(count($report['charts']))
-            $("#InvoiceCircleCon").show();
-            info.columns.forEach(function (col) {
-                pieChart(`InvoiceCircle${col}`,charts.circle[col],info)
-            });
+            /************* Start TrendLine Chart ****************/
+            @if(count($report['charts']))
+                $("#BranchInvoiceTrendLineCon").show();
+                trendLineChart('BranchInvoiceTrendLine',charts.bar, info);
+            @endif
+            /**************** End TrendLine Chart****************/
         @endif
-        /**************** End Circle Chart ***************/
-
-        /************* Start TrendLine Chart ****************/
-        @if(count($report['charts']))
-            $("#BranchInvoiceTrendLineCon").show();
-            trendLineChart('BranchInvoiceTrendLine',charts.bar, info);
-        @endif
-        /**************** End TrendLine Chart****************/
     </script>
 @endpush

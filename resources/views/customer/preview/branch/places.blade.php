@@ -477,7 +477,15 @@
                                             </div>
                                         </div>
                                     @endforeach
-
+                                </div>
+                                <div class="row d-none">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="duration-ration-cont" style="width: 100%">
+                                            <p><b>@lang('app.in_active_time') : </b>
+                                                20 {{__('app.Hours')}}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                                 @if(count($data))
                                     <div class="iq-card mt-4 mb-4">
@@ -784,12 +792,9 @@
             $('.chart-type.tables-type .dropdown-item').on("click", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-
                 $(this).closest('.tables-type ').find('.dropdown-item').removeClass('selected');
                 $(this).addClass('selected');
-
                 $('.custom-table table').removeClass().addClass('table');
-
                 if ($(this).hasClass('table-1')) {
                     $('.custom-table table').addClass('theme-1');
                     setUserSetting('table_type', 1);
@@ -809,25 +814,26 @@
             $('.chart-type.charts .dropdown-item').on("click", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-
                 $(this).closest('.chart-type ').find('.dropdown-item').removeClass('selected');
                 $(this).addClass('selected');
+
                 @if(count($charts))
-                if ($(this).hasClass('chart-1')) {
-                    $('.pie-charts').hide();
-                    $('#chart1').show();
-                    branchPlaceBar('chart1',@json($charts['bar']));
-                    setUserSetting('chart_type', 'bar');
-                } else if ($(this).hasClass('chart-2')) {
-                    $('#chart1').hide();
-                    $('.pie-charts').show();
-                    branchPlaceCircleWork('chart2',@json($charts['circle']['work']));
-                    branchPlaceCircleEmpty('chart3',@json($charts['circle']['empty']));
-                    setUserSetting('chart_type', 'circle');
-                }
+                    if ($(this).hasClass('chart-1')) {
+                        $('.pie-charts').hide();
+                        $('#chart1').show();
+                        branchPlaceBar('chart1',@json($charts['bar']));
+                        setUserSetting('chart_type', 'bar');
+                    } else if ($(this).hasClass('chart-2')) {
+                        $('#chart1').hide();
+                        $('.pie-charts').show();
+                        branchPlaceCircleWork('chart2',@json($charts['circle']['work']));
+                        branchPlaceCircleEmpty('chart3',@json($charts['circle']['empty']));
+                        setUserSetting('chart_type', 'circle');
+                    }
                 @endif
             });
         });
+
         $(document).ready(function () {
             let filterDataFn = function (e) {
                 var key = $(this).data('key');
@@ -837,7 +843,6 @@
                 let spinnerCont = $(`.spinner-cont-${key}`);
                 $(this.closest('.setting-card-cont')).dropdown('toggle');
                 spinnerCont.removeClass('d-none');
-
                 $.ajax({
                     type: 'get',
                     url : "{{route('branch.filter.area')}}",
@@ -847,7 +852,6 @@
                         date: date
                     },
                     success: function (res) {
-
                         let empty_val = res.data.empty_by_minute??0;
                         let work_val = res.data.work_by_minute??0;
 
@@ -856,8 +860,6 @@
                         $(`#hours_empty_${key}`).text(Math.round(empty_val/60,0));
                         $(`#hours_work_${key}`).text(Math.round(work_val/60,0));
                         $(`.filter-badge-${key}.badge`).text(selectedText);
-
-
                     },
                     error: function (xhr, status, error) {
                         let customToast = Swal.mixin({
@@ -882,6 +884,7 @@
                 })
             }
             slickCarouselCardEvents(filterDataFn);
+
             $('.area-section.slider').on('afterChange', function(event, slick){
                 cr && (slickCarouselCardEvents(filterDataFn), cr = false);
             })
@@ -890,26 +893,24 @@
                 cr = false;
             })
         });
+
         @if(count($charts))
-        @if($userSettings)
-        @if($userSettings->chart_type == 'bar')
-        $('.pie-charts').hide();
-        $('#chart1').show();
-        branchPlaceBar('chart1',@json($charts['bar']));
-        @else
-        $('#chart1').hide();
-        $('.pie-charts').show();
-        branchPlaceCircleWork('chart2',@json($charts['circle']['work']));
-        branchPlaceCircleEmpty('chart3',@json($charts['circle']['empty']));
+            @if($userSettings)
+                @if($userSettings->chart_type == 'bar')
+                    $('.pie-charts').hide();
+                    $('#chart1').show();
+                    branchPlaceBar('chart1',@json($charts['bar']));
+                @else
+                    $('#chart1').hide();
+                    $('.pie-charts').show();
+                    branchPlaceCircleWork('chart2',@json($charts['circle']['work']));
+                    branchPlaceCircleEmpty('chart3',@json($charts['circle']['empty']));
+                @endif
+            @else
+                $('.pie-charts').hide();
+                $('#chart1').show();
+                branchPlaceBar('chart1',@json($charts['bar']));
+            @endif
         @endif
-        @else
-        $('.pie-charts').hide();
-        $('#chart1').show();
-        branchPlaceBar('chart1',@json($charts['bar']));
-        @endif
-        @endif
-
-
-
     </script>
 @endsection

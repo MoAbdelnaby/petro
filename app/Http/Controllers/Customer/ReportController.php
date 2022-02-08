@@ -63,14 +63,15 @@ class ReportController extends Controller
             $cities = Region::active()->primary()->parent()->select('id', 'name')->get();
 
             $filter = (empty($request->except('_token')) || is_null($request->show_by))
-                ? $this->getTopBranch($type, $request->all())
-                : $request->except('_token');
+                ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
 
             $result = ReportService::handle($type, $filter);
 
-            $list_report = in_array($result['type'], ['region', 'city']) ? Region::query() : Branch::query();
+            if (isset($result['type'])) {
+                $list_report = in_array($result['type'], ['region', 'city']) ? Region::query() : Branch::query();
 
-            $list_report = $list_report->active()->primary()->take(6)->whereIn('id', \Arr::wrap($result['list']))->pluck('name');
+                $list_report = $list_report->active()->primary()->take(6)->whereIn('id', \Arr::wrap($result['list']))->pluck('name');
+            }
 
             return view("customer.reports.type.$type", [
                 'branches' => $branches,
@@ -114,8 +115,8 @@ class ReportController extends Controller
                 ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
 
             $filter['download'] = true;
-            $data = ReportService::handle($type, $filter)??[];
-            $list = \Arr::flatten($data,1);
+            $data = ReportService::handle($type, $filter) ?? [];
+            $list = \Arr::flatten($data, 1);
 
             $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : '2022-01-01';
             $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();

@@ -2,6 +2,7 @@
 
 namespace App\Services\Report\type;
 
+use App\Models\Branch;
 use App\Services\Report\BaseReport;
 use Illuminate\Support\Facades\DB;
 use JsonException;
@@ -203,7 +204,8 @@ class InvoiceReport extends BaseReport
         $result = [];
         foreach (['invoice', 'no_invoice'] as $status) {
             $query[$status] = DB::table($this->mainTable)
-                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
+                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.plate_status", '=', 'success')
                 ->select('branches.id')
                 ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
                 ->where('branches.user_id', parentID())
@@ -253,5 +255,38 @@ class InvoiceReport extends BaseReport
         $this->$func_name($list, $selectQuery);
 
         return $this->getReport($data["type"], $filter);
+    }
+
+    /**
+     * @param $filter
+     * @return mixed
+     */
+    protected function loadBranchCheckTable($filter)
+    {
+        $query = DB::table($this->mainTable)
+            ->where("$this->mainTable.status", '=', 'completed')
+            ->where("$this->mainTable.plate_status", '=', 'success')
+            ->select('branches.id')
+            ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
+            ->where('branches.user_id', parentID())
+            ->where('branches.active', true)
+            ->whereNull('branches.deleted_at')
+            ->distinct();
+
+//        $query = $this->handleDateFilter($query, $filter, true);
+
+        if ($filter['integration'] ?? false) {
+            $result = $query->whereNull('invoice')->get()->toArray();
+        } else {
+            $result = $query->whereNotNull('invoice')->get()->toArray();
+        }
+
+        $ids = array_column(array_map(static fn($el) => (array)$el, $result), 'id');
+
+        return [
+            'branch_check' => [
+                'table' => Branch::whereIn('id', $ids)->get()->toArray()
+            ]
+        ];
     }
 }

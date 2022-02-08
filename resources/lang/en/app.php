@@ -1594,4 +1594,5 @@ return [
     'this_month' => 'This Month',
     'last_week' => 'Last Week',
     'this_week' => 'This Week',
+    'in_active_time' => 'In Active Time',
 ];

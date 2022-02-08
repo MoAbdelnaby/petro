@@ -139,7 +139,6 @@ class PlaceReport extends BaseReport
         return $charts;
     }
 
-
     /**
      * @param $filter
      * @return array

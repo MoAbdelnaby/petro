@@ -372,6 +372,15 @@
                                         </div>
                                     @endforeach
                                 </div>
+                                <div class="row d-none">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="duration-ration-cont" style="width: 100%">
+                                            <p><b>@lang('app.in_active_time') : </b>
+                                                20 {{__('app.Hours')}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                                 @if(count($data))
                                     <div class="iq-card mt-4 mb-4">
                                         <div class="iq-card-body">
@@ -640,21 +649,17 @@
                 e.preventDefault();
                 $(this).next('ul').toggle();
             });
-
             $(' .dropdown-item.removeDefault').on("click", function (e) {
                 $(this).find('.show-icon').toggle();
                 e.stopPropagation();
                 e.preventDefault();
             });
-
             /***** Tables Show ******/
             $('.chart-type.tables-type .dropdown-item').on("click", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-
                 $(this).closest('.tables-type ').find('.dropdown-item').removeClass('selected');
                 $(this).addClass('selected');
-
                 $('.custom-table table').removeClass().addClass('table');
 
                 if ($(this).hasClass('table-1')) {
@@ -728,10 +733,6 @@
             if($('.show-image-models').hasClass('show')){
                 alert('ss')
             }
-
-
-
-
             /***** Charts Show ******/
             $('.chart-type.charts .dropdown-item').on("click", function (e) {
                 e.stopPropagation();
@@ -755,6 +756,69 @@
                 @endif
             });
         });
+
+        $(document).ready(function () {
+            let filterDataFn = function (e) {
+                var key = $(this).data('key');
+                var branch_id = "{{$usermodelbranch->branch_id}}";
+                var date = $(this).val();
+                let selectedText = e.target.options[e.target.selectedIndex].text.trim();
+                let spinnerCont = $(`.spinner-cont-${key}`);
+                $(this.closest('.setting-card-cont')).dropdown('toggle');
+                spinnerCont.removeClass('d-none');
+                $.ajax({
+                    type: 'get',
+                    url: "{{route('branch.filter.area')}}",
+                    data: {
+                        area: key,
+                        branch_id: branch_id,
+                        date: date
+                    },
+                    success: function (res) {
+                        console.log(date)
+                        let empty_val = res.data.empty_by_minute??0;
+                        let work_val = res.data.work_by_minute??0;
+
+                        $(`#minutes_empty_${key}`).text(empty_val);
+                        $(`#minutes_work_${key}`).text(work_val);
+                        $(`#hours_empty_${key}`).text(Math.round(empty_val/60,0));
+                        $(`#hours_work_${key}`).text(Math.round(work_val/60,0));
+                        $(`.filter-badge-${key}.badge`).text(selectedText);
+
+                    },
+                    error: function (xhr, status, error) {
+                    let customToast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                    customToast.fire({
+                        icon: 'error',
+                        title: error || 'Failed To Load Data'
+                    });
+                },
+                complete: function(xhr, status){
+                    spinnerCont.addClass('d-none');
+                }
+                })
+            }
+
+            slickCarouselCardEvents(filterDataFn)
+            $('.area-section.slider').on('afterChange', function(event, currentSlide){
+                cr && (slickCarouselCardEvents(filterDataFn), cr = false);
+            })
+            $('.area-section.slider').on('breakpoint', function(event, slick){
+                slickCarouselCardEvents(filterDataFn);
+                cr = false;
+            })
+        });
+
         @if(count($charts))
             @if($userSettings)
                 @if($userSettings->chart_type == 'bar')
@@ -773,77 +837,6 @@
                 branchPlaceBar('chart1',@json($charts['bar']));
             @endif
         @endif
-
-
-
-            $(document).ready(function () {
-
-                // until do it
-
-
-                let filterDataFn = function (e) {
-                    var key = $(this).data('key');
-                    var branch_id = "{{$usermodelbranch->branch_id}}";
-                    var date = $(this).val();
-                    let selectedText = e.target.options[e.target.selectedIndex].text.trim();
-                    let spinnerCont = $(`.spinner-cont-${key}`);
-                    $(this.closest('.setting-card-cont')).dropdown('toggle');
-                    spinnerCont.removeClass('d-none');
-                    console.log(key,branch_id,date)
-
-                    $.ajax({
-                        type: 'get',
-                        url: "{{route('branch.filter.area')}}",
-                        data: {
-                            area: key,
-                            branch_id: branch_id,
-                            date: date
-                        },
-                        success: function (res) {
-                            console.log(date)
-                            let empty_val = res.data.empty_by_minute??0;
-                            let work_val = res.data.work_by_minute??0;
-
-                            $(`#minutes_empty_${key}`).text(empty_val);
-                            $(`#minutes_work_${key}`).text(work_val);
-                            $(`#hours_empty_${key}`).text(Math.round(empty_val/60,0));
-                            $(`#hours_work_${key}`).text(Math.round(work_val/60,0));
-                            $(`.filter-badge-${key}.badge`).text(selectedText);
-
-                        },
-                        error: function (xhr, status, error) {
-                        let customToast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-                        customToast.fire({
-                            icon: 'error',
-                            title: error || 'Failed To Load Data'
-                        });
-                    },
-                    complete: function(xhr, status){
-                        spinnerCont.addClass('d-none');
-                    }
-                    })
-                }
-
-                slickCarouselCardEvents(filterDataFn)
-
-                $('.area-section.slider').on('afterChange', function(event, currentSlide){
-                    cr && (slickCarouselCardEvents(filterDataFn), cr = false);
-                })
-                $('.area-section.slider').on('breakpoint', function(event, slick){
-                    slickCarouselCardEvents(filterDataFn);
-                    cr = false;
-                })
-            });
     </script>
 @endsection
 

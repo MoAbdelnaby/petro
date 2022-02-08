@@ -12,7 +12,7 @@ use App\Models\PlaceMaintenanceSetting;
 use App\Models\Region;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
-use App\Services\ReportService;
+use App\Services\Report\ReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -578,10 +578,11 @@ class BranchesController extends Controller
                 $i++;
             }
         }
-
-        $invoice_chart = ReportService::invoiceComparisonReport('custom', [$current_branch->id]);
-        $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$current_branch->id]);
-        $duration_ratio = $duration_ratio[0]['duration']??0;
+        $filter = ['show_by' => 'branch', 'branch_type' => 'branch', 'branch_data' => $current_branch->id];
+        $invoice_chart = ReportService::handle('invoice', $filter);
+        $duration_ratio = ReportService::handle('stayingAverage', $filter);
+        $invoice_chart = $invoice_chart['charts']['bar'];
+        $duration_ratio = round(array_sum(\Arr::pluck($duration_ratio['charts']['bar'],'value'))/3);
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
     }
@@ -786,7 +787,7 @@ class BranchesController extends Controller
 
         $invoice_chart = ReportService::invoiceComparisonReport('custom', [$current_branch->id], $start, $end);
         $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$current_branch->id], $start, $end);
-        $duration_ratio = $duration_ratio[0]['duration']??0;
+        $duration_ratio = $duration_ratio[0]['duration'] ?? 0;
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
 

@@ -874,9 +874,8 @@
 @section('scripts')
     <script src="{{asset('js/report/branchCharts.js')}}"></script>
     <script src="{{asset('js/config.js')}}"></script>
-    <script src="{{asset('js/report/invoice.js')}}"></script>
     <script>
-        comparisonInvoiceBar('invoiceChart',@json($invoice_chart));
+        branchInvoiceBar('invoiceChart',@json($invoice_chart));
 
         $.ajaxSetup({
             headers: {
@@ -952,7 +951,6 @@
                                 title: message
                             })
                         }
-
                     });
                 } else {
                     Swal.fire({
