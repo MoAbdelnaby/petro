@@ -62,7 +62,17 @@
                                 </div>
 
                                 <div class="related-heading mb-3 m-0 row col-12 related-heading--custom" >
-                                    <h2 class="p-0 col ml-2">{{ __('app.Invoice_report') }}</h2>
+                                    <h2 class="p-0 col ml-2">
+                                        @if(is_null(request('branch_check')))
+                                            {{ __('app.Invoice_report') }}
+                                        @else
+                                            @if(request('integration') == 'invoice')
+                                                {{ __('app.invoice_integration_branch') }}
+                                            @else
+                                                {{ __('app.invoice_non_integration_branch') }}
+                                            @endif
+                                        @endif
+                                    </h2>
                                     <div class="duration-cont col py-0">
                                         <div class="duration">
                                             <i>
@@ -100,7 +110,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 branches-cont pb-4">
-                                        @if(isset($report['type']))
+                                        @if(is_null(request('branch_check')))
                                             <h3>{{ __("app.".\Str::plural($report['type'])) }} : </h3>
                                             <ul>
                                                 @foreach($list_report as $elemnt)
@@ -110,13 +120,14 @@
                                         @endif
                                     </div>
                                 </div>
+
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
                                         @if(count($report['charts']??[]))
                                             <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
                                                 <div class="col-lg-6 col-md-6 mb-3">
                                                     <div class="card text-center col-12">
-                                                        <a href="{{route('reports.show',['type'=>'invoice','branch_check'=> true])}}" class="card-header row online">
+                                                        <a href="{{route('reports.show',array_merge(['type'=>'invoice','branch_check'=> true,'integration' =>'invoice'], request()->toArray()))}}" class="card-header row online">
                                                             <div class="col-4"><img width="100" src="{{ asset("images/invoice.svg") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.invoice_integration_branch')  }}</b></h5>
@@ -127,12 +138,13 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-6">
                                                     <div class="card text-center col-12">
-                                                        <a href="{{route('reports.show',['type'=>'invoice','branch_check'=> true])}}" class="card-header row offline">
+                                                        <a href="{{route('reports.show',array_merge(['type'=>'invoice','branch_check'=> true,'integration' =>'no_invoice'], request()->toArray()))}}" class="card-header row offline">
                                                             <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_invoice.png") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.invoice_non_integration_branch') }}</b></h5>
                                                                 <h3><b>{{$report['branch_check']['no_invoice']??0}}</b></h3>
                                                             </div>
+                                                        </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -167,22 +179,42 @@
                                                 <div id="BranchInvoiceSideBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
                                         @elseif(count($report['branch_check']['table']??[]))
+                                            <a href="{{route('reports.export',array_merge(['type' => 'invoice','integration'=>request('integration'),'branch_check'=>true], request()->toArray()))}}"
+                                               id="export_excel" data-type="xls" style="position: absolute; left: 10%;"
+                                                    class="btn btn-primary submit_form waves-effect waves-light">
+                                                <i class="fas fa-file-excel-o"></i> {{ __('app.ExportExcel') }}
+                                            </a>
                                             <table class="table dataTable text-center no-footer">
                                                 <thead>
-                                                <tr role="row">
-                                                    <th>{{ __('app.Name') }}</th>
-                                                    <th>{{ __('app.customers.branches.table.code') }}</th>
-                                                    <th>{{ __('app.customers.branches.table.area_count') }}</th>
-                                                    <th>{{ __('app.invoice_integration_branch') }}</th>
-                                                </tr>
+                                                    <tr role="row">
+                                                        <th>#</th>
+                                                        <th>{{ __('app.Name') }}</th>
+                                                        <th>{{ __('app.customers.branches.table.code') }}</th>
+                                                        <th>{{ __('app.customers.branches.table.area_count') }}</th>
+                                                        <th>{{ __('app.integration') }}</th>
+                                                        <th>{{ __('app.Settings') }}</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach ($report['branch_check']['table'] as $item)
+                                                @foreach ($report['branch_check']['table'] as $index=>$item)
                                                     <tr class="item{{ $item['id'] }}">
+                                                        <td>{{ ++$index}}</td>
                                                         <td>{{ $item['name'] }}</td>
                                                         <td>{{ $item['code'] }}</td>
                                                         <td>{{ $item['area_count'] }}</td>
-                                                        <td>{{ $item['area_count'] }}</td>
+                                                        <td>
+                                                            @if(request('integration') == 'invoice')
+                                                                <span class="badge badge-pill badge-success">{{ __('app.yes') }}</span>
+                                                            @else
+                                                                <span class="badge badge-pill badge-danger">{{ __('app.no') }}</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-info btn-sm"
+                                                               href="{{ route('customerBranches.show', [$item['id']]) }}">
+                                                                {{ __('app.customers.branches.show') }}
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -201,7 +233,6 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection
 @php $key_name = 'report'; @endphp
 @push('js')

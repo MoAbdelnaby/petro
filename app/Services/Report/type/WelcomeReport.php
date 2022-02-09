@@ -2,6 +2,7 @@
 
 namespace App\Services\Report\type;
 
+use App\Models\Branch;
 use App\Services\Report\BaseReport;
 use Illuminate\Support\Facades\DB;
 use JsonException;
@@ -125,7 +126,7 @@ class WelcomeReport extends BaseReport
                             'CheckIn Date' => $el->checkInDate,
                             'CheckOutDate' => $el->checkOutDate,
                             'Duration' => str_replace('before', '', \Carbon\Carbon::parse($el->checkInDate)->diffForHumans($el->checkOutDate)),
-                            'Welcome' => $el->welcome,
+                            'Invocie' => $el->welcome
                         ]);
                     }, $item->toArray())];
                 })->toArray();
@@ -148,7 +149,7 @@ class WelcomeReport extends BaseReport
             "list" => ucfirst($key),
             "unit" => config('app.report.type.welcome.unit'),
             "columns" => config('app.report.type.welcome.data'),
-            "display_key" => ["welcome" => __('app.Welcome'), "no_welcome" => __('app.no_welcome')]
+            "display_key" => ["welcome" => __('app.Invoice'), "no_welcome" => __('app.no_welcome')]
         ];
 
         return $report;
@@ -190,9 +191,10 @@ class WelcomeReport extends BaseReport
 
     /**
      * @param $filter
+     * @param string $type
      * @return array
      */
-    public function handleReportCompare($filter): array
+    public function handleReportCompare($filter, $type = 'count'): array
     {
         $data = $this->handleListQuery($filter);
         $list = $data['list'];
@@ -203,7 +205,8 @@ class WelcomeReport extends BaseReport
         $result = [];
         foreach (['welcome', 'no_welcome'] as $status) {
             $query[$status] = DB::table($this->mainTable)
-                ->where("$this->mainTable.status", '=', 'completed')->where("$this->mainTable.plate_status", '=', 'success')
+                ->where("$this->mainTable.status", '=', 'completed')
+                ->where("$this->mainTable.plate_status", '=', 'success')
                 ->select('branches.id')
                 ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
                 ->where('branches.user_id', parentID())
@@ -214,6 +217,8 @@ class WelcomeReport extends BaseReport
             if ($data['type'] == 'branch' && ($filter['default'] ?? false) == false) {
                 $query[$status] = $query[$status]->whereIn('branches.id', $list);
             }
+
+            $filter['column'] = "$this->mainTable.checkInDate";
 
             $query[$status] = $this->handleDateFilter($query[$status], $filter, true);
 
@@ -227,10 +232,21 @@ class WelcomeReport extends BaseReport
         $welcomes = array_column($result['welcome'], 'id');
         $no_welcomes = array_column($result['no_welcome'], 'id');
         $no_welcomes = array_values(array_diff($no_welcomes, $welcomes));
-        $result['welcome'] = count($welcomes);
-        $result['no_welcome'] = count($no_welcomes);
 
-        return $result;
+        if ($type == 'count') {
+            $result['welcome'] = count($welcomes);
+            $result['no_welcome'] = count($no_welcomes);
+
+            return $result;
+        } else {
+            $ids = $type == 'welcome' ? $welcomes : $no_welcomes;
+            return [
+                'branch_check' => [
+                    'table' => Branch::select('id','name','code','area_count','created_at')
+                        ->whereIn('id', $ids)->get()->toArray()
+                ]
+            ];
+        }
     }
 
     /**
@@ -248,7 +264,7 @@ class WelcomeReport extends BaseReport
             $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
         }
 
-        $selectQuery = 'branches.name as branch_name,BayCode,welcome,plate_en,plate_ar,checkInDate,checkOutDate';
+        $selectQuery = 'branches.name as branch_name,BayCode,plate_en,plate_ar,checkInDate,checkOutDate,welcome';
 
         $this->$func_name($list, $selectQuery);
 

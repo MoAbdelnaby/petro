@@ -1595,4 +1595,7 @@ return [
     'last_week' => 'Last Week',
     'this_week' => 'This Week',
     'in_active_time' => 'In Active Time',
+    'yes' => 'Yes',
+    'no' => 'No',
+    'integration' => 'Integration',
 ];

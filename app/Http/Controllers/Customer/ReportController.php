@@ -191,4 +191,35 @@ class ReportController extends Controller
 
         return redirect()->back()->with('danger', "Fail To Download File");
     }
+
+    public function export($type, Request $request)
+    {
+        try {
+            $filter = (empty($request->except('_token')) || is_null($request->show_by))
+                ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
+
+            $result = ReportService::handle($type, $filter);
+            $list = \Arr::flatten($result, 2);
+            $key_word = in_array(\request('integration'), ['invoice', 'welcome']) ? '' : 'Non_';
+            $name = "{$key_word}integration_{$type}_excel_file.xls";
+            $path = "reports/$type/files";
+
+            $file_path = $path . '/' . $name;
+            if (!is_dir(storage_path("/app/public/" . $path))) {
+                \File::makeDirectory(storage_path("/app/public/" . $path), 0777, true, true);
+            }
+
+            $check = \Excel::store(new ExportFiles($list), '/public/' . $file_path);
+
+            if ($check) {
+                $file = public_path() . "/storage/$file_path";
+                return \Response::download($file, $name, ['Content-Type: application/xls']);
+            }
+
+            return redirect()->back()->with('danger', "Fail To Download File");
+
+        } catch (\Exception $e) {
+            return unKnownError($e->getMessage());
+        }
+    }
 }

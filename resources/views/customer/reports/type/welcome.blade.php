@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.index')
 @section('page_title')
-    {{__('app.Welcome_report')}}
+    {{__('app.Welcomes_reports')}}
 @endsection
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -62,7 +62,17 @@
                                 </div>
 
                                 <div class="related-heading mb-3 m-0 row col-12 related-heading--custom" >
-                                    <h2 class="p-0 col ml-2">{{ __('app.Welcome_report') }}</h2>
+                                    <h2 class="p-0 col ml-2">
+                                        @if(is_null(request('branch_check')))
+                                            {{ __('app.Welcome_report') }}
+                                        @else
+                                            @if(request('integration') == 'welcome')
+                                                {{ __('app.welcome_integration_branch') }}
+                                            @else
+                                                {{ __('app.welcome_non_integration_branch') }}
+                                            @endif
+                                        @endif
+                                    </h2>
                                     <div class="duration-cont col py-0">
                                         <div class="duration">
                                             <i>
@@ -100,77 +110,122 @@
                                         </div>
                                     </div>
                                     <div class="col-12 branches-cont pb-4">
-                                        <h3>{{ __("app.".\Str::plural($report['type'])) }} : </h3>
-                                        <ul>
-                                            @foreach($list_report as $elemnt)
-                                                <li>{{$elemnt}}</li>
-                                            @endforeach
-                                        </ul>
+                                        @if(is_null(request('branch_check')))
+                                            <h3>{{ __("app.".\Str::plural($report['type'])) }} : </h3>
+                                            <ul>
+                                                @foreach($list_report as $elemnt)
+                                                    <li>{{$elemnt}}</li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
                                     </div>
                                 </div>
+
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
-                                        @if(count($report['charts']))
+                                        @if(count($report['charts']??[]))
                                             <div class="row pt-3 mx-0 px-0" id="sortable" data-sortable-id="0" aria-dropeffect="move">
                                                 <div class="col-lg-6 col-md-6 mb-3">
                                                     <div class="card text-center col-12">
-                                                        <div class="card-header row online">
+                                                        <a href="{{route('reports.show',array_merge(['type'=>'welcome','branch_check'=> true,'integration' =>'welcome'], request()->toArray()))}}" class="card-header row online">
                                                             <div class="col-4"><img width="100" src="{{ asset("images/welcome.png") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.welcome_integration_branch')  }}</b></h5>
                                                                 <h3><b>{{$report['branch_check']['welcome']??0}}</b></h3>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6">
                                                     <div class="card text-center col-12">
-                                                        <div class="card-header row offline">
+                                                        <a href="{{route('reports.show',array_merge(['type'=>'welcome','branch_check'=> true,'integration' =>'no_welcome'], request()->toArray()))}}" class="card-header row offline">
                                                             <div class="col-4"><img width="100" fill="red" src="{{ asset("images/no_welcome.png") }}" alt=""></div>
                                                             <div class="col-8">
                                                                 <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.welcome_non_integration_branch') }}</b></h5>
                                                                 <h3><b>{{$report['branch_check']['no_welcome']??0}}</b></h3>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="pt-4 mb-5" id="BranchWelcomeBarCon"  style="display: none">
-                                                <div id="BranchWelcomeBar" class="chartDiv" style="min-height: 450px"></div>
-                                            </div>
-                                            <div class="pt-4 mb-5" id="BranchWelcomeLineCon" style="display: none">
-                                                <div id="BranchWelcomeLine" class="chartDiv" style="min-height: 450px"></div>
-                                            </div>
-                                            <div class="row pb-5" id="WelcomeCircleCon" style="display: none">
-                                                @foreach($report['info']['columns']??[] as $column)
-                                                    @if(count($report['info']['columns']) <2)
-                                                        <div class="col-md-3"></div>
-                                                    @else
-                                                        <div class="col-md-1" style="margin-right: -55px"></div>
-                                                    @endif
-                                                    <div class="col-lg-5">
-                                                        <div class="pt-8">
-                                                            <div id="WelcomeCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
-                                                        </div>
-                                                        <h4 class="text-center" style="margin-left: 37%">
-                                                            {{$report['info']['display_key'][$column]}}&nbsp;( {{$report['info']['unit']}} )
-                                                        </h4>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                            <div class="pt-4 mb-5" id="BranchWelcomeTrendLineCon" style="display: none">
-                                                <div id="BranchWelcomeTrendLine" class="chartDiv" style="min-height: 450px"></div>
-                                            </div>
-                                            <div class="pt-4 mb-5" id="BranchWelcomeSideBarCon" style="display: none">
-                                                <div id="BranchWelcomeSideBar" class="chartDiv" style="min-height: 450px"></div>
-                                            </div>
-                                        @else
-                                            <div class="col-12 text-center">
-                                                <img src="{{ asset('images/no-results.webp') }}" class="no-results-image col-12 col-md-7  mt-5"
-                                                     alt="">
-                                            </div>
-                                        @endif
                                     </div>
+                                    <div class="pt-4 mb-5" id="BranchWelcomeBarCon"  style="display: none">
+                                        <div id="BranchWelcomeBar" class="chartDiv" style="min-height: 450px"></div>
+                                    </div>
+                                    <div class="pt-4 mb-5" id="BranchWelcomeLineCon" style="display: none">
+                                        <div id="BranchWelcomeLine" class="chartDiv" style="min-height: 450px"></div>
+                                    </div>
+                                    <div class="row pb-5" id="WelcomeCircleCon" style="display: none">
+                                        @foreach($report['info']['columns']??[] as $column)
+                                            @if(count($report['info']['columns']) <2)
+                                                <div class="col-md-3"></div>
+                                            @else
+                                                <div class="col-md-1" style="margin-right: -55px"></div>
+                                            @endif
+                                            <div class="col-lg-5">
+                                                <div class="pt-8">
+                                                    <div id="WelcomeCircle{{$column}}" class="chartDiv" style="min-height: 450px"></div>
+                                                </div>
+                                                <h4 class="text-center" style="margin-left: 37%">
+                                                    {{$report['info']['display_key'][$column]}}&nbsp;( {{$report['info']['unit']}} )
+                                                </h4>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="pt-4 mb-5" id="BranchWelcomeTrendLineCon" style="display: none">
+                                        <div id="BranchWelcomeTrendLine" class="chartDiv" style="min-height: 450px"></div>
+                                    </div>
+                                    <div class="pt-4 mb-5" id="BranchWelcomeSideBarCon" style="display: none">
+                                        <div id="BranchWelcomeSideBar" class="chartDiv" style="min-height: 450px"></div>
+                                    </div>
+
+                                    @elseif(count($report['branch_check']['table']??[]))
+                                        <a href="{{route('reports.export',array_merge(['type' => 'welcome','integration'=>request('integration'),'branch_check'=>true], request()->toArray()))}}"
+                                           id="export_excel" data-type="xls" style="position: absolute; left: 10%;"
+                                           class="btn btn-primary submit_form waves-effect waves-light">
+                                            <i class="fas fa-file-excel-o"></i> {{ __('app.ExportExcel') }}
+                                        </a>
+                                        <table class="table dataTable text-center no-footer">
+                                            <thead>
+                                            <tr role="row">
+                                                <th>#</th>
+                                                <th>{{ __('app.Name') }}</th>
+                                                <th>{{ __('app.customers.branches.table.code') }}</th>
+                                                <th>{{ __('app.customers.branches.table.area_count') }}</th>
+                                                <th>{{ __('app.integration') }}</th>
+                                                <th>{{ __('app.Settings') }}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach ($report['branch_check']['table'] as $index=>$item)
+                                                <tr class="item{{ $item['id'] }}">
+                                                    <td>{{ ++$index}}</td>
+                                                    <td>{{ $item['name'] }}</td>
+                                                    <td>{{ $item['code'] }}</td>
+                                                    <td>{{ $item['area_count'] }}</td>
+                                                    <td>
+                                                        @if(request('integration') == 'welcome')
+                                                            <span class="badge badge-pill badge-success">{{ __('app.yes') }}</span>
+                                                        @else
+                                                            <span class="badge badge-pill badge-danger">{{ __('app.no') }}</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-info btn-sm"
+                                                           href="{{ route('customerBranches.show', [$item['id']]) }}">
+                                                            {{ __('app.customers.branches.show') }}
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <div class="col-12 text-center">
+                                            <img src="{{ asset('images/no-results.webp') }}" class="no-results-image col-12 col-md-7  mt-5"
+                                                 alt="">
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -184,6 +239,7 @@
 @push('js')
     <script src="{{asset('js/report/report.js')}}"></script>
     <script>
+        @if($report['charts']??false)
         let charts = @json($report['charts']);
         let info = @json($report['info']);
         /************* Start Bar Chart ****************/
@@ -222,5 +278,6 @@
         trendLineChart('BranchWelcomeTrendLine',charts.bar, info);
         @endif
         /**************** End TrendLine Chart****************/
+        @endif
     </script>
 @endpush

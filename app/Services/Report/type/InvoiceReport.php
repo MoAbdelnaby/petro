@@ -191,9 +191,10 @@ class InvoiceReport extends BaseReport
 
     /**
      * @param $filter
+     * @param string $type
      * @return array
      */
-    public function handleReportCompare($filter): array
+    public function handleReportCompare($filter, $type = 'count'): array
     {
         $data = $this->handleListQuery($filter);
         $list = $data['list'];
@@ -217,6 +218,8 @@ class InvoiceReport extends BaseReport
                 $query[$status] = $query[$status]->whereIn('branches.id', $list);
             }
 
+            $filter['column'] = "$this->mainTable.checkInDate";
+
             $query[$status] = $this->handleDateFilter($query[$status], $filter, true);
 
             if ($status == 'no_invoice') {
@@ -229,10 +232,21 @@ class InvoiceReport extends BaseReport
         $invoices = array_column($result['invoice'], 'id');
         $no_invoices = array_column($result['no_invoice'], 'id');
         $no_invoices = array_values(array_diff($no_invoices, $invoices));
-        $result['invoice'] = count($invoices);
-        $result['no_invoice'] = count($no_invoices);
 
-        return $result;
+        if ($type == 'count') {
+            $result['invoice'] = count($invoices);
+            $result['no_invoice'] = count($no_invoices);
+
+            return $result;
+        } else {
+            $ids = $type == 'invoice' ? $invoices : $no_invoices;
+            return [
+                'branch_check' => [
+                    'table' => Branch::select('id','name','code','area_count','created_at')
+                        ->whereIn('id', $ids)->get()->toArray()
+                ]
+            ];
+        }
     }
 
     /**
@@ -255,38 +269,5 @@ class InvoiceReport extends BaseReport
         $this->$func_name($list, $selectQuery);
 
         return $this->getReport($data["type"], $filter);
-    }
-
-    /**
-     * @param $filter
-     * @return mixed
-     */
-    protected function loadBranchCheckTable($filter)
-    {
-        $query = DB::table($this->mainTable)
-            ->where("$this->mainTable.status", '=', 'completed')
-            ->where("$this->mainTable.plate_status", '=', 'success')
-            ->select('branches.id')
-            ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
-            ->where('branches.user_id', parentID())
-            ->where('branches.active', true)
-            ->whereNull('branches.deleted_at')
-            ->distinct();
-
-//        $query = $this->handleDateFilter($query, $filter, true);
-
-        if ($filter['integration'] ?? false) {
-            $result = $query->whereNull('invoice')->get()->toArray();
-        } else {
-            $result = $query->whereNotNull('invoice')->get()->toArray();
-        }
-
-        $ids = array_column(array_map(static fn($el) => (array)$el, $result), 'id');
-
-        return [
-            'branch_check' => [
-                'table' => Branch::whereIn('id', $ids)->get()->toArray()
-            ]
-        ];
     }
 }

@@ -29,8 +29,8 @@ abstract class BaseReport
         }
 
         //Check If Branch Check only
-        if ((request('branch_check') ?? false) && method_exists($this, 'loadBranchCheckTable')) {
-            return $this->loadBranchCheckTable($filter);
+        if (!is_null(request('branch_check')) && method_exists($this, 'handleReportCompare')) {
+            return $this->handleReportCompare($filter, request('integration'));
         }
 
         //Prepare Base Query to get This report base On List Type
