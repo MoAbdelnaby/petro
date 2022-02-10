@@ -9,6 +9,7 @@
  */
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 if (!function_exists('active')) {
@@ -300,6 +301,40 @@ if (!function_exists('diffMonth')) {
         }
     }
 }
+if (!function_exists('handleDiff')) {
+    function handleDiff($diff): string
+    {
+        $year = false;
+        $day = false;
+        $month = false;
+        $hour = false;
+        $minutes = false;
+
+        if ($diff->y) {
+            $year = $diff->d . ' ' . __('Year' . ($diff->y > 1 ? 's' : ''));
+        }
+
+        if ($diff->m) {
+            $month = $diff->m . ' ' . __('Day' . ($diff->m > 1 ? 's' : ''));
+        }
+
+        if ($diff->d) {
+            $day = $diff->d . ' ' . __('Day' . ($diff->d > 1 ? 's' : ''));
+        }
+
+        if ($diff->h) {
+            $hour = $diff->h . ' ' . __('Hour' . ($diff->h > 1 ? 's' : ''));
+        }
+
+        if ($diff->i) {
+            $minutes = $diff->i . ' ' . __('Minute' . ($diff->i > 1 ? 's' : ''));
+        }
+
+        $diff = ($year ? $year . ' ' : '') . ' ' . ($month ? $month . ' ' : '') . ($day ? $day . ' ' : '') . ($hour ? $hour . ' ' : '') . ($minutes ? $minutes . ' ' : '');
+
+        return empty(trim($diff)) ? "0 " . __('Minute') : trim($diff);
+    }
+}
 
 
 if (!function_exists('str_contains')) {
@@ -330,8 +365,7 @@ if (!function_exists('getStartEndDate')) {
 
             $start_name = Carbon::now()->startOfWeek()->subDays(1)->format("Y-m-d");
             $last_name = Carbon::now()->endOfWeek()->subDays(1)->format("Y-m-d");
-        }
-        elseif ($time == 'last_week') {
+        } elseif ($time == 'last_week') {
 
             $start_name = Carbon::now()->subWeek(1)->startOfWeek()->addDays(1)->format("Y-m-d");
             $last_name = Carbon::now()->subWeek(1)->endOfWeek()->subDays(1)->format("Y-m-d");

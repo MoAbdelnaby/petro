@@ -10,7 +10,7 @@
 
 @push('css')
     <style>
-        .invalid-feedback{
+        .invalid-feedback {
             display: block;
         }
     </style>
@@ -21,12 +21,15 @@
     <div id="content-page" class="content-page">
         <div class="container-fluid">
             <div class="iq-card">
-                <div class="card-header">
-                    <h2>{{ __('app.Branch_Status_Header') }} : {{ $branchName }}</h2>
+                <div class="iq-card-body">
+                <div class=" menu-and-filter menu-and-filter--custom related-heading">
+                    <h2>
+                        <img src="{{resolveDark()}}/img/icon_menu/building.svg" width="24"
+                             class="tab_icon-img" alt="">
+                        {{ __('app.Branch_Status_log') }}: {{$branchName}}</h2>
                 </div>
                 <div class="container-fluid">
                     <div class="card-body">
-
                         <div class="related-product-block position-relative col-12">
                             <div class="product_table table-responsive row p-0 m-0 col-12">
                                 <table class="table dataTable ui celled table-bordered text-center">
@@ -43,15 +46,15 @@
                                             <td>{{ $k+1 }}</td>
                                             <td>{{ $log->user->name }}</td>
                                             <td>
-{{--                                                {{ $log->status }}--}}
+                                                {{--                                                {{ $log->status }}--}}
                                                 @if ($log->status == "connected")
-                                                    <i class="fas fa-circle" style="color: green"></i> {{ $log->status }}
+                                                    <i class="fas fa-circle"
+                                                       style="color: green"></i> {{ $log->status }}
                                                 @else
                                                     <i class="fas fa-circle" style="color: red"></i> {{ $log->status }}
                                                 @endif
-
                                             </td>
-                                            <td>{{ $log->error }}</td>
+                                            <td>{{ Str::limit($log->error,50) }}</td>
                                             <td>{{ \Carbon\Carbon::parse($log->created_at)->isoFormat("LLL") }}</td>
                                         </tr>
                                     @endforeach

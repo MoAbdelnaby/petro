@@ -1598,4 +1598,9 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'integration' => 'Integration',
+    'last_staibility' => 'Last Staibility',
+    'staibility' => 'Staibility',
+    'stable' => 'Stable',
+    'not_staple' => 'Not Stable',
+    'Branch_Status_log' => 'Branch Status Log',
 ];

@@ -24,6 +24,7 @@ use App\Models\Carprofile;
 use App\Notifications\branchStatusNotification;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -52,7 +53,7 @@ class ApiModelController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function getSetting(ApiModelRequest $request)
     {
@@ -318,7 +319,8 @@ class ApiModelController extends Controller
         return response()->json(['success' => false, 'message' => 'Station Code Not Found'], 200);
     }
 
-    public function branchNetwork(Request $request) {
+    public function branchNetwork(Request $request): JsonResponse
+    {
         $validator = Validator::make($request->all(), [
             'branch_code' => 'required',
             'last_error' => 'required',
@@ -330,67 +332,59 @@ class ApiModelController extends Controller
             $json['code'] = 500;
             $json['message'] = 'issue of creation branch status';
 
-            return response()->json(['data' => $json],$json['code']);
+            return response()->json(['data' => $json], $json['code']);
         }
 
         try {
-            $json = array();
-            $branchStatusArr = array();
-            /* get branch */
-            $branch = Branch::where("code",$request->branch_code)->first();
-            /* end of get branch */
+            $json = [];
+            $branchStatusArr = [];
+            $branch = Branch::where("code", $request->branch_code)->first();
+
             if ($branch) {
                 if ($branch->active == 1) {
                     $create = BranchNetWork::create([
                         'user_id' => Auth::id(),
                         'branch_code' => $request->branch_code,
-                        'error' => json_encode($request->last_error),
+                        'error' => json_encode($request->last_error, JSON_THROW_ON_ERROR),
                         'status' => $request->status,
                         'sending' => 0,
                     ]);
-                    /* last of error */
-                    $branchStatus = BranchStatus::where('branch_code',$request->branch_code)->first();
+
+                    //Handle Last Error
+                    $branchStatus = BranchStatus::where('branch_code', $request->branch_code)->first();
                     $branchStatusArr['status'] = 'online';
                     $branchStatusArr['created_at'] = Carbon::now();
-                    $branchStatusArr['last_error'] = json_encode($request->last_error);
+                    $branchStatusArr['last_error'] = json_encode($request->last_error, JSON_THROW_ON_ERROR);
                     $branchStatusArr['last_connected'] = null;
                     $branchStatusArr['branch_code'] = $request->branch_code;
                     $branchStatusArr['branch_name'] = $branch->name;
+
                     if ($branchStatus) {
                         $branchStatus->update($branchStatusArr);
                     } else {
                         BranchStatus::create($branchStatusArr);
                     }
-                    /* End */
+
                     if ($create) {
-                        /* response successfully */
                         $json['status'] = 'success';
                         $json['message'] = 'store branch status successfully';
                         $json['code'] = 200;
-                    }else {
+                    } else {
                         $json['status'] = 'field';
                         $json['code'] = 500;
                         $json['message'] = 'issue of creation branch status';
                     }
-                    /* send notification to admins heating branch */
-//                    foreach (User::where('type','customer')->get() as $user) {
-//                        $user->notify(new branchStatusNotification($branchStatusArr,Auth::user()->name));
-//                    }
-                    /* end notify*/
-                    return response()->json(['data' => $json],$json['code']);
+
+                    return response()->json(['data' => $json], $json['code']);
                 } else {
-                    return response()->json(['data' => [], 'message' => 'this Branch is inActive', 'code' => 200],200);
+                    return response()->json(['data' => [], 'message' => 'this Branch is inActive', 'code' => 200], 200);
                 }
             } else {
-                return response()->json(['data' => [], 'message' => 'Branch Not Found', 'code' => 404],404);
+                return response()->json(['data' => [], 'message' => 'Branch Not Found', 'code' => 404], 404);
             }
+
         } catch (\Exception $e) {
-            return response()->json([
-                'data'=> [],
-                'message' => $e->getMessage(),
-                'code' => 500
-            ], 500);
+            return response()->json(['data' => [], 'message' => $e->getMessage(), 'code' => 500], 500);
         }
     }
-
 }

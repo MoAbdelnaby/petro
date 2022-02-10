@@ -14,6 +14,7 @@ use App\Models\UserModelBranch;
 use App\Models\UserPackages;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
@@ -24,7 +25,7 @@ class BranchModelsController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * return void
      */
     public function __construct(BranchModelsRepo $repo)
     {
@@ -38,7 +39,7 @@ class BranchModelsController extends Controller
     /**
      * \Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
@@ -124,7 +125,7 @@ class BranchModelsController extends Controller
     /**
      * Create the Package for dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * return \Illuminate\Contracts\Support\Renderable
      */
     public function create()
     {
@@ -136,8 +137,8 @@ class BranchModelsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * param \Illuminate\Http\Request $request
+     * return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -195,8 +196,8 @@ class BranchModelsController extends Controller
     /**
      * update the Permission for dashboard.
      *
-     * @param Permission $permission
-     * @return \Illuminate\Contracts\Support\Renderable
+     * param Permission $permission
+     * return \Illuminate\Contracts\Support\Renderable
      */
     public function edit($id)
     {
@@ -210,8 +211,8 @@ class BranchModelsController extends Controller
     /**
      * Update a resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * param \Illuminate\Http\Request $request
+     * return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -245,8 +246,8 @@ class BranchModelsController extends Controller
     /**
      * Delete more than one permission.
      *
-     * @param $id
-     * @return \Illuminate\Http\Response
+     * param $id
+     * return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
@@ -263,8 +264,8 @@ class BranchModelsController extends Controller
             ->where('created_at', '<=', Carbon::now())
             ->count();
 
-        Branch::whereNotIn('code', $branches->pluck('branch_code'))->get()->map(function($item) use ($branches) {
-            $branches->push((object) [
+        Branch::whereNotIn('code', $branches->pluck('branch_code'))->get()->map(function ($item) use ($branches) {
+            $branches->push((object)[
                 'id' => 111,
                 'branch_code' => $item->code,
                 'user_id' => $item->user_id,
@@ -275,7 +276,35 @@ class BranchModelsController extends Controller
         });
 
         $off = $branches->count() - $on;
-        return view("customer.branches_status.index", compact('branches', 'off', 'on'));
+
+        //Last Staibilty
+        $first_errors = DB::table('branch_net_works')
+            ->select('branch_code', DB::raw('MAX(created_at) as start_error'))
+            ->where('error', '<>', '"No errors"')
+            ->whereYear('created_at', '2022')
+            ->groupBy('branch_code')
+            ->latest()
+            ->get();
+
+        $last_stability = [];
+        foreach ($first_errors as $error) {
+            $last_stability[$error->branch_code] = DB::table('branch_net_works')
+                ->select('branch_code', DB::raw('MIN(created_at) as start_date'), DB::raw('MAX(created_at) as end_date'))
+                ->where('error', '=', '"No errors"')
+                ->where('branch_code', '=', $error->branch_code)
+                ->where('created_at', '>=', $error->start_error)
+                ->latest()
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'start_date' => $item->start_date,
+                        'end_date' => $item->end_date,
+                        'stability' => handleDiff(Carbon::parse($item->start_date)->diff($item->end_date))
+                    ];
+                })->first();
+        }
+
+        return view("customer.branches_status.index", compact('branches', 'last_stability', 'off', 'on'));
     }
 
     public function getLogs($code)
@@ -286,4 +315,45 @@ class BranchModelsController extends Controller
         return view("customer.branches_status.logs", compact('logs', 'branchName'));
     }
 
+    public function getStaibility($code)
+    {
+        $branch = Branch::where('code', $code)->firstOrFail();
+
+        $steps = $this->stepsQuery($code);
+
+        $info = [
+            "list" => 'start_date',
+            "unit" => "Hours",
+            "columns" => ["stability"],
+            "display_key" => ["stability" => __('app.stability')]
+        ];
+
+        return view("customer.branches_status.steps", compact('branch', 'steps', 'info'));
+    }
+
+    /**
+     * @param $code
+     * @return array
+     */
+    protected function stepsQuery($code): array
+    {
+        $steps = DB::table('branch_net_works')
+            ->select('branch_net_works.*')
+            ->where('branch_code', '=', $code)
+            ->whereYear('created_at', '2022')
+            ->latest()
+            ->take(100)
+            ->get();
+
+        return $steps->chunkWhile(fn($value, $key, $chunk) => $value->error == $chunk->last()->error)
+            ->map(function ($createdChunk) {
+    //                dd($createdChunk);
+                return [
+                    'status' => $createdChunk->first()->error == '"No errors"' ? 'stable' : 'not_stable',
+                    'start_date' => $createdChunk->last()->created_at,
+                    'end_date' => $createdChunk->first()->created_at,
+                    'stability' => handleDiff(Carbon::parse($createdChunk->last()->created_at)->diff($createdChunk->first()->created_at))
+                ];
+            })->toArray();
+    }
 }

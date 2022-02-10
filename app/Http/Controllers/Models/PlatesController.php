@@ -387,16 +387,12 @@ class PlatesController extends Controller
             return response()->json(['success' => true, 'message' => "Your {$request->type} Message Sent Successfully"], 200);
 
         } catch (\Exception $e) {
-
             return response()->json(['success' => false, 'message' => 'Something went Wrong', 'info' => $e->getMessage()], 500);
-
         }
-
     }
 
     public function get_branch_plate_times(Request $request)
     {
-
         $start = false;
         $end = false;
         if ($request->date != 'all') {

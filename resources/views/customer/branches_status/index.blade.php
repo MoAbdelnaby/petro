@@ -10,7 +10,7 @@
 
 @push('css')
     <style>
-        .invalid-feedback{
+        .invalid-feedback {
             display: block;
         }
 
@@ -29,17 +29,22 @@
                         <div class="iq-card-body">
                             <div class=" menu-and-filter menu-and-filter--custom related-heading">
                                 <h2>
-                                    <img src="{{resolveDark()}}/img/icon_menu/building.svg"  width="24" class="tab_icon-img" alt="">
+                                    <img src="{{resolveDark()}}/img/icon_menu/building.svg" width="24"
+                                         class="tab_icon-img" alt="">
                                     {{ __('app.Branch_Status_Header') }}</h2>
                             </div>
                             <div class="container-fluid">
                                 <div class="row mb-3 mt-3 justify-content-center">
-                                    <div class="col-lg-3 col-md-6">
+                                    <div class="col-lg-6 col-md-6">
                                         <div class="card text-center">
                                             <div class="card-header row online mx-0 px-0">
-                                                <div class="col-4"><img width="100" src="{{ asset("images/online-svgrepo-com.svg") }}" alt=""></div>
+                                                <div class="col-4"><img width="100"
+                                                                        src="{{ asset("images/online-svgrepo-com.svg") }}"
+                                                                        alt=""></div>
                                                 <div class="col-8">
-                                                    <h5><b><i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}</b></h5>
+                                                    <h5><b><i class="fas fa-circle"
+                                                              style="color: green"></i> {{ __('app.branch_online')  }}
+                                                        </b></h5>
                                                     <h3><b>{{ $on }}</b></h3>
                                                 </div>
 
@@ -47,12 +52,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-3 col-md-6">
+                                    <div class="col-lg-6 col-md-6">
                                         <div class="card text-center col-12  ">
                                             <div class="card-header row offline ">
-                                                <div class="col-4"><img width="100" fill="red" src="{{ asset("images/offline-svgrepo-com.svg") }}" alt=""></div>
+                                                <div class="col-4"><img width="100" fill="red"
+                                                                        src="{{ asset("images/offline-svgrepo-com.svg") }}"
+                                                                        alt=""></div>
                                                 <div class="col-8">
-                                                    <h5><b><i class="fas fa-circle" style="color: red"></i> {{ __('app.branch_offline') }}</b></h5>
+                                                    <h5><b><i class="fas fa-circle"
+                                                              style="color: red"></i> {{ __('app.branch_offline') }}</b>
+                                                    </h5>
                                                     <h3><b>{{ $off }}</b></h3>
                                                 </div>
 
@@ -71,9 +80,9 @@
                                                 <th>#</th>
                                                 <th>{{__('app.branch_name')}}</th>
                                                 <th>{{ __('app.branch_status') }}</th>
+                                                <th>{{ __('app.last_staibility') }}</th>
                                                 <th>{{ __('app.last_connected') }}</th>
                                                 <th>{{ __('app.Actions') }}</th>
-
                                                 </thead>
                                                 <tbody class="trashbody">
                                                 @foreach($branches as $k => $branch)
@@ -84,11 +93,14 @@
                                                         </td>
                                                         <td>
                                                             @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
-                                                                <i class="fas fa-circle" style="color: green"></i> {{ __('app.branch_online')  }}
+                                                                <i class="fas fa-circle"
+                                                                   style="color: green"></i> {{ __('app.branch_online')  }}
                                                             @else
-                                                                <i class="fas fa-circle" style="color: red"></i> {{ __('app.branch_offline') }}
+                                                                <i class="fas fa-circle"
+                                                                   style="color: red"></i> {{ __('app.branch_offline') }}
                                                             @endif
                                                         </td>
+                                                        <td>{{isset($last_stability[$branch->branch_code])?$last_stability[$branch->branch_code]['stability']:"0 ". __('app.minute')}}</td>
                                                         <td>
                                                             @php($diff = \Carbon\Carbon::now()->diff($branch->created_at))
                                                             @if($diff->y)
@@ -104,7 +116,12 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a class="btn btn-primary" href="branches-log/{{$branch->branch_code}}" target="_blank">{{ __('app.Show') }}</a>
+                                                            <a class="btn btn-primary"
+                                                               href="branches-log/{{$branch->branch_code}}"
+                                                               target="_blank">{{ __('app.Show') }}</a>
+                                                            <a class="btn btn-info"
+                                                               href="branches-staibility/{{$branch->branch_code}}"
+                                                               target="_blank">{{ __('app.staibility') }}</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

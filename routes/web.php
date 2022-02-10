@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,16 +15,51 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+Route::get('test', function () {
+
+    DB::enableQueryLog();
+
+    //Last Staibilty
+    $first_errors = DB::table('branch_net_works')
+        ->select('branch_code', DB::raw('MAX(created_at) as start_error'))
+        ->where('error', '<>', '"No errors"')
+        ->whereYear('created_at', '2022')
+        ->groupBy('branch_code')
+        ->latest()
+        ->get();
+
+    foreach ([$first_errors] as $error) {
+        $last_stability[$error->branch_code] = DB::table('branch_net_works')
+            ->select('branch_code', DB::raw('MIN(created_at) as start_date'), DB::raw('MAX(created_at) as end_date'))
+            ->where('error', '=', '"No errors"')
+            ->where('branch_code', '=', $error->branch_code)
+            ->where('created_at', '>=', $error->start_error)
+            ->latest()
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'start_date' => $item->start_date,
+                    'end_date' => $item->end_date,
+                    'last_stability' => Carbon::parse($item->start_date)->diffInSeconds($item->end_date),
+                ];
+            })->first();
+    }
+
+    $log = DB::getQueryLog();
+
+    dd($log, $first_errors, $last_stability);
+});
+
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('lang/{lang}', 'HomeController@select')->name('select');
 Route::get('dark/{code}', 'HomeController@dark')->name('dark');
 Route::post('user_settings/{col}', 'UserSettingsController@update')->name('user_settings');
 Auth::routes();
 
-Route::group(['middleware' => ['auth','speed']], function () {
+Route::group(['middleware' => ['auth', 'speed']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
-    Route::get('userNotify','HomeController@getNotify')->name('notfication');
+    Route::get('userNotify', 'HomeController@getNotify')->name('notfication');
 
 
     Route::group(['prefix' => 'api/charts'], function () {
@@ -34,7 +70,7 @@ Route::group(['middleware' => ['auth','speed']], function () {
         Route::post('heatmapLowHigh', 'Models\DashController@getPositionsLowHigh');
     });
     Route::group(['prefix' => 'api/map'], function () {
-        Route::match(['get','post'],'filter', 'Customer\MapController@filter')->name('map.filter');
+        Route::match(['get', 'post'], 'filter', 'Customer\MapController@filter')->name('map.filter');
         Route::post('plates_filter', 'Customer\MapController@MapPlatesfilter')->name('map.platesFilter');
     });
 
@@ -138,6 +174,7 @@ Route::group(['middleware' => ['auth','speed']], function () {
         Route::get('myBranches', 'UserController@myBranches')->name('myBranches');
         Route::get('branches-status', 'BranchModelsController@BranchesStatus')->name('branches_status');
         Route::get('branches-log/{id}', 'BranchModelsController@getLogs');
+        Route::get('branches-staibility/{id}', 'BranchModelsController@getStaibility');
         Route::get('customerPackages/assignuser/{id}', 'CustomerPackagesController@assignuser')->name('customerPackages.assignuser');
         Route::post('customerPackages/assignuser/{id}/create', 'CustomerPackagesController@assignuserpost')->name('customerPackages.assignuserpost');
         Route::post('customerPackages/requestPackage', 'CustomerPackagesController@requestPackage')->name('customerPackages.requestPackage');
@@ -277,6 +314,7 @@ Route::group(['middleware' => ['auth','speed']], function () {
 });
 Route::get('branches/register', 'Models\ConnectionSpeedController@registerBranch')->name('branch.register');
 
-Route::get('branch/filter/area','Models\PlacesController@get_branch_data')->name('branch.filter.area');
+Route::get('branch/filter/area', 'Models\PlacesController@get_branch_data')->name('branch.filter.area');
 
-Route::get('branch/plates/times','Models\PlatesController@get_branch_plate_times')->name('branch.plates.times');
+Route::get('branch/plates/times', 'Models\PlatesController@get_branch_plate_times')->name('branch.plates.times');
+
