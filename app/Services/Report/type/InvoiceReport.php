@@ -202,7 +202,6 @@ class InvoiceReport extends BaseReport
         if (isset($filter['show_by'])) {
             $data = $this->handleListQuery($filter);
         }
-
         $list = $data['list'] ?? [];
         if (!is_array($list)) {
             $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
@@ -220,8 +219,10 @@ class InvoiceReport extends BaseReport
                 ->whereNull('branches.deleted_at')
                 ->distinct();
 
-            if ($data['type'] ?? '' == 'branch' && ($filter['default'] ?? false) == false) {
-                $query[$status] = $query[$status]->whereIn('branches.id', $list);
+            if (($filter['default'] ?? false) == false) {
+                if ($data['type'] ?? '' == 'branch') {
+                    $query[$status] = $query[$status]->whereIn('branches.id', $list);
+                }
             }
 
             $filter['column'] = "$this->mainTable.checkInDate";

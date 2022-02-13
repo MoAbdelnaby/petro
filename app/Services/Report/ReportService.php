@@ -29,6 +29,7 @@ class ReportService
 
         $filter = [
             'start' => $start,
+            'default' => true,
             'end' => $end
         ];
 
