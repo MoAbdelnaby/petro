@@ -126,25 +126,41 @@
                                 </div>
                             </div>
                         </div>
-                    @endcan
-                    <div class="border-bottom clearfix"></div>
+                        <div class="border-bottom clearfix"></div>
 
-                    @can('list-CustomerUsers')
-                        <div
-                            class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/activities' ? 'active' : '' }}">
-                            <div class="col-12 justify-content-center">
-                                <div class="iq-product-cover d-flex justify-content-center">
-                                    <a href="{{ route('activities.index') }}" class="iq-waves-effect"><img
-                                            src="{{ resolveDark() }}/img/icon_menu/work-time.svg" alt="product-image"
-                                            class="img-fluid"></a>
-                                </div>
-                                <div class="iq-product-cover d-flex justify-content-center"><a
-                                        href="{{ route('activities.index') }}"
-                                        class="iq-waves-effect menutext">{{ __('app.side_bar.auth_control.activities') }}</a>
-                                </div>
+                    @endcan
+
+                    <div
+                        class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/reports' ? 'active' : '' }}">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ route('reports.index') }}" class="iq-waves-effect"><img
+                                        src="{{ resolveDark() }}/img/icon_menu/report.svg" alt="Reports"
+                                        class="img-fluid"></a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center"><a
+                                    href="{{ route('reports.index') }}"
+                                    class="iq-waves-effect menutext">{{ __('app.Reports') }}</a></div>
+                        </div>
+                    </div>
+                    <div class="border-bottom clearfix"></div>
+                    <div
+                        class="row justify-content-center  p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/branches-status' ? 'active' : '' }} ">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ route('branches_status') }}" class="iq-waves-effect">
+                                    {{--                                    <i class="fas fa-building fa-2x"></i>--}}
+                                    <img
+                                        src="{{ resolveDark() }}/img/icon_menu/building.svg" alt="Settings"
+                                        class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ route('branches_status') }}"
+                                   class="iq-waves-effect menutext">{{ __('app.branchStatus') }}</a>
                             </div>
                         </div>
-                    @endcan
+                    </div>
                     <div class="border-bottom clearfix"></div>
                     <div
                         class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/config/place/get' ? 'active' : '' }}">
@@ -160,23 +176,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="border-bottom clearfix"></div>
-                    <div
-                        class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/reports' ? 'active' : '' }}">
-                        <div class="col-12 justify-content-center">
-                            <div class="iq-product-cover d-flex justify-content-center">
-                                <a href="{{ route('reports.index') }}" class="iq-waves-effect"><img
-                                        src="{{ resolveDark() }}/img/icon_menu/report.svg" alt="Reports"
-                                        class="img-fluid"></a>
+                    @can('list-CustomerUsers')
+                        <div class="border-bottom clearfix"></div>
+
+                        <div
+                            class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/activities' ? 'active' : '' }}">
+                            <div class="col-12 justify-content-center">
+                                <div class="iq-product-cover d-flex justify-content-center">
+                                    <a href="{{ route('activities.index') }}" class="iq-waves-effect"><img
+                                            src="{{ resolveDark() }}/img/icon_menu/work-time.svg" alt="product-image"
+                                            class="img-fluid"></a>
+                                </div>
+                                <div class="iq-product-cover d-flex justify-content-center"><a
+                                        href="{{ route('activities.index') }}"
+                                        class="iq-waves-effect menutext">{{ __('app.side_bar.auth_control.activities') }}</a>
+                                </div>
                             </div>
-                            <div class="iq-product-cover d-flex justify-content-center"><a
-                                    href="{{ route('reports.index') }}"
-                                    class="iq-waves-effect menutext">{{ __('app.Reports') }}</a></div>
                         </div>
-                    </div>
-                    <div class="border-bottom clearfix"></div>
-
-
+                        <div class="border-bottom clearfix"></div>
+                    @endcan
                     <div
                         class="row justify-content-center  p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/settings/reminder' ? 'active' : '' }} ">
                         <div class="col-12 justify-content-center">
@@ -300,24 +318,6 @@
                         </div>
                     </div>
                     <div class="border-bottom clearfix"></div>
-
-                    <div
-                        class="row justify-content-center  p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/branches-status' ? 'active' : '' }} ">
-                        <div class="col-12 justify-content-center">
-                            <div class="iq-product-cover d-flex justify-content-center">
-                                <a href="{{ route('branches_status') }}" class="iq-waves-effect">
-{{--                                    <i class="fas fa-building fa-2x"></i>--}}
-                                    <img
-                                        src="{{ resolveDark() }}/img/icon_menu/building.svg" alt="Settings"
-                                        class="img-fluid">
-                                </a>
-                            </div>
-                            <div class="iq-product-cover d-flex justify-content-center">
-                                <a href="{{ route('branches_status') }}"
-                                   class="iq-waves-effect menutext">{{ __('app.branchStatus') }}</a>
-                            </div>
-                        </div>
-                    </div>
                 @else
 
                     @if (auth()->user()->type == 'subcustomer')

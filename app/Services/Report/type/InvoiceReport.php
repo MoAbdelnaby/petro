@@ -192,12 +192,18 @@ class InvoiceReport extends BaseReport
     /**
      * @param $filter
      * @param string $type
+     * @param string $type_column
      * @return array
      */
-    public function handleReportCompare($filter, $type = 'count'): array
+    public function handleReportCompare($filter, $type = 'count', $type_column = 'list'): array
     {
-        $data = $this->handleListQuery($filter);
-        $list = $data['list'];
+        $data = [];
+
+        if (isset($filter['show_by'])) {
+            $data = $this->handleListQuery($filter);
+        }
+
+        $list = $data['list'] ?? [];
         if (!is_array($list)) {
             $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
         }
@@ -214,7 +220,7 @@ class InvoiceReport extends BaseReport
                 ->whereNull('branches.deleted_at')
                 ->distinct();
 
-            if ($data['type'] == 'branch' && ($filter['default'] ?? false) == false) {
+            if ($data['type'] ?? '' == 'branch' && ($filter['default'] ?? false) == false) {
                 $query[$status] = $query[$status]->whereIn('branches.id', $list);
             }
 
@@ -240,9 +246,14 @@ class InvoiceReport extends BaseReport
             return $result;
         } else {
             $ids = $type == 'invoice' ? $invoices : $no_invoices;
+
+            if ($type_column == 'id') {
+                return $ids;
+            }
+
             return [
                 'branch_check' => [
-                    'table' => Branch::select('id','name','code','area_count','created_at')
+                    'table' => Branch::select('id', 'name', 'code', 'area_count', 'created_at')
                         ->whereIn('id', $ids)->get()->toArray()
                 ]
             ];

@@ -320,15 +320,14 @@ class BranchModelsController extends Controller
         $branch = Branch::where('code', $code)->firstOrFail();
 
         $steps = $this->stepsQuery($code);
+        $charts = $this->prepareChart($steps);
 
         $info = [
             "list" => 'start_date',
             "unit" => "Hours",
-            "columns" => ["stability"],
-            "display_key" => ["stability" => __('app.stability')]
         ];
 
-        return view("customer.branches_status.steps", compact('branch', 'steps', 'info'));
+        return view("customer.branches_status.steps", compact('branch', 'steps', 'info', 'charts'));
     }
 
     /**
@@ -342,18 +341,32 @@ class BranchModelsController extends Controller
             ->where('branch_code', '=', $code)
             ->whereYear('created_at', '2022')
             ->latest()
-            ->take(100)
             ->get();
 
-        return $steps->chunkWhile(fn($value, $key, $chunk) => $value->error == $chunk->last()->error)
-            ->map(function ($createdChunk) {
-    //                dd($createdChunk);
-                return [
-                    'status' => $createdChunk->first()->error == '"No errors"' ? 'stable' : 'not_stable',
-                    'start_date' => $createdChunk->last()->created_at,
-                    'end_date' => $createdChunk->first()->created_at,
-                    'stability' => handleDiff(Carbon::parse($createdChunk->last()->created_at)->diff($createdChunk->first()->created_at))
-                ];
-            })->toArray();
+        return $steps->chunkWhile(function ($value, $key, $chunk) {
+            return $value->error == $chunk->last()->error;
+        })->map(function ($createdChunk) {
+            return [
+                'status' => $createdChunk->first()->error == '"No errors"' ? 'stable' : 'not_stable',
+                'start_date' => Carbon::parse($createdChunk->last()->created_at)->subMinutes(15)->format('Y-m-d h:i A'),
+                'end_date' => Carbon::parse($createdChunk->first()->created_at)->format('Y-m-d h:i A'),
+                'stability' => handleDiff(Carbon::parse($createdChunk->last()->created_at)->subMinutes(15)->diff($createdChunk->first()->created_at))
+            ];
+        })->toArray();
+    }
+
+    /**
+     * @param $charts
+     * @return mixed
+     */
+    private function prepareChart($charts)
+    {
+        return collect($charts)->map(function ($item) {
+            $item = (object)$item;
+            return [
+                'date' => Carbon::parse($item->start_date)->format('Y-m-d H:i:s'),
+                'value' => $item->status == 'stable' ? 1 : 0,
+            ];
+        });
     }
 }

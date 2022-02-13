@@ -12,6 +12,11 @@
         .invalid-feedback {
             display: block;
         }
+
+        #stepCharts {
+            width: 100%;
+            height: 500px;
+        }
     </style>
 @endpush
 
@@ -33,7 +38,11 @@
                             <div class="container-fluid">
                                 <div class="card-body">
                                     <div class="related-product-block position-relative col-12">
-                                        <div class="product_table table-responsive row p-0 m-0 col-12">
+                                        <div class="pt-4 mb-5">
+                                            <div id="stepCharts" class="chartdiv" style="min-height: 450px"></div>
+                                        </div>
+                                        <div class="product_table table-responsive row p-0 m-0 col-12"
+                                             style="overflow-x: hidden">
                                             <table class="table dataTable ui celled table-bordered text-center">
                                                 <thead class="">
                                                 <th>#</th>
@@ -76,17 +85,74 @@
         </div>
     </div>
 @endsection
-<script src="{{asset('js/report/report.js')}}"></script>
 
 @push('js')
+    {{--    <script src="{{asset('js/report/report.js')}}"></script>--}}
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script>
         $(function () {
-            let steps = @json($steps);
-            let info = @json($info);
-            @if(count($steps))
-            lineChart('chartLine', steps, info);
+            let steps = @json($charts, JSON_THROW_ON_ERROR);
+            @if($charts->count())
+                stepCharts('stepCharts', steps);
             @endif
         });
+
+        function stepCharts(id, data) {
+            am5.ready(function () {
+                var root = am5.Root.new(id);
+                root.dateFormatter.setAll({
+                    dateFormat: "YYY-MM-dd H:i:s",
+                    dateFields: ["valueX"]
+                });
+                root.setThemes([
+                    am5themes_Animated.new(root)
+                ]);
+                var chart = root.container.children.push(am5xy.XYChart.new(root, {
+                    panX: true,
+                    panY: true,
+                    wheelX: "panX",
+                    wheelY: "zoomX"
+                }));
+                var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+                    behavior: "none"
+                }));
+                cursor.lineY.set("visible", false);
+                var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+                    maxDeviation: 0.5,
+                    baseInterval: {timeUnit: "second", count: 1},
+                    renderer: am5xy.AxisRendererX.new(root, {pan: "zoom"}),
+                    tooltip: am5.Tooltip.new(root, {})
+                }));
+                var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+                    maxDeviation: 1,
+                    renderer: am5xy.AxisRendererY.new(root, {pan: "zoom"})
+                }));
+                var series = chart.series.push(am5xy.StepLineSeries.new(root, {
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueYField: "value",
+                    valueXField: "date",
+                    tooltip: am5.Tooltip.new(root, {
+                        labelText: "{valueX}: {valueY}"
+                    })
+                }));
+                series.strokes.template.setAll({
+                    strokeWidth: 3
+                });
+                series.data.processor = am5.DataProcessor.new(root, {
+                    dateFormat: "YYY-MM-dd H:i:s",
+                    dateFields: ["date"]
+                });
+                series.data.setAll(data);
+                chart.set("scrollbarX", am5.Scrollbar.new(root, {
+                    orientation: "horizontal"
+                }));
+                series.appear(1000);
+                chart.appear(1000, 100);
+            });
+        }
     </script>
 @endpush
 

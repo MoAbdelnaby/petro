@@ -31,23 +31,22 @@
                                 <h2>
                                     <img src="{{resolveDark()}}/img/icon_menu/building.svg" width="24"
                                          class="tab_icon-img" alt="">
-                                    {{ __('app.Branch_Status_Header') }}</h2>
+                                    {{ __('app.Branch_Status_Header') }}
+                                </h2>
                             </div>
                             <div class="container-fluid">
                                 <div class="row mb-3 mt-3 justify-content-center">
                                     <div class="col-lg-6 col-md-6">
                                         <div class="card text-center">
                                             <div class="card-header row online mx-0 px-0">
-                                                <div class="col-4"><img width="100"
-                                                                        src="{{ asset("images/online-svgrepo-com.svg") }}"
-                                                                        alt=""></div>
+                                                <div class="col-4">
+                                                    <img width="100" src="{{ asset("images/online-svgrepo-com.svg") }}" alt=""></div>
                                                 <div class="col-8">
                                                     <h5><b><i class="fas fa-circle"
                                                               style="color: green"></i> {{ __('app.branch_online')  }}
                                                         </b></h5>
                                                     <h3><b>{{ $on }}</b></h3>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -55,9 +54,8 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="card text-center col-12  ">
                                             <div class="card-header row offline ">
-                                                <div class="col-4"><img width="100" fill="red"
-                                                                        src="{{ asset("images/offline-svgrepo-com.svg") }}"
-                                                                        alt=""></div>
+                                                <div class="col-4">
+                                                    <img width="100" fill="red" src="{{ asset("images/offline-svgrepo-com.svg") }}" alt=""></div>
                                                 <div class="col-8">
                                                     <h5><b><i class="fas fa-circle"
                                                               style="color: red"></i> {{ __('app.branch_offline') }}</b>
@@ -129,7 +127,6 @@
                                             </table>
                                         </div>
                                     </div>
-
                                     {{--                            {{ $branches->links() }}--}}
                                 </div>
                             </div>
@@ -138,6 +135,7 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
+
+

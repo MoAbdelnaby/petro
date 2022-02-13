@@ -7,6 +7,7 @@ use App\Models\AreaStatus;
 use App\Models\Branch;
 use App\Models\Carprofile;
 use App\Models\Region;
+use App\Services\Report\type\InvoiceReport;
 use App\User;
 use Carbon\Carbon;
 use Exception;
@@ -26,11 +27,19 @@ class ReportService
         $branches = Branch::active()->primary()->count();
         $regions = Region::active()->primary()->count();
 
+        $filter = [
+            'start' => $start,
+            'end' => $end
+        ];
+
+        $report = new InvoiceReport();
+        $integration_invoice = $report->handleReportCompare($filter, 'invoice', 'id');
+
         //System Models Staticis
         $cars = Carprofile::where('status', 'completed');
         $invoice = Carprofile::where('status', 'completed');
         $welcome = Carprofile::where('status', 'completed');
-        $backout = Carprofile::where('status', 'completed');
+        $backout = Carprofile::where('status', 'completed')->whereIn('branch_id', $integration_invoice);
         $serving = Carprofile::where('status', 'completed');
         $work = AreaDurationDay::query();
         $empty = AreaDurationDay::query();
