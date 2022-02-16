@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\PackageRequest;
 use App\UserSetting;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrap();
+
             if(env('APP_ENV') === 'production') {
                 $this->app['request']->server->set('HTTPS', true);
             }
