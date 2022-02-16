@@ -308,14 +308,19 @@
                                             @endforeach
                                         @endif
                                         </tbody>
-                                    </table>
-                                    <div class="col-md-6">
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination justify-content-end mb-0">
                                                 {{ $data->links() }}
                                             </ul>
                                         </nav>
-                                    </div>
+                                    </table>
+{{--                                    <div class="col-md-6">--}}
+{{--                                        <nav aria-label="Page navigation example">--}}
+{{--                                            <ul class="pagination justify-content-end mb-0">--}}
+{{--                                                {{ $data->links() }}--}}
+{{--                                            </ul>--}}
+{{--                                        </nav>--}}
+{{--                                    </div>--}}
                                 </div>
                             </div>
                         </div>
