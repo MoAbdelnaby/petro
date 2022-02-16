@@ -256,6 +256,8 @@ class BranchModelsController extends Controller
 
     public function BranchesStatus()
     {
+        // Handle online-offline filter
+
         /* get branches by table view last_branch_error */
         $query = DB::table('last_error_branch_views');
         $branches = $query->get();
