@@ -83,6 +83,7 @@ class CustomerPackagesController extends Controller
         ]);
     }
 
+
     /**
      * Show the application dashboard.
      *

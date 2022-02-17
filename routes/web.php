@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\InserBranchData;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -15,39 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('test', function () {
+Route::get('handle-branch-insert', function () {
 
-    DB::enableQueryLog();
-
-    //Last Staibilty
-    $first_errors = DB::table('branch_net_works')
-        ->select('branch_code', DB::raw('MAX(created_at) as start_error'))
-        ->where('error', '<>', '"No errors"')
-        ->whereYear('created_at', '2022')
-        ->groupBy('branch_code')
-        ->latest()
-        ->get();
-
-    foreach ([$first_errors] as $error) {
-        $last_stability[$error->branch_code] = DB::table('branch_net_works')
-            ->select('branch_code', DB::raw('MIN(created_at) as start_date'), DB::raw('MAX(created_at) as end_date'))
-            ->where('error', '=', '"No errors"')
-            ->where('branch_code', '=', $error->branch_code)
-            ->where('created_at', '>=', $error->start_error)
-            ->latest()
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'start_date' => $item->start_date,
-                    'end_date' => $item->end_date,
-                    'last_stability' => Carbon::parse($item->start_date)->diffInSeconds($item->end_date),
-                ];
-            })->first();
+    if (!session()->has('insert_status')) {
+        $insertObject = new InserBranchData();
+        $insertObject->handle();
+        return "<h1>Data Inserted For First Time Success</h1>";
     }
 
-    $log = DB::getQueryLog();
+    session()->put('insert_status', true);
 
-    dd($log, $first_errors, $last_stability);
+    return "<h1>Data Already Inserted Befors Success";
 });
 
 Route::get('/', 'HomeController@welcome')->name('welcome');

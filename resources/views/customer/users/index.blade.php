@@ -155,7 +155,7 @@
                                                     </td>
                                                     <td>{{$user->name}}</td>
                                                     <td>{{ $user->email }}</td>
-                                                    <td>{{ $user->phone }}</td>
+                                                    <td>{{ $user->phone??'---' }}</td>
                                                     <td>
                                                         @if(!empty($user->branches))
                                                             @foreach($user->branches as $brn)
@@ -250,20 +250,20 @@
                                     </div>
                                 @endif
                             </div>
-{{--                            <div class="row justify-content-between mt-3">--}}
-{{--                                <div id="user-list-page-info" class="col-md-6">--}}
-{{--                                    <span>{{ __('app.Showing') }} 1 {{ __('app.to') }} {{count($users)}} {{ __('app.of') }} {{count($users)}} {{ __('app.entries') }}</span>--}}
-{{--                                </div>--}}
+                            <div class="row justify-content-between mt-3">
+                                <div id="user-list-page-info" class="col-md-6">
+                                    <span>{{ __('app.Showing') }} 1 {{ __('app.to') }} {{count($users)}} {{ __('app.of') }} {{count($users)}} {{ __('app.entries') }}</span>
+                                </div>
 
-{{--                                <div class="col-md-6">--}}
-{{--                                    <nav aria-label="Page navigation example">--}}
-{{--                                        <ul class="pagination justify-content-end mb-0">--}}
-{{--                                            {{ $users->links() }}--}}
-{{--                                        </ul>--}}
-{{--                                    </nav>--}}
-{{--                                </div>--}}
+                                <div class="col-md-6">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end mb-0">
+                                            {{ $users->links() }}
+                                        </ul>
+                                    </nav>
+                                </div>
 
-{{--                            </div>--}}
+                            </div>
                         </div>
                     </div>
                 </div>
