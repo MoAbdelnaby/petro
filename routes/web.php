@@ -16,18 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('handle-branch-insert', function () {
-
-    if (!session()->has('insert_status')) {
-        $insertObject = new InserBranchData();
-        $insertObject->handle();
-        return "<h1>Data Inserted For First Time Success</h1>";
-    }
-
-    session()->put('insert_status', true);
-
-    return "<h1>Data Already Inserted Befors Success";
-});
+//Route::get('handle-branch-insert', function () {
+//
+//    if (!session()->has('insert_status')) {
+//        $insertObject = new InserBranchData();
+//        $insertObject->handle();
+//        return "<h1>Data Inserted For First Time Success</h1>";
+//    }
+//
+//    session()->put('insert_status', true);
+//
+//    return "<h1>Data Already Inserted Befors Success";
+//});
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('lang/{lang}', 'HomeController@select')->name('select');

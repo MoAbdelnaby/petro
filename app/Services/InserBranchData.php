@@ -14,6 +14,7 @@ class InserBranchData
     public function __construct()
     {
         $this->data = $this->prepareData();
+        SeederCheck::start();
     }
 
     /**
@@ -61,7 +62,7 @@ class InserBranchData
             'phone' => $data['mobile'],
             'type' => 'subcustomer',
             'password' => bcrypt(123456),
-            'parent_id' => parentID()
+            'parent_id' => 3
         ];
 
         $user = User::updateOrCreate(['email' => $data['email']], $user_data);
@@ -85,7 +86,7 @@ class InserBranchData
         if (!$region) {
             $region = Region::create([
                 'name' => $data['region'],
-                'user_id' => parentID(),
+                'user_id' => 3,
                 'parent_id' => 1
             ]);
 
@@ -98,7 +99,7 @@ class InserBranchData
         ], [
             'name' => $data['code'] . " - {$data['name']}",
             'description' => "{$data['name']} Description",
-            'user_id' => parentID(),
+            'user_id' => 3,
             'area_count' => 4,
             'region_id' => $data['region_id'],
         ]);
