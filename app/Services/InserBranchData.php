@@ -61,7 +61,7 @@ class InserBranchData
             'name' => $data['name'],
             'phone' => $data['mobile'],
             'type' => 'subcustomer',
-            'password' => bcrypt(123456),
+            'password' => '123456789',
             'parent_id' => 3
         ];
 
