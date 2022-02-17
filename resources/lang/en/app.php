@@ -1147,6 +1147,7 @@ return [
         ],
         'period' => 'Period',
         'empty_region' => 'No Data Found For This Region',
+        'empty_branch' => 'No Data Found For This Branch',
         'check_in_date' => 'CheckIn Date',
         'check_out_date' => 'CheckOut Date',
         'plate_no_ar' => 'Arabic Plate',

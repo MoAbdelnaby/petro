@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'jwt-auth' => \App\Http\Middleware\authJWT::class,
         'speed' => \App\Http\Middleware\CanMeasureSpeed::class,
+        'subCustomerCheck' => \App\Http\Middleware\SubCustomerCheck::class,
         'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
         'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
     ];
