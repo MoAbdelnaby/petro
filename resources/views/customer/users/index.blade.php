@@ -52,7 +52,7 @@
 
                                         </div>
 
-                                        <table class="table table-bordered text-center">
+                                        <table style="width: 100%;"  class="table table-bordered text-center">
                                             <thead class="bg-primary">
                                             <td>
                                                 <label for="selectall" class="custom-checkbox pl-1">
@@ -79,9 +79,9 @@
                                                     <td>{{$trash->name}}</td>
                                                     <td>{{$trash->email}}</td>
 
-                                                    <td>
-                                                        <button type="submit"  class="trash_restore btn btn-sm btn-primary" style="color: white;"><i class="fas fa-recycle"></i> {{__('app.Restore')}}</button>
-                                                        <button type="submit" class="trash_delete btn btn-sm btn-danger"  ><i class="fas fa-trash"></i> {{__('app.customers.branches.delete')}}</button>
+                                                    <td style='white-space: nowrap'>
+                                                        <button style="display: inline-block" type="submit"  class="trash_restore btn btn-sm btn-primary" style="color: white;"><i class="fas fa-recycle"></i> {{__('app.Restore')}}</button>
+                                                        <button style="display: inline-block" type="submit" class="trash_delete btn btn-sm btn-danger"  ><i class="fas fa-trash"></i> {{__('app.customers.branches.delete')}}</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
