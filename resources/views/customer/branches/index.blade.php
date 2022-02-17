@@ -43,7 +43,7 @@
                                                 </i>{{ __('app.delete_all') }}</button>
 
                                         </div>
-                                        <table class="table dataTable table-bordered text-center">
+                                        <table style="width: 100%;" class="table dataTable table-bordered text-center">
 
                                             <thead class="bg-primary">
                                                 <td> <label for="selectall" class="custom-checkbox pl-1">
@@ -53,6 +53,9 @@
                                                 </td>
                                                 <th>{{ __('app.Image') }}</th>
                                                 <th>{{ __('app.users.table.name') }}</th>
+                                                <th>{{ __('app.customers.branches.table.code') }}</th>
+                                                <th>{{ __('app.customers.branches.table.areas') }}</th>
+                                                <th>{{ __('app.region') }}</th>
                                                 <th>{{ __('app.Settings') }}</th>
 
                                             </thead>
@@ -72,12 +75,15 @@
                                                                 width="auto" height="50" alt="product-image">
                                                         </td>
                                                         <td>{{ $trash->name }}</td>
+                                                        <td>{{ $trash->code }}</td>
+                                                        <td>{{ $trash->area_count }}</td>
+                                                        <td>{{ $trash->region->name ?? '' }}</td>
 
-                                                        <td>
-                                                            <button type="submit" class="trash_restore btn btn-sm btn-primary"
+                                                        <td style='white-space: nowrap'>
+                                                            <button style="display: inline-block" type="submit" class="trash_restore btn btn-sm btn-primary"
                                                                 style="color: white;"><i class="fas fa-recycle"></i>
                                                                 {{ __('app.Restore') }}</button>
-                                                            <button type="submit" class="trash_delete btn btn-sm btn-danger"><i class="fas fa-trash"></i>
+                                                            <button  style="display: inline-block" type="submit" class="trash_delete btn btn-sm btn-danger"><i class="fas fa-trash"></i>
                                                                 {{ __('app.customers.branches.delete') }}</button>
                                                         </td>
                                                     </tr>
