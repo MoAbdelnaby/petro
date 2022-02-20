@@ -308,24 +308,6 @@
                                             @endforeach
                                         @endif
                                         </tbody>
-<<<<<<< HEAD
-
-                                    </table>
-{{--                                    <div class="col-md-6">--}}
-{{--                                        <nav aria-label="Page navigation example">--}}
-{{--                                            <ul class="pagination justify-content-end mb-0">--}}
-{{--                                                {{ $data->links() }}--}}
-{{--                                            </ul>--}}
-{{--                                        </nav>--}}
-{{--                                    </div>--}}
-                                    <div class="col-12 text-center">
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination justify-content-end mb-0">
-                                                {{ $data->withQueryString()->links() }}
-                                            </ul>
-                                        </nav>
-                                        {{-- @dd($data->links()) --}}
-=======
                                     </table>
                                     <div class="col-md-6">
                                         <nav aria-label="Page navigation example">
@@ -333,7 +315,6 @@
                                                 {{ $data->links() }}
                                             </ul>
                                         </nav>
->>>>>>> a99c3d741facd30ef78c956f38215869666c99f3
                                     </div>
                                 </div>
                             </div>
