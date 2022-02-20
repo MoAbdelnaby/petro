@@ -76,7 +76,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|max:60|email' . (User::where('email', $request->email)->first() ? '|unique:users,email' : ''),
             'name' => 'required|string|min:2|max:60',
-            'phone' => 'nullable|min:11|max:13',
+            'phone' => 'nullable|min:6|max:13',
             'type' => 'required',
             'password' => 'required|min:8|confirmed',
             'package' => 'nullable',
@@ -211,7 +211,7 @@ class UserController extends Controller
             'email' => 'required|max:50|email|regex:/^\S+@\S+\.\S+$/|unique:users,email,' . auth()->user()->id,
             'name' => 'required|string|min:2|max:60',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'phone' => 'nullable|min:11|max:13',
+            'phone' => 'nullable|min:6|max:13',
 //            'phone' => 'nullable|regex:/^[0-9\-\(\)\/\+\s]*$/',
         ]);
 
@@ -256,7 +256,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|regex:/^\S+@\S+\.\S+$/|unique:users,email,' . $id,
             'name' => 'required|string|min:2|max:60',
-            'phone' => 'nullable|min:11|max:13|regex:/^[0-9\-\(\)\/\+\s]*$/',
+            'phone' => 'nullable|min:6|max:13|regex:/^[0-9\-\(\)\/\+\s]*$/',
             'type' => 'required',
             'password' => 'sometimes|confirmed',
         ]);

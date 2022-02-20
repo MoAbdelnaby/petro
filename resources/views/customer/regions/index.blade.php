@@ -39,7 +39,7 @@
                                         <button type="submit" style="display: none" class="restore_all btn btn-sm btn-primary mr-1"><i class="fas fa-recycle"></i> {{__('app.restore_all')}}</button>
                                         <button type="submit" style="display: none" class="remove_all btn btn-sm btn-danger" ><i class="fas fa-trash"> </i>{{__('app.delete_all')}}</button>
                                     </div>
-                               <table class="table dataTable table-bordered text-center">
+                               <table style="width: 100%;" class="table dataTable table-bordered text-center">
 
                                    <thead class="bg-primary">
                                     <td>
@@ -67,9 +67,9 @@
                                         </td>
                                         <td>{{$trash->name}}</td>
 
-                                        <td>
-                                            <button type="submit"  class="trash_restore btn btn-sm btn-primary" style="color: white;"><i class="fas fa-recycle"></i> {{__('app.Restore')}}</button>
-                                            <button type="submit" class="trash_delete btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" ><i class="fas fa-trash"></i> {{__('app.customers.branches.delete')}}</button>
+                                        <td style='white-space: nowrap'>
+                                            <button style="display: inline-block" type="submit"  class="trash_restore btn btn-sm btn-primary" style="color: white;"><i class="fas fa-recycle"></i> {{__('app.Restore')}}</button>
+                                            <button style="display: inline-block" type="submit" class="trash_delete btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" ><i class="fas fa-trash"></i> {{__('app.customers.branches.delete')}}</button>
                                         </td>
                                         </tr>
                                         @endforeach

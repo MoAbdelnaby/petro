@@ -85,11 +85,11 @@
                                                             <td>{{((bool)$item->status)?'Ready' : 'Not Ready Yet' }}</td>
                                                             <td>{{$item->type }}</td>
                                                             <td>
+                                                                @if($item->status)
+                                                                    <a class="btn btn-sm btn-primary"
+                                                                       href="{{ route('branchmodelpreview.files.download',[$item->id]) }}">{{__('app.customers.branches.download')}}</a>
+                                                                @endif
                                                                 @if(auth()->user()->type=="customer")
-                                                                    @if($item->status)
-                                                                        <a class="btn btn-sm btn-primary"
-                                                                           href="{{ route('branchmodelpreview.files.download',[$item->id]) }}">{{__('app.customers.branches.download')}}</a>
-                                                                    @endif
                                                                     <a class="btn btn-sm btn-danger"
                                                                        data-toggle="tooltip" data-placement="top"
                                                                        title="" data-original-title="Delete"
@@ -154,11 +154,12 @@
                                                                 <div class="clearfix border-bottom mt-1 mb-1"></div>
                                                                 <div
                                                                     class="ratting-item d-flex align-items-center justify-content-center p-0 m-0 pb-2">
+
+                                                                    @if($item->status)
+                                                                        <a class="btn btn-primary mx-1"
+                                                                           href="{{ route('branchmodelpreview.files.download',[$item->id]) }}">{{__('app.customers.branches.download')}}</a>
+                                                                    @endif
                                                                     @if(auth()->user()->type=="customer")
-                                                                        @if($item->status)
-                                                                            <a class="btn btn-primary mx-1"
-                                                                               href="{{ route('branchmodelpreview.files.download',[$item->id]) }}">{{__('app.customers.branches.download')}}</a>
-                                                                        @endif
                                                                         <a class="btn btn-danger" data-toggle="tooltip"
                                                                            data-placement="top" title="Delete"
                                                                            data-original-title="Delete"

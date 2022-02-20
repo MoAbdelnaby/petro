@@ -308,6 +308,7 @@
                                             @endforeach
                                         @endif
                                         </tbody>
+<<<<<<< HEAD
 
                                     </table>
 {{--                                    <div class="col-md-6">--}}
@@ -324,6 +325,15 @@
                                             </ul>
                                         </nav>
                                         {{-- @dd($data->links()) --}}
+=======
+                                    </table>
+                                    <div class="col-md-6">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-end mb-0">
+                                                {{ $data->links() }}
+                                            </ul>
+                                        </nav>
+>>>>>>> a99c3d741facd30ef78c956f38215869666c99f3
                                     </div>
                                 </div>
                             </div>
