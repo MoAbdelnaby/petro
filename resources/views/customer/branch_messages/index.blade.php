@@ -39,7 +39,7 @@
             display: none !important;
         }
         ul.pagination {
-            padding-left: 50%;
+            /* padding-left: 50%; */
             margin-bottom: 15px;
         }
     </style>
@@ -334,7 +334,6 @@
     <script>
         $(document).ready(function () {
 
-
             /***** Tables Show ******/
             $('.tables-types-d .dropdown-item').on("click", function (e) {
                 e.stopPropagation();
@@ -443,7 +442,8 @@
         })
         $('#select_branch').on('change', function (){
             $(this).closest('.form-group').find(".invalid-feedback").hide();
-        })
+        });
+
     </script>
 @endpush
 
