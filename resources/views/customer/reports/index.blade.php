@@ -95,8 +95,8 @@
                                                             <div class="row">
                                                                 <div class=" col-md-12 " id="branch_selection">
                                                                     <lebel>{{ __('app.Select_branches') }}:</lebel>
-                                                                    <select class="form-control select_2 required"
-                                                                            multiple name="lists[]">
+
+                                                                    <select class="form-control select_2 required" id="select_branch" name="lists[]">
                                                                         @foreach($branches as $branch)
                                                                             <option value="{{$branch->id}}"
                                                                                     @if(in_array($branch->id,request('lists')??[])) selected @endif>{{$branch->name}}</option>
@@ -505,6 +505,8 @@
                     $(this).find('.invalid-feedback').show()
                 }
             });
+
+            $("#select_branch").select2();
 
             $(".static_download").on('click', function (e) {
                 e.preventDefault();

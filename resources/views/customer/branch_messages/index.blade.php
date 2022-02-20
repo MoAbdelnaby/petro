@@ -39,7 +39,7 @@
             display: none !important;
         }
         ul.pagination {
-            padding-left: 50%;
+            /* padding-left: 50%; */
             margin-bottom: 15px;
         }
     </style>
@@ -308,11 +308,7 @@
                                             @endforeach
                                         @endif
                                         </tbody>
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination justify-content-end mb-0">
-                                                {{ $data->links() }}
-                                            </ul>
-                                        </nav>
+
                                     </table>
 {{--                                    <div class="col-md-6">--}}
 {{--                                        <nav aria-label="Page navigation example">--}}
@@ -321,6 +317,14 @@
 {{--                                            </ul>--}}
 {{--                                        </nav>--}}
 {{--                                    </div>--}}
+                                    <div class="col-12 text-center">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-end mb-0">
+                                                {{ $data->withQueryString()->links() }}
+                                            </ul>
+                                        </nav>
+                                        {{-- @dd($data->links()) --}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -338,7 +342,6 @@
 @push("js")
     <script>
         $(document).ready(function () {
-
 
             /***** Tables Show ******/
             $('.tables-types-d .dropdown-item').on("click", function (e) {
@@ -448,7 +451,8 @@
         })
         $('#select_branch').on('change', function (){
             $(this).closest('.form-group').find(".invalid-feedback").hide();
-        })
+        });
+
     </script>
 @endpush
 
