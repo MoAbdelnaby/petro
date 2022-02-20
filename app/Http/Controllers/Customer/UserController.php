@@ -310,5 +310,23 @@ class UserController extends Controller
         }
     }
 
+    public function UserSetting(){
+        $user = Auth::user();
+        $notify = $user->mail_notify;
+        return view('settings.user.setting', ['notify'=>$notify]);
+    }
+
+    public function MailsettingUpdate(Request $request){
+        $validator = Validator::make($request->all(), [
+            'mail_notify' => 'required|in:on,off',
+        ]);
+        if ($validator->errors()->count()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        $user = Auth::user();
+        $user->update($validator->validated());
+        return redirect()->back()->with('success', __('app.mail_status_success'));
+    }
+
 
 }

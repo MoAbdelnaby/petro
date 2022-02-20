@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\BranchStatus;
+use App\Jobs\SendBranchStatusMailJob;
 use App\Mail\mailUserBranch;
 use App\Models\Branch;
 use App\Models\BranchSetting;
@@ -20,7 +21,7 @@ class BranchStatusApi extends Command
      *
      * @var string
      */
-    protected $signature = 'branch-status-api';
+    protected $signature = 'branch-status:update';
 
     /**
      * The console command description.
@@ -49,6 +50,7 @@ class BranchStatusApi extends Command
         $res = [];
         $data = [];
         $minutes = 0;
+        $AiValue =15;
 
         $now = Carbon::now();
         $branches = DB::table("last_error_branch_views as branchError")
@@ -61,18 +63,20 @@ class BranchStatusApi extends Command
             $branchStatus = BranchStatus::where('branch_code', $branch->branch_code)->first();
             $data['last_connected'] = $now->diffForHumans($branch->created_at, true);
 
-            if ($now->subMinutes() < $branch->created_at) {
+            if ($now->subMinutes($AiValue) < $branch->created_at) {
                 $data['status'] = 'online';
                 $data['last_error'] = $branch->error;
             } else {
                 $data['status'] = 'offline';
-                $data['last_error'] = null;
+                $data['last_error'] = $branch->error;
 
-//                $current = Branch::with('users')->find($branch->br_id);
-//                $users = $current->users;
-//                if (count($users) > 0) {
-//                    $this->sendErrotToAdmin($branch, $data,$users);
-//                }
+                $current = Branch::with('users')->find($branch->br_id);
+
+                $users = $current->users;
+                if (count($users) > 0) {
+
+                    $this->sendErrorToAdmin($branch, $users);
+                }
             }
 
             $data['branch_code'] = $branch->branch_code;
@@ -93,25 +97,39 @@ class BranchStatusApi extends Command
      * @param $data
      * @param $users
      */
-    protected function sendErrotToAdmin($branch, $data, $users): void
+    protected function sendErrorToAdmin($branch, $users): void
     {
-        $now = now();
-        $branchSetting = BranchSetting::find(1);
-        if ($branchSetting->type == 'hours') {
-            $minutes = $branchSetting->duration * 60;
-        } else {
-            $minutes = $branchSetting->duration;
+        try {
+            $now = now();
+            $branchSetting = BranchSetting::find(1);
+            if ($branchSetting->type == 'hours') {
+                $minutes = $branchSetting->duration * 60;
+            } else {
+                $minutes = $branchSetting->duration;
+            }
+
+            if ($now->subMinutes($minutes) > $branch->created_at) {
+//            foreach (User::where('type', 'customer')->get() as $admin) {
+//                $admin->notify(new branchConnectionNotification($branch, $data, $minutes, 'schedule'));
+//            }
+                foreach ($users as $user) {
+                    $check = DB::table('branches_users')
+                        ->where('user_id', $user->id)
+                        ->where('branch_id', $branch->br_id)
+                        ->first();
+                    if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
+                        dispatch(new SendBranchStatusMailJob($branch,$minutes,$user->email));
+                        $updates = DB::table('branches_users')
+                            ->where('user_id', $user->id)
+                            ->where('branch_id', $branch->br_id)
+                            ->update(['notified' => '1']);
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+
         }
 
-        if ($now->subMinute($minutes) > $branch->created_at) {
-            foreach (User::where('type', 'customer')->get() as $admin) {
-                $admin->notify(new branchConnectionNotification($branch, $data, $minutes, 'schedule'));
-            }
-            foreach ($users as $key => $user) {
-                Mail::to($user->email)->send(new mailUserBranch($branch));
-                DB::table("last_error_branch_views")->when("branch_code", $branch->branch_code)->update(['sending', 1]);
-            }
-        }
 
     }
 }

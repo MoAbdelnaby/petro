@@ -190,6 +190,8 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::post('customerBranches/bulkDelete', 'CustomerBranchesController@forceDelete')->name('branches.bulkDelete');
         Route::get('customerBranches/change/{id}', 'CustomerBranchesController@changeActive')->name('branches.change_active');
         Route::get('myBranches', 'UserController@myBranches')->name('myBranches');
+        Route::get('settings', 'UserController@UserSetting')->name('subcustomer.settings');
+        Route::post('mailsettingUpdate', 'UserController@MailsettingUpdate')->name('user.MailsettingUpdate');
     });
 });
 

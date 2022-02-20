@@ -113,6 +113,8 @@ class CustomerBranchesController extends Controller
             'photo' => 'nullable|image',
             'code' => 'required|unique:branches,code',
             'region_id' => 'required',
+            'lat' => 'nullable|required_with:lng',
+            'lng' => 'nullable|required_with:lat',
             'top' => 'sometimes|required',
             'left' => 'sometimes|required',
             'area_count' => 'required|numeric|min:1|max:9',
@@ -120,6 +122,7 @@ class CustomerBranchesController extends Controller
             'models.*' => 'required|numeric|in:3,4',
         ]);
 
+        dd($request_data);
         $data = Arr::except($request_data, ['region_id', 'photo']);
 
         try {
@@ -215,6 +218,8 @@ class CustomerBranchesController extends Controller
             'region_id' => 'required',
             'top' => 'required',
             'left' => 'required',
+            'lat' => 'nullable|required_with:lng',
+            'lng' => 'nullable|required_with:lat',
             'area_count' => 'required|numeric|min:1|max:9',
             'code' => 'required|unique:branches,code,' . $id,
         ]);

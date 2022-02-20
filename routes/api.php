@@ -55,7 +55,10 @@ Route::get('handle-pending-plates', function (){
 
 Route::get('export-files-models', function (){
     \Illuminate\Support\Facades\Artisan::call('files:export');
-    \Illuminate\Support\Facades\Artisan::call('branch-status-api');
+});
+
+Route::get('branch-status-update', function (){
+    \Illuminate\Support\Facades\Artisan::call('branch-status:update');
 });
 
 //Route::get('handle-carprofiles', function (){

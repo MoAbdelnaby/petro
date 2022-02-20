@@ -341,13 +341,17 @@ class ApiModelController extends Controller
             $branch = Branch::where("code", $request->branch_code)->first();
 
             if ($branch) {
+
+                DB::table('branches_users')
+                    ->where('branch_id', $branch->id)
+                    ->update(['notified' => '0']);
+
                 if ($branch->active == 1) {
                     $create = BranchNetWork::create([
                         'user_id' => Auth::id(),
                         'branch_code' => $request->branch_code,
                         'error' => json_encode($request->last_error, JSON_THROW_ON_ERROR),
                         'status' => $request->status,
-                        'sending' => 0,
                     ]);
 
                     //Handle Last Error

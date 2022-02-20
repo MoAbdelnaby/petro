@@ -2,6 +2,9 @@
 return [
     'show_all' => 'Show All',
     'data' => 'Data',
+    'mail_reminder'=>'Mail Reminder',
+    'selectMailType'=>'select mail status',
+    'mail_status_success'=>'mail status updated successfully',
     'charEnExample' => 'The letters must be entered in English example [ abc... ] ',
     'numEnExample' => 'The numbers must be entered in English example [ 123... ] ',
     'charArExample' => 'The letters must be entered in Arabic example [ ا ب ت ... ]',
@@ -1067,6 +1070,8 @@ return [
             'table' => [
                 'id' => 'ID',
                 'name' => 'Name',
+                'lat' => 'Lat',
+                'lng' => 'Lng',
                 'top' => 'Top',
                 'left' => 'Left',
                 'region' => 'Region',

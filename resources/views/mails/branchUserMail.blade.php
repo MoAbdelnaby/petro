@@ -19,7 +19,7 @@
         </div>
         <div class="card-body text-center">
             <strong>
-                this branch has been offline for while
+                this branch has been offline More than  {{$time}} Minutes
                 please checkup of this branch and keep in touch with us
             </strong>
         </div>
