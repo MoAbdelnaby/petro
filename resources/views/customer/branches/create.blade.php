@@ -84,7 +84,7 @@
                                             </div>
                                             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                                                 <label for="lng">{{__('app.customers.branches.table.lng')}} </label>
-                                                <input type="text" name="lat" class="form-control" id="lat" placeholder="{{__('app.customers.branches.table.lng')}}" value="{{ old('lng') }}">
+                                                <input type="text" name="lng" class="form-control" id="lng" placeholder="{{__('app.customers.branches.table.lng')}}" value="{{ old('lng') }}">
                                                 @if($errors->has('lng'))
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $errors->first('lng') }}</strong>

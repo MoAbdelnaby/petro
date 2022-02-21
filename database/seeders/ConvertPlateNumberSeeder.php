@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use App\Models\Carprofile;
 use Illuminate\Database\Seeder;
@@ -7,7 +8,7 @@ use Illuminate\Support\Str;
 class ConvertPlateNumberSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */

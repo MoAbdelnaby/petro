@@ -57,7 +57,7 @@
             "app/Helper/responses.php"
         ],
         "classmap": [
-            "database/seeds",
+            "database/seeders",
             "database/factories"
         ]
     },

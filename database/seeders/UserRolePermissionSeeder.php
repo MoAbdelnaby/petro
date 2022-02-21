@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use App\User;
 use Illuminate\Database\Seeder;
@@ -10,7 +11,7 @@ use Spatie\Permission\Models\Role;
 class UserRolePermissionSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */

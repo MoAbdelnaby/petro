@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use App\Models\Models;
 use Illuminate\Database\Seeder;
@@ -9,7 +10,7 @@ use App\Models\ModelFeature;
 class ModelFeaturesSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */

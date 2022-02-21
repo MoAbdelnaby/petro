@@ -85,6 +85,26 @@
                                             </div>
 
                                             <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                                <label for="lat">{{__('app.customers.branches.table.lat')}} </label>
+                                                <input type="text" name="lat" class="form-control" id="lat" placeholder="{{__('app.customers.branches.table.lat')}}" value="{{ old('lat')? old('lat') : $item->lat }}">
+                                                @if($errors->has('lat'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('lat') }}</strong>
+                                                    </span>
+                                                    @enderror
+                                            </div>
+                                            <div class="form-group col-sm-12 col-md-6 col-lg-6">
+                                                <label for="lng">{{__('app.customers.branches.table.lng')}} </label>
+                                                <input type="text" name="lng" class="form-control" id="lng" placeholder="{{__('app.customers.branches.table.lng')}}" value="{{ old('lng')? old('lng') : $item->lng }}">
+                                                @if($errors->has('lng'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('lng') }}</strong>
+                                                    </span>
+                                                    @enderror
+                                            </div>
+
+
+                                            <div class="form-group col-sm-12 col-md-6 col-lg-6">
                                                 <label
                                                     for="area_count">{{__('app.customers.branches.table.area_count')}}
                                                     *</label>

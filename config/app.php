@@ -49,6 +49,7 @@ return [
 
     'azure_storage' => env('AZURE_STORAGE_LOCAL_ADDRESS', ''),
     'azure_container' => env('AZURE_STORAGE_CONTAINER', ''),
+    'petromin_cordinates' => env('WHATSAPP_PETROMIN_CORDINATES', 'https://whatsapp-wakeb.azurewebsites.net/api/sendPetrominCordinates'),
 
     /*
     |--------------------------------------------------------------------------
@@ -136,7 +137,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This locale will be used by the Faker PHP library when generating fake
-    | data for your database seeds. For example, this will be used to get
+    | data for your database seeders. For example, this will be used to get
     | localized telephone numbers, street address information and more.
     |
     */

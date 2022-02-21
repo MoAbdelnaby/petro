@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use App\Services\SeederCheck;
 use Illuminate\Database\Seeder;
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MoveImagesToStorageSeeder::class);
         $this->call(MovePlaceImagesToStorageSeeder::class);
         $this->call(branchSettingSeeder::class);
+        $this->call(BranchCoordinatesSeeder::class);
 
     }
 }

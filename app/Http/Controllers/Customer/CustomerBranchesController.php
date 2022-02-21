@@ -122,7 +122,6 @@ class CustomerBranchesController extends Controller
             'models.*' => 'required|numeric|in:3,4',
         ]);
 
-        dd($request_data);
         $data = Arr::except($request_data, ['region_id', 'photo']);
 
         try {
@@ -148,7 +147,8 @@ class CustomerBranchesController extends Controller
                 $data['region_id'] = $reg->id;
             }
 
-            if ($request->has('photo') && array_key_exists('photo', $validator->validated())) {
+//            if ($request->has('photo') && array_key_exists('photo', $validator->validated())) {
+            if ($request->has('photo')) {
                 $image = $request->file('photo');
                 $fileName = time() . rand(0, 999999999) . '.' . $image->getClientOriginalExtension();
                 $request->photo->storeAs('branches', $fileName, 'public');
@@ -180,6 +180,17 @@ class CustomerBranchesController extends Controller
             }
 
             DB::commit();
+
+            if($request->has('lat')) {
+                $post = [
+                    'address' => $request->name,
+                    'lat' => $request->lat,
+                    'lng' => $request->lng,
+                    'code' =>$request->code
+                ];
+                $this->sendBranchCoordinates($post);
+            }
+
             return redirect()->route('customerBranches.index')->with('success', __('app.customers.branches.success_message'));
 
         } catch (\Exception $e) {
@@ -294,9 +305,21 @@ class CustomerBranchesController extends Controller
             }
 
             DB::commit();
+
+            if($request->has('lat')) {
+                $post = [
+                    'address' => $request->name,
+                    'lat' => $request->lat,
+                    'lng' => $request->lng,
+                    'code' =>$request->code
+                ];
+                $this->sendBranchCoordinates($post);
+            }
+
         } catch (\Exception $e) {
             DB::rollback();
         }
+
         return redirect()->route('customerBranches.index')->with('success', __('app.customers.branches.updated_message'));
 
     }
@@ -366,5 +389,19 @@ class CustomerBranchesController extends Controller
         $branches = [];
         return view('customer.service.create', compact('id', 'branches'));
     }
+
+
+    public function sendBranchCoordinates($post) {
+
+        $ch = curl_init(config('app.petromin_cordinates'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        // execute!
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($result);
+    } // end entryResponse
+
 
 }
