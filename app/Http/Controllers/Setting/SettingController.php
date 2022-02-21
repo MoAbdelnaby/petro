@@ -8,6 +8,8 @@ use App\Models\Reminder;
 use App\Setting;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Arr;
+use Validator;
 class SettingController extends Controller
 {
     public function __construct()
@@ -101,6 +103,15 @@ class SettingController extends Controller
 
     public function branchmailSetting(Request $request) {
 
+        $validator = Validator::make($request->all(), [
+            'branch_type' => 'required',
+            'branch_duration' => 'required',
+        ]);
+
+        if ($validator->errors()->count()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
             DB::table('branch_settings')->updateOrInsert([
                 'id' => 1
             ],[
@@ -112,6 +123,43 @@ class SettingController extends Controller
 
         return redirect()->route('setting.reminder');
     }
+
+    public function mailSetting(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'env' => 'required|array',
+            'env.MAIL_DRIVER' => 'required',
+            'env.MAIL_HOST' => 'required',
+            'env.MAIL_PORT' => 'required',
+            'env.MAIL_USERNAME' => 'required',
+            'env.MAIL_PASSWORD' => 'required',
+            'env.MAIL_ENCRYPTION' => 'required',
+        ]);
+        if ($validator->errors()->count()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $data = Arr::only($request->env,
+            [
+                'MAIL_DRIVER',
+                'MAIL_HOST',
+                'MAIL_PORT',
+                'MAIL_USERNAME',
+                'MAIL_PASSWORD',
+                'MAIL_ENCRYPTION'
+            ]
+        );
+        foreach ($data as $key=>$value) {
+            put_permanent_env($key,$value);
+        }
+        // TO Be Continue ...
+
+        session()->flash('success', __('app.settings.success_message'));
+
+        return redirect()->route('setting.reminder');
+    }
+
+
 
     public function testingUser(Request $request,$branchId) {
 //        dd($branchId);

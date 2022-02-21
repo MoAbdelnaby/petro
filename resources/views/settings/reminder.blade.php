@@ -33,25 +33,33 @@
                     <div class="iq-card mt-4 mb-4">
                         <div class="iq-card-body">
                             <div class="related-heading plates-car-cont border-0">
-                                <div class="d-flex justify-content-between align-items-center setting-heading border-bottom">
+                                <div
+                                    class="d-flex justify-content-between align-items-center setting-heading border-bottom">
                                     <h2 class="border-bottom-0" style="text-transform: capitalize;">
                                         <img
                                             src="{{ resolveDark() }}/img/icon_menu/settings.svg" alt="Settings"
                                             class="tab_icon-img">
-                                    {{ __('app.Settings') }}
+                                        {{ __('app.Settings') }}
                                     </h2>
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link {{ !$errors->has('env.*') ? 'show active':'' }}" id="v-pills-reminder-tab" data-toggle="pill"--}}
+{{--                                               href="#v-pills-reminder"--}}
+{{--                                               role="tab" aria-controls="v-pills-reminder"--}}
+{{--                                               aria-selected="true">{{ __('app.Reminder') }}</a>--}}
+{{--                                        </li>--}}
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="v-pills-reminder-tab" data-toggle="pill"
-                                               href="#v-pills-reminder"
-                                               role="tab" aria-controls="v-pills-reminder"
-                                               aria-selected="true">{{ __('app.Reminder') }}</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="v-pills-branch-tab" data-toggle="pill"
+                                            <a class="nav-link {{$errors->has('branch_type') || count($errors) == 0 ? 'show active':'' }}" id="v-pills-branch-tab" data-toggle="pill"
                                                href="#v-pills-branch"
                                                role="tab" aria-controls="v-pills-reminder"
                                                aria-selected="true">{{ __('app.branchSetting') }}</a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $errors->has('env.*') ? 'active':'' }}" id="v-pills-branch-tab" data-toggle="pill"
+                                               href="#v-pills-mail"
+                                               role="tab" aria-controls="v-pills-reminder"
+                                               aria-selected="true">{{ __('app.mailSetting') }}</a>
                                         </li>
                                     </ul>
 
@@ -60,80 +68,204 @@
                                     <div class="row">
                                         <div class="col-12 ">
                                             <div class="tab-content" id="v-pills-tabContent">
-                                                <div class="tab-pane fade show active  py-3" id="v-pills-reminder"
-                                                     role="tabpanel"
-                                                     aria-labelledby="v-pills-reminder-tab">
-                                                    <form id="reminderForm" method="post" novalidate
-                                                          action="{{route('setting.reminder_post')}}"
-                                                          class="reminder-form">
-                                                    @csrf
-                                                    <!-- {{--@include('settings.reminder-tab)--}} -->
-                                                        <div class="">
-                                                            <div class="row m-0 p-0">
-                                                                <div class="col-md-4">
+{{--                                                <div class="tab-pane fade  py-3" id="v-pills-reminder"--}}
+{{--                                                     role="tabpanel"--}}
+{{--                                                     aria-labelledby="v-pills-reminder-tab">--}}
+{{--                                                    <form id="reminderForm" method="post" novalidate--}}
+{{--                                                          action="{{route('setting.reminder_post')}}"--}}
+{{--                                                          class="reminder-form">--}}
+{{--                                                    @csrf--}}
+{{--                                                    <!-- --}}{{--@include('settings.reminder-tab)--}}{{-- -->--}}
+{{--                                                        <div class="">--}}
+{{--                                                            <div class="row m-0 p-0">--}}
+{{--                                                                <div class="col-md-4">--}}
+{{--                                                                    <div class="form-group">--}}
+{{--                                                                        <label for="days">{{ __('app.Days') }}</label>--}}
+{{--                                                                        <input type="number" class="form-control"--}}
+{{--                                                                               id="days"--}}
+{{--                                                                               min="1" max="365" name="day"--}}
+{{--                                                                               value="{{$reminder ? $reminder->day : ''}}"--}}
+{{--                                                                               aria-describedby="number of days"--}}
+{{--                                                                               placeholder="(1  - 365)">--}}
+{{--                                                                        <div class="invalid-feedback day">--}}
+{{--                                                                            {{ __('app.enter_a_valid_number_of_days') }}--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="col-12  mt-3">--}}
+{{--                                                            <button type="submit"--}}
+{{--                                                                    class="btn btn-primary submit-btn waves-effect waves-light px-4 py-2"--}}
+{{--                                                                    style="width: 200px;">{{ __('app.Save') }}--}}
+{{--                                                            </button>--}}
+{{--                                                        </div>--}}
+{{--                                                    </form>--}}
+{{--                                                </div>--}}
+                                                <div class="tab-pane fade py-3   {{ $errors->has('branch_type') || count($errors) == 0 ? 'show active':'' }}" id="v-pills-branch">
+                                                    <div class="">
+                                                        <form id="branchMailsetting" method="post" novalidate
+                                                              action="{{route('setting.branchmail')}}"
+                                                              class="reminder-form">
+                                                            @csrf
+                                                            <div class="row p-0 m-0">
+                                                                <div class="col-lg-4 col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="days">{{ __('app.Days') }}</label>
-                                                                        <input type="number" class="form-control" id="days"
-                                                                               min="1" max="365" name="day"
-                                                                               value="{{$reminder ? $reminder->day : ''}}"
-                                                                               aria-describedby="number of days"
-                                                                               placeholder="(1  - 365)">
-                                                                        <div class="invalid-feedback day">
-                                                                            {{ __('app.enter_a_valid_number_of_days') }}
+                                                                        <label for="">{{ __('app.selectType') }}</label>
+                                                                        <select name="branch_type" class="form-control"
+                                                                                id="picType">
+                                                                            <option value=""></option>
+                                                                            <option value="hours">Hours</option>
+                                                                            <option value="minute">Minute</option>
+                                                                        </select>
+                                                                             @if($errors->has('branch_type'))
+                                                                            <small class="text-danger" role="alert">
+                                                                                <strong>{{ $errors->get('branch_type')[0] }}</strong>
+                                                                            </small>
+                                                                            @endif
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-6 ">
+                                                                    <div class="form-group">
+                                                                        <div id="durationDiv">
+                                                                            <label style="display: none"
+                                                                                   for="">{{ __('app.duration') }}</label>
                                                                         </div>
                                                                     </div>
+
                                                                 </div>
+                                                            </div>
+                                                            <div class="row p-0 m-0">
+                                                                <div class="col-12 mt-3">
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary submitmail-btn waves-effect waves-light px-4 py-2"
+                                                                            style="width: 200px;">{{ __('app.Save') }}
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                                <div class="tab-pane fade py-3 {{ $errors->has('env.*') ? 'show active':'' }}" id="v-pills-mail">
+                                                    <div class="">
+
+                                                        <form id="Mailsettings" method="post" novalidate
+                                                              action="{{route('setting.mailsettings')}}"
+                                                              class="reminder-form">
+                                                            @csrf
+                                                            <div class="row p-0 m-0">
+                                                                <div class="col-lg-4 col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="text">{{ __('MAIL DRIVER') }}</label>
+                                                                        <input type="text"
+                                                                               name="env[MAIL_DRIVER]"
+                                                                               class="form-control"
+                                                                               placeholder="smtp"
+                                                                               value="">
+
+
+                                                                            @if($errors->has('env.*'))
+                                                                            <small class="text-danger" role="alert">
+                                                                                 <strong>{{ $errors->get('env.*')['env.MAIL_DRIVER'][0] }}</strong>
+                                                                            </small>
+                                                                            @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="text">{{ __('MAIL HOST') }}</label>
+                                                                        <input type="text"
+                                                                               name="env[MAIL_HOST]"
+                                                                               class="form-control"
+                                                                               placeholder="smtp.googlemail.com"
+                                                                               value=""
+                                                                        >
+                                                                        @if($errors->has('env.*'))
+                                                                            <small class="text-danger" role="alert">
+                                                                                 <strong>{{ $errors->get('env.*')['env.MAIL_HOST'][0] }}</strong>
+                                                                            </small>
+                                                                            @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="text">{{ __('MAIL PORT') }}</label>
+                                                                        <input type="text"
+                                                                               name="env[MAIL_PORT]"
+                                                                               class="form-control"
+                                                                               placeholder="465"
+                                                                               value="">
+                                                                        @if($errors->has('env.*'))
+                                                                            <small class="text-danger" role="alert">
+                                                                                 <strong>{{ $errors->get('env.*')['env.MAIL_PORT'][0] }}</strong>
+                                                                            </small>
+                                                                            @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-6">
+
+                                                                    <div class="form-group">
+                                                                        <label for="text">{{ __('MAIL USERNAME') }}</label>
+                                                                        <input type="text"
+                                                                               name="env[MAIL_USERNAME]"
+                                                                               class="form-control"
+                                                                               placeholder="username"
+                                                                               value="">
+                                                                        @if($errors->has('env.*'))
+                                                                            <small class="text-danger" role="alert">
+                                                                                 <strong>{{ $errors->get('env.*')['env.MAIL_USERNAME'][0] }}</strong>
+                                                                            </small>
+                                                                            @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-6">
+
+                                                                    <div class="form-group">
+                                                                        <label for="text">{{ __('MAIL PASSWORD') }}</label>
+                                                                        <input type="text"
+                                                                               name="env[MAIL_PASSWORD]"
+                                                                               class="form-control"
+                                                                               placeholder="password"
+                                                                               value="">
+                                                                        @if($errors->has('env.*'))
+                                                                            <small class="text-danger" role="alert">
+                                                                                 <strong>{{ $errors->get('env.*')['env.MAIL_PASSWORD'][0] }}</strong>
+                                                                            </small>
+                                                                            @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-6">
+
+                                                                    <div class="form-group">
+                                                                        <label for="text">{{ __('MAIL ENCRYPTION') }}</label>
+                                                                        <select name="env[MAIL_ENCRYPTION]" class="form-control">
+                                                                            <option value=""></option>
+                                                                            <option value="tls">tls</option>
+                                                                            <option value="ssl">ssl</option>
+                                                                        </select>
+                                                                        @if($errors->has('env.*'))
+                                                                            <small class="text-danger" role="alert">
+                                                                                 <strong>{{ $errors->get('env.*')['env.MAIL_ENCRYPTION'][0] }}</strong>
+                                                                            </small>
+                                                                            @endif
+                                                                    </div>
+                                                                </div>
+
+
 
                                                             </div>
-                                                        </div>
-                                                        <div class="col-12  mt-3">
-                                                            <button type="submit"
-                                                                    class="btn btn-primary submit-btn waves-effect waves-light px-4 py-2"
-                                                                    style="width: 200px;">{{ __('app.Save') }}
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-
-                                                <div class="tab-pane fade py-3" id="v-pills-branch">
-                                                    <div class="">
-                                                            <form id="branchMailsetting" method="post" novalidate
-                                                                  action="{{route('setting.branchmail')}}"
-                                                                  class="reminder-form">
-                                                                @csrf
-                                                                <div class="row p-0 m-0">
-                                                                    <div class="col-lg-4 col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">{{ __('app.selectType') }}</label>
-                                                                            <select name="branch_type" class="form-control"
-                                                                                    id="picType">
-                                                                                <option value=""></option>
-                                                                                <option value="hours">Hours</option>
-                                                                                <option value="minute">Minute</option>
-                                                                            </select>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div class="col-lg-4 col-md-6 ">
-                                                                        <div class="form-group">
-                                                                            <div id="durationDiv">
-                                                                                <label style="display: none"
-                                                                                       for="">{{ __('app.duration') }}</label>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
+                                                            <div class="row p-0 m-0">
+                                                                <div class="col-12 mt-3">
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary submitmailsettings-btn waves-effect waves-light px-4 py-2"
+                                                                            style="width: 200px;">{{ __('app.Save') }}
+                                                                    </button>
                                                                 </div>
-                                                                <div class="row p-0 m-0">
-                                                                    <div class="col-12 mt-3">
-                                                                        <button type="submit"
-                                                                                class="btn btn-primary submitmail-btn waves-effect waves-light px-4 py-2"
-                                                                                style="width: 200px;">{{ __('app.Save') }}
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+                                                            </div>
+                                                        </form>
                                                     </div>
 
                                                 </div>
@@ -243,7 +375,11 @@
 
             $(".submitmail-btn").on("click", (e) => {
                 $("#branchMailsetting").submit();
-            })
+            });
+
+            $(".submitmailsettings-btn").on("click", (e) => {
+                $("#branchMailsetting").submit();
+            });
 
         });
 

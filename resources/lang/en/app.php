@@ -1,6 +1,7 @@
 <?php
 return [
     'show_all' => 'Show All',
+    'mailSetting'=>'Mail Settting',
     'data' => 'Data',
     'mail_reminder'=>'Mail Reminder',
     'selectMailType'=>'select mail status',

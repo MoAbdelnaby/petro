@@ -137,6 +137,7 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::get('reminder', 'SettingController@getReminder')->name('setting.reminder');
             Route::post('reminder/post', 'SettingController@saveReminder')->name('setting.reminder_post');
             Route::post('branch/mail', 'SettingController@branchmailSetting')->name('setting.branchmail');
+            Route::post('mail', 'SettingController@mailSetting')->name('setting.mailsettings');
         });
 
         Route::post('connection-speed', 'Models\ConnectionSpeedController@store');
