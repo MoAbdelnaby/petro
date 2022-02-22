@@ -13,16 +13,18 @@ class mailUserBranch extends Mailable
     public $branch_name;
     public $minutes;
     public $code;
+    public $username;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($branch_name,$code,$time)
+    public function __construct($branch_name,$code,$time,$username)
     {
         $this->branch_name = $branch_name;
         $this->code = $code;
         $this->minutes = $time;
+        $this->username = $username;
 
     }
 
@@ -35,10 +37,12 @@ class mailUserBranch extends Mailable
     {
         $result =  MailTemplate::where('key', 'branchError')->value('value');
         $content = str_replace([
+            '[[to]]',
             '[[branch]]',
             '[[code]]',
             '[[downtime]]'
         ], [
+            $this->username,
             $this->code,
             $this->minutes,
             $this->branch_name,
