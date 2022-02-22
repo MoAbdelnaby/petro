@@ -171,6 +171,7 @@ class SettingController extends Controller
 
 
     public function saveMailTemplate(Request $request) {
+        dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'key' => 'required',
