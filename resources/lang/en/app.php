@@ -342,6 +342,12 @@ return [
     'No_Results_Found' => 'No Results Found',
     'PrevP' => 'Prev',
     'NextP' => 'Next',
+    'brancheErrorTemplate' => 'Branche Error Template',
+    'Manger_Name_to' => 'Manger Name: [[to]]',
+    'Branch_Name_branch' => 'Branch Name: [[branch]]',
+    'Branch_Code_code' => 'Branch Code: [[code]]',
+    'Branch_Down_Time_downtime' => 'Branch Down Time: [[downtime]]',
+
     'auth' => [
         'login' => 'Sign In',
         'register' => 'Sign up',

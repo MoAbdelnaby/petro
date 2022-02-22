@@ -4,9 +4,12 @@
 @endsection
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
 @endsection
 
 @push('css')
+ <!-- Include stylesheet -->
+ <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <style>
         .select2-container {
             width: 100% !important;
@@ -18,6 +21,60 @@
 
         .select-model h3 {
             width: 230px;
+        }
+
+        .ql-toolbar.ql-snow + .ql-container.ql-snow {
+            border-top: 0px;
+            min-height: 400px;
+        }
+        .ql-toolbar.ql-snow {
+            padding: 24px;
+        }
+        .ql-snow .ql-picker {
+            position: relative!important;
+            z-index: 999;
+        }
+
+        .ql-snow .ql-picker.ql-header {
+            width: 200px;
+            height: 34px;
+            line-height: 34px;
+        }
+        .ql-snow .ql-picker.ql-size {
+            width: 200px;
+            position: relative!important;
+        }
+        .ql-toolbar .ql-picker .ql-picker-label {
+            border-color: #ccc;
+            width: 100%;
+            position: relative!important;
+            height: 34px;
+            display: inline-block;
+        }
+        .ql-snow .ql-picker.ql-expanded .ql-picker-options{
+            overflow: hidden;
+            margin-top: 34px;
+            top: 100%;
+            z-index: 999999999;
+            position: absolute!important;
+            display: block;
+        }
+        .ql-editor p{
+            margin: 0;
+            padding: 0;
+            counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+            min-height: 100%;
+            display: block;
+            position: relative;
+            min-height: 50px;
+            padding: 10px;
+            z-index: ;
+        }
+        .ql-toolbar.ql-snow .ql-formats{
+            height: 34px
+        }
+        .related-heading span{
+            top: 0px!important;
         }
     </style>
 @endpush
@@ -78,6 +135,7 @@
 {{--                                                @include('settings.includes.reminder_message')--}}
                                                 @include('settings.includes.mail_status')
                                                 @include('settings.includes.mailsetting')
+                                                @include('settings.includes.branchErrorTempleat')
                                             </div>
 
                                         </div>
@@ -97,8 +155,42 @@
 @endsection
 
 @push("js")
+<!-- Include the Quill library -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<!-- Initialize Quill editor -->
+<script>
+var toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
+
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']                                         // remove formatting button
+];
+
+var quill = new Quill('#editor', {
+  modules: {
+    toolbar: toolbarOptions
+  },
+  theme: 'snow'
+});
+</script>
     <script>
         $(document).on("change", "#picType", function () {
+
+
+
             if ($('#picType').val()) {
                 $('#durationSelect').remove();
                 let values = []
@@ -127,6 +219,12 @@
 
         })
         $(document).ready(function () {
+            $('#saveEditor').on('click',function(){
+                let html = $('#editor').html();
+                $('input#htmlEle').val(html);
+                $('#Submit').trigger('click');
+
+            });
 
             $("#days").on("focus", function () {
                 if ($("#days.is-invalid")[0]) {
@@ -176,7 +274,11 @@
                 $("#branchMailsetting").submit();
             });
 
+
+
         });
+
+
 
 
         $(window).scroll(function () {

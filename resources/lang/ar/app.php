@@ -284,6 +284,13 @@ return array(
     'action' => 'الحدث',
     'action_message' => 'تم بنجاح',
     'active' => 'مفعل',
+    'brancheErrorTemplate' => 'قالب خطأ الفرع',
+
+    'Manger_Name_to' => 'اسم المدير: [[to]]',
+    'Branch_Name_branch' => 'اسم الفرع: [[branch]]',
+    'Branch_Code_code' => 'رمز الفرع: [[code]]',
+    'Branch_Down_Time_downtime' => 'وقت تعطل الفرع: [[downtime]]',
+
     'activities' => array(
         'activities' => 'أنشطة',
         'table' => array(
