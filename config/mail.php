@@ -14,6 +14,7 @@ return [
     */
 
     'default' => env('MAIL_MAILER', 'smtp'),
+    'driver'=>env('MAIL_DRIVER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------

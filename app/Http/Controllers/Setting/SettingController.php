@@ -73,11 +73,18 @@ class SettingController extends Controller
         return response()->json(['message' => __('app.settings.success_message')], '200');
     }
 
-    public function getReminder()
+    public function getSetting()
     {
         $reminder = Reminder::latest()->first();
-
-        return view('settings.reminder',['reminder' => $reminder]);
+       $mail = [
+            'driver'=> config('mail.driver'),
+            'host'=> config('mail.mailers.smtp.host'),
+            'port'=> config('mail.mailers.smtp.port'),
+            'encryption'=> config('mail.mailers.smtp.encryption'),
+            'username'=> config('mail.mailers.smtp.username'),
+            'password'=> config('mail.mailers.smtp.password'),
+        ];
+        return view('settings.reminder',['reminder' => $reminder,'mail'=>$mail]);
     }
 
     public function saveReminder(Request $request)
