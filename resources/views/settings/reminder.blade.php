@@ -120,7 +120,7 @@
                                         </li>
 
                                         <li class="nav-item">
-                                            <a class="nav-link " id="v-pills-branch-tab" data-toggle="pill"
+                                            <a class="nav-link {{ $errors->has('value') ? 'active':'' }} " id="v-pills-branch-tab" data-toggle="pill"
                                                href="#v-pills-branchErrorMailtemplate"
                                                role="tab" aria-controls="v-pills-reminder"
                                                aria-selected="true">{{ __('app.brancheErrorTemplate') }}</a>
@@ -222,8 +222,6 @@ var quill = new Quill('#editor', {
             $('#saveEditor').on('click',function(){
                 let html = $('#editor').html();
                 $('input#htmlEle').val(html);
-                $('#Submit').trigger('click');
-
             });
 
             $("#days").on("focus", function () {

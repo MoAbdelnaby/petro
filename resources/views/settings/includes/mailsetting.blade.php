@@ -63,6 +63,7 @@
                                class="form-control"
                                placeholder="username"
                                value="{{$mail ? $mail['username'] : ''}}">
+
                         @if($errors->has('env.*'))
                             <small class="text-danger" role="alert">
                                 <strong>{{ $errors->get('env.*')['env.MAIL_USERNAME'][0] }}</strong>

@@ -25,8 +25,7 @@
                 <div class="col-lg-4 col-md-6 ">
                     <div class="form-group">
                         <div id="durationDiv">
-                            <label style="display: none"
-                                   for="">{{ __('app.duration') }}</label>
+                            <label style="display: none" for="">{{ __('app.duration') }}</label>
                         </div>
                     </div>
 
