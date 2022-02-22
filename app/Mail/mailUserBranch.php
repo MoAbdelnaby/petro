@@ -46,7 +46,7 @@ class mailUserBranch extends Mailable
             $this->branch_name,
             $this->code,
             $this->minutes . ' Minutes',
-           
+
         ], $result);
 
         return $this->view('mails.mailtemplate',compact('content'));

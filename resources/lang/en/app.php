@@ -1515,7 +1515,7 @@ return [
         'plate_put_in_error' => 'Plate moved to error successfully',
     ],
     'service' => [
-        'service' => 'service',
+        'service' => 'Service',
         'index' => 'index',
         'create' => 'create service',
         'update' => 'update service',
@@ -1526,7 +1526,7 @@ return [
         'english_description' => 'english description',
         'action' => 'action',
     ],
-    'branchStatus' => 'branch Status',
+    'branchStatus' => 'Branch Status',
     'branch_name' => 'Branch Name',
     'branch_status' => 'Branch Status',
     'lastError' => 'last Error',

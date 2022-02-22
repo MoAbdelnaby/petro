@@ -1,4 +1,4 @@
-<div class="tab-pane fade py-3 {{ $errors->has('env.*') ? 'show active':'' }}" id="v-pills-mail">
+<div class="tab-pane fade py-3 {{ $errors->has('env.*') || count($errors) == 0 ? 'show active':'' }}" id="v-pills-mail">
     <div class="">
 
         <form id="Mailsettings" method="post" novalidate
@@ -18,7 +18,7 @@
 
                         @if($errors->has('env.*'))
                             <small class="text-danger" role="alert">
-                                <strong>{{ $errors->get('env.*')['env.MAIL_DRIVER'][0] }}</strong>
+                                <strong>{{ $errors->get('env.*')['env.MAIL_MAILER'][0] ?? '' }}</strong>
                             </small>
                         @endif
                     </div>
@@ -34,7 +34,7 @@
                         >
                         @if($errors->has('env.*'))
                             <small class="text-danger" role="alert">
-                                <strong>{{ $errors->get('env.*')['env.MAIL_HOST'][0] }}</strong>
+                                <strong>{{ $errors->get('env.*')['env.MAIL_HOST'][0] ?? '' }}</strong>
                             </small>
                         @endif
                     </div>
@@ -49,7 +49,7 @@
                                value="{{$mail ? $mail['port'] : ''}}">
                         @if($errors->has('env.*'))
                             <small class="text-danger" role="alert">
-                                <strong>{{ $errors->get('env.*')['env.MAIL_PORT'][0] }}</strong>
+                                <strong>{{ $errors->get('env.*')['env.MAIL_PORT'][0] ?? '' }}</strong>
                             </small>
                         @endif
                     </div>
@@ -66,7 +66,7 @@
 
                         @if($errors->has('env.*'))
                             <small class="text-danger" role="alert">
-                                <strong>{{ $errors->get('env.*')['env.MAIL_USERNAME'][0] }}</strong>
+                                <strong>{{ $errors->get('env.*')['env.MAIL_USERNAME'][0] ?? '' }}</strong>
                             </small>
                         @endif
                     </div>
@@ -82,7 +82,7 @@
                                value="{{$mail ? $mail['password'] : ''}}">
                         @if($errors->has('env.*'))
                             <small class="text-danger" role="alert">
-                                <strong>{{ $errors->get('env.*')['env.MAIL_PASSWORD'][0] }}</strong>
+                                <strong>{{ $errors->get('env.*')['env.MAIL_PASSWORD'][0] ?? '' }}</strong>
                             </small>
                         @endif
                     </div>
@@ -98,7 +98,7 @@
                         </select>
                         @if($errors->has('env.*'))
                             <small class="text-danger" role="alert">
-                                <strong>{{ $errors->get('env.*')['env.MAIL_ENCRYPTION'][0] }}</strong>
+                                <strong>{{ $errors->get('env.*')['env.MAIL_ENCRYPTION'][0] ?? '' }}</strong>
                             </small>
                         @endif
                     </div>

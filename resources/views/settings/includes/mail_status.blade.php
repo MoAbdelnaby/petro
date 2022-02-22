@@ -1,4 +1,4 @@
-<div class="tab-pane fade py-3   {{ $errors->has('branch_type') || count($errors) == 0 ? 'show active':'' }}" id="v-pills-branch">
+<div class="tab-pane fade py-3   {{ $errors->has('branch_type')  ? 'show active':'' }}" id="v-pills-branch">
     <div class="">
         <form id="branchMailsetting" method="post" novalidate
               action="{{route('setting.branchmail')}}"

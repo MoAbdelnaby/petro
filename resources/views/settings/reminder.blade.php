@@ -105,19 +105,22 @@
 {{--                                               role="tab" aria-controls="v-pills-reminder"--}}
 {{--                                               aria-selected="true">{{ __('app.Reminder') }}</a>--}}
 {{--                                        </li>--}}
+
                                         <li class="nav-item">
-                                            <a class="nav-link {{$errors->has('branch_type') || count($errors) == 0 ? 'show active':'' }}" id="v-pills-branch-tab" data-toggle="pill"
+                                            <a class="nav-link {{ $errors->has('env.*') || count($errors) == 0 ? 'active':'' }}" id="v-pills-branch-tab" data-toggle="pill"
+                                               href="#v-pills-mail"
+                                               role="tab" aria-controls="v-pills-reminder"
+                                               aria-selected="true">{{ __('app.mailSetting') }}</a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link {{$errors->has('branch_type')  ? 'show active':'' }}" id="v-pills-branch-tab" data-toggle="pill"
                                                href="#v-pills-branch"
                                                role="tab" aria-controls="v-pills-reminder"
                                                aria-selected="true">{{ __('app.branchSetting') }}</a>
                                         </li>
 
-                                        <li class="nav-item">
-                                            <a class="nav-link {{ $errors->has('env.*') ? 'active':'' }}" id="v-pills-branch-tab" data-toggle="pill"
-                                               href="#v-pills-mail"
-                                               role="tab" aria-controls="v-pills-reminder"
-                                               aria-selected="true">{{ __('app.mailSetting') }}</a>
-                                        </li>
+
 
                                         <li class="nav-item">
                                             <a class="nav-link {{ $errors->has('value') ? 'active':'' }} " id="v-pills-branch-tab" data-toggle="pill"
@@ -133,8 +136,8 @@
                                         <div class="col-12 ">
                                             <div class="tab-content" id="v-pills-tabContent">
 {{--                                                @include('settings.includes.reminder_message')--}}
-                                                @include('settings.includes.mail_status')
                                                 @include('settings.includes.mailsetting')
+                                                @include('settings.includes.mail_status')
                                                 @include('settings.includes.branchErrorTempleat')
                                             </div>
 
