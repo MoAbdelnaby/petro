@@ -118,8 +118,8 @@ class BranchStatusApi extends Command
                         ->where('branch_id', $branch->br_id)
                         ->first();
                     if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
-                        dispatch(new SendBranchStatusMailJob($branch,$minutes,$user->email));
-                        $updates = DB::table('branches_users')
+                        dispatch(new SendBranchStatusMailJob($branch,$minutes,$user->email,$user->name));
+                        DB::table('branches_users')
                             ->where('user_id', $user->id)
                             ->where('branch_id', $branch->br_id)
                             ->update(['notified' => '1']);

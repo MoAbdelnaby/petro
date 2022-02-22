@@ -40,7 +40,8 @@
                                         <div class="card text-center">
                                             <div class="card-header row online mx-0 px-0">
                                                 <div class="col-4">
-                                                    <img width="100" src="{{ asset("images/online-svgrepo-com.svg") }}" alt=""></div>
+                                                    <img width="100" src="{{ asset("images/online-svgrepo-com.svg") }}"
+                                                         alt=""></div>
                                                 <div class="col-8">
                                                     <h5><b><i class="fas fa-circle"
                                                               style="color: green"></i> {{ __('app.branch_online')  }}
@@ -55,7 +56,9 @@
                                         <div class="card text-center col-12  ">
                                             <div class="card-header row offline ">
                                                 <div class="col-4">
-                                                    <img width="100" fill="red" src="{{ asset("images/offline-svgrepo-com.svg") }}" alt=""></div>
+                                                    <img width="100" fill="red"
+                                                         src="{{ asset("images/offline-svgrepo-com.svg") }}" alt="">
+                                                </div>
                                                 <div class="col-8">
                                                     <h5><b><i class="fas fa-circle"
                                                               style="color: red"></i> {{ __('app.branch_offline') }}</b>
@@ -98,7 +101,17 @@
                                                                    style="color: red"></i> {{ __('app.branch_offline') }}
                                                             @endif
                                                         </td>
-                                                        <td>{{isset($last_stability[$branch->branch_code])?$last_stability[$branch->branch_code]['stability']:"0 ". __('app.minute')}}</td>
+                                                        <td>
+                                                            @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
+                                                                @if(isset($last_stability[$branch->branch_code]))
+                                                                    {{$last_stability[$branch->branch_code]['stability']}}
+                                                                @else
+                                                                    {{"0 ". __('app.minute')}}
+                                                                @endif
+                                                            @else
+                                                                {{"0 ". __('app.minute')}}
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             @php($diff = \Carbon\Carbon::now()->diff($branch->created_at))
                                                             @if($diff->y)

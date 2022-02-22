@@ -17,7 +17,6 @@ class SubCustomerCheck
     public function handle($request, Closure $next)
     {
         if (Auth::user()->type == 'subcustomer') {
-//            return redirect('customer/myBranches');
             abort(403);
         }
         return $next($request);

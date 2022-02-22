@@ -18,6 +18,7 @@ class SendBranchStatusMailJob implements ShouldQueue
     public $branch_code;
     public $minutes;
     public $email;
+    public $name;
 
 
     /**
@@ -25,12 +26,13 @@ class SendBranchStatusMailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($data,$minutes,$email)
+    public function __construct($data,$minutes,$email,$name)
     {
         $this->branch_name = $data->name;
         $this->branch_code = $data->branch_code;
         $this->minutes = $minutes;
         $this->email = $email;
+        $this->name = $name;
     }
 
     /**
@@ -43,6 +45,7 @@ class SendBranchStatusMailJob implements ShouldQueue
         $branch_name = $this->branch_name;
         $code = $this->branch_code;
         $time = $this->minutes;
-        Mail::to($this->email)->send(new mailUserBranch($branch_name ,$code,$time));
+        $username = $this->name;
+        Mail::to($this->email)->send(new mailUserBranch($branch_name ,$code,$time,$username));
     }
 }
