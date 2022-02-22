@@ -15,6 +15,7 @@ class SendBranchStatusMailJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $branch_name;
+    public $branch_code;
     public $minutes;
     public $email;
 
@@ -27,6 +28,7 @@ class SendBranchStatusMailJob implements ShouldQueue
     public function __construct($data,$minutes,$email)
     {
         $this->branch_name = $data->name;
+        $this->branch_code = $data->branch_code;
         $this->minutes = $minutes;
         $this->email = $email;
     }
@@ -39,7 +41,8 @@ class SendBranchStatusMailJob implements ShouldQueue
     public function handle()
     {
         $branch_name = $this->branch_name;
+        $code = $this->branch_code;
         $time = $this->minutes;
-        Mail::to($this->email)->send(new mailUserBranch($branch_name ,$time));
+        Mail::to($this->email)->send(new mailUserBranch($branch_name ,$code,$time));
     }
 }

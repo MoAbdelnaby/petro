@@ -61,6 +61,13 @@
                                                role="tab" aria-controls="v-pills-reminder"
                                                aria-selected="true">{{ __('app.mailSetting') }}</a>
                                         </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link " id="v-pills-branch-tab" data-toggle="pill"
+                                               href="#v-pills-branchErrorMailtemplate"
+                                               role="tab" aria-controls="v-pills-reminder"
+                                               aria-selected="true">{{ __('app.brancheErrorTemplate') }}</a>
+                                        </li>
                                     </ul>
 
                                 </div>
