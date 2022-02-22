@@ -136,6 +136,7 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::post('setting_save', 'SettingController@settingSave');
             Route::get('reminder', 'SettingController@getSetting')->name('setting.reminder');
             Route::post('reminder/post', 'SettingController@saveReminder')->name('setting.reminder_post');
+            Route::post('mailTemplate', 'SettingController@saveMailTemplate')->name('setting.mailTemplate');
             Route::post('branch/mail', 'SettingController@branchmailSetting')->name('setting.branchmail');
             Route::post('mail', 'SettingController@mailSetting')->name('setting.mailsettings');
         });

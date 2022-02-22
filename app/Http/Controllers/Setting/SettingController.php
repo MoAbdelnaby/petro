@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Models\BranchSetting;
+use App\Models\MailTemplate;
 use App\Models\Reminder;
 use App\Setting;
 use Illuminate\Http\Request;
@@ -167,6 +168,29 @@ class SettingController extends Controller
     }
 
 
+
+    public function saveMailTemplate(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'key' => 'required',
+            'value' => 'required',
+        ]);
+
+        if ($validator->errors()->count()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        // write your code
+        MailTemplate::updateOrCreate(
+            ['key'=>$request->key],
+            [
+                'value'=>$request->value,
+                'group'=>'mails',
+            ]
+        );
+
+        session()->flash('success', __('app.settings.success_message'));
+        return redirect()->route('setting.reminder');
+    }
 
     public function testingUser(Request $request,$branchId) {
 //        dd($branchId);
