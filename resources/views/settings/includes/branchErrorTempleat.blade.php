@@ -17,13 +17,13 @@
 
 
     </div>
-    <form id="branchMailsetting" method="post" novalidate action="{{route('setting.mailTemplate')}}" class="reminder-form">
+    <form id="branchErrorMailTemplate" method="post" novalidate action="{{route('setting.mailTemplate')}}" class="reminder-form">
         @csrf
         <input type="hidden"  name="key" value="branchError">
         <input type="hidden" id="htmlEle" name="value">
         <div class="row p-0 m-0">
             <div class="col-12 mt-3">
-                <input type="submit" class="btn btn-primary waves-effect waves-light px-4 py-2 " style="width: 200px;" id="Submit" value="{{ __('app.Save') }}" >
+                <input  class="btn branch-errror-template-btn btn-primary waves-effect waves-light px-4 py-2 " style="width: 200px;"  value="{{ __('app.Save') }}" >
             </div>
         </div>
     </form>

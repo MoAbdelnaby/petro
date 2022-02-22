@@ -43,9 +43,10 @@ class mailUserBranch extends Mailable
             '[[downtime]]'
         ], [
             $this->username,
-            $this->code,
-            $this->minutes,
             $this->branch_name,
+            $this->code,
+            $this->minutes . ' Minutes',
+           
         ], $result);
 
         return $this->view('mails.mailtemplate',compact('content'));

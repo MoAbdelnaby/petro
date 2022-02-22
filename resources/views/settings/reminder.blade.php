@@ -187,6 +187,8 @@ var quill = new Quill('#editor', {
 });
 </script>
     <script>
+
+
         $(document).on("change", "#picType", function () {
 
 
@@ -219,9 +221,14 @@ var quill = new Quill('#editor', {
 
         })
         $(document).ready(function () {
-            $('#saveEditor').on('click',function(){
-                let html = $('#editor').html();
+            var mailtemplateData = '{!!$mailtemplate !!}';
+            $('#editor .ql-editor').html(mailtemplateData)
+
+            $('.branch-errror-template-btn').on('click',function(e){
+                e.preventDefault();
+                let html = $('#editor .ql-editor').html();
                 $('input#htmlEle').val(html);
+                $("#branchErrorMailTemplate").submit();
             });
 
             $("#days").on("focus", function () {

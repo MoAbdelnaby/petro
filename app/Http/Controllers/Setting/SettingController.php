@@ -79,7 +79,7 @@ class SettingController extends Controller
         $reminder = Reminder::latest()->first();
         $mailtemplate =  MailTemplate::where('key', 'branchError')->value('value');
         $mail = [
-            'driver'=> config('mail.driver'),
+            'driver'=> config('mail.default'),
             'host'=> config('mail.mailers.smtp.host'),
             'port'=> config('mail.mailers.smtp.port'),
             'encryption'=> config('mail.mailers.smtp.encryption'),
@@ -137,7 +137,7 @@ class SettingController extends Controller
 
         $validator = Validator::make($request->all(), [
             'env' => 'required|array',
-            'env.MAIL_DRIVER' => 'required',
+            'env.MAIL_MAILER' => 'required',
             'env.MAIL_HOST' => 'required',
             'env.MAIL_PORT' => 'required',
             'env.MAIL_USERNAME' => 'required',
@@ -150,7 +150,7 @@ class SettingController extends Controller
 
         $data = Arr::only($request->env,
             [
-                'MAIL_DRIVER',
+                'MAIL_MAILER',
                 'MAIL_HOST',
                 'MAIL_PORT',
                 'MAIL_USERNAME',
@@ -171,8 +171,6 @@ class SettingController extends Controller
 
 
     public function saveMailTemplate(Request $request) {
-        dd($request->all());
-
         $validator = Validator::make($request->all(), [
             'key' => 'required',
             'value' => 'required',

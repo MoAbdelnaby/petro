@@ -10,7 +10,7 @@
                     <div class="form-group">
                         <label for="text">{{ __('MAIL DRIVER') }}</label>
                         <input type="text"
-                               name="env[MAIL_DRIVER]"
+                               name="env[MAIL_MAILER]"
                                class="form-control"
                                placeholder="smtp"
                                value="{{$mail ? $mail['driver'] : ''}}">
