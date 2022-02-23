@@ -7,6 +7,9 @@ use App\Jobs\SendBranchStatusMailJob;
 use App\Mail\mailUserBranch;
 use App\Models\Branch;
 use App\Models\BranchSetting;
+use App\Models\CarPLatesSetting;
+use App\Models\PlaceMaintenanceSetting;
+use App\Models\UserModelBranch;
 use App\Notifications\branchConnectionNotification;
 use App\User;
 use Carbon\Carbon;
@@ -74,7 +77,6 @@ class BranchStatusApi extends Command
 
                 $users = $current->users;
                 if (count($users) > 0) {
-
                     $this->sendErrorToAdmin($branch, $users);
                 }
             }
@@ -100,32 +102,47 @@ class BranchStatusApi extends Command
     protected function sendErrorToAdmin($branch, $users): void
     {
         try {
-            $now = now();
+
+
             $branchSetting = BranchSetting::find(1);
             if ($branchSetting->type == 'hours') {
                 $minutes = $branchSetting->duration * 60;
             } else {
                 $minutes = $branchSetting->duration;
             }
-
-            if ($now->subMinutes($minutes) > $branch->created_at) {
-//            foreach (User::where('type', 'customer')->get() as $admin) {
-//                $admin->notify(new branchConnectionNotification($branch, $data, $minutes, 'schedule'));
-//            }
-                foreach ($users as $user) {
-                    $check = DB::table('branches_users')
-                        ->where('user_id', $user->id)
-                        ->where('branch_id', $branch->br_id)
-                        ->first();
-                    if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
-                        dispatch(new SendBranchStatusMailJob($branch,$minutes,$user->email,$user->name));
-                        DB::table('branches_users')
-                            ->where('user_id', $user->id)
-                            ->where('branch_id', $branch->br_id)
-                            ->update(['notified' => '1']);
+            $userModelBranch = UserModelBranch::where('branch_id',$branch->br_id)->first();
+                $this->comment($userModelBranch->id);
+            if($userModelBranch) {
+                $branch_work = PlaceMaintenanceSetting::where('user_model_branch_id', $userModelBranch->id)->where('active', 1)->first();
+                if (!$branch_work) {
+                    $branch_work = CarPLatesSetting::where('user_model_branch_id', $userModelBranch->id)->where('active', 1)->first();
+                }
+                $this->comment($branch_work->id);
+                if ($branch_work) {
+                    $now = Carbon::now();
+                    $start = Carbon::parse($branch_work->start_time);
+                    $end = Carbon::parse($branch_work->end_time);
+                    if( $now < $end &&  $now > $start) {
+                        $this->comment('start2');
+                        if ($now->subMinutes($minutes) > $branch->created_at) {
+                            foreach ($users as $user) {
+                                $check = DB::table('branches_users')
+                                    ->where('user_id', $user->id)
+                                    ->where('branch_id', $branch->br_id)
+                                    ->first();
+                                if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
+                                    dispatch(new SendBranchStatusMailJob($branch,$minutes,$user->email,$user->name));
+                                    DB::table('branches_users')
+                                        ->where('user_id', $user->id)
+                                        ->where('branch_id', $branch->br_id)
+                                        ->update(['notified' => '1']);
+                                }
+                            }
+                        }
                     }
                 }
             }
+
         } catch (\Exception $e) {
 
         }
