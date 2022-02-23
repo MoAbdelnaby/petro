@@ -68,7 +68,7 @@
             position: relative;
             min-height: 50px;
             padding: 10px;
-            z-index: ;
+
         }
         .ql-toolbar.ql-snow .ql-formats{
             height: 34px
@@ -193,8 +193,6 @@ var quill = new Quill('#editor', {
 
 
         $(document).on("change", "#picType", function () {
-
-
 
             if ($('#picType').val()) {
                 $('#durationSelect').remove();

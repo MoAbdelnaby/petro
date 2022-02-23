@@ -11,8 +11,8 @@
                         <select name="branch_type" class="form-control"
                                 id="picType">
                             <option value=""></option>
-                            <option value="hours">Hours</option>
-                            <option value="minute">Minute</option>
+                            <option value="hours" {{$branch_setting && $branch_setting->type == "hours"  ? "selected" : ""}}>Hours</option>
+                            <option value="minute" {{$branch_setting && $branch_setting->type == "minute"  ? "selected" : ""}}>Minute</option>
                         </select>
                         @if($errors->has('branch_type'))
                             <small class="text-danger" role="alert">
@@ -25,7 +25,21 @@
                 <div class="col-lg-4 col-md-6 ">
                     <div class="form-group">
                         <div id="durationDiv">
-                            <label style="display: none" for="">{{ __('app.duration') }}</label>
+
+                            <label style="display:{{$branch_setting ? 'block' : 'none'}}" for="">{{ __('app.duration') }}</label>
+                            <select style="display:{{$branch_setting ? 'block' : 'none'}}" class='form-control' id='durationSelect' name='branch_duration'>
+                                @if($branch_setting)
+                                    @if($branch_setting->type == 'hours')
+                                        @for($i = 1; $i < 24; $i++)
+                                            <option value="{{$i}}" {{ $branch_setting->duration == $i  ? "selected" : ""}}>{{$i}}</option>
+                                        @endfor
+                                    @else
+                                        @for($i = 1; $i < 60; $i++)
+                                            <option value="{{$i}}" {{ $branch_setting->duration == $i  ? "selected" : ""}}>{{$i}}</option>
+                                        @endfor
+                                    @endif
+                                @endif
+                            </select>
                         </div>
                     </div>
 
