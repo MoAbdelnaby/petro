@@ -1,7 +1,7 @@
 <?php
 return [
     'show_all' => 'Show All',
-    'mailSetting'=>'Mail Settting',
+    'mailSetting'=>'Mail Setttings',
     'data' => 'Data',
     'mail_reminder'=>'Mail Reminder',
     'selectMailType'=>'select mail status',
@@ -22,7 +22,7 @@ return [
     'not_connected_yet' => 'Not Connected Yet',
     'connection_speed' => 'Connection Speed',
     'Internet_status' => 'Internet Status',
-    'branchSetting' => 'Branch Status Mail',
+    'branchSetting' => 'Branch Status Mail Duration',
     'duration' => 'Duration',
     'selectType' => 'Select Duration Type',
     'Branch_Status_Header' => 'Branch Statuses',
@@ -342,7 +342,7 @@ return [
     'No_Results_Found' => 'No Results Found',
     'PrevP' => 'Prev',
     'NextP' => 'Next',
-    'brancheErrorTemplate' => 'Branche Error Template',
+    'brancheErrorTemplate' => 'Branche Status Mail Template',
     'Manger_Name_to' => 'Manger Name: [[to]]',
     'Branch_Name_branch' => 'Branch Name: [[branch]]',
     'Branch_Code_code' => 'Branch Code: [[code]]',
