@@ -391,4 +391,30 @@ class ApiModelController extends Controller
             return response()->json(['data' => [], 'message' => $e->getMessage(), 'code' => 500], 500);
         }
     }
+
+    public function testServerLoad(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'key' => 'required',
+            'value' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false,'message' => $validator->errors()], 500);
+        }
+
+        $data = array_merge( $validator->validated(), ['created_at' => Carbon::now()]);
+
+        try {
+             DB::table('loaders')->insert([
+                 $data
+            ]);
+            return response()->json(['success' => true, 'message' => 'Data Returned Successfully'], 200);
+
+        }catch (\Exception $e){
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+
+    }
 }

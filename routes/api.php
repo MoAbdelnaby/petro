@@ -42,6 +42,7 @@ Route::group(['middleware' => 'api','namespace' => 'Api','prefix' => 'auth'], fu
         Route::post('send_template', 'TemplateMessageController@SendTemplateToUser');
 
         Route::post('BranchNetwork','ApiModelController@branchNetwork');
+        Route::post('testLoad', 'ApiModelController@testServerLoad');
     });
 
 
@@ -118,6 +119,8 @@ Route::get('branch/{code}/status', 'Api\AreaStatusController@status');
 Route::get('getphone', 'Api\AreaStatusController@handle');
 
 Route::post('invoices/download', 'Api\TemplateMessageController@downloadInvoice');
+
+
 
 Route::get('test',function (){
     $total = AreaDurationDay::

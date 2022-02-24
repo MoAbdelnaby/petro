@@ -93,10 +93,10 @@
                                                     <div class="row">
                                                         <div id="branch_container" class="col-md-12 ">
                                                             <div class="row">
-                                                                <div class=" col-md-12 " id="branch_selection">
+                                                                <div class=" col-md-12" id="branch_selection">
                                                                     <lebel>{{ __('app.Select_branches') }}:</lebel>
 
-                                                                    <select class="form-control select_2 required" id="select_branch" name="lists[]">
+                                                                    <select class="form-control select_2 required" multiple  id="select_branch" name="lists[]">
                                                                         @foreach($branches as $branch)
                                                                             <option value="{{$branch->id}}"
                                                                                     @if(in_array($branch->id,request('lists')??[])) selected @endif>{{$branch->name}}</option>
@@ -106,6 +106,10 @@
                                                                         Please select branch.
                                                                     </div>
                                                                 </div>
+{{--                                                                <div class=" col-md-4 " >--}}
+{{--                                                                    <input type="checkbox" id="selectallbranches" > Select All--}}
+{{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
+{{--                                                                </div>--}}
                                                             </div>
                                                         </div>
 
@@ -496,6 +500,22 @@
 @push('js')
     <script>
         $(document).ready(function () {
+
+            $("#selectallbranches").click(function(){
+                if($("#selectallbranches").is(':checked') ){
+                    $("#select_branch > option").prop("selected","selected");
+                    $("#select_branch").trigger("change");
+                }else{
+                    $("#select_branch > option").removeAttr("selected");
+                    $("#select_branch").trigger("change");
+                }
+            });
+
+
+            $("#checkValButton").click(function(){
+                alert($("#select_branch").val());
+            });
+
             $('.btn-filter').on('click', function () {
                 $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');
             })
