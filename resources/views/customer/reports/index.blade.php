@@ -93,7 +93,7 @@
                                                     <div class="row">
                                                         <div id="branch_container" class="col-md-12 ">
                                                             <div class="row">
-                                                                <div class=" col-md-12" id="branch_selection">
+                                                                <div class=" col-md-8" id="branch_selection">
                                                                     <lebel>{{ __('app.Select_branches') }}:</lebel>
 
                                                                     <select class="form-control select_2 required" multiple  id="select_branch" name="lists[]">
@@ -106,10 +106,10 @@
                                                                         Please select branch.
                                                                     </div>
                                                                 </div>
-{{--                                                                <div class=" col-md-4 " >--}}
-{{--                                                                    <input type="checkbox" id="selectallbranches" > Select All--}}
+                                                                <div class=" col-md-4 " >
+                                                                    <input type="checkbox" id="selectallbranches" > Select All
 {{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
-{{--                                                                </div>--}}
+                                                                </div>
                                                             </div>
                                                         </div>
 
@@ -503,10 +503,12 @@
 
             $("#selectallbranches").click(function(){
                 if($("#selectallbranches").is(':checked') ){
+                    console.log('checked');
                     $("#select_branch > option").prop("selected","selected");
                     $("#select_branch").trigger("change");
                 }else{
-                    $("#select_branch > option").removeAttr("selected");
+                    console.log('removed');
+                    $("#select_branch").val(null);
                     $("#select_branch").trigger("change");
                 }
             });
