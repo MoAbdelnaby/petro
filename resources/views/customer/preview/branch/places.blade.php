@@ -776,6 +776,19 @@
     <script src="{{asset('js/config.js')}}"></script>
     <script>
         $(document).ready(function () {
+
+
+
+            let scrollMenuItemLeft = $('.header .nav-pills .nav-link.active').position().left;
+
+
+            if(scrollMenuItemLeft > $('.scroll-horizontal .scroll-horizontal--elm-cont').width()){
+                $('.scroll-horizontal').scrollLeft(scrollMenuItemLeft - ($('.header .nav-pills .nav-link.active').width()+50));
+            }
+            console.log("000 => "+ $('.scroll-horizontal .scroll-horizontal--elm-cont').width());
+            console.log("aaa => " + $('.header .nav-pills .nav-link.active').position().left);
+            console.log("bbb => " + scrollMenuItemLeft);
+
             $('.dropdown-submenu a.test').on("click", function (e) {
                 e.stopPropagation();
                 e.preventDefault();

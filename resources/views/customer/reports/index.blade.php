@@ -93,7 +93,7 @@
                                                     <div class="row">
                                                         <div id="branch_container" class="col-md-12 ">
                                                             <div class="row">
-                                                                <div class=" col-md-8" id="branch_selection">
+                                                                <div class=" col-md-8 p-0" id="branch_selection">
                                                                     <lebel>{{ __('app.Select_branches') }}:</lebel>
 
                                                                     <select class="form-control select_2 required" multiple  id="select_branch" name="lists[]">
@@ -107,7 +107,12 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class=" col-md-4 " >
-                                                                    <input type="checkbox" id="selectallbranches" > Select All
+                                                                    <label for="selectallbranches" class="custom-checkbox pl-1 pl-4 mt-4">
+                                                                        <input class="trashselect" type="checkbox" name="trashs[]" id="selectallbranches" value="1">
+                                                                        <span class="checkmark"></span> Select All
+                                                                        
+                                                                    </label> 
+                                                                    {{-- <input type="checkbox" id="selectallbranches" > Select All --}}
 {{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
                                                                 </div>
                                                             </div>

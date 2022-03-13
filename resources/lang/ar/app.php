@@ -290,7 +290,10 @@ return array(
     'Branch_Name_branch' => 'اسم الفرع: [[branch]]',
     'Branch_Code_code' => 'رمز الفرع: [[code]]',
     'Branch_Down_Time_downtime' => 'وقت تعطل الفرع: [[downtime]]',
+    'subadmin' => 'ادمن فرعى',
+    'subcustomer' => 'عميل فرعى',
 
+    
     'activities' => array(
         'activities' => 'أنشطة',
         'table' => array(

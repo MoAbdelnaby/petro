@@ -347,6 +347,8 @@ return [
     'Branch_Name_branch' => 'Branch Name: [[branch]]',
     'Branch_Code_code' => 'Branch Code: [[code]]',
     'Branch_Down_Time_downtime' => 'Branch Down Time: [[downtime]]',
+    'subadmin' => 'subadmin',
+    'subcustomer' => 'subcustomer',
 
     'auth' => [
         'login' => 'Sign In',
