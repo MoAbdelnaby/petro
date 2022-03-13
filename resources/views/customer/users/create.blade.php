@@ -85,6 +85,20 @@
                                                    placeholder="{{__('app.auth.password_confirmation')}}"
                                                    name="password_confirmation">
                                             @error('password_confirmation')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-lg-4 col-md-6 col-sm-12">
+                                            <label for="password_confirmation"><i
+                                                    class="fas fa-key"></i> {{__('app.type')}}
+                                            </label>
+                                            <select name="type" id="type" class="form-control">
+                                                <option value="subadmin">{{ __('app.subadmin') }}</option>
+                                                <option value="subcustomer">{{ __('app.subcustomer') }}</option>
+                                            </select>
+                                            @error('password_confirmation')
                                             <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -99,7 +113,6 @@
                                                 <input class="trashselect" type="checkbox" name="speedtest" id="speedtest" >
                                                 <span class="checkmark"></span>
                                             </label>
-
 
                                             {{-- <input type="checkbox" style="" name="speedtest"
                                                    checked="checked" id="speedtest"

@@ -115,7 +115,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'type' => 'subcustomer',
+            'type' => $request->type,
             'password' => $request->password,
             'parent_id' => parentID()
         ];

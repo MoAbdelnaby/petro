@@ -27,7 +27,7 @@
             <div class="row col-12 p-0 m-0 text-right d-block mb-2">
 
                 @can('create-CustomerUsers')
-                    @if(auth()->user()->type=="customer" && count($trashs))
+                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin"  && count($trashs))
                         <button type="button" class="btn btn-primary float-left" data-toggle="modal" data-target="#RecycleBin">
                             <i class="fas fa-recycle"></i> {{ __('app.Recycle_Bin') }}
                         </button>
@@ -49,7 +49,6 @@
                                         <div class="col-12 mb-2">
                                             <button type="submit" style=" display: none" class="restore_all btn btn-sm btn-primary mr-2"><i class="fas fa-recycle"></i> {{__('app.restore_all')}}</button>
                                             <button type="submit" style="display: none" class="remove_all btn btn-sm btn-danger" ><i class="fas fa-trash"> </i>{{__('app.delete_all')}}</button>
-
                                         </div>
 
                                         <table style="width: 100%;"  class="table table-bordered text-center">
@@ -99,7 +98,7 @@
                     </div>
 
                 @can('create-CustomerUsers')
-                    @if(auth()->user()->type=="customer")
+                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                     <a class="btn btn-primary" href="{{route('customerUsers.create')}}" >
                         <i class="fas fa-plus"></i> &nbsp;{{__('app.new')}}
                     </a>
@@ -164,7 +163,7 @@
                                                         @endif
                                                     </td>
                                                     <td style="width: max-content;display: inline-block">
-                                                        @if(auth()->user()->type=="customer")
+                                                        @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                                                             @php
                                                                 $user_branches = [];
                                                                     foreach ($user->branches as $brn)
@@ -230,7 +229,7 @@
                                                     <div class="border-bottom my-2"></div>
                                                     <div class="col-12">
                                                         <div class="text-center px-0 pb-2">
-                                                            @if(auth()->user()->type=="customer")
+                                                            @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                                                                 @php
                                                                     $user_branches = [];
                                                                         foreach ($user->branches as $brn)
