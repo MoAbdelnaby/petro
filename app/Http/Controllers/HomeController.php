@@ -51,8 +51,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (Auth::user()->type == "customer") {
-
+        if (Auth::user()->type == "customer" || Auth::user()->type == "subadmin") {
 
             return \redirect()->route('CustomerHome');
 
