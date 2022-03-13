@@ -16,7 +16,7 @@
 
             <div class="row col-12 p-0 m-0 text-right d-block mb-2">
                 @can('create-CustomerBranches')
-                    @if(auth()->user()->type=="customer" && count($trashs))
+                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin" && count($trashs))
                         <button type="button" class="btn btn-primary float-left" data-toggle="modal" data-target="#RecycleBin">
                             <i class="fas fa-recycle"></i> {{ __('app.Recycle_Bin') }}
                         </button>
@@ -87,7 +87,7 @@
                 </div>
 
             @can('create-CustomerBranches')
-                @if(auth()->user()->type=="customer")
+                @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                     <a class="btn btn-primary" href="{{route('customerRegions.create')}}" >
                         <i class="fa fa-plus"></i> {{__('app.customers.regions.new')}}
                     </a>
@@ -165,7 +165,7 @@
                                                                 </a>
                                                             </td>
                                                             <td>
-                                                                @if(auth()->user()->type=="customer")
+                                                                @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                                                                     <a class="btn btn-sm btn-info"  href="{{ route('customerRegions.edit',[$item->id]) }}"> <i class="fas fa-edit"></i> {{__('app.customers.regions.edit')}}</a>
                                                                     <a class="btn btn-sm btn-danger" style="cursor: pointer;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="delete_alert({{ $item->id }});" ><i class="fas fa-trash-alt"></i> {{__('app.customers.regions.delete')}}</a>
                                                                 @endif
@@ -207,7 +207,7 @@
                                                             <div class="ratting-item-div">
                                                                 <div class="clearfix border-bottom mt-1 mb-1"></div>
                                                                 <div class="ratting-item d-flex align-items-center justify-content-center p-0 m-0 pb-2">
-                                                                    @if(auth()->user()->type=="customer")
+                                                                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                                                                         <div class="text-center mr-1">
                                                                             <a class="btn  btn-info"  href="{{ route('customerRegions.edit',[$item->id]) }}"> <i class="fas fa-edit"></i> {{__('app.customers.regions.edit')}}</a>
                                                                         </div>

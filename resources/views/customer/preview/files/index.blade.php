@@ -89,7 +89,7 @@
                                                                     <a class="btn btn-sm btn-primary"
                                                                        href="{{ route('branchmodelpreview.files.download',[$item->id]) }}">{{__('app.customers.branches.download')}}</a>
                                                                 @endif
-                                                                @if(auth()->user()->type=="customer")
+                                                                @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                                                                     <a class="btn btn-sm btn-danger"
                                                                        data-toggle="tooltip" data-placement="top"
                                                                        title="" data-original-title="Delete"
@@ -159,7 +159,7 @@
                                                                         <a class="btn btn-primary mx-1"
                                                                            href="{{ route('branchmodelpreview.files.download',[$item->id]) }}">{{__('app.customers.branches.download')}}</a>
                                                                     @endif
-                                                                    @if(auth()->user()->type=="customer")
+                                                                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                                                                         <a class="btn btn-danger" data-toggle="tooltip"
                                                                            data-placement="top" title="Delete"
                                                                            data-original-title="Delete"

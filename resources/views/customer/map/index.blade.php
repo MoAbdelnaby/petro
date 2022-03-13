@@ -23,7 +23,7 @@
 
             <div class="row col-12 p-0 m-0 text-right d-block mb-2">
                 {{--                @can('create-CustomerUsers')--}}
-                {{--                    @if(auth()->user()->type=="customer")--}}
+                {{--                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")--}}
                 {{--                    <a class="btn btn-primary" href="{{route('customerUsers.create')}}" >--}}
                 {{--                        <i class="fas fa-plus"></i> &nbsp;{{__('app.new')}}--}}
                 {{--                    </a>--}}

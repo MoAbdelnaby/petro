@@ -62,7 +62,7 @@
 
                                     </div>
                                     @can('create-branchmodels')
-                                        @if(auth()->user()->type=="customer")
+                                        @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                                     <div class="col-sm-12 col-md-6">
                                         <div class="user-list-files d-flex float-right">
                                             <a class="iq-bg-primary" href="{{route('branchmodels.create')}}" >
@@ -93,7 +93,7 @@
                                             <td>{{$item->created_at}}</td>
                                             <td>
                                                 <div class="flex align-items-center list-user-action">
-                                                    @if(auth()->user()->type=="customer")
+                                                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
                                                     <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Show Model"   href="{{ route('branchmodels.show',[$item->id]) }}"><i class="fa fa-eye"></i></a>
                                                     @can('edit-branchmodels')
                                                     <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="{{ route('branchmodels.edit',[$item->id]) }}"><i class="ri-pencil-line"></i></a>

@@ -84,7 +84,7 @@ class PlatesController extends Controller
         if ($results->isNotEmpty()) {
             foreach ($results as $result) {
                 $final_branches[] = (object)[
-                    'name' => $result->branch->name,
+                    'name' => $result->branch ? $result->branch->name : '',
                     'user_model_branch_id' => $result->id
                 ];
             }
