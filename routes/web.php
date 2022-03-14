@@ -23,6 +23,8 @@ Route::get('dark/{code}', 'HomeController@dark')->name('dark');
 Route::post('user_settings/{col}', 'UserSettingsController@update')->name('user_settings');
 Auth::routes();
 
+Route::post('user/password/reset','Auth\UserController@resetPassword')->name('user_reset_password');
+
 Route::group(['middleware' => ['auth', 'speed']], function () {
     Route::group(['middleware' => 'subCustomerCheck'], function () {
         Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');

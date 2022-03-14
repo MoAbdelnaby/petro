@@ -204,6 +204,21 @@ class UserController extends Controller
 
     }
 
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|exists:users,email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+        if ($validator->errors()->count()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+        User::where('email',$request->email)->update(['password' => bcrypt($request->password)]);
+
+        return redirect()->route('login')->with('success', __('app.change_success_message'));
+
+    }
+
     public function updateprofile(Request $request)
     {
 

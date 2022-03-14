@@ -4,6 +4,15 @@
 @endsection
 @section('content')
     <div class="card">
+        @include('layouts.dashboard.partials._alert')
+
+        <div class="text-center" style="width:400px; margin:0 auto;">
+            @if (session()->has('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+        </div>
 
         <h5 class="card-login-header info-color  pt-4">
             <strong>{{__('app.auth.login')}}</strong>
