@@ -581,8 +581,13 @@ class BranchesController extends Controller
         $filter = ['show_by' => 'branch', 'branch_type' => 'branch', 'branch_data' => $current_branch->id];
         $invoice_chart = ReportService::handle('invoice', $filter);
         $duration_ratio = ReportService::handle('stayingAverage', $filter);
-        $invoice_chart = $invoice_chart['charts']['bar'];
-        $duration_ratio = round(array_sum(\Arr::pluck($duration_ratio['charts']['bar'],'value'))/3);
+
+        $invoice_chart = !empty($invoice_chart['charts']) ? $invoice_chart['charts']['bar'] : [];
+        if (empty($invoice_chart['charts'])) {
+            $duration_ratio = 0;
+        } else {
+            $duration_ratio = round(array_sum(\Arr::pluck($duration_ratio['charts']['bar'], 'value')) / 3);
+        }
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
     }
