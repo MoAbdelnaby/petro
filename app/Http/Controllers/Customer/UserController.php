@@ -203,17 +203,20 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     {
-        $user = User::where('id', $request->id)->first();
-        if ($user && $user->id != parentID() && $user->id != primaryID()) {
-            activity()
-                ->causedBy(auth()->user())
-                ->inLog('user')
-                ->performedOn($user)
-                ->withProperties(['deleted_at' => Carbon::now()->format('Y-m-d H:i:s')])
-                ->log(auth()->user()->name . ' Deleted - ' . $user->name ?? $user->id);
 
-            $user->delete();
-            return response()->json(['message' => __('app.success_delete_message'), 'alertmsg' => __('app.success')], 200);
+        $user = User::where('id', $request->id)->first();
+        if((auth()->user()->type =="subadmin"  && $user->type != "subadmin") || auth()->user()->type=="customer") {
+            if ($user && $user->id != parentID() && $user->id != primaryID()) {
+                activity()
+                    ->causedBy(auth()->user())
+                    ->inLog('user')
+                    ->performedOn($user)
+                    ->withProperties(['deleted_at' => Carbon::now()->format('Y-m-d H:i:s')])
+                    ->log(auth()->user()->name . ' Deleted - ' . $user->name ?? $user->id);
+
+                $user->delete();
+                return response()->json(['message' => __('app.success_delete_message'), 'alertmsg' => __('app.success')], 200);
+            }
         }
         return response()->json(['message' => __('app.cannotdelete'), 'alertmsg' => __('app.fail')], 500);
     }

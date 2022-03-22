@@ -20,6 +20,10 @@ class UsersRepo extends AbstractRepo implements UsersRepoInterface
 
     public function getRelative($user_id)
     {
-        return $this->model::with('branches')->where('parent_id', $user_id)->where('type','subcustomer')->orderBy('id', 'DESC')->paginate(10);
+        return $this->model::with('branches')
+            ->where('parent_id', $user_id)
+            ->whereIn('type',['subcustomer','subadmin'])
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
     }
 }
