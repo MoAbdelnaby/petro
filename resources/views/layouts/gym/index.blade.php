@@ -58,13 +58,17 @@
                 <div class="modal-header border-bottom-0"></div>
                 <div class="modal-body">
                     <div class="position-relative d-block w-100 text-center">
-                        <img src="" id="image_to_show" alt="">
+                        <div class="position-relative d-flex" id="images-cont">
+{{--                            <img src="" id="car_image" alt="car" style="display: none">--}}
+                            <img src="" id="image_to_show" alt="">
+                            <button type="button" class="close" id="basicExampleClose" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
 {{--                        <span id="indexImage">1</span>--}}
                         <span class="next-arrow"><i class="fas fa-chevron-right"></i></span>
                         <span class="prev-arrow"><i class="fas fa-chevron-left"></i></span>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+
                     </div>
                 </div>
             </div>

@@ -35,6 +35,18 @@ class Carprofile extends Model
         }
     }
 
+    function getPathAreaScreenshotAttribute()
+    {
+        $path = "/places/". $this->branch_id."/".$this->created_at->format('Y')."/".$this->created_at->format('M') ."/". $this->created_at->format('d')."/";
+        if ($this->disk == 'azure') {
+            return config('app.azure_storage').config('app.azure_container')."/storage".$path.str_replace('/screenshot/','',$this->area_screenshot);
+
+        } else {
+            return 'http://104.211.179.36/'.'/storage'. $this->area_screenshot;
+//            return url('/storage'. $this->screenshot);
+        }
+    }
+
 
 
     public function getCharArAttribute()

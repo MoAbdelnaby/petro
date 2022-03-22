@@ -428,6 +428,7 @@
                                                         <tbody>
                                                         @foreach($data as $item)
                                                             <tr style="cursor: pointer; position: relative"
+                                                                data-screen2="{{$item->path_area_screenshot}}"
                                                                 id="{{$item->path_screenshot}}" class="record"
                                                                 data-toggle="modal" data-target="#basicExampleModal">
                                                                 <td>{{$item->checkInDate}}</td>
