@@ -106,7 +106,7 @@
                             <div class="tables text-center">
                                 <div class="custom-table error-mg-table">
                                     <table id="paginationSimpleNumbers"
-                                           class="table mt-4 table-striped dataTable"
+                                           class="table mt-4 table-striped "
                                            width="100%">
                                         <thead>
                                         <tr>
@@ -161,14 +161,11 @@
                                     </table>
                                 </div>
 
-{{--                                <nav aria-label="Page navigation example">--}}
-{{--                                    <ul class="pagination pg-blue">--}}
-{{--                                        @if($data != [])--}}
-{{--                                            {!! $data->appends(request()->query())->links() !!}--}}
-
-{{--                                        @endif--}}
-{{--                                    </ul>--}}
-{{--                                </nav>--}}
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-end mb-0">
+                                        {{ $data->links() }}
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>

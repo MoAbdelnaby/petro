@@ -88,8 +88,11 @@
                                         </form>
                                     </div>
                                     <div class="content-search">
-                                        <div class="loading">
-                                            <img src="/assets/images/search-icon.gif" alt="">
+                                        <div class="loading position-relative">
+{{--                                            <img src="/assets/images/search-icon.gif" alt="">--}}
+                                            <div class="loading-spin">
+                                                <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -272,6 +275,7 @@
             var timer;
             $('input.search').on('input',function(){
                 timer && clearTimeout(timer);
+                // $('.content-search .loading').fadeIn();
                 timer = setTimeout(getSearchData, 500);
             });
 
@@ -281,14 +285,14 @@
                 bran=[];
                 $('.content-search .branch-search').remove();
                 var ll = $('input.search').val();
-                if(ll.length > 2){
+                if(ll.length > 1){
                     $('.content-search .loading').fadeIn();
 
                     $('#mapfilter').ajaxSubmit({
                         success: function (data) {
 
                             if(data.data.length > 0) {
-                                $('.content-search .loading').fadeOut();
+                                let loadingFadeOut = $('.content-search .loading').fadeOut().promise();
                                 for (var r = 0; r < data.data.length; r++) {
                                     var regname;
                                     var regid;
@@ -313,12 +317,16 @@
                                         }
                                     }
                                     var ele = "<div class='branch-search " + classes + " border-bottom'><h3 rel='" + (regid ? regid : '') + "'>" + (data.data[r].name ? data.data[r].name : data.data[r].plate_en + " | " + data.data[r].plate_ar) + "</h3></div>"
-                                    $('.content-search').append(ele).fadeIn();
+                                    loadingFadeOut.then(() => {
+                                        $('.content-search').append(ele).fadeIn();
+                                    })
                                 }
                             }else {
                                 var ele = "<div class='branch-search  border-bottom'><h3>"+noresualt+"</h3></div>";
-                                $('.loading').fadeOut();
-                                $('.content-search').append(ele).show();
+                                let loadingFadeOut = $('.loading').fadeOut().promise();
+                                loadingFadeOut.then(() => {
+                                    $('.content-search').append(ele).fadeIn();
+                                })
 
                             }
 

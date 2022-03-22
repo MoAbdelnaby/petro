@@ -562,6 +562,7 @@
                                                         @foreach($data as $item)
 
                                                             <tr style="cursor: pointer; position: relative"
+                                                                data-screen2="{{$item->path_area_screenshot}}"
                                                                 id="{{$item->path_screenshot}}" class="record"
                                                                 data-toggle="modal" data-target="#basicExampleModal">
                                                                 <td>{{$item->checkInDate}}</td>
@@ -785,17 +786,26 @@
                                                             @php
                                                                 $noImage=false;
                                                             @endphp
+
                                                             @foreach($data as $item)
+
                                                                 @if((int)$item->BayCode === (int)$key)
+
                                                                     @php
                                                                         $noImage=true;
                                                                     @endphp
                                                                     @if($item->screenshot != null)
                                                                         <div class="screenshot-img">
+
                                                                             <img src="{{$item->path_screenshot}}"
                                                                                  height="251" alt=""
                                                                                  data-toggle="modal"
                                                                                  data-target="#basicExampleModal">
+
+{{--                                                                            <img src="{{$item->path__area_screenshot}}"--}}
+{{--                                                                                 height="251" alt=""--}}
+{{--                                                                                 data-toggle="modal"--}}
+{{--                                                                                 data-target="#basicExampleModal">--}}
                                                                             <div class="img-overlay">
                                                                                 <span class="mr-1">{{$item->checkInDate}}</span>
                                                                             </div>
@@ -803,6 +813,7 @@
                                                                     @endif
                                                                 @endif
                                                             @endforeach
+
                                                             @if($noImage == false)
                                                                 <img src="/assets/images/no_image.svg" class="mt-5 no_image" alt=""/>
                                                             @endif

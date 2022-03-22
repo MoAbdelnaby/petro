@@ -36,14 +36,31 @@ $(document).ready(function () {
   $('#paginationSimpleNumbers tr').on('click',function (e) {
     // var screenshot = $(this).closest('div').attr('id');
     trid = $(this).attr('id');
+    let img2 = $(this).data('screen2');
+      console.log('img2',img2);
+
     console.log(trid);
+
    // trid = $('tr').attr('id');
     //var src = $(this).attr("src");
       $('#image_to_show').attr('src', trid);
+      if(img2){
+          console.log($('#images-cont'))
+           $('#car_image').remove();
+          $('#images-cont').prepend(`<img src="${img2}" id="car_image" alt="car" />`)
+          // let carImgElm = $('#car_image');
+          // carImgElm.attr('src', img2);
+          // carImgElm.css('display','inline-block');
+      }
+
   })
 
 
   });
+$('#basicExampleModal').on('hidden.bs.modal', function (e) {
+    $('#car_image').remove();
+    $('.next-arrow, .prev-arrow').hide();
+})
 
 
 

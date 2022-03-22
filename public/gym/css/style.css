@@ -2618,10 +2618,21 @@ g[aria-labelledby$="title"] {
     left: 60px;
 }
 #image_to_show {
-    width: 60% !important;
+    width: 60vw !important;
     display: inline-block;
     height: auto !important;
     /*animation: slideanimation ease-in-out .4s;*/
+}
+#images-cont{
+    width: fit-content;
+    margin: 0 auto;
+}
+#car_image{
+    width: 48vw !important;
+}
+#car_image + #image_to_show{
+    width: 48vw !important;
+    height: auto !important;
 }
 
 .over-flow-hidden {
@@ -2724,8 +2735,10 @@ g[aria-labelledby$="title"] {
     margin-left: 0px;
     margin-top: -50px;
     height: 50px;
-    top: auto;
-    right: auto;
+    /*top: auto;*/
+    /*right: auto;*/
+    top: 0;
+    right: 0;
     position: absolute;
 }
 
