@@ -3,6 +3,7 @@ return [
     'show_all' => 'Show All',
     'mailSetting'=>'Mail Setttings',
     'data' => 'Data',
+    'plate_modal_title'=>'Car Details',
     'mail_reminder'=>'Mail Reminder',
     'selectMailType'=>'select mail status',
     'mail_status_success'=>'mail status updated successfully',

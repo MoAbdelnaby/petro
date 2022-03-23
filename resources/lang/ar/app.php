@@ -3,6 +3,7 @@
 return array(
     'branchSetting' => 'بريد حالة الافرع',
     'duration' => 'الفترة',
+    'plate_modal_title'=>'تفاصيل السيارة',
     'mail_reminder'=>'رسائل البريد',
     'selectMailType'=>'اختر الحالة',
     'mail_status_success'=>'تم تحديث حالة البريد',
@@ -293,7 +294,7 @@ return array(
     'subadmin' => 'ادمن فرعى',
     'subcustomer' => 'عميل فرعى',
 
-    
+
     'activities' => array(
         'activities' => 'أنشطة',
         'table' => array(
