@@ -191,6 +191,7 @@ function slickCarouselCardEvents(fn) {
 
 function reviewPdf(plate, itemid, e) {
     e.preventDefault();
+    e.stopPropagation();
     var plateNumber = plate;
     var carprofile_id = itemid;
     $.ajax({
