@@ -53,9 +53,9 @@ class PlatesController extends Controller
                 return redirect()->route('myBranches')->with('danger', __('app.gym.empty_branch'));
             }
 
-        } elseif ($user->type == "customer") {
+        } elseif ($user->type == "customer" || $user->type == "subadmin") {
             $branch = Branch::findOrFail($usermodelbranch->branch_id);
-            if ($branch->user_id != $user->id) {
+            if ($branch->user_id != $user->id && $user->type != "subadmin") {
                 return redirect()->route('customerPackages.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
             }
         }
@@ -165,9 +165,9 @@ class PlatesController extends Controller
                 return redirect()->route('myBranches')->with('danger', __('app.gym.empty_branch'));
             }
 
-        } elseif ($user->type == "customer") {
+        } elseif ($user->type == "customer" || $user->type == "subadmin") {
             $item = Branch::findOrFail($usermodelbranch->branch_id);
-            if ($item->user_id != $user->id) {
+            if ($item->user_id != $user->id && $user->type != "subadmin") {
                 return redirect()->route('customerPackages.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
             }
         }

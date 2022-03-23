@@ -190,8 +190,7 @@
                                                                         class="far fa-sitemap"></i> {{$brn->name}}</span>
                                                             @endforeach
                                                         @else
-                                                            <span class="nav-item li-btn-sm btn-info"><i
-                                                                    class="far fa-sitemap"></i> {{ __('Can View All Branches') }}</span>
+                                                            <span class="nav-item li-btn-sm "> {{ __('----') }}</span>
                                                         @endif
                                                     </td>
                                                     <td style="width: max-content;display: inline-block">
@@ -282,8 +281,7 @@
                                                                                 </li>
                                                                             @endforeach
                                                                         @else
-                                                                            <span class="nav-item li-btn-sm btn-info"><i
-                                                                                    class="far fa-sitemap"></i> {{ __('Can View All Branches') }}</span>
+                                                                            <span class="nav-item li-btn-sm "> {{ __('----') }}</span>
                                                                         @endif
                                                                     </div>
                                                                 </ul>

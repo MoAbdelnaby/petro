@@ -5,24 +5,23 @@ namespace App\Console\Commands;
 use App\Models\Carprofile;
 use App\Services\AreaDurationDaily;
 use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
-class AreaDurationDailyCommand extends Command
+class AreaDurationDailyFromStartCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'area:duration-daily';
+    protected $signature = 'area:duration-daily-first';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Calcluate area duration (work and minute) per minute daily';
+    protected $description = 'Calcluate area duration (work and minute) per minute from start';
 
     /**
      * Create a new command instance.
@@ -45,7 +44,20 @@ class AreaDurationDailyCommand extends Command
             $startTime = now();
             $this->comment('Processing');
 
-             (new AreaDurationDaily())->calculate(Carbon::now()->subDays(1)->toDateString());
+
+                $start = Carprofile::first();
+                if ($start) {
+//                    $start = '2022-03-21 00:00:00';
+                    $start = $start->checkInDate;
+                    $begin = new \DateTime($start);
+                    $end = new \DateTime();
+
+                    $areaDurationService = new AreaDurationDaily();
+
+                    for ($i = $begin; $i <= $end; $i->modify('+1 day')) {
+                        $areaDurationService->calculate($i->format("Y-m-d"));
+                    }
+                }
 
             $this->info('Successfully update duration time in each area');
             $time = $startTime->floatDiffInSeconds(now());

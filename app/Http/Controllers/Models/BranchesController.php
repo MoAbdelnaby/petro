@@ -46,6 +46,7 @@ class BranchesController extends Controller
 
     public function index($branch_id = null)
     {
+
         $activepackage = UserPackages::where('user_id', parentID())->where('active', '1')->first();
 
         if ($branch_id) {
@@ -106,6 +107,7 @@ class BranchesController extends Controller
 
             $activebranches = $query->get();
             if ($count < 1) {
+
                 $user = Auth::user();
                 if ($user->type == "subcustomer") {
                     return redirect()->route('myBranches')->with('danger', __('app.gym.empty_branch'));
@@ -113,6 +115,7 @@ class BranchesController extends Controller
                     return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
                 }
             } else {
+
                 $branch_id = $activebranches[0]->b_id;
 
                 $query = DB::table('user_model_branches')
@@ -136,6 +139,7 @@ class BranchesController extends Controller
                 $items = $query->get();
 
                 if ($count < 1) {
+
                     $user = Auth::user();
                     if ($user->type == "subcustomer") {
                         return redirect()->route('myBranches')->with('danger', __('app.gym.empty_branch'));
@@ -143,6 +147,7 @@ class BranchesController extends Controller
                         return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
                     }
                 } else {
+
                     if ($items[0]->lt_id == 8) {
                         return redirect()->route('branchmodelpreview.places', [$branch_id, $items[0]->id]);
                     } else if ($items[0]->lt_id == 9) {
@@ -175,8 +180,9 @@ class BranchesController extends Controller
                 ];
             }
 
-        } elseif ($user->type == "customer") {
-            if ($current_branch->user_id != $user->id) {
+        } elseif ($user->type == "customer" || $user->type == "subadmin") {
+
+            if ($current_branch->user_id != $user->id && $user->type != "subadmin" ) {
                 return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
             }
 
@@ -492,9 +498,10 @@ class BranchesController extends Controller
             }
 
 
-        } elseif ($user->type == "customer") {
+        } elseif ($user->type == "customer" || $user->type == "subadmin") {
 
-            if ($current_branch->user_id != $user->id) {
+
+            if ($current_branch->user_id != $user->id && $user->type != "subadmin" ) {
                 return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
             }
 

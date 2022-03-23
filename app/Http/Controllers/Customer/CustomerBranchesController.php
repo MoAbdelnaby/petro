@@ -49,7 +49,7 @@ class CustomerBranchesController extends Controller
             if (!in_array($id, $branches)) {
                 return redirect()->back()->with('danger', __('app.gym.empty_branch'));
             }
-        } elseif ($user->type == "customer") {
+        } elseif ($user->type == "customer" || $user->type == "subadmin") {
 
             $item = $this->repo->findOrFail($id);
 

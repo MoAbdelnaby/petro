@@ -147,9 +147,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-
         $user = User::with('roles')->where('id', $id)->first();
-        return view('customer.users.edit', compact('id', 'user'));
+        if((auth()->user()->type =="subadmin"  && $user->type != "subadmin") || auth()->user()->type=="customer") {
+
+            return view('customer.users.edit', compact('id', 'user'));
+        }
+        return redirect()->back()->with('danger', 'Can not edit this user');
 
     }
 
@@ -175,24 +178,28 @@ class UserController extends Controller
         }
 
         $user = User::where('id', $id)->first();
-        $data  = $validator->validated();
-        if ($request->has('speedtest') && $request->speedtest == 'on') {
-            $data['speedtest'] =  1;
-        }else{
-            $data['speedtest'] =  0;
-        }
+        if((auth()->user()->type =="subadmin"  && $user->type != "subadmin") || auth()->user()->type=="customer") {
 
-        if($request->has('password')){
-            if(is_null($request->password)){
-                $data = Arr::except($data,['password']);
+            $data = $validator->validated();
+            if ($request->has('speedtest') && $request->speedtest == 'on') {
+                $data['speedtest'] = 1;
+            } else {
+                $data['speedtest'] = 0;
             }
-        }
 
-        if ($user) {
-            $user->update($data);
-        }
+            if ($request->has('password')) {
+                if (is_null($request->password)) {
+                    $data = Arr::except($data, ['password']);
+                }
+            }
 
+            if ($user) {
+                $user->update($data);
+            }
         return redirect('/customer/customerUsers')->with('success', __('app.users.success_update_message'));
+        }
+        abort(403);
+
     }
 
     /**

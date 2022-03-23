@@ -16,6 +16,7 @@
             width: 100% !important;
         }
 
+
         .select2-selection.select2-selection--multiple {
             min-height: 40px !important;
         }
@@ -35,9 +36,10 @@
             width: 230px;
         }
 
-        div.dataTables_wrapper div.dataTables_paginate,div.dataTables_wrapper div.dataTables_info{
+        div.dataTables_wrapper div.dataTables_paginate, div.dataTables_wrapper div.dataTables_info {
             display: none !important;
         }
+
         ul.pagination {
             /* padding-left: 50%; */
             margin-bottom: 15px;
@@ -71,7 +73,8 @@
                             <div class="plates-car-cont">
                                 <div class="c-flex related-heading mb-4">
                                     <h2 class="border-bottom-0 mx-2 mt-0 mb-2" style="text-transform: capitalize;">
-                                        <img src="{{resolveDark()}}/img/icon_menu/envelope.svg"  width="24" class="tab_icon-img" alt="">
+                                        <img src="{{resolveDark()}}/img/icon_menu/envelope.svg" width="24"
+                                             class="tab_icon-img" alt="">
                                         {{ __('app.branch_message') }}
 
                                     </h2>
@@ -81,19 +84,24 @@
                                             <i class="fas fa-file-archive-o"></i> {{ __('app.prepared_files') }}
                                         </a>
                                         <div class="filter-dropdown position-relative">
-                                            <a class="btn-filter btn btn-primary waves-effect waves-light" data-toggle="dropdown" href="#">
+                                            <a class="btn-filter btn btn-primary waves-effect waves-light"
+                                               data-toggle="dropdown" href="#">
                                                 <i class="fas fa-sort-alt"></i> Filter
                                             </a>
                                             <div class="filter-content ">
-                                                <form method="get" id="form" class="filter-form" action="{{route('branch.message_log')}}">
+                                                <form method="get" id="form" class="filter-form"
+                                                      action="{{route('branch.message_log')}}">
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="form-group">
-                                                                <label class="w-100">@lang('app.Select_branch') * </label>
+                                                                <label class="w-100">@lang('app.Select_branch')
+                                                                    * </label>
                                                                 <div class="select-cont position-relative">
-                                                                    <select class="form-control" id="select_branch" name="branch_id">
-                                                                        <option value="" selected>{{ __('app.Select_branch') }}</option>
+                                                                    <select class="form-control" id="select_branch"
+                                                                            name="branch_id">
+                                                                        <option value=""
+                                                                                selected>{{ __('app.Select_branch') }}</option>
                                                                         @foreach($branches as $branch)
                                                                             <option value="{{$branch->id}}"
                                                                             @if(request('branch_id') != null) {{request('branch_id') == $branch->id ? 'selected' : ''}} @endif>{{$branch->name}}</option>
@@ -108,7 +116,8 @@
                                                         <div class="col-12 mb-2">
                                                             <label>{{__('app.type')}}</label>
                                                             <div class="select-cont">
-                                                                <select class="form-control nice-select"  name='message_type'>
+                                                                <select class="form-control nice-select"
+                                                                        name='message_type'>
                                                                     <option value="">@lang('app.all')</option>
                                                                     <option
                                                                         value="welcome" {{ request('message_type') == 'welcome' ? 'selected' : '' }}>@lang('app.Welcome')</option>
@@ -146,7 +155,8 @@
                                                                 class="btn btn-primary submit_form waves-effect waves-light">
                                                             <i class="fas fa-file-pdf-o"></i> {{ __('app.ExportPdf') }}
                                                         </button>
-                                                        <button type="submit" id="search" data-type="search" class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
+                                                        <button type="submit" id="search" data-type="search"
+                                                                class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
                                                             <i class="fas fa-search"></i> {{ __('app.Search') }}
                                                         </button>
                                                     </div>
@@ -200,76 +210,77 @@
                                     </div>
 
                                 </div>
-{{--                                <div class=" my-4">--}}
-{{--                                    <form method="get" id="form" action="{{route('branch.message_log')}}">--}}
-{{--                                        @csrf--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-3">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label class="w-100">@lang('app.Select_branch') * </label>--}}
-{{--                                                    <select class="form-control" id="select_branch" name="branch_id">--}}
-{{--                                                        <option value="" selected>{{ __('app.Select_branch') }}</option>--}}
-{{--                                                        @foreach($branches as $branch)--}}
-{{--                                                            <option value="{{$branch->id}}"--}}
-{{--                                                            @if(request('branch_id') != null) {{request('branch_id') == $branch->id ? 'selected' : ''}} @endif>{{$branch->name}}</option>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    </select>--}}
-{{--                                                    <div class="invalid-feedback name-feedback">--}}
-{{--                                                        <strong>{{$errors->has('branch_id')?$errors->first('branch_id'):''}}</strong>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-3">--}}
-{{--                                                <label>{{__('app.start')}}</label>--}}
-{{--                                                <input type="date" name="start_date" class="form-control"--}}
-{{--                                                       value="{{old('start_date')}}"/>--}}
-{{--                                                <div class="invalid-feedback name-feedback">--}}
-{{--                                                    <strong>{{$errors->has('start_date')?$errors->first('start_date'):''}}</strong>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-3">--}}
-{{--                                                <label>{{__('app.end')}}</label>--}}
-{{--                                                <input type="date" name="end_date" class="form-control"--}}
-{{--                                                       value="{{old('end_date')}}"/>--}}
-{{--                                                <div class="invalid-feedback name-feedback">--}}
-{{--                                                    <strong>{{$errors->has('end_date')?$errors->first('end_date'):''}}</strong>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-3">--}}
-{{--                                                <label>{{__('app.type')}}</label>--}}
-{{--                                                <select class="form-control"  name='message_type'>--}}
-{{--                                                    <option value="">@lang('app.all')</option>--}}
-{{--                                                    <option--}}
-{{--                                                        value="welcome" {{ request('message_type') == 'welcome' ? 'selected' : '' }}>@lang('app.Welcome')</option>--}}
-{{--                                                    <option--}}
-{{--                                                        value="invoice" {{ request('message_type') == 'invoice' ? 'selected' : '' }}>@lang('app.Invoice')</option>--}}
-{{--                                                </select>--}}
-{{--                                                <div class="invalid-feedback name-feedback">--}}
-{{--                                                    <strong>{{$errors->has('message_type')?$errors->first('message_type'):''}}</strong>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-4" style="padding-top: 34px">--}}
-{{--                                                <label for=""></label>--}}
-{{--                                                <button type="submit" id="export_excel" data-type="xls"--}}
-{{--                                                        class="btn btn-primary submit_form waves-effect waves-light">--}}
-{{--                                                    <i class="fas fa-file-excel-o"></i> {{ __('app.ExportExcel') }}--}}
-{{--                                                </button>--}}
-{{--                                                <button type="submit" id="export_excel" data-type="pdf"--}}
-{{--                                                        class="btn btn-primary submit_form waves-effect waves-light">--}}
-{{--                                                    <i class="fas fa-file-pdf-o"></i> {{ __('app.ExportPdf') }}--}}
-{{--                                                </button>--}}
-{{--                                                <button type="submit" id="search" data-type="search"--}}
-{{--                                                        class="btn btn-info submit_form waves-effect waves-light">--}}
-{{--                                                    <i class="fas fa-search"></i> {{ __('app.Search') }}--}}
-{{--                                                </button>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </form>--}}
-{{--                                </div>--}}
+                                {{--                                <div class=" my-4">--}}
+                                {{--                                    <form method="get" id="form" action="{{route('branch.message_log')}}">--}}
+                                {{--                                        @csrf--}}
+                                {{--                                        <div class="row">--}}
+                                {{--                                            <div class="col-3">--}}
+                                {{--                                                <div class="form-group">--}}
+                                {{--                                                    <label class="w-100">@lang('app.Select_branch') * </label>--}}
+                                {{--                                                    <select class="form-control" id="select_branch" name="branch_id">--}}
+                                {{--                                                        <option value="" selected>{{ __('app.Select_branch') }}</option>--}}
+                                {{--                                                        @foreach($branches as $branch)--}}
+                                {{--                                                            <option value="{{$branch->id}}"--}}
+                                {{--                                                            @if(request('branch_id') != null) {{request('branch_id') == $branch->id ? 'selected' : ''}} @endif>{{$branch->name}}</option>--}}
+                                {{--                                                        @endforeach--}}
+                                {{--                                                    </select>--}}
+                                {{--                                                    <div class="invalid-feedback name-feedback">--}}
+                                {{--                                                        <strong>{{$errors->has('branch_id')?$errors->first('branch_id'):''}}</strong>--}}
+                                {{--                                                    </div>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="col-3">--}}
+                                {{--                                                <label>{{__('app.start')}}</label>--}}
+                                {{--                                                <input type="date" name="start_date" class="form-control"--}}
+                                {{--                                                       value="{{old('start_date')}}"/>--}}
+                                {{--                                                <div class="invalid-feedback name-feedback">--}}
+                                {{--                                                    <strong>{{$errors->has('start_date')?$errors->first('start_date'):''}}</strong>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="col-3">--}}
+                                {{--                                                <label>{{__('app.end')}}</label>--}}
+                                {{--                                                <input type="date" name="end_date" class="form-control"--}}
+                                {{--                                                       value="{{old('end_date')}}"/>--}}
+                                {{--                                                <div class="invalid-feedback name-feedback">--}}
+                                {{--                                                    <strong>{{$errors->has('end_date')?$errors->first('end_date'):''}}</strong>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="col-3">--}}
+                                {{--                                                <label>{{__('app.type')}}</label>--}}
+                                {{--                                                <select class="form-control"  name='message_type'>--}}
+                                {{--                                                    <option value="">@lang('app.all')</option>--}}
+                                {{--                                                    <option--}}
+                                {{--                                                        value="welcome" {{ request('message_type') == 'welcome' ? 'selected' : '' }}>@lang('app.Welcome')</option>--}}
+                                {{--                                                    <option--}}
+                                {{--                                                        value="invoice" {{ request('message_type') == 'invoice' ? 'selected' : '' }}>@lang('app.Invoice')</option>--}}
+                                {{--                                                </select>--}}
+                                {{--                                                <div class="invalid-feedback name-feedback">--}}
+                                {{--                                                    <strong>{{$errors->has('message_type')?$errors->first('message_type'):''}}</strong>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="col-4" style="padding-top: 34px">--}}
+                                {{--                                                <label for=""></label>--}}
+                                {{--                                                <button type="submit" id="export_excel" data-type="xls"--}}
+                                {{--                                                        class="btn btn-primary submit_form waves-effect waves-light">--}}
+                                {{--                                                    <i class="fas fa-file-excel-o"></i> {{ __('app.ExportExcel') }}--}}
+                                {{--                                                </button>--}}
+                                {{--                                                <button type="submit" id="export_excel" data-type="pdf"--}}
+                                {{--                                                        class="btn btn-primary submit_form waves-effect waves-light">--}}
+                                {{--                                                    <i class="fas fa-file-pdf-o"></i> {{ __('app.ExportPdf') }}--}}
+                                {{--                                                </button>--}}
+                                {{--                                                <button type="submit" id="search" data-type="search"--}}
+                                {{--                                                        class="btn btn-info submit_form waves-effect waves-light">--}}
+                                {{--                                                    <i class="fas fa-search"></i> {{ __('app.Search') }}--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </form>--}}
+                                {{--                                </div>--}}
 
                             </div>
                             <div class="tables text-center">
                                 <div class="custom-table error-mg-table">
+
                                     <table id="paginationSimpleNumbers" class="table dataTable mt-4 table-striped"
                                            width="100%">
                                         <thead>
@@ -333,6 +344,10 @@
 @push("js")
     <script>
         $(document).ready(function () {
+
+            var totalcount = "{{ __('app.Count') }}" + " " +"[ {{$totalcount}} ]";
+
+            $('#paginationSimpleNumbers_wrapper').delegate().prepend('<div class="dataTables_length btn btn-info waves-effect waves-light">'+totalcount+ '</div>');
 
             /***** Tables Show ******/
             $('.tables-types-d .dropdown-item').on("click", function (e) {
@@ -432,15 +447,15 @@
         $('.btn-filter').on('click', function () {
             $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');
         })
-        $(".filter-form").on("submit", function(e){
+        $(".filter-form").on("submit", function (e) {
             let select = $('#select_branch');
-            if(!select.val()){
+            if (!select.val()) {
                 e.preventDefault();
                 select.closest('.form-group').find('.invalid-feedback').show()
                 select.closest('.form-group').find('.invalid-feedback').html('<strong>Please select branch</strog>')
             }
         })
-        $('#select_branch').on('change', function (){
+        $('#select_branch').on('change', function () {
             $(this).closest('.form-group').find(".invalid-feedback").hide();
         });
 

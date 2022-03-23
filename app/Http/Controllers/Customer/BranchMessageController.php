@@ -40,16 +40,18 @@ class BranchMessageController extends Controller
         }
 
         if ($request->end_date) {
-            $query->whereDate('created_at', '>=', $request->end_date);
+            $query->whereDate('created_at', '<=', $request->end_date);
         }
 
         if ($request->message_type) {
             $query->where('type',  $request->message_type);
         }
 
+        $totalcount = $query->count();
+
         $data = $query->paginate(10);
 
-        return view("customer.branch_messages.index", compact('branches', 'data', 'userSettings'));
+        return view("customer.branch_messages.index", compact('branches','totalcount', 'data', 'userSettings'));
     }
 
     public function export($request)

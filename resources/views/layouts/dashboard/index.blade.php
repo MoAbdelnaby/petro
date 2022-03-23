@@ -145,7 +145,8 @@
                     "previous": PrevP,
                     "Next": NextP,
                 }
-            }
+            },
+            "bLengthChange" : false,
         });
 
         // toggle icon menu
