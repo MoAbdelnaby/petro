@@ -77,7 +77,8 @@
                                     </div>
                                     <div class="mb-2 filter-pills-cont">
                                         <div class="filter-dropdown">
-                                            <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm" href="{{route('reports.index')}}">
+                                            <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm"
+                                               href="{{route('reports.index')}}">
                                                 <i class="fas fa-bookmark"></i> &nbsp;{{ __('app.Default_report') }}
                                             </a>
                                             <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm static_download">
@@ -91,12 +92,13 @@
                                                 <form action="" method="get" class="filter-form">
                                                     @csrf
                                                     <div class="row">
-                                                        <div id="branch_container" class="col-md-12 ">
+                                                        <div id="branch_container" class="col-md-12">
                                                             <div class="row">
-                                                                <div class=" col-md-8 p-0" id="branch_selection">
+                                                                <div class=" col-md-10" id="branch_selection">
                                                                     <lebel>{{ __('app.Select_branches') }}:</lebel>
 
-                                                                    <select class="form-control select_2 required" multiple  id="select_branch" name="lists[]">
+                                                                    <select class="form-control select_2 required"
+                                                                            multiple id="select_branch" name="lists[]">
                                                                         @foreach($branches as $branch)
                                                                             <option value="{{$branch->id}}"
                                                                                     @if(in_array($branch->id,request('lists')??[])) selected @endif>{{$branch->name}}</option>
@@ -106,14 +108,18 @@
                                                                         Please select branch.
                                                                     </div>
                                                                 </div>
-                                                                <div class=" col-md-4 " >
-                                                                    <label for="selectallbranches" class="custom-checkbox pl-1 pl-4 mt-4">
-                                                                        <input class="trashselect" type="checkbox" name="trashs[]" id="selectallbranches" value="1">
-                                                                        <span class="checkmark"></span> Select All
-                                                                        
-                                                                    </label> 
+                                                                <div class="col-md-2" style="margin-left: -25px; padding-top: 5px">
+                                                                    <label for="selectallbranches"
+                                                                           class="custom-checkbox pl-4 mt-4">
+                                                                        <input class="trashselect" type="checkbox"
+                                                                               name="trashs[]" id="selectallbranches"
+                                                                               value="1">
+                                                                        <span class="checkmark"></span>
+                                                                        <strong>All</strong>
+
+                                                                    </label>
                                                                     {{-- <input type="checkbox" id="selectallbranches" > Select All --}}
-{{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
+                                                                    {{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -161,8 +167,12 @@
                                     <h2>{{ __("app.Branches")}} : </h2>
                                     @if($list_report)
                                         <ul>
-                                            @foreach($list_report as $elemnt)
+                                            @foreach($list_report as $index => $elemnt)
                                                 <li>{{$elemnt}}</li>
+                                                @if($index == 4)
+                                                    <li>.....</li>
+                                                    @break
+                                                @endif
                                             @endforeach
                                         </ul>
                                     @else
@@ -506,20 +516,18 @@
     <script>
         $(document).ready(function () {
 
-            $("#selectallbranches").click(function(){
-                if($("#selectallbranches").is(':checked') ){
-                    console.log('checked');
-                    $("#select_branch > option").prop("selected","selected");
+            $("#selectallbranches").click(function () {
+                if ($("#selectallbranches").is(':checked')) {
+                    $("#select_branch > option").prop("selected", "selected");
                     $("#select_branch").trigger("change");
-                }else{
-                    console.log('removed');
+                } else {
                     $("#select_branch").val(null);
                     $("#select_branch").trigger("change");
                 }
             });
 
 
-            $("#checkValButton").click(function(){
+            $("#checkValButton").click(function () {
                 alert($("#select_branch").val());
             });
 

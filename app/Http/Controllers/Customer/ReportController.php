@@ -170,7 +170,7 @@ class ReportController extends Controller
      */
     public function downloadStatistics(Request $request)
     {
-        $data = ReportService::downloadStatistics($request->start ?? '2022-01-01', $request->end ?? null, $request->lists ?? null);
+        $data = ReportService::downloadStatistics($request->start ?? '2022-01-01', $request->end, $request->lists);
         $type = "statistics";
         $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : '2022-01-01';
         $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();
