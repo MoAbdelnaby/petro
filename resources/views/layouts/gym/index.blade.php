@@ -50,6 +50,119 @@
     </div>
 
 
+{{--    row modals--}}
+    <div class="modal fade row-modal" id="basicExampleModal0" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h4 class="modal-title">{{ __('app.plate_modal_title') }}</h4>
+                    <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class=" row">
+                            <div class=" col-12 col-md-6  " id="images-cont">
+                               <div class="active-image-cont position-relative">
+                                   <div class="slide">
+                                       <img src="" alt="">
+                                   </div>
+                                   <div class="slide">
+                                       <img src="" alt="">
+                                   </div>
+
+                                   <a class="next" ><i class="fas fa-chevron-right"></i></a>
+                                   <a class="previous" ><i class="fas fa-chevron-left"></i></a>
+                               </div>
+                                <div class="thumbnails">
+                                    <a class="thumb" data-thumb="1">
+                                        <img src="" alt="">
+                                    </a>
+                                    <a class="thumb" data-thumb="2">
+                                        <img src="" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 row-info">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="row-info__item checkin-date">
+                                            <div class="title">CheckIn Date</div>
+                                            <div class="info">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 checkout-date">
+                                        <div class="row-info__item">
+                                            <div class="title">CheckOut Date</div>
+                                            <div class="info">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="row-info__item period">
+                                            <div class="title">Period</div>
+                                            <div class="info">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="row-info__item area">
+                                            <div class="title">Area</div>
+                                            <div class="info">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="row-info__item ar-plate">
+                                            <div class="title">Arabic Plate</div>
+                                            <div class="info">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="row-info__item en-plate">
+                                            <div class="title">English Plate</div>
+                                            <div class="info">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row-info__item status">
+                                            <div class="title">
+                                                Status
+                                            </div>
+                                            <div class="info">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- Modal -->
     <div class="modal fade show-image-models" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">

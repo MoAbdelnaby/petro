@@ -564,18 +564,18 @@
                                                             <tr style="cursor: pointer; position: relative"
                                                                 data-screen2="{{$item->path_area_screenshot}}"
                                                                 id="{{$item->path_screenshot}}" class="record"
-                                                                data-toggle="modal" data-target="#basicExampleModal">
-                                                                <td>{{$item->checkInDate}}</td>
-                                                                <td>{{$item->checkOutDate}}</td>
-                                                                <td>{{str_replace('before','',\Carbon\Carbon::parse($item->checkInDate)->diffForHumans($item->checkOutDate))}}</td>
-                                                                <td class="open">{{ __('app.gym.Area').' '.$item->BayCode}}</td>
-                                                                <td class="open ">
+                                                                data-toggle="modal" data-target="#basicExampleModal0">
+                                                                <td class="checkin-date">{{$item->checkInDate}}</td>
+                                                                <td class="checkout-date">{{$item->checkOutDate}}</td>
+                                                                <td class="period">{{str_replace('before','',\Carbon\Carbon::parse($item->checkInDate)->diffForHumans($item->checkOutDate))}}</td>
+                                                                <td class="open area">{{ __('app.gym.Area').' '.$item->BayCode}}</td>
+                                                                <td class="open ar-plate">
                                                                     {{$item->plate_ar}}
                                                                 </td>
-                                                                <td class="open ">
+                                                                <td class="open en-plate">
                                                                     {{$item->plate_en}}
                                                                 </td>
-                                                                <td class="open " id="status{{$item->id}}"
+                                                                <td class="open status" id="status{{$item->id}}"
                                                                     style="position:relative;">
                                                                     @if($item->plate_status == 'error')
                                                                         <span
