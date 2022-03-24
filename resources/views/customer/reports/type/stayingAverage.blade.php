@@ -102,8 +102,12 @@
                                     <div class="col-12 branches-cont pb-4">
                                         <h3>{{ __("app.".\Str::plural($report['type'])) }} : </h3>
                                         <ul>
-                                            @foreach($list_report as $elemnt)
+                                            @foreach($list_report as $index => $elemnt)
                                                 <li>{{$elemnt}}</li>
+                                                @if($index == 4)
+                                                    <li>.....</li>
+                                                    @break
+                                                @endif
                                             @endforeach
                                         </ul>
                                     </div>

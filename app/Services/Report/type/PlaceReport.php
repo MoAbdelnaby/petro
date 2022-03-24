@@ -2,7 +2,15 @@
 
 namespace App\Services\Report\type;
 
+use App\Models\AreaDurationDay;
+use App\Models\AreaStatus;
+use App\Models\Branch;
+use App\Models\CarPLatesSetting;
+use App\Models\Carprofile;
+use App\Models\PlaceMaintenanceSetting;
+use App\Models\UserModelBranch;
 use App\Services\Report\BaseReport;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use JsonException;
 
@@ -157,5 +165,95 @@ class PlaceReport extends BaseReport
         $this->$func_name($list);
 
         return [$this->getReport($data["type"], $filter)['charts']['bar']];
+    }
+
+
+    /**
+     * @param $filter
+     * @param $lists
+     * @return array
+     */
+    public function handleDurationCustom($filter, $lists = null): array
+    {
+        $work = 0;
+        $empty = 0;
+        if (empty($lists)) {
+            $lists = Branch::primary()->active()->pluck('id')->toArray();
+        }
+
+        if (!is_array($lists)) {
+            $lists = str_contains($lists, ',') ? explode(',', (string)$lists) : $lists;
+        }
+
+        foreach (\Arr::wrap($lists) as $branch) {
+            $areas = AreaStatus::where('branch_id', $branch)->distinct()->pluck('area');
+            if ($areas->isEmpty()) continue;
+            $areas = $areas->sort()->toArray();
+
+            foreach ($areas as $area) {
+                $branch_work = 0;
+                $query = Carprofile::where('status', 'completed')
+                    ->where('branch_id', $branch)
+                    ->where('BayCode', $area);
+
+                //Handle date filter by checkInDate
+                $filter['column'] = 'checkInDate';
+                $this->handleDateFilter($query, $filter, true);
+
+                $query->chunk(500, function ($profiles) use (&$work, &$branch_work) {
+                    foreach ($profiles as $record) {
+                        $start = Carbon::parse($record->checkInDate);
+                        $end = Carbon::parse($record->checkOutDate);
+                        if ($end > $start) {
+                            $difference = $end->diffInMinutes($start);
+                            $branch_work += $difference;
+                            $work += $difference;
+                        }
+                    }
+                });
+
+                $start_time = Carbon::parse($filter['start']);
+                $end_time = Carbon::parse($filter['end']);
+
+                if ($end_time < $start_time) {
+                    $end_time = Carbon::now();
+                }
+
+                $branch_empty = $end_time->diffInMinutes($start_time);
+
+                if ($branch_empty > $branch_work) {
+                    $branch_empty -= $branch_work;
+                }
+                $empty += $branch_empty ?? 0;
+            }
+        }
+
+        return [$work, $empty];
+    }
+
+    /**
+     * @param $filter
+     * @param $type
+     * @param null $lists
+     * @return int|mixed
+     */
+    public function handleDurationDay($filter, $type, $lists = null)
+    {
+        $query = AreaDurationDay::query();
+
+        $filter['column'] = 'date';
+        $this->handleDateFilter($query, $filter);
+
+        if (!empty($lists)) {
+            if (!is_array($lists)) {
+                $lists = str_contains($lists, ',') ? explode(',', (string)$lists) : $lists;
+            }
+            $lists = \Arr::wrap($lists);
+
+            $query->whereIn('branch_id', $lists);
+
+        }
+
+        return $query->sum("{$type}_by_minute");
     }
 }
