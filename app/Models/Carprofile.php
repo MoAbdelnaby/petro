@@ -23,6 +23,9 @@ class Carprofile extends Model
     public function failMessage() {
         return $this->hasOne(FailedMessage::class);
     }
+    public function invoiceStatus() {
+        return $this->hasOne(MessageLog::class)->where('type','invoice');
+    }
 
     function getPathScreenshotAttribute()
     {

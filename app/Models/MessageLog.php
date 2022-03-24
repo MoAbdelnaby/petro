@@ -12,4 +12,6 @@ class MessageLog extends Model
     {
         return $this->hasOne(Branch::class, 'id', 'branch_id');
     }
+
+
 }

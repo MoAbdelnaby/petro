@@ -466,15 +466,38 @@
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    @if(!is_null($item->invoice))
-                                                                        <a id="download-{{$item->id}}" download
-                                                                           class="download_invoice"
-                                                                           onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"
-                                                                           data-toggle="popover" data-trigger="hover"
-                                                                           data-content="Preview Invoice">
-                                                                            <i class="fas fa-file-pdf text-success" style="font-size: 19px"></i>
+                                                                    @if (!is_null($item->invoiceStatus))
+                                                                        @if($item->invoiceStatus->status == 'sent')
+                                                                            <a id="download-{{$item->id}}" download
+                                                                               class="download_invoice"
+                                                                               onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"
+                                                                               data-toggle="popover" data-trigger="hover"
+                                                                               data-content="Preview Invoice">
+                                                                                <i class="fas fa-file-pdf text-success"
+                                                                                   style="font-size: 19px"></i>
+                                                                            </a>
+
+                                                                        @elseif( $item->invoiceStatus->status == 'failed')
+                                                                            <a data-toggle="popover" data-trigger="hover" data-content="{{$item->invoiceStatus->error_reason}}">
+                                                                                <i class="fas fa-file-prescription text-warning"
+                                                                                   style="font-size: 19px"></i>
+                                                                            </a>
+                                                                        @elseif($item->invoiceStatus->status == 'received')
+                                                                            <a data-toggle="popover" data-trigger="hover" data-content=" {{ __('Invoiced Received') }}">
+                                                                                <i class="fas fa-file-import text-info" style="font-size: 19px"></i>
+                                                                            </a>
+                                                                        @endif
+
+                                                                    @else
+                                                                        <a data-toggle="popover" data-trigger="hover" data-content="No invoice Sent">
+                                                                            <i class="fas fa-file-excel text-danger"
+                                                                               style="font-size: 19px"></i>
+
                                                                         </a>
+
                                                                     @endif
+
+
                                                                 </td>
 
                                                                 <td class="open action-col position-relative action_drop">

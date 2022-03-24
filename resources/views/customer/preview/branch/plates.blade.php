@@ -9,6 +9,7 @@
     @endif
 @endsection
 @push('css')
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
     <style>
         .loader {
             border: 4px solid #f3f3f3;
@@ -606,7 +607,8 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    @if(!is_null($item->invoice))
+                                                                    @if (!is_null($item->invoiceStatus))
+                                                                        @if($item->invoiceStatus->status == 'sent')
                                                                         <a id="download-{{$item->id}}" download
                                                                            class="download_invoice"
                                                                            onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"
@@ -615,7 +617,28 @@
                                                                             <i class="fas fa-file-pdf text-success"
                                                                                style="font-size: 19px"></i>
                                                                         </a>
+
+                                                                        @elseif( $item->invoiceStatus->status == 'failed')
+                                                                            <a data-toggle="popover" data-trigger="hover" data-content="{{$item->invoiceStatus->error_reason}}">
+                                                                                <i class="fas fa-file-prescription text-warning"
+                                                                                   style="font-size: 19px"></i>
+                                                                            </a>
+                                                                        @elseif($item->invoiceStatus->status == 'received')
+                                                                            <a data-toggle="popover" data-trigger="hover" data-content=" {{ __('Invoiced Received') }}">
+                                                                                <i class="fas fa-file-import text-info" style="font-size: 19px"></i>
+                                                                            </a>
+                                                                        @endif
+
+                                                                    @else
+                                                                        <a data-toggle="popover" data-trigger="hover" data-content="No invoice Sent">
+                                                                            <i class="fas fa-file-excel text-danger"
+                                                                               style="font-size: 19px"></i>
+
+                                                                        </a>
+
                                                                     @endif
+
+
                                                                 </td>
 
                                                                 <td class="open action-col position-relative action_drop">
@@ -672,6 +695,7 @@
                                                                 </td>
                                                             </tr>
                                                         @endforeach
+{{--                                                        @dd('fd')--}}
                                                         </tbody>
                                                     </table>
                                                 </div>
