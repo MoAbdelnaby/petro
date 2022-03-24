@@ -29,8 +29,7 @@ class BranchMessageController extends Controller
 
         $userSettings = UserSetting::where('user_id', auth()->id())->first();
 
-        $query = MessageLog::where('status', 'sent')
-            ->with('branch')
+        $query = MessageLog::with('branch')
             ->when(($request->branch_id != null), function ($q) {
                 return $q->where('branch_id', \request('branch_id'));
             })->latest();
@@ -45,6 +44,9 @@ class BranchMessageController extends Controller
 
         if ($request->message_type) {
             $query->where('type',  $request->message_type);
+        }
+        if ($request->status) {
+            $query->where('status',  $request->status);
         }
 
         $totalcount = $query->count();

@@ -105,6 +105,8 @@ return [
     'Times' => 'Times',
     'Home_Page' => 'Home Page',
     'Invoice_Sent' => 'Invoice Sent',
+    'sent' => 'Sent',
+    'failed' => 'Failed',
     'Credited_From_Accounts' => 'Credited From Accounts',
     'AVG_Employee_Costs' => 'AVG Employee Costs',
     'Average_payment_delay' => 'Average payment delay',

@@ -129,6 +129,23 @@
                                                                 <strong>{{$errors->has('message_type')?$errors->first('message_type'):''}}</strong>
                                                             </div>
                                                         </div>
+
+                                                        <div class="col-12 mb-2">
+                                                            <label>{{__('app.status')}}</label>
+                                                            <div class="select-cont">
+                                                                <select class="form-control nice-select"
+                                                                        name='status'>
+                                                                    <option value="">@lang('app.all')</option>
+                                                                    <option
+                                                                        value="sent" {{ request('status') == 'sent' ? 'selected' : '' }}>@lang('app.sent')</option>
+                                                                    <option
+                                                                        value="failed" {{ request('status') == 'failed' ? 'selected' : '' }}>@lang('app.failed')</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="invalid-feedback name-feedback">
+                                                                <strong>{{$errors->has('status')?$errors->first('status'):''}}</strong>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-12 mb-2">
                                                             <label>{{__('app.start')}}</label>
                                                             <input type="date" name="start_date" class="form-control"
@@ -287,6 +304,7 @@
                                         <tr>
                                             <th class="th-sm">#</th>
                                             <th class="th-sm">{{__('app.type')}}</th>
+                                            <th class="th-sm">{{__('app.status')}}</th>
                                             <th class="th-sm">{{__('app.branch')}}</th>
                                             {{--                                            <th class="th-sm">{{__('app.message')}}</th>--}}
                                             <th class="th-sm">{{__('app.gym.plate_no')}}</th>
@@ -301,6 +319,7 @@
                                                 <tr>
                                                     <td>{{++$index}}</td>
                                                     <td>{{$item->type}}</td>
+                                                    <td>{{$item->status}}</td>
                                                     <td>{{$item->branch ? $item->branch->name :''}}</td>
                                                     {{--                                                <td>{{$item->message}}</td>--}}
                                                     <td>{{$item->plateNumber}}</td>

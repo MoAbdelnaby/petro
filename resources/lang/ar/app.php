@@ -17,7 +17,8 @@ return array(
     'Upload' => 'تحميل',
     'downloadSpeed' => 'سرعة التنزيل',
     'uploadSpeed' => 'سرعة تحميل',
-
+    'sent' => 'مرسل',
+    'failed' => 'غير مرسل',
     'Show' => 'عرض',
     'No_Thing_TO_Show_Here' => 'لا يوجد شيء لعرضه هنا',
     'No_thing_to_paragraph' => 'الرجاء الانتقال إلى التكوين وتغيير شيء ما لعرضه في الصفحة الرئيسية',
