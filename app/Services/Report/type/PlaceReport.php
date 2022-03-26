@@ -5,10 +5,8 @@ namespace App\Services\Report\type;
 use App\Models\AreaDurationDay;
 use App\Models\AreaStatus;
 use App\Models\Branch;
-use App\Models\CarPLatesSetting;
 use App\Models\Carprofile;
-use App\Models\PlaceMaintenanceSetting;
-use App\Models\UserModelBranch;
+use App\Models\Region;
 use App\Services\Report\BaseReport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -21,66 +19,80 @@ class PlaceReport extends BaseReport
 
     public function getCityQuery($list)
     {
-        $query = DB::table($this->mainTable)
-            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-            ->join("regions", "regions.id", '=', "branches.region_id")
-            ->join("regions as city", "city.id", '=', "regions.parent_id")
-            ->where("branches.user_id", '=', parentID())
-            ->where("regions.user_id", '=', parentID())
-            ->where("branches.active", '=', true)
-            ->where("regions.active", '=', true)
-            ->whereIn("regions.parent_id", $list)
-            ->select("city.id as list_id", "city.name as list_name",
-                DB::raw("SUM($this->mainTable.work_by_minute) as work"),
-                DB::raw("SUM($this->mainTable.empty_by_minute) as empty")
-            );
+        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+            $query = $this->handleDurationCustom($this->filter, $list, false, 'city');
+        } else {
+            $query = DB::table($this->mainTable)
+                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+                ->join("regions", "regions.id", '=', "branches.region_id")
+                ->join("regions as city", "city.id", '=', "regions.parent_id")
+                ->where("branches.user_id", '=', parentID())
+                ->where("regions.user_id", '=', parentID())
+                ->where("branches.active", '=', true)
+                ->where("regions.active", '=', true)
+                ->whereIn("regions.parent_id", $list)
+                ->select("city.id as list_id", "city.name as list_name",
+                    DB::raw("SUM($this->mainTable.work_by_minute) as work"),
+                    DB::raw("SUM($this->mainTable.empty_by_minute) as empty")
+                );
+        }
         $this->query = $query;
     }
 
     public function getRegionQuery($list)
     {
-        $query = DB::table($this->mainTable)
-            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-            ->join("regions", "regions.id", '=', "branches.region_id")
-            ->where("branches.user_id", '=', parentID())
-            ->where("regions.user_id", '=', parentID())
-            ->where("branches.active", '=', true)
-            ->where("regions.active", '=', true)
-            ->whereIn("regions.id", $list)
-            ->select("regions.id as list_id", "regions.name as list_name",
-                DB::raw("SUM($this->mainTable.work_by_minute) as work"),
-                DB::raw("SUM($this->mainTable.empty_by_minute) as empty")
-            );
+        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+            $query = $this->handleDurationCustom($this->filter, $list, false, 'region');
+        } else {
+            $query = DB::table($this->mainTable)
+                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+                ->join("regions", "regions.id", '=', "branches.region_id")
+                ->where("branches.user_id", '=', parentID())
+                ->where("regions.user_id", '=', parentID())
+                ->where("branches.active", '=', true)
+                ->where("regions.active", '=', true)
+                ->whereIn("regions.id", $list)
+                ->select("regions.id as list_id", "regions.name as list_name",
+                    DB::raw("SUM($this->mainTable.work_by_minute) as work"),
+                    DB::raw("SUM($this->mainTable.empty_by_minute) as empty")
+                );
+        }
         $this->query = $query;
     }
 
     public function getBranchQuery($list)
     {
-        $query = DB::table($this->mainTable)
-            ->whereIn("branch_id", $list)
-            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-            ->where("branches.user_id", '=', parentID())
-            ->where("branches.active", '=', true)
-            ->select("branch_id as list_id", "branches.name as list_name",
-                DB::raw("SUM(work_by_minute) as work"),
-                DB::raw("SUM(empty_by_minute) as empty")
-            );
-
+        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+            $query = $this->handleDurationCustom($this->filter, $list, false);
+        } else {
+            $query = DB::table($this->mainTable)
+                ->whereIn("branch_id", $list)
+                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+                ->where("branches.user_id", '=', parentID())
+                ->where("branches.active", '=', true)
+                ->select("branch_id as list_id", "branches.name as list_name",
+                    DB::raw("SUM(work_by_minute) as work"),
+                    DB::raw("SUM(empty_by_minute) as empty")
+                );
+        }
         $this->query = $query;
     }
 
     public function getAreaQuery($list)
     {
-        $query = DB::table($this->mainTable)
-            ->whereIn("$this->mainTable.branch_id", $list)
-            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-            ->where("branches.user_id", '=', parentID())
-            ->where("branches.active", '=', true)
-            ->select("$this->mainTable.area as list_id", "$this->mainTable.area as list_name",
-                DB::raw("SUM(work_by_minute) as work"),
-                DB::raw("SUM(empty_by_minute) as empty")
-            );
-
+        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+            $query = $this->handleDurationCustom($this->filter, $list, false, 'area');
+        } else {
+            $query = DB::table($this->mainTable)
+                ->whereIn("$this->mainTable.branch_id", $list)
+                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+                ->where("branches.user_id", '=', parentID())
+                ->where("branches.active", '=', true)
+                ->select("$this->mainTable.area as list_id", "$this->mainTable.area as list_name",
+                    DB::raw("SUM(work_by_minute) as work"),
+                    DB::raw("SUM(empty_by_minute) as empty")
+                );
+        }
         $this->query = $query;
     }
 
@@ -92,15 +104,18 @@ class PlaceReport extends BaseReport
      */
     public function getReport($key, $filter): array
     {
-        $filter["column"] = "$this->mainTable.date";
+        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+            $result = $this->query;
+        } else {
 
-        $query = $this->handleDateFilter($this->query, $filter);
-
-        $result = json_decode($query->groupBy("list_id")
-            ->get()
-            ->mapWithKeys(function ($item) {
-                return [$item->list_name => $item];
-            }), true, 512, JSON_THROW_ON_ERROR);
+            $filter["column"] = "$this->mainTable.date";
+            $query = $this->handleDateFilter($this->query, $filter);
+            $result = json_decode($query->groupBy("list_id")
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [$item->list_name => $item];
+                }), true, 512, JSON_THROW_ON_ERROR);
+        }
 
         $report['charts'] = $this->prepareChart($result, $key);
         $report["info"] = [
@@ -167,16 +182,17 @@ class PlaceReport extends BaseReport
         return [$this->getReport($data["type"], $filter)['charts']['bar']];
     }
 
-
     /**
      * @param $filter
-     * @param $lists
+     * @param null $lists
+     * @param bool $sum
+     * @param string $depth
      * @return array
      */
-    public function handleDurationCustom($filter, $lists = null): array
+    public function handleDurationCustom($filter, $lists = null, bool $sum = true, string $depth = 'branch'): array
     {
-        $work = 0;
-        $empty = 0;
+        $work = [];
+        $empty = [];
         if (empty($lists)) {
             $lists = Branch::primary()->active()->pluck('id')->toArray();
         }
@@ -185,36 +201,55 @@ class PlaceReport extends BaseReport
             $lists = str_contains($lists, ',') ? explode(',', (string)$lists) : $lists;
         }
 
-        foreach (\Arr::wrap($lists) as $branch) {
-            $areas = AreaStatus::where('branch_id', $branch)->distinct()->pluck('area');
-            if ($areas->isEmpty()) continue;
-            $areas = $areas->sort()->toArray();
+        $branches_by_region = [];
+        if (isset($filter['show_by']) && $filter['region_type']) {
+            if (($filter['show_by'] == 'region' && $filter['region_type'] == 'comparison')
+                || ($filter['show_by'] == 'city' && $filter['city_type'] == 'region')) {
+                $branches_by_region = Branch::whereIn('region_id', $lists)->pluck('region_id', 'id')->toArray();
+                $lists = array_keys($branches_by_region);
 
-            foreach ($areas as $area) {
+            } elseif ($filter['show_by'] == 'city' && $filter['city_type'] == 'comparison') {
+                $lists = Region::whereIn('parent_id', $lists)->pluck('id')->toArray();
+                $branches_by_region = Branch::whereIn('region_id', $lists)->pluck('region_id', 'id')->toArray();
+                $lists = array_keys($branches_by_region);
+            }
+        }
+
+        foreach (\Arr::wrap($lists) as $branch_id) {
+            $branch = DB::table('branches')
+                ->select('name', 'area_count', 'id')
+                ->where('id', $branch_id)
+                ->where('active', 1)
+                ->where('user_id', parentID())
+                ->first();
+
+            if (empty($branch)) {
+                continue;
+            }
+
+            for ($area = 1; $area <= (int)$branch->area_count ?? 0; $area++) {
                 $branch_work = 0;
                 $query = Carprofile::where('status', 'completed')
-                    ->where('branch_id', $branch)
+                    ->where('branch_id', $branch->id)
                     ->where('BayCode', $area);
 
                 //Handle date filter by checkInDate
                 $filter['column'] = 'checkInDate';
                 $this->handleDateFilter($query, $filter, true);
 
-                $query->chunk(500, function ($profiles) use (&$work, &$branch_work) {
+                $query->chunk(500, function ($profiles) use (&$work, &$branch_work, $area, $branch) {
                     foreach ($profiles as $record) {
                         $start = Carbon::parse($record->checkInDate);
                         $end = Carbon::parse($record->checkOutDate);
                         if ($end > $start) {
                             $difference = $end->diffInMinutes($start);
                             $branch_work += $difference;
-                            $work += $difference;
+                            $work["$branch->name,$branch->id"]['area'][$area]['work'][] = $difference;
                         }
                     }
                 });
-
                 $start_time = Carbon::parse($filter['start']);
                 $end_time = Carbon::parse($filter['end']);
-
                 if ($end_time < $start_time) {
                     $end_time = Carbon::now();
                 }
@@ -224,11 +259,19 @@ class PlaceReport extends BaseReport
                 if ($branch_empty > $branch_work) {
                     $branch_empty -= $branch_work;
                 }
-                $empty += $branch_empty ?? 0;
+                $empty["$branch->name,$branch->id"]['area'][$area]['empty'][] = $branch_empty;
             }
         }
 
-        return [$work, $empty];
+        if ($sum) {
+            $work = array_sum(\Arr::flatten($work));
+            $empty = array_sum(\Arr::flatten($empty));
+            return [$work, $empty];
+        }
+
+        $data = array_merge_recursive_distinct($work, $empty);
+
+        return $this->resolveDurationDepth($data, $depth, $branches_by_region);
     }
 
     /**
@@ -240,8 +283,8 @@ class PlaceReport extends BaseReport
     public function handleDurationDay($filter, $type, $lists = null)
     {
         $query = AreaDurationDay::query();
-
         $filter['column'] = 'date';
+
         $this->handleDateFilter($query, $filter);
 
         if (!empty($lists)) {
@@ -249,11 +292,85 @@ class PlaceReport extends BaseReport
                 $lists = str_contains($lists, ',') ? explode(',', (string)$lists) : $lists;
             }
             $lists = \Arr::wrap($lists);
-
             $query->whereIn('branch_id', $lists);
-
         }
 
         return $query->sum("{$type}_by_minute");
+    }
+
+    /**
+     * @param $data
+     * @param $depth
+     * @param array $extra
+     * @return array
+     */
+    public function resolveDurationDepth($data, $depth, array $extra = []): array
+    {
+        if ($depth == 'branch') {
+            $result = [];
+            collect($data)->map(function ($area) {
+                return collect($area['area'])->map(function ($data) {
+                    return [
+                        'work' => array_sum($data['work'] ?? []),
+                        'empty' => array_sum($data['empty'] ?? [])
+                    ];
+                });
+            })->map(function ($item, $key) use ($data, &$result) {
+                $branch_name = explode(',', $key)[0];
+                $result[$branch_name] = [
+                    'list_id' => explode(',', $key)[1],
+                    'list_name' => $branch_name,
+                    'work' => array_sum(array_column($item->toArray(), 'work')),
+                    'empty' => array_sum(array_column($item->toArray(), 'empty')),
+                ];
+            })->toArray();
+
+        } elseif ($depth == 'area') {
+
+            $result = collect($data)->map(function ($area) {
+                return collect($area['area'])->map(function ($data, $key) {
+                    return [
+                        'list_id' => $key,
+                        'list_name' => $key,
+                        'work' => array_sum($data['work'] ?? []),
+                        'empty' => array_sum($data['empty'] ?? [])
+                    ];
+                });
+            })->first()->toArray();
+
+        } elseif ($depth == 'region' || $depth == 'city') {
+            $result = [];
+            $work = [];
+            $empty = [];
+            collect($data)->map(function ($area) {
+                return collect($area['area'])->map(function ($data) {
+                    return [
+                        'work' => array_sum($data['work'] ?? []),
+                        'empty' => array_sum($data['empty'] ?? [])
+                    ];
+                });
+            })->map(function ($item, $key) use ($data, $extra) {
+                $branch_id = explode(',', $key)[1];
+                $region = Region::find($extra[$branch_id]);
+                return [
+                    'list_id' => $region->id,
+                    'list_name' => $region->name,
+                    'work' => array_sum(array_column($item->toArray(), 'work')),
+                    'empty' => array_sum(array_column($item->toArray(), 'empty')),
+                ];
+            })->map(function ($item) use (&$result, &$work, &$empty) {
+                $work[$item['list_name']][] = $item['work'] ?? 0;
+                $empty[$item['list_name']][] = $item['empty'] ?? 0;
+
+                $result[$item['list_name']] = [
+                    'list_id' => $item['list_id'],
+                    'list_name' => $item['list_name'],
+                    'work' => array_sum($work[$item['list_name']]),
+                    'empty' => array_sum($empty[$item['list_name']]),
+                ];
+            });
+        }
+
+        return $result ?? [];
     }
 }

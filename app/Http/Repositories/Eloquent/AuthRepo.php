@@ -59,7 +59,6 @@ class AuthRepo extends AbstractRepo implements AuthRepoInterface
 
         if ($request->remember_me) {
             $token->expires_at = Carbon::now()->addWeeks(1);
-            dd($token->expires_at);
         }
         if ($token->save()) {
             return [
