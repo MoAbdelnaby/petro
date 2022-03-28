@@ -6,6 +6,8 @@ use Carbon\Carbon;
 
 abstract class BaseReport
 {
+    public $filter;
+
     /**
      * Prepare Important Properties to execute report
      *
@@ -14,6 +16,8 @@ abstract class BaseReport
      */
     public function prepare($filter): array
     {
+        $this->filter = $filter;
+
         $data = $this->handleListQuery($filter);
         $key = ucfirst($data["type"]);
         $func_name = "get{$key}Query";

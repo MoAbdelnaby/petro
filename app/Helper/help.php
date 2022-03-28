@@ -368,6 +368,31 @@ if (!function_exists('unKnownError')) {
             : redirect()->back()->with(['danger' => $message]);
     }
 }
+function array_merge_numeric_values(): array
+{
+    $arrays = func_get_args();
+    $merged = array();
+    foreach ($arrays as $array)
+    {
+        foreach ($array as $key => $value)
+        {
+            if ( ! is_numeric($value))
+            {
+                continue;
+            }
+            if ( ! isset($merged[$key]))
+            {
+                $merged[$key] = $value;
+            }
+            else
+            {
+                $merged[$key] += $value;
+            }
+        }
+    }
+    return $merged;
+}
+
 if (!function_exists('getStartEndDate')) {
     function getStartEndDate($time = null): array
     {

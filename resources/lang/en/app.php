@@ -1,7 +1,7 @@
 <?php
 return [
     'show_all' => 'Show All',
-    'mailSetting'=>'Mail Setttings',
+    'mailSetting'=>'Mail Settings',
     'data' => 'Data',
     'plate_modal_title'=>'Car Details',
     'mail_reminder'=>'Mail Reminder',
