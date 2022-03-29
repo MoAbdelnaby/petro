@@ -73,7 +73,7 @@ class SendInvoiceMessage implements ShouldQueue
                 ->whereDate('created_at', Carbon::today())
                 ->latest()->first();
 
-            $row =  MessageLog::where('id',$this->messageLog_id)
+             MessageLog::where('id',$this->messageLog_id)
             ->update(
                 [
                     'carprofile_id' => $carprofile ? $carprofile->id : null,

@@ -459,10 +459,11 @@
                                                                         <i class="fas fa-comment text-success"></i>
 
                                                                     @else
-                                                                        <a class="" data-toggle="popover" data-trigger="hover" data-content="{{$item->failMessage->status}}">
+                                                                        <a class="" data-toggle="popover"
+                                                                           data-trigger="hover"
+                                                                           data-content="{{$item->failMessage->status}}">
                                                                             <i class="fas fa-comment-slash text-danger"></i>
                                                                         </a>
-
                                                                     @endif
                                                                 </td>
                                                                 <td>
@@ -850,6 +851,9 @@
         }
 
         $(document).ready(function () {
+
+            $('[data-toggle="popover"]').popover();
+
             var item_update = false;
 
             $('.put-error').on('click', function (e) {
