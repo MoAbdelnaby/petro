@@ -127,7 +127,7 @@ class ReportService
         $branches = \Arr::wrap($lists);
 
         if (empty($branches)) {
-            $branches = Branch::active()->primary()->pluck('id')->toArray();
+            $branches = Branch::active()->primary()->get();
         }
 
         foreach ($branches as $branch) {
@@ -139,11 +139,11 @@ class ReportService
             ];
 
             //System Models Statics
-            $cars = Carprofile::where('status', 'completed')->where('branch_id', $branch);
-            $invoice = Carprofile::where('status', 'completed')->where('branch_id', $branch);
-            $welcome = Carprofile::where('status', 'completed')->where('branch_id', $branch);
-            $backout = Carprofile::where('status', 'completed')->where('branch_id', $branch);
-            $serving = Carprofile::where('status', 'completed')->where('branch_id', $branch);
+            $cars = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+            $invoice = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+            $welcome = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+            $backout = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+            $serving = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
             $areas = AreaStatus::query();
 
             //Handle filter date [start-end]
@@ -172,7 +172,7 @@ class ReportService
             }
 
             $result[] = [
-                'Branch Name' => $branch_name ?? 0,
+                'Branch Name' => $branch->name ?? 0,
                 'Start Date' => $start ?? "2022-01-01",
                 'End Date' => $end ?? now()->toDateString(),
                 'Area Count' => $areas ?? 0,
