@@ -36,11 +36,11 @@ class ReportService
         ];
 
         //System Models Statics
-        $cars = Carprofile::where('status', 'completed');
-        $invoice = Carprofile::where('status', 'completed');
-        $welcome = Carprofile::where('status', 'completed');
-        $backout = Carprofile::where('status', 'completed');
-        $serving = Carprofile::where('status', 'completed');
+        $cars = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+        $invoice = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+        $welcome = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+        $backout = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+        $serving = Carprofile::where('status', 'completed')->where('plate_status', 'success');
         $areas = AreaStatus::query();
 
         //Handle filter date [start-end]
