@@ -251,7 +251,7 @@ class PlaceReport extends BaseReport
                     }
                 });
 
-                $user_model_branch = UserModelBranch::with('branch')->where('branch_id', $branch)->latest()->first();
+                $user_model_branch = UserModelBranch::with('branch')->where('branch_id', $branch->id)->latest()->first();
                 $plate_setting = PlaceMaintenanceSetting::where('user_model_branch_id', $user_model_branch->id)->where('active', 1)->first();
                 if (!$plate_setting) {
                     $plate_setting = CarPLatesSetting::where('user_model_branch_id', $user_model_branch->id)->where('active', 1)->first();
