@@ -258,15 +258,21 @@ class PlaceReport extends BaseReport
                 }
 
                 $start_time = Carbon::parse($filter['start']);
-                $start_time_setting = Carbon::parse($plate_setting->start_time);
+                $start_time_setting = Carbon::createFromFormat('Y-m-d H:i',
+                    $start_time->format('Y-m-d') . ' ' . $plate_setting->start_time
+                );
                 $end_time = Carbon::parse($filter['end']);
-                $end_time_setting = Carbon::parse($plate_setting->end_time);
-
-                if($start_time->format('H') < $start_time_setting->format('H') ){
+                $end_time_setting = Carbon::createFromFormat('Y-m-d H:i',
+                    $end_time->format('Y-m-d') . ' ' . $plate_setting->end_time
+                );
+                if ($start_time < $start_time_setting) {
                     $start_time = $start_time_setting;
                 }
-                if($end_time->format('H') > $end_time_setting->format('H') ){
+                if ($end_time > $end_time_setting) {
                     $end_time = $end_time_setting;
+                }
+                if ($end_time > now()) {
+                    $end_time = now();
                 }
                 if ($end_time < $start_time) {
                     $end_time = Carbon::now();
