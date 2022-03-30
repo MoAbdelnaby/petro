@@ -34,14 +34,12 @@ class ReportService
             'column' => 'checkInDate',
             'end' => $end
         ];
-        $report = new InvoiceReport();
-        $integration_invoice = $report->handleReportCompare($filter, 'invoice', 'id');
 
         //System Models Statics
         $cars = Carprofile::where('status', 'completed');
         $invoice = Carprofile::where('status', 'completed');
         $welcome = Carprofile::where('status', 'completed');
-        $backout = Carprofile::where('status', 'completed')->where('branch_id', $integration_invoice);
+        $backout = Carprofile::where('status', 'completed');
         $serving = Carprofile::where('status', 'completed');
         $areas = AreaStatus::query();
 
@@ -199,7 +197,7 @@ class ReportService
      * @param bool $timeStamp
      * @return mixed
      */
-    public function handleDateFilter($query, $filter, bool $timeStamp = false)
+    public static function handleDateFilter($query, $filter, bool $timeStamp = false)
     {
         $filter['start'] = empty($filter['start']) ? "2022-01-01" : $filter['start'];
 

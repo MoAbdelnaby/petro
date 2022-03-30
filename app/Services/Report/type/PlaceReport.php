@@ -3,10 +3,12 @@
 namespace App\Services\Report\type;
 
 use App\Models\AreaDurationDay;
-use App\Models\AreaStatus;
 use App\Models\Branch;
+use App\Models\CarPLatesSetting;
 use App\Models\Carprofile;
+use App\Models\PlaceMaintenanceSetting;
 use App\Models\Region;
+use App\Models\UserModelBranch;
 use App\Services\Report\BaseReport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -248,14 +250,29 @@ class PlaceReport extends BaseReport
                         }
                     }
                 });
+
+                $user_model_branch = UserModelBranch::with('branch')->where('branch_id', $branch)->latest()->first();
+                $plate_setting = PlaceMaintenanceSetting::where('user_model_branch_id', $user_model_branch->id)->where('active', 1)->first();
+                if (!$plate_setting) {
+                    $plate_setting = CarPLatesSetting::where('user_model_branch_id', $user_model_branch->id)->where('active', 1)->first();
+                }
+
                 $start_time = Carbon::parse($filter['start']);
+                $start_time_setting = Carbon::parse($plate_setting->start_time);
                 $end_time = Carbon::parse($filter['end']);
+                $end_time_setting = Carbon::parse($plate_setting->end_time);
+
+                if($start_time->format('H') < $start_time_setting->format('H') ){
+                    $start_time = $start_time_setting;
+                }
+                if($end_time->format('H') > $end_time_setting->format('H') ){
+                    $end_time = $end_time_setting;
+                }
                 if ($end_time < $start_time) {
                     $end_time = Carbon::now();
                 }
 
                 $branch_empty = $end_time->diffInMinutes($start_time);
-
                 if ($branch_empty > $branch_work) {
                     $branch_empty -= $branch_work;
                 }
