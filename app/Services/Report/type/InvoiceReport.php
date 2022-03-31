@@ -198,7 +198,6 @@ class InvoiceReport extends BaseReport
     public function handleReportCompare($filter, $type = 'count', $type_column = 'list'): array
     {
         $data = [];
-
         if (isset($filter['show_by'])) {
             $data = $this->handleListQuery($filter);
         }
