@@ -79,6 +79,11 @@ Route::get('reminder_message-work', function (){
 Route::get('handle-duration-daily', function (){
     \Illuminate\Support\Facades\Artisan::call('area:duration-daily');
 });
+
+Route::get('handle-duration-daily-today', function (){
+    \Illuminate\Support\Facades\Artisan::call('area:duration-daily today');
+});
+
 Route::get('handle-duration-total', function (){
     \Illuminate\Support\Facades\Artisan::call('area:duration');
 });
