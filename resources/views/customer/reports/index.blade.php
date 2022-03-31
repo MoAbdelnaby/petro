@@ -89,7 +89,7 @@
                                             </a>
                                             <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
                                                data-toggle="dropdown" href="#">
-                                                <i class="fas fa-sort-alt"></i> &nbsp;{{ __('app.Filter') }}
+                                                <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
                                             </a>
                                             <div class="filter-content" aria-labelledby="dropdownMenuButton">
                                                 <form action="" method="get" class="filter-form">
