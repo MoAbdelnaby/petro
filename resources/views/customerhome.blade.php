@@ -257,14 +257,14 @@
                                                         class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                                         <div class="d-flex align-items-center">
                                                             <div
-                                                                class="rounded-circle iq-card-icon iq-bg-warning mr-2">
+                                                                class="rounded-circle iq-card-icon  mr-2" style="background: #00ff9e29">
                                                                 <i class="fa fa-file-text text-success"></i>
                                                             </div>
                                                             <h3>{{$statistics['invoice']}}</h3>
                                                         </div>
                                                         <div
                                                             class="iq-map text-warning font-size-32">
-                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                            <i class="ri-bar-chart-grouped-line text-success"></i></div>
                                                     </div>
                                                 </a>
                                             </div>
