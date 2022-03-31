@@ -57,7 +57,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                @if(auth()->user()->id != 3)
+                                                @if(auth()->user()->id != 3 && auth()->user()->parent_id != 3 )
                                                     <div class="product-action ml-2">
                                                         <div class="add-to-cart">
                                                             <a class="btn btn-default"

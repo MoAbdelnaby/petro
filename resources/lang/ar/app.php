@@ -18,11 +18,12 @@ return array(
     'downloadSpeed' => 'سرعة التنزيل',
     'uploadSpeed' => 'سرعة تحميل',
     'sent' => 'مرسل',
+    'Unavailable' => 'غير متاح',
     'failed' => 'غير مرسل',
     'Show' => 'عرض',
     'No_Thing_TO_Show_Here' => 'لا يوجد شيء لعرضه هنا',
     'No_thing_to_paragraph' => 'الرجاء الانتقال إلى التكوين وتغيير شيء ما لعرضه في الصفحة الرئيسية',
-
+    'carprofile'=>'بروفايل السياره',
     'Create_New_Service' => 'إنشاء خدمة جديدة',
     'not_connected_yet' => 'غير متصل بعد',
     'connection_speed' => 'سرعة الاتصال',

@@ -15,7 +15,12 @@
         .select2-container {
             width: 100% !important;
         }
-
+        .iq-card-body {
+            overflow: initial !important;
+        }
+        .filter-content {
+           line-height: normal;
+        }
 
         .select2-selection.select2-selection--multiple {
             min-height: 40px !important;
@@ -309,6 +314,7 @@
                                             {{--                                            <th class="th-sm">{{__('app.message')}}</th>--}}
                                             <th class="th-sm">{{__('app.gym.plate_no')}}</th>
                                             <th class="th-sm">{{__('app.auth.phone')}}</th>
+                                            <th class="th-sm">{{__('app.carprofile')}}</th>
                                             <th class="th-sm">{{__('app.Invoice')}}</th>
                                             <th class="th-sm">{{__('app.createdIn')}}</th>
                                         </tr>
@@ -324,6 +330,22 @@
                                                     {{--                                                <td>{{$item->message}}</td>--}}
                                                     <td>{{$item->plateNumber}}</td>
                                                     <td>{{str_replace('whatsapp:+','',$item->phone)}}</td>
+                                                    <td>
+                                                        @if(!is_null($item->carprofile_id))
+                                                            <a class="" data-toggle="popover"
+                                                               data-trigger="hover"
+                                                               data-content="{{ __('app.Available')  }}">
+                                                                <i class="fas fa-circle text-success "></i>
+                                                            </a>
+
+                                                        @else
+                                                            <a class="" data-toggle="popover"
+                                                               data-trigger="hover"
+                                                               data-content="{{ __('app.Unavailable')  }}">
+                                                                <i class="fas fa-circle text-danger"></i>
+                                                            </a>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         @if($item->invoiceUrl)
                                                             <a target="_blank" style="padding: 0 5px 0 5px"
@@ -364,9 +386,9 @@
     <script>
         $(document).ready(function () {
 
-            var totalcount = "{{ __('app.Count') }}" + " " +"[ {{$totalcount}} ]";
+            var totalcount = "{{ __('app.Count') }}" + " " + "[ {{$totalcount}} ]";
 
-            $('#paginationSimpleNumbers_wrapper').delegate().prepend('<div class="dataTables_length btn btn-info waves-effect waves-light">'+totalcount+ '</div>');
+            $('#paginationSimpleNumbers_wrapper').delegate().prepend('<div class="dataTables_length btn btn-info waves-effect waves-light">' + totalcount + '</div>');
 
             /***** Tables Show ******/
             $('.tables-types-d .dropdown-item').on("click", function (e) {

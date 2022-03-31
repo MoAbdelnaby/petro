@@ -15,7 +15,7 @@ class AreaDurationDailyCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'area:duration-daily';
+    protected $signature = 'area:duration-daily {day?}';
 
     /**
      * The console command description.
@@ -45,14 +45,20 @@ class AreaDurationDailyCommand extends Command
             $startTime = now();
             $this->comment('Processing');
 
-             (new AreaDurationDaily())->calculate(Carbon::now()->subDays(1)->toDateString());
-
-            $this->info('Successfully update duration time in each area');
+            if($this->argument('day') == 'today'){
+                $this->comment("today");
+                (new AreaDurationDaily())->calculate(Carbon::now()->toDateString());
+            } else{
+                $this->comment("yesterday");
+                (new AreaDurationDaily())->calculate(Carbon::now()->subDays(1)->toDateString());
+            }
+            $this->comment("finish");
+            $this->comment('Successfully update duration time in each area');
             $time = $startTime->floatDiffInSeconds(now());
             $this->comment("Processed in " . round($time, 3) . " seconds");
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage() . $e->getLine());
+//            Log::error($e->getMessage() . $e->getLine());
         }
     }
 }
