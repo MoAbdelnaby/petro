@@ -74,12 +74,12 @@ class ReportService
         //1. if statistics in one day calculated based on place_maintenances table
         //2. if statistics in more one day calculated based on area_duration_day table
         $placeReport = new PlaceReport();
-        if (Carbon::parse($filter['start'])->format('d') == Carbon::parse($filter['end'])->format('d')) {
-            [$work, $empty] = $placeReport->handleDurationCustom($filter, $lists);
-        } else {
-            $work = $placeReport->handleDurationDay($filter, 'work', $lists);
-            $empty = $placeReport->handleDurationDay($filter, 'empty', $lists);
-        }
+//        if (Carbon::parse($filter['start'])->format('d') == Carbon::parse($filter['end'])->format('d')) {
+//            [$work, $empty] = $placeReport->handleDurationCustom($filter, $lists);
+//        } else {
+        $work = $placeReport->handleDurationDay($filter, 'work', $lists);
+        $empty = $placeReport->handleDurationDay($filter, 'empty', $lists);
+//        }
 
         return [
             'branches' => $branches,
@@ -164,12 +164,12 @@ class ReportService
             //1. if statistics in one day calculated based on place_maintenances table
             //2. if statistics in more one day calculated based on area_duration_day table
             $placeReport = new PlaceReport();
-            if (Carbon::parse($filter['start'])->format('d') == Carbon::parse($filter['end'])->format('d')) {
-                [$work, $empty] = $placeReport->handleDurationCustom($filter, $lists);
-            } else {
-                $work = $placeReport->handleDurationDay($filter, 'work', $lists);
-                $empty = $placeReport->handleDurationDay($filter, 'empty', $lists);
-            }
+//            if (Carbon::parse($filter['start'])->format('d') == Carbon::parse($filter['end'])->format('d')) {
+//                [$work, $empty] = $placeReport->handleDurationCustom($filter, $lists);
+//            } else {
+            $work = $placeReport->handleDurationDay($filter, 'work', $lists);
+            $empty = $placeReport->handleDurationDay($filter, 'empty', $lists);
+//            }
 
             $result[] = [
                 'Branch Name' => $branch->name ?? 0,
@@ -202,8 +202,8 @@ class ReportService
         $filter['start'] = empty($filter['start']) ? "2022-01-01" : $filter['start'];
 
         if ($filter['start'] ?? false) {
-            $start = ($filter['start'] > date('Y-m-d')) ? now() : Carbon::parse($filter['start']);
-            if ($timeStamp) {
+            $start = (Carbon::parse($filter['start']) > now()) ? now() : Carbon::parse($filter['start']);
+                if ($timeStamp) {
                 $query->where($filter['column'], '>=', $start->format('Y-m-d H:i:s'));
             } else {
                 $query->whereDate($filter['column'], '>=', $start->format('Y-m-d'));
@@ -211,7 +211,7 @@ class ReportService
         }
 
         if ($filter['end'] ?? false) {
-            $end = ($filter['end'] > date('Y-m-d')) ? now() : Carbon::parse($filter['end']);
+            $end = Carbon::parse($filter['end']) > now() ? now() : Carbon::parse($filter['end']);
             if ($timeStamp) {
                 $query->where($filter['column'], '<=', $end->format('Y-m-d H:i:s'));
             } else {
