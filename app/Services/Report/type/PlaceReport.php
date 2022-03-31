@@ -21,80 +21,80 @@ class PlaceReport extends BaseReport
 
     public function getCityQuery($list)
     {
-        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
-            $query = $this->handleDurationCustom($this->filter, $list, false, 'city');
-        } else {
-            $query = DB::table($this->mainTable)
-                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-                ->join("regions", "regions.id", '=', "branches.region_id")
-                ->join("regions as city", "city.id", '=', "regions.parent_id")
-                ->where("branches.user_id", '=', parentID())
-                ->where("regions.user_id", '=', parentID())
-                ->where("branches.active", '=', true)
-                ->where("regions.active", '=', true)
-                ->whereIn("regions.parent_id", $list)
-                ->select("city.id as list_id", "city.name as list_name",
-                    DB::raw("SUM($this->mainTable.work_by_minute) as work"),
-                    DB::raw("SUM($this->mainTable.empty_by_minute) as empty")
-                );
-        }
+//        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+//            $query = $this->handleDurationCustom($this->filter, $list, false, 'city');
+//        } else {
+        $query = DB::table($this->mainTable)
+            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+            ->join("regions", "regions.id", '=', "branches.region_id")
+            ->join("regions as city", "city.id", '=', "regions.parent_id")
+            ->where("branches.user_id", '=', parentID())
+            ->where("regions.user_id", '=', parentID())
+            ->where("branches.active", '=', true)
+            ->where("regions.active", '=', true)
+            ->whereIn("regions.parent_id", $list)
+            ->select("city.id as list_id", "city.name as list_name",
+                DB::raw("SUM($this->mainTable.work_by_minute) as work"),
+                DB::raw("SUM($this->mainTable.empty_by_minute) as empty")
+            );
+//        }
         $this->query = $query;
     }
 
     public function getRegionQuery($list)
     {
-        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
-            $query = $this->handleDurationCustom($this->filter, $list, false, 'region');
-        } else {
-            $query = DB::table($this->mainTable)
-                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-                ->join("regions", "regions.id", '=', "branches.region_id")
-                ->where("branches.user_id", '=', parentID())
-                ->where("regions.user_id", '=', parentID())
-                ->where("branches.active", '=', true)
-                ->where("regions.active", '=', true)
-                ->whereIn("regions.id", $list)
-                ->select("regions.id as list_id", "regions.name as list_name",
-                    DB::raw("SUM($this->mainTable.work_by_minute) as work"),
-                    DB::raw("SUM($this->mainTable.empty_by_minute) as empty")
-                );
-        }
+//        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+//            $query = $this->handleDurationCustom($this->filter, $list, false, 'region');
+//        } else {
+        $query = DB::table($this->mainTable)
+            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+            ->join("regions", "regions.id", '=', "branches.region_id")
+            ->where("branches.user_id", '=', parentID())
+            ->where("regions.user_id", '=', parentID())
+            ->where("branches.active", '=', true)
+            ->where("regions.active", '=', true)
+            ->whereIn("regions.id", $list)
+            ->select("regions.id as list_id", "regions.name as list_name",
+                DB::raw("SUM($this->mainTable.work_by_minute) as work"),
+                DB::raw("SUM($this->mainTable.empty_by_minute) as empty")
+            );
+//        }
         $this->query = $query;
     }
 
     public function getBranchQuery($list)
     {
-        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
-            $query = $this->handleDurationCustom($this->filter, $list, false);
-        } else {
-            $query = DB::table($this->mainTable)
-                ->whereIn("branch_id", $list)
-                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-                ->where("branches.user_id", '=', parentID())
-                ->where("branches.active", '=', true)
-                ->select("branch_id as list_id", "branches.name as list_name",
-                    DB::raw("SUM(work_by_minute) as work"),
-                    DB::raw("SUM(empty_by_minute) as empty")
-                );
-        }
+//        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+//            $query = $this->handleDurationCustom($this->filter, $list, false);
+//        } else {
+        $query = DB::table($this->mainTable)
+            ->whereIn("branch_id", $list)
+            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+            ->where("branches.user_id", '=', parentID())
+            ->where("branches.active", '=', true)
+            ->select("branch_id as list_id", "branches.name as list_name",
+                DB::raw("SUM(work_by_minute) as work"),
+                DB::raw("SUM(empty_by_minute) as empty")
+            );
+//        }
         $this->query = $query;
     }
 
     public function getAreaQuery($list)
     {
-        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
-            $query = $this->handleDurationCustom($this->filter, $list, false, 'area');
-        } else {
-            $query = DB::table($this->mainTable)
-                ->whereIn("$this->mainTable.branch_id", $list)
-                ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
-                ->where("branches.user_id", '=', parentID())
-                ->where("branches.active", '=', true)
-                ->select("$this->mainTable.area as list_id", "$this->mainTable.area as list_name",
-                    DB::raw("SUM(work_by_minute) as work"),
-                    DB::raw("SUM(empty_by_minute) as empty")
-                );
-        }
+//        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+//            $query = $this->handleDurationCustom($this->filter, $list, false, 'area');
+//        } else {
+        $query = DB::table($this->mainTable)
+            ->whereIn("$this->mainTable.branch_id", $list)
+            ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+            ->where("branches.user_id", '=', parentID())
+            ->where("branches.active", '=', true)
+            ->select("$this->mainTable.area as list_id", "$this->mainTable.area as list_name",
+                DB::raw("SUM(work_by_minute) as work"),
+                DB::raw("SUM(empty_by_minute) as empty")
+            );
+//        }
         $this->query = $query;
     }
 
@@ -106,18 +106,18 @@ class PlaceReport extends BaseReport
      */
     public function getReport($key, $filter): array
     {
-        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
-            $result = $this->query;
-        } else {
+//        if (Carbon::parse($this->filter['start'])->format('d') == Carbon::parse($this->filter['end'])->format('d')) {
+//            $result = $this->query;
+//        } else {
 
-            $filter["column"] = "$this->mainTable.date";
-            $query = $this->handleDateFilter($this->query, $filter);
-            $result = json_decode($query->groupBy("list_id")
-                ->get()
-                ->mapWithKeys(function ($item) {
-                    return [$item->list_name => $item];
-                }), true, 512, JSON_THROW_ON_ERROR);
-        }
+        $filter["column"] = "$this->mainTable.date";
+        $query = $this->handleDateFilter($this->query, $filter);
+        $result = json_decode($query->groupBy("list_id")
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->list_name => $item];
+            }), true, 512, JSON_THROW_ON_ERROR);
+//        }
 
         $report['charts'] = $this->prepareChart($result, $key);
         $report["info"] = [
