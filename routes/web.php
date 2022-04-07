@@ -97,6 +97,7 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::get('config/{type}/get', 'ConfigController@index')->name('config.index');
             Route::post('config/update', 'ConfigController@update')->name('config.update');
             Route::get('reports', 'ReportController@index')->name('reports.index');
+            Route::post('reports/filter', 'ReportController@filter')->name('reports.filter');
             Route::get('report/region/{region}/show-branches', 'ReportController@getBranchByRegion');
             Route::get('report/city/{region}/show-regions', 'ReportController@getRegionByCity');
             Route::get('reports/{type}/show', 'ReportController@show')->name('reports.show');

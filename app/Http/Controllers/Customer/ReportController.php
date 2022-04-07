@@ -222,4 +222,8 @@ class ReportController extends Controller
             return unKnownError($e->getMessage());
         }
     }
+
+    public function filter(Request $request){
+        return $this->index($request);
+    }
 }
