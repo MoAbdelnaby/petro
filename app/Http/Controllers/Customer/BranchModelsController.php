@@ -317,11 +317,18 @@ class BranchModelsController extends Controller
         return view("customer.branches_status.logs", compact('logs', 'branchName'));
     }
 
-    public function getStaibility($code)
+    public function getStaibility(Request $request, $code)
     {
         $branch = Branch::where('code', $code)->firstOrFail();
-
-        $steps = $this->stepsQuery($code);
+        $start = Carbon::now()->startOfYear();
+        $end = Carbon::now();
+        if (isset($request->start)) {
+            $start = $request->start;
+        }
+        if (isset($request->end)) {
+            $end = $request->end;
+        }
+        $steps = $this->stepsQuery($code, $start, $end);
         $charts = $this->prepareChart($steps);
 
         $info = [
@@ -336,12 +343,13 @@ class BranchModelsController extends Controller
      * @param $code
      * @return array
      */
-    protected function stepsQuery($code): array
+    protected function stepsQuery($code, $start, $end)
     {
         $steps = DB::table('branch_net_works')
             ->select('branch_net_works.*')
             ->where('branch_code', '=', $code)
-            ->whereYear('created_at', '2022')
+            ->whereDate('created_at', '>=', $start)
+            ->whereDate('created_at', '<=', $end)
             ->latest()
             ->get();
 
@@ -352,9 +360,10 @@ class BranchModelsController extends Controller
                 'status' => $createdChunk->first()->error == '"No errors"' ? 'stable' : 'not_stable',
                 'start_date' => Carbon::parse($createdChunk->last()->created_at)->subMinutes(15)->format('Y-m-d h:i A'),
                 'end_date' => Carbon::parse($createdChunk->first()->created_at)->format('Y-m-d h:i A'),
-                'stability' => handleDiff(Carbon::parse($createdChunk->last()->created_at)->subMinutes(15)->diff($createdChunk->first()->created_at))
+                'stability' => handleDiff(Carbon::parse($createdChunk->last()->created_at)->subMinutes(15)->diff($createdChunk->first()->created_at)),
             ];
         })->toArray();
+
     }
 
     /**

@@ -8,6 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @push('css')
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         .invalid-feedback {
             display: block;
@@ -28,13 +31,72 @@
                 <div class="col-sm-12">
                     <div class="iq-card">
                         <div class="iq-card-body">
-                            <div class="menu-and-filter menu-and-filter--custom related-heading">
-                                <h2>
-                                    <img src="{{resolveDark()}}/img/icon_menu/building.svg" width="24"
-                                         class="tab_icon-img" alt="">
-                                    {{ __('app.Branch_Status_Header') }}: {{$branch->name}}
-                                </h2>
+
+                            <div class="row col-12 p-0 m-0 mb-3  menu-and-filter menu-and-filter--custom">
+                                <div class="col">
+                                    <ul class="nav nav-tabs nav-tabs--custom" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            {{ __('app.Branch_Status_Header') }}: {{$branch->name}}
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="mb-2 filter-pills-cont">
+                                    <div class="filter-dropdown">
+
+                                        <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
+                                           data-toggle="dropdown" href="#">
+                                            <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
+                                        </a>
+                                        <div class="filter-content" aria-labelledby="dropdownMenuButton">
+                                            <form action="" method="get" class="filter-form">
+                                                @csrf
+
+                                                <div class="form-group input-group input-daterange">
+                                                    <div class="d-flex align-items-end row">
+                                                        <div class="col-md-12 mt-2">
+                                                            <label
+                                                                class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
+                                                            <input type="datetime-local"
+                                                                   value="{{request('start')}}" name="start"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+
+                                                        <div class="col-md-12 mt-2">
+                                                            <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
+                                                            <input type="datetime-local" value="{{request('end')}}"
+                                                                   name="end"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center mt-4">
+                                                    <button type="submit"
+                                                            class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
+                                                        {{ __('app.Filter') }}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+{{--                            <div class="related-heading">--}}
+{{--                                <h2>--}}
+{{--                                    <img src="{{resolveDark()}}/img/icon_menu/building.svg" width="24"--}}
+{{--                                         class="tab_icon-img" alt="">--}}
+{{--                                    {{ __('app.Branch_Status_Header') }}: {{$branch->name}}--}}
+{{--                                </h2>--}}
+{{--                            </div>--}}
+
                             <div class="container-fluid">
                                 <div class="card-body">
                                     <div class="related-product-block position-relative col-12">
@@ -73,6 +135,7 @@
                                                 @endforeach
                                                 </tbody>
                                             </table>
+
                                         </div>
                                     </div>
                                     {{--  {{ $branches->links() }}--}}
@@ -92,6 +155,12 @@
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script>
+
+        $(document).ready(function () {
+            $('.btn-filter').on('click', function () {
+                $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');
+            })
+        });
         $(function () {
             let steps = @json($charts, JSON_THROW_ON_ERROR);
             @if($charts->count())
