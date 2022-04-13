@@ -296,7 +296,6 @@ class BranchModelsController extends Controller
 
         $last_stability = [];
 
-//        dd($request->all());
         [$from_total, $to_total] = $this->handleRangeTime($request);
         foreach ($first_errors as $error) {
             $last_stability[$error->branch_code] = cache()->remember('last_stability', now()->addMinutes(10), fn() => DB::table('branch_net_works')
@@ -323,6 +322,7 @@ class BranchModelsController extends Controller
                             'stability' => handleDiff(Carbon::parse($item->start_date)->diff($item->end_date))
                         ];
                     }
+                    return [];
                 })->first()
             );
         }
