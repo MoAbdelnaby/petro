@@ -159,7 +159,14 @@
                                                 </thead>
                                                 <tbody class="trashbody">
                                                 @foreach($branches as $k => $branch)
-                                                    @if(isset($last_stability[$branch->branch_code]['stability']))
+                                                    @if(!isset($last_stability[$branch->branch_code]['stability']))
+                                                        @continue;
+                                                    @endif
+                                                    @if($filter_status == true)
+                                                        @if (!\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
+                                                            @continue;
+                                                        @endif
+                                                    @endif
                                                     <tr>
                                                         <td>{{ $k+1 }}</td>
                                                         <td>
@@ -167,7 +174,8 @@
                                                         </td>
                                                         <td>
                                                             @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
-                                                                <i class="fas fa-circle" style="color: green"></i>
+                                                                <i class="fas fa-circle"
+                                                                   style="color: green"></i>
                                                                 {{ __('app.branch_online')  }}
                                                             @else
                                                                 <i class="fas fa-circle" style="color: red"></i>
@@ -175,7 +183,11 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            {{$last_stability[$branch->branch_code]['stability']??"0 ". __('app.minute')}}
+                                                            @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
+                                                                {{$last_stability[$branch->branch_code]['stability']??"0 ". __('app.minute')}}
+                                                            @else
+                                                                {{"0 ". __('app.minute')}}
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @php($diff = \Carbon\Carbon::now()->diff($branch->created_at))
@@ -200,7 +212,7 @@
                                                                target="_blank">{{ __('app.stability') }}</a>
                                                         </td>
                                                     </tr>
-                                                    @endif
+
                                                 @endforeach
                                                 </tbody>
                                             </table>

@@ -265,7 +265,7 @@ class BranchModelsController extends Controller
         } else {
             $branches = DB::table('last_error_branch_views')
                 ->selectRaw('last_error_branch_views.*,branches.name')
-                ->join('branches','branches.code','=','last_error_branch_views.branch_code')
+                ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
                 ->get();
 
             Branch::active()->primary()
@@ -329,7 +329,12 @@ class BranchModelsController extends Controller
                 })->first();
         }
 
-        return view("customer.branches_status.index", compact('branches', 'last_stability', 'off', 'on'));
+        $filter_status = false;
+        if ($from_total != 0 || $to_total != 0) {
+            $filter_status = true;
+        }
+
+        return view("customer.branches_status.index", compact('branches', 'last_stability', 'off', 'on', 'filter_status'));
     }
 
     /**
