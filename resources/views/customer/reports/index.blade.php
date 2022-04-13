@@ -7,7 +7,9 @@
 @endsection
 
 @push('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <style>
         .select2-container {
@@ -92,7 +94,8 @@
                                                 <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
                                             </a>
                                             <div class="filter-content" aria-labelledby="dropdownMenuButton">
-                                                <form action="{{route('reports.filter')}}" method="post" class="filter-form">
+                                                <form action="{{route('reports.filter')}}" method="post"
+                                                      class="filter-form">
                                                     @csrf
                                                     <div class="row">
                                                         <div id="branch_container" class="col-md-12">
@@ -111,7 +114,8 @@
                                                                         Please select branch.
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-2" style="margin-left: -25px; padding-top: 5px">
+                                                                <div class="col-md-2"
+                                                                     style="margin-left: -25px; padding-top: 5px">
                                                                     <label for="selectallbranches"
                                                                            class="custom-checkbox pl-4 mt-4">
                                                                         <input class="trashselect" type="checkbox"
@@ -209,7 +213,7 @@
                                             </i>
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??"2022-01-01"}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -280,7 +284,9 @@
                                                                 <div
                                                                     class="rounded-circle iq-card-icon iq-bg-danger mr-2">
                                                                     <i class="fa-solid fa-code-branch"></i></div>
-                                                                <h3>{{$statistics['branches']}}</h3></div>
+                                                                <h3>{{$statistics['active_branches']}}</h3>
+                                                                <h4>&nbsp;({{$statistics['branches']??0}})</h4>
+                                                            </div>
                                                             <div
                                                                 class="iq-map text-danger font-size-32">
                                                                 <i class="ri-bar-chart-grouped-line"></i></div>
@@ -383,7 +389,8 @@
                                                             class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                                             <div class="d-flex align-items-center">
                                                                 <div
-                                                                    class="rounded-circle iq-card-icon  mr-2" style="background: #00ff9e29">
+                                                                    class="rounded-circle iq-card-icon  mr-2"
+                                                                    style="background: #00ff9e29">
                                                                     <i class="fa fa-file-text text-success"></i>
                                                                 </div>
                                                                 <h3>{{$statistics['invoice']}}</h3>
@@ -518,7 +525,6 @@
 @push('js')
     <script>
         $(document).ready(function () {
-
             $("#selectallbranches").click(function () {
                 if ($("#selectallbranches").is(':checked')) {
                     $("#select_branch > option").prop("selected", "selected");
@@ -528,7 +534,6 @@
                     $("#select_branch").trigger("change");
                 }
             });
-
 
             $("#checkValButton").click(function () {
                 alert($("#select_branch").val());

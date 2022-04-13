@@ -55,7 +55,7 @@ abstract class BaseReport
      */
     public function handleDateFilter($query, $filter, bool $timeStamp = false)
     {
-        $filter['start'] = empty($filter['start']) ? "2022-01-01" : $filter['start'];
+        $filter['start'] = empty($filter['start']) ? now()->startOfYear()->toDateString() : $filter['start'];
 
         if ($filter['start'] ?? false) {
             $start = ($filter['start'] > date('Y-m-d')) ? now(): Carbon::parse($filter['start']);

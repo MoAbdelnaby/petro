@@ -1,5 +1,5 @@
 function barChart(id, data, info) {
-    console.log(data);
+
     am4core.ready(function () {
         am4core.useTheme(am4themes_animated);
         var chart = am4core.create(id, am4charts.XYChart);
@@ -10,7 +10,7 @@ function barChart(id, data, info) {
             am4core.color("#ff8904"),
         ];
         chart.colors.step = 2;
-
+        chart.exporting.menu = new am4core.ExportMenu();
         chart.legend = new am4charts.Legend();
         chart.legend.position = "bottom";
         chart.legend.paddingBottom = 20;
@@ -101,6 +101,7 @@ function lineChart(id, data, info) {
     am4core.ready(function () {
         am4core.useTheme(am4themes_animated);
         var chart = am4core.create(id, am4charts.XYChart);
+        chart.exporting.menu = new am4core.ExportMenu();
         chart.colors.list = [
             am4core.color("#29A0D8"),
             am4core.color("#eeae53"),
@@ -166,6 +167,7 @@ function sideBarChart(id, data, info) {
     am4core.ready(function () {
         am4core.useTheme(am4themes_animated);
         var chart = am4core.create(id, am4charts.XYChart);
+        chart.exporting.menu = new am4core.ExportMenu();
         chart.width = am4core.percent(99);
         chart.data = data;
 
@@ -277,6 +279,7 @@ function pieChart(id, data, info) {
         chart.hiddenState.properties.radius = am4core.percent(0);
         pieSeries.labels.template.disabled = true;
         chart.legend = new am4charts.Legend();
-        chart.legend.position = "left"
+        chart.legend.position = "left";
+        chart.exporting.menu = new am4core.ExportMenu();
     }); // end am4core.ready()
 }

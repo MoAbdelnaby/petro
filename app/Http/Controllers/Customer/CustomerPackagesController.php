@@ -62,20 +62,16 @@ class CustomerPackagesController extends Controller
         });
         $off = $branches->count() - $on;
 
-        if (request('time_range')) {
-            $date = getStartEndDate(request('time_range'));
-        }
-
         $report = [];
         foreach (['place', 'plate', 'stayingAverage', 'invoice'] as $type) {
             $filter = $this->getTopBranch($type, request()->all());
-            $filter['start'] = $date['start'] ?? "2022-01-01";
+            $filter['start'] = $date['start'] ?? now()->startOfYear()->toDateString();
             $filter['end'] = $date['end'] ?? now()->toDateString();
             $report[$type] = ReportService::handle($type, $filter);
         }
 
         return view('customerhome', [
-            'statistics' => ReportService::statistics($date['start'] ?? '2022-01-01', $date['end'] ?? null),
+            'statistics' => ReportService::statistics($filter['start'] , $filter['end']),
             'report' => $report,
             'config' => $config,
             'off' => $off,
@@ -349,7 +345,7 @@ class CustomerPackagesController extends Controller
         $branches = DB::table("view_top_branch_$type")->pluck('branch_id')->toArray();
 
         return [
-            'start' => $filter['start'] ?? "2022-01-01",
+            'start' => $filter['start'] ?? now()->startOfYear()->toDateString(),
             'end' => $filter['end'] ?? null,
             'show_by' => 'branch',
             'branch_type' => 'comparison',

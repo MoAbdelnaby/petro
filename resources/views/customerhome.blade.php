@@ -129,11 +129,12 @@
                                                     <div
                                                         class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                                         <div class="d-flex align-items-center">
-
-                                                            <div
-                                                                class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                                <i class="fa-solid fa-code-branch"></i></div>
-                                                            <h3>{{$statistics['branches']}}</h3></div>
+                                                            <div class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                <i class="fa-solid fa-code-branch"></i>
+                                                            </div>
+                                                            <h3>{{$statistics['active_branches']}}</h3>
+                                                            <h4>&nbsp;({{$statistics['branches']??0}})</h4>
+                                                        </div>
                                                         <div
                                                             class="iq-map text-danger font-size-32">
                                                             <i class="ri-bar-chart-grouped-line"></i></div>
@@ -308,7 +309,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??'2022-01-01'}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -383,7 +384,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??'2022-01-01'}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -458,7 +459,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??'2022-01-01'}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -533,7 +534,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??'2022-01-01'}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"

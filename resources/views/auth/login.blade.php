@@ -64,10 +64,10 @@
                           class=" mt-1 mr-1 spinner-border spinner-border-sm login-spiner" role="status"
                           aria-hidden="true"></span>
                 </button>
-                <div class="sign-info">
-                    <span class="dark-color d-inline-block line-height-2">{{__('app.auth.donothaveaccount')}}<a href="{{ route('register') }}">{{__('app.auth.register')}}</a></span>
+{{--                <div class="sign-info">--}}
+{{--                    <span class="dark-color d-inline-block line-height-2">{{__('app.auth.donothaveaccount')}}<a href="{{ route('register') }}">{{__('app.auth.register')}}</a></span>--}}
 
-                </div>
+{{--                </div>--}}
             </form>
             <!-- Form -->
 
