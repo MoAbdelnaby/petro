@@ -177,7 +177,7 @@
                                                         <td>
                                                             @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
                                                                 @if(isset($last_stability[$branch->branch_code]))
-                                                                    {{$last_stability[$branch->branch_code]['stability']}}
+                                                                    {{$last_stability[$branch->branch_code]->stability??"0 ". __('app.minute')}}
                                                                 @else
                                                                     {{"0 ". __('app.minute')}}
                                                                 @endif
