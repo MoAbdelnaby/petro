@@ -263,12 +263,16 @@ class BranchModelsController extends Controller
                 ->where('created_at', '<=', Carbon::now())
                 ->get();
         } else {
-            $branches = DB::table('last_error_branch_views')->get();
+            $branches = DB::table('last_error_branch_views')
+                ->selectRaw('last_error_branch_views.*,branches.name')
+                ->join('branches','branches.code','=','last_error_branch_views.branch_code')
+                ->get();
+
             Branch::active()->primary()
-                ->whereNotIn('code', $branches->pluck('branch_code'))
                 ->get()
                 ->map(function ($item) use ($branches) {
                     $branches->push((object)[
+                        'name' => $item->name,
                         'branch_code' => $item->code,
                         'user_id' => $item->user_id,
                         'error' => '',
@@ -286,34 +290,33 @@ class BranchModelsController extends Controller
         $off = $branches->count() - $on;
 
         //Last Stability
-        $first_errors = cache()->remember('first_errors', now()->addMinutes(10), fn() => DB::table('branch_net_works')
+        $first_errors = DB::table('branch_net_works')
             ->select('branch_code', DB::raw('MAX(created_at) as start_error'))
             ->where('error', '<>', '"No errors"')
             ->whereYear('created_at', '2022')
             ->groupBy('branch_code')
             ->latest()
-            ->get());
+            ->get();
 
         $last_stability = [];
-
         [$from_total, $to_total] = $this->handleRangeTime($request);
         foreach ($first_errors as $error) {
-            $last_stability[$error->branch_code] = cache()->remember('last_stability', now()->addMinutes(10), fn() => DB::table('branch_net_works')
+            $last_stability[$error->branch_code] = DB::table('branch_net_works')
                 ->select('branch_code', DB::raw('MIN(created_at) as start_date'), DB::raw('MAX(created_at) as end_date'))
                 ->where('error', '=', '"No errors"')
                 ->where('branch_code', '=', $error->branch_code)
                 ->where('created_at', '>=', $error->start_error)
                 ->latest()
                 ->get()
-                ->filter(function ($item) use ($from_total, $to_total) {
+                ->map(function ($item) use ($from_total, $to_total) {
                     $diffMinutes = Carbon::parse($item->start_date)->diffInMinutes($item->end_date);
                     $from_range = true;
                     if ($from_total != 0) {
-                        $from_range = $from_total > $diffMinutes;
+                        $from_range = $diffMinutes > $from_total;
                     }
                     $to_range = true;
                     if ($to_total != 0) {
-                        $to_range = $to_total < $diffMinutes;
+                        $to_range = $diffMinutes < $to_total;
                     }
                     if ($from_range && $to_range) {
                         return [
@@ -323,8 +326,7 @@ class BranchModelsController extends Controller
                         ];
                     }
                     return [];
-                })->first()
-            );
+                })->first();
         }
 
         return view("customer.branches_status.index", compact('branches', 'last_stability', 'off', 'on'));
@@ -362,7 +364,7 @@ class BranchModelsController extends Controller
 
         $steps = $this->stepsQuery($code, $start, $end);
         $charts = $this->prepareChart($steps);
-        $info = ["list" => 'start_date', "unit" => "Hours",];
+        $info = ["list" => 'start_date', "unit" => "Hours"];
 
         return view("customer.branches_status.steps", compact('branch', 'steps', 'info', 'charts'));
     }
@@ -423,7 +425,7 @@ class BranchModelsController extends Controller
         $to_hour = 0;
         $to_minute = 0;
         if (!is_null($request->from_day)) {
-            $from_day = $request->from_day * 60 * 60;
+            $from_day = $request->from_day * 24 * 60;
         }
         if (!is_null($request->from_hour)) {
             $from_hour = $request->from_hour * 60;
@@ -435,7 +437,7 @@ class BranchModelsController extends Controller
         $from_total = ($from_day + $from_hour + $from_minute);
 
         if (!is_null($request->to_day)) {
-            $to_day = $request->to_day * 60 * 60;
+            $to_day = $request->to_day * 24 * 60;
         }
         if (!is_null($request->to_hour)) {
             $to_hour = $request->to_hour * 60;
