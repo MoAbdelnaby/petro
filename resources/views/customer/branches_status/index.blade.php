@@ -160,11 +160,12 @@
                                                 <tbody class="trashbody">
                                                 @foreach($branches as $k => $branch)
                                                     @if(!isset($last_stability[$branch->branch_code]['stability']))
-                                                        @continue;
+                                                        @continue
                                                     @endif
                                                     @if($filter_status == true)
-                                                        @if (!\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
-                                                            @continue;
+                                                        @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
+                                                        @else
+                                                            @continue
                                                         @endif
                                                     @endif
                                                     <tr>

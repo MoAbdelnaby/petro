@@ -259,8 +259,10 @@ class BranchModelsController extends Controller
     {
         if ($request->online_status == 'online') {
             $branches = DB::table('last_error_branch_views')
-                ->where('created_at', '>=', Carbon::now()->subMinutes(15))
-                ->where('created_at', '<=', Carbon::now())
+                ->selectRaw('last_error_branch_views.*,branches.name')
+                ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
+                ->where('last_error_branch_views.created_at', '>=', Carbon::now()->subMinutes(15))
+                ->where('last_error_branch_views.created_at', '<=', Carbon::now())
                 ->get();
         } else {
             $branches = DB::table('last_error_branch_views')
@@ -293,13 +295,14 @@ class BranchModelsController extends Controller
         $first_errors = DB::table('branch_net_works')
             ->select('branch_code', DB::raw('MAX(created_at) as start_error'))
             ->where('error', '<>', '"No errors"')
-            ->whereYear('created_at', '2022')
+            ->whereYear('created_at', now()->format('Y'))
             ->groupBy('branch_code')
             ->latest()
             ->get();
 
         $last_stability = [];
         [$from_total, $to_total] = $this->handleRangeTime($request);
+
         foreach ($first_errors as $error) {
             $last_stability[$error->branch_code] = DB::table('branch_net_works')
                 ->select('branch_code', DB::raw('MIN(created_at) as start_date'), DB::raw('MAX(created_at) as end_date'))
@@ -310,6 +313,7 @@ class BranchModelsController extends Controller
                 ->get()
                 ->map(function ($item) use ($from_total, $to_total) {
                     $diffMinutes = Carbon::parse($item->start_date)->diffInMinutes($item->end_date);
+
                     $from_range = true;
                     if ($from_total != 0) {
                         $from_range = $diffMinutes > $from_total;
