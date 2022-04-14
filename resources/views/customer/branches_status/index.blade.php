@@ -171,7 +171,7 @@
                                                     <tr>
                                                         <td>{{ $k+1 }}</td>
                                                         <td>
-                                                            {{  $branch->name }}
+                                                            {{  $branch->name ?? ''}}
                                                         </td>
                                                         <td>
                                                             @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
