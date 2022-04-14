@@ -6,12 +6,11 @@ use App\BranchNetWork;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\BranchModelsRepo;
 use App\Models\Branch;
-use App\Models\Permission;
-use App\Models\Role;
 use App\Models\UserModel;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -253,7 +252,7 @@ class BranchModelsController extends Controller
 
     /**
      * @return Application|Factory|View
-     * @throws \Exception
+     * @throws Exception
      */
     public function branchesStatus(Request $request)
     {
@@ -289,7 +288,7 @@ class BranchModelsController extends Controller
             ->where('created_at', '<=', Carbon::now())
             ->count();
 
-        $off = $branches->count() - $on;
+        $off = Branch::active()->primary()->count() - $on;
 
         //Last Stability
         $first_errors = DB::table('branch_net_works')

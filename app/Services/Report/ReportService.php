@@ -69,15 +69,9 @@ class ReportService
         $serving = $serving->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
 
         //Handle work-empty duration statistics based on date
-        //1. if statistics in one day calculated based on place_maintenances table
-        //2. if statistics in more one day calculated based on area_duration_day table
         $placeReport = new PlaceReport();
-//        if (Carbon::parse($filter['start'])->format('d') == Carbon::parse($filter['end'])->format('d')) {
-//            [$work, $empty] = $placeReport->handleDurationCustom($filter, $lists);
-//        } else {
         $work = $placeReport->handleDurationDay($filter, 'work', $lists);
         $empty = $placeReport->handleDurationDay($filter, 'empty', $lists);
-//        }
 
         return [
             'active_branches' => $active_branches,
@@ -159,17 +153,10 @@ class ReportService
             $backout = $backout->where('invoice', '=', null)->count();
             $serving = $serving->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
 
-
             //Handle work-empty duration statistics based on date
-            //1. if statistics in one day calculated based on place_maintenances table
-            //2. if statistics in more one day calculated based on area_duration_day table
             $placeReport = new PlaceReport();
-//            if (Carbon::parse($filter['start'])->format('d') == Carbon::parse($filter['end'])->format('d')) {
-//                [$work, $empty] = $placeReport->handleDurationCustom($filter, $lists);
-//            } else {
             $work = $placeReport->handleDurationDay($filter, 'work', $lists);
             $empty = $placeReport->handleDurationDay($filter, 'empty', $lists);
-//            }
 
             $result[] = [
                 'Branch Name' => $branch->name ?? 0,
