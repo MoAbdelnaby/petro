@@ -168,6 +168,11 @@
                                                             @continue
                                                         @endif
                                                     @endif
+                                                    @if(request('online_status') == 'offline')
+                                                        @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
+                                                            @continue
+                                                        @endif
+                                                    @endif
                                                     <tr>
                                                         <td>{{ $k+1 }}</td>
                                                         <td>
