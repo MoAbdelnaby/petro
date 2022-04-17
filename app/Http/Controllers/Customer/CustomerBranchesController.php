@@ -370,15 +370,15 @@ class CustomerBranchesController extends Controller
         $item = $this->repo->findOrFail($id);
         $item->active = !$item->active;
         $item->save();
-        $item->fresh();
+        $data = $item->refresh();
 
         try {
             $post = [
-                'address' => $item->name,
-                'lat' => $item->lat,
-                'lng' => $item->lng,
-                'code' =>$item->code,
-                'active' =>$item->active
+                'address' => $data->name,
+                'lat' => $data->lat,
+                'lng' => $data->lng,
+                'code' =>$data->code,
+                'active' =>$data->active
             ];
 
             $this->sendBranchCoordinates($post);
