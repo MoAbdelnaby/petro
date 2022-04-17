@@ -37,7 +37,7 @@ class PositionController extends Controller
     {
         try {
             $items = $this->repo->orderBy('id', 'DESC')->with('parentPosition')->withCount('users')->get();
-            $trashs = $this->repo->onlyTrashed()->primary()->get();
+            $trashs = $this->repo->onlyTrashed()->withCount('users')->primary()->get();
 
             return view('customer.positions.index', compact('items', 'trashs'));
 

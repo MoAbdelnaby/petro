@@ -52,7 +52,6 @@
                                         <th>{{__('app.Name')}}</th>
                                         <th>{{__('app.description')}}</th>
                                         <th>{{__('app.users_count')}}</th>
-                                        <th>{{__('app.table')}}</th>
                                         <th>{{ __('app.Settings') }}</th>
                                         </thead>
                                         <tbody class="trashbody">
@@ -68,7 +67,7 @@
                                                 </td>
                                                 <td>{{$trash->name}}</td>
                                                 <td>{{$trash->description}}</td>
-                                                <td>{{$trash->users_count}}</td>
+                                                <td>{{$trash->users_count??'---'}}</td>
                                                 <td style='white-space: nowrap'>
                                                     <button style="display: inline-block" type="submit"
                                                             class="trash_restore btn btn-sm btn-primary"
