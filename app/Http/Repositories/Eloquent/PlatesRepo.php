@@ -62,7 +62,7 @@ class PlatesRepo extends AbstractRepo implements PlatesRepoInterface
     private function getData($usermodelbranchid, $start, $end, $starttime = null, $endtime = null)
     {
 
-        $modelrecords = $this->model::where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
+        $modelrecords = $this->model->where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
         if ($start) {
             $modelrecords = $modelrecords->whereDate('date', '>=', $start);
         }
@@ -82,7 +82,7 @@ class PlatesRepo extends AbstractRepo implements PlatesRepoInterface
         $result["status"] = true;
         $result["count"] = $modelrecords->count();
         $result["list"] = $modelrecords;
-        $result["area1"] = $modelrecords = $this->model::where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
+        $result["area1"] = $modelrecords = $this->model->where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
         if ($start) {
             $result["area1"] = $result["area1"]->whereDate('date', '>=', $start);
         }
@@ -98,7 +98,7 @@ class PlatesRepo extends AbstractRepo implements PlatesRepoInterface
         $result["area1"] = $result["area1"]->where('area', 1)->get();
 
 
-        $result["area2"] = $modelrecords = $this->model::where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
+        $result["area2"] = $modelrecords = $this->model->where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
         if ($start) {
             $result["area2"] = $result["area2"]->whereDate('date', '>=', $start);
         }
@@ -112,7 +112,7 @@ class PlatesRepo extends AbstractRepo implements PlatesRepoInterface
             $result["area2"] = $result["area2"]->where('time', '<=', $endtime);
         }
         $result["area2"] = $result["area2"]->where('area', 2)->get();
-        $result["area3"] = $modelrecords = $this->model::where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
+        $result["area3"] = $modelrecords = $this->model->where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
         if ($start) {
             $result["area3"] = $result["area3"]->whereDate('date', '>=', $start);
         }
@@ -126,7 +126,7 @@ class PlatesRepo extends AbstractRepo implements PlatesRepoInterface
             $result["area3"] = $result["area3"]->where('time', '<=', $endtime);
         }
         $result["area3"] = $result["area3"]->where('area', 3)->get();
-        $result["area4"] = $modelrecords = $this->model::where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
+        $result["area4"] = $modelrecords = $this->model->where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
         if ($start) {
             $result["area4"] = $result["area4"]->whereDate('date', '>=', $start);
         }
@@ -201,7 +201,7 @@ class PlatesRepo extends AbstractRepo implements PlatesRepoInterface
     private function getDataexport($usermodelbranchid, $start, $end, $starttime = null, $endtime = null)
     {
 
-        $modelrecordsfilter = $this->model::select('id', 'date')->where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
+        $modelrecordsfilter = $this->model->select('id', 'date')->where('user_model_branch_id', $usermodelbranchid)->where('active', 1);
 
         if ($start) {
             $modelrecordsfilter = $modelrecordsfilter->whereDate('date', '>=', $start);

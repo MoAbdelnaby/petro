@@ -23,7 +23,7 @@ class CustomerRepo extends AbstractRepo implements CustomerRepoInterface
 
     public function getactivePackage()
     {
-        return $this->model::where('user_id', parentID())->where('active', '1')->first();
+        return $this->model->where('user_id', parentID())->where('active', '1')->first();
     }
 
     public function getOldRequests()

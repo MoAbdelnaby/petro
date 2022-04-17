@@ -24,5 +24,4 @@ class BranchFiles extends Model
     {
         return $this->hasOne(Branch::class, 'id', 'branch_id');
     }
-
 }

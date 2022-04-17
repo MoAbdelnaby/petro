@@ -1,27 +1,11 @@
 <!-- Sidebar  -->
 <div class="iq-sidebar">
     <div class="iq-sidebar-logo d-flex justify-content-center p-0">
-        <a href="{{ route('home') }}">
-            {{-- @if (session()->has('darkMode')) --}}
-            {{-- <img alt="Logo" src="{{url('/images')}}/wakeball/wakebwhite.png" class="img-fluid mainlogo" width="50"  alt="" style="height: 33px;"/> --}}
-            {{-- @else --}}
-            {{-- <img  src="{{url('/images')}}/wakeball/wakebdark.png"  class="img-fluid mainlogo" width="50"  alt="" style="height: 33px;"> --}}
-            {{-- @endif --}}
-
-        </a>
-        {{-- <div class="iq-menu-bt-sidebar"> --}}
-        {{-- <div class="iq-menu-bt align-self-center"> --}}
-        {{-- <div class="wrapper-menu "> --}}
-        {{-- <div class="main-circle"><i class="ri-arrow-left-s-line"></i></div> --}}
-        {{-- <div class="hover-circle"><i class="ri-arrow-right-s-line"></i></div> --}}
-        {{-- </div> --}}
-        {{-- </div> --}}
-        {{-- </div> --}}
+        <a href="{{ route('home') }}"></a>
     </div>
     <div id="sidebar-scrollbar">
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu p-0 m-0">
-
                 @hasrole('customer')
                 @if (auth()->user()->type != 'subcustomer')
                     <div
@@ -41,7 +25,6 @@
                     </div>
 
                     <div class="border-bottom clearfix"></div>
-
                     <div
                         class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/map' ? 'active' : '' }}">
                         <div class="col-12 justify-content-center">
@@ -129,6 +112,22 @@
                         <div class="border-bottom clearfix"></div>
 
                     @endcan
+
+                    <div class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/positions' ? 'active' : '' }}">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ url('customer/positions') }}" class="iq-waves-effect">
+                                    <img src="{{ resolveDark() }}/img/icon_menu/positions.svg" alt="Reports" class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ url('customer/positions') }}" class="iq-waves-effect menutext">
+                                    {{ __('app.positions') }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-bottom clearfix"></div>
 
                     <div
                         class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/reports' ? 'active' : '' }}">
@@ -231,7 +230,7 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ route('connection-speed.index') }}" class="iq-waves-effect">
-{{--                                    <i class="fas fa-wifi fa-2x"></i>--}}
+                                    {{--                                    <i class="fas fa-wifi fa-2x"></i>--}}
                                     <img
                                         src="{{ resolveDark() }}/img/icon_menu/wifi.svg" alt="Settings"
                                         class="img-fluid">
@@ -250,7 +249,7 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a target="_blank" href="{{route('branch.register')}}" class="iq-waves-effect">
-{{--                                    <i class="fas fa-building fa-2x"></i>--}}
+                                    {{--                                    <i class="fas fa-building fa-2x"></i>--}}
                                     <img
                                         src="{{ resolveDark() }}/img/icon_menu/building.svg" alt="Settings"
                                         class="img-fluid">
@@ -270,7 +269,7 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ route('branch.message_log') }}" class="iq-waves-effect">
-{{--                                    <i class="fa fa-envelope-open fa-2x"></i>--}}
+                                    {{--                                    <i class="fa fa-envelope-open fa-2x"></i>--}}
                                     <img
                                         src="{{ resolveDark() }}/img/icon_menu/envelope.svg" alt="Settings"
                                         class="img-fluid">
@@ -289,7 +288,7 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ route('service.index') }}" class="iq-waves-effect">
-{{--                                    <i class="fab fa-servicestack fa-2x"></i>--}}
+                                    {{--                                    <i class="fab fa-servicestack fa-2x"></i>--}}
                                     <img
                                         src="{{ resolveDark() }}/img/icon_menu/servicestack.svg" alt="Settings"
                                         class="img-fluid">
@@ -349,8 +348,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                     @endif
                 @endif
 
@@ -419,25 +416,14 @@
                                             class="ri-profile-line"></i>{{ __('app.side_bar.saas_control.modelfeatures') }}
                                     </a></li>
                             @endcan
-                            {{-- @can('list-packageRequests') --}}
-                            <li><a href="{{ route('packageRequests.index') }}"><i
+                            <li>
+                                <a href="{{ route('packageRequests.index') }}"><i
                                         class="ri-profile-line"></i>{{ __('app.side_bar.saas_control.packageRequests') }}
-                                </a></li>
-                            {{-- @endcan --}}
-
-
-                            {{-- @can('list-modelstatus') --}}
-                            {{-- <li><a href="{{route('modelstatus.index')}}"><i class="ri-profile-line"></i>{{__('app.side_bar.saas_control.modelstatus')}}</a></li> --}}
-                            {{-- @endcan --}}
-
-
+                                </a>
+                            </li>
                         </ul>
                     </li>
-
-
-
                     @endhasrole
-
             </ul>
         </nav>
         <div class="p-3"></div>

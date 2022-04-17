@@ -201,7 +201,6 @@ class BranchModelsController extends Controller
         $models = $this->repo->getactiveModels();
         $item = $this->repo->findOrFail($id);
         return view('customer.branchmodels.edit', compact('id', 'item', 'branches', 'models'));
-
     }
 
     /**

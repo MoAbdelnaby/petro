@@ -102,10 +102,10 @@ Route::get('azure-images-upload', function () {
 //    \Illuminate\Support\Facades\Artisan::call('queue:restart');
 //});
 
-Route::group(['prefix' => 'api/exports'], function () {
-    Route::post('heatmap_count', 'Models\DashController@topLowHeatmap');
-    Route::post('heatmap_rate', 'Models\DashController@HeatmapRate');
-});
+//Route::group(['prefix' => 'api/exports'], function () {
+//    Route::post('heatmap_count', 'Models\DashController@topLowHeatmap');
+//    Route::post('heatmap_rate', 'Models\DashController@HeatmapRate');
+//});
 
 Route::get('branch/{code}/status', 'Api\AreaStatusController@status');
 Route::get('getphone', 'Api\AreaStatusController@handle');

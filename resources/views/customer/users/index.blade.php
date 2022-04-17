@@ -71,6 +71,7 @@
                                             </label>
                                         </td>
                                         <th>{{__('app.users.table.name')}}</th>
+                                        <th>{{__('app.users.table.position')}}</th>
                                         <th>{{__('app.users.table.email')}}</th>
                                         <th>{{ __('app.Settings') }}</th>
 
@@ -88,6 +89,7 @@
                                                 </td>
 
                                                 <td>{{$trash->name}}</td>
+                                                <td>{{$trash->position??'--'}}</td>
                                                 <td>{{$trash->email}}</td>
 
                                                 <td style='white-space: nowrap'>
@@ -165,6 +167,7 @@
                                             <th>{{__('app.users.table.image')}}</th>
                                             <th>{{__('app.users.table.name')}}</th>
                                             <th>{{__('app.users.table.Type')}}</th>
+                                            <th>{{__('app.position')}}</th>
                                             <th>{{__('app.users.table.email')}}</th>
                                             <th>{{__('app.users.table.Phone')}}</th>
                                             <th>{{__('app.saas.packages.items.active_branches')}}</th>
@@ -180,6 +183,7 @@
                                                     </td>
                                                     <td>{{$user->name}}</td>
                                                     <td>{{$user->type}}</td>
+                                                    <td>{{$user->position?$user->position->name:'---'}}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>{{ $user->phone??'---' }}</td>
                                                     <td>
@@ -202,20 +206,20 @@
                                                                     $user_brs = json_encode(implode(",",$user_branches));
                                                             @endphp
                                                             @if($user->type != "subadmin")
-                                                            <a class="btn btn-sm btn-info" data-toggle="tooltip"
-                                                               data-placement="top" title=""
-                                                               data-original-title="Assign to Branch"
-                                                               onclick="assign_user_to_branch_model_alert({{ $user->id }},{{ $user_brs }},{{ $branches }},{{ $regions }});"
-                                                               style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>
+                                                                <a class="btn btn-sm btn-info" data-toggle="tooltip"
+                                                                   data-placement="top" title=""
+                                                                   data-original-title="Assign to Branch"
+                                                                   onclick="assign_user_to_branch_model_alert({{ $user->id }},{{ $user_brs }},{{ $branches }},{{ $regions }});"
+                                                                   style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>
                                                             @endif
-                                                        @if(auth()->user()->type =="subadmin"  && $user->type != "subadmin" || auth()->user()->type=="customer")
+                                                            @if(auth()->user()->type =="subadmin"  && $user->type != "subadmin" || auth()->user()->type=="customer")
                                                                 <a class="btn btn-sm btn-primary"
-                                                               href="{{ route('customerUsers.edit',[$user->id]) }}"
-                                                               style="color: white;">{{__('app.customers.branches.edit')}}</a>
-                                                            <a class="btn btn-sm btn-danger" rel="{{ $user->id }}"
-                                                               data-toggle="tooltip" data-placement="top" title=""
-                                                               data-original-title="Delete"
-                                                               onclick="delete_alert({{ $user->id }});">{{__('app.customers.branches.delete')}}</a>
+                                                                   href="{{ route('customerUsers.edit',$user->id) }}"
+                                                                   style="color: white;">{{__('app.customers.branches.edit')}}</a>
+                                                                <a class="btn btn-sm btn-danger" rel="{{ $user->id }}"
+                                                                   data-toggle="tooltip" data-placement="top" title=""
+                                                                   data-original-title="Delete"
+                                                                   onclick="delete_alert({{ $user->id }});">{{__('app.customers.branches.delete')}}</a>
                                                             @endif
                                                         @endif
                                                     </td>
@@ -241,14 +245,37 @@
                                                         </div>
 
                                                         <div class="product-description">
-                                                            <h5><small><span><i class="fas fa-user"></i> {{__('app.users.table.name')}}</span>
-                                                                    : {{$user->name}}</small></h5>
-                                                            <h5><small><span><i class="fas fa-paper-plane"></i> {{__('app.users.table.email')}}</span>
-                                                                    : {{$user->email}}</small></h5>
-                                                            <h5><small><span><i class="fas fa-phone-alt"></i> {{__('app.users.table.Phone')}}</span>
-                                                                    : {{$user->phone}}</small></h5>
+                                                            <h5>
+                                                                <small>
+                                                                    <span>
+                                                                        <i class="fas fa-user"></i>
+                                                                        {{__('app.users.table.name')}}
+                                                                    </span>: {{$user->name}}
+                                                                </small>
+                                                            </h5>
+                                                            <h5>
+                                                                <small>
+                                                                    <span>
+                                                                        <i class="fas fa-paper-plane"></i>
+                                                                        {{__('app.users.table.email')}}
+                                                                    </span>: {{$user->email}}</small>
+                                                            </h5>
+                                                            <h5>
+                                                                <small>
+                                                                    <span>
+                                                                        {{__('app.position')}}
+                                                                    </span>: {{$user->position?$user->position->name:'---'}}
+                                                                </small>
+                                                            </h5>
+                                                            <h5>
+                                                                <small>
+                                                                    <span>
+                                                                        <i class="fas fa-phone-alt"></i>
+                                                                        {{__('app.users.table.Phone')}}
+                                                                    </span>: {{$user->phone??'---'}}
+                                                                </small>
+                                                            </h5>
 
-                                                            {{-- <h5><span>{{__('app.saas.packages.items.active_branches')}}</span> : </h5>--}}
                                                             <div class="border-bottom my-1"></div>
                                                             <h5 class="d-block position-relative">
                                                                 <small><i
@@ -281,7 +308,8 @@
                                                                                 </li>
                                                                             @endforeach
                                                                         @else
-                                                                            <span class="nav-item li-btn-sm "> {{ __('----') }}</span>
+                                                                            <span
+                                                                                class="nav-item li-btn-sm "> {{ __('----') }}</span>
                                                                         @endif
                                                                     </div>
                                                                 </ul>
@@ -307,7 +335,7 @@
                                                                        style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>
                                                                 @endif
                                                                 <a class="btn btn-primary"
-                                                                   href="{{ route('customerUsers.edit',[$user->id]) }}"
+                                                                   href="{{ route('customerUsers.edit',$user->id) }}"
                                                                    style="color: white;">{{__('app.customers.branches.edit')}}</a>
                                                                 <a class="btn btn-danger" data-toggle="tooltip"
                                                                    data-placement="top" title=""

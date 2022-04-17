@@ -23,20 +23,20 @@ Route::get('dark/{code}', 'HomeController@dark')->name('dark');
 Route::post('user_settings/{col}', 'UserSettingsController@update')->name('user_settings');
 Auth::routes();
 
-Route::post('user/password/reset','Auth\UserController@resetPassword')->name('user_reset_password');
+Route::post('user/password/reset', 'Auth\UserController@resetPassword')->name('user_reset_password');
 
 Route::group(['middleware' => ['auth', 'speed']], function () {
     Route::group(['middleware' => 'subCustomerCheck'], function () {
         Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
         Route::get('userNotify', 'HomeController@getNotify')->name('notfication');
 
-        Route::group(['prefix' => 'api/charts'], function () {
-            Route::post('getTotalPeople', 'Models\DashController@getPeopleCount');
-            Route::get('getFilterImage/{id}', 'Models\DashController@FilterImage');
-            Route::post('getHeatMapData', 'Models\DashController@getPositionsData');
-            Route::post('ignoreDisabledData', 'Models\DashController@heatmapDisabledRegion');
-            Route::post('heatmapLowHigh', 'Models\DashController@getPositionsLowHigh');
-        });
+//        Route::group(['prefix' => 'api/charts'], function () {
+//            Route::post('getTotalPeople', 'Models\DashController@getPeopleCount');
+//            Route::get('getFilterImage/{id}', 'Models\DashController@FilterImage');
+//            Route::post('getHeatMapData', 'Models\DashController@getPositionsData');
+//            Route::post('ignoreDisabledData', 'Models\DashController@heatmapDisabledRegion');
+//            Route::post('heatmapLowHigh', 'Models\DashController@getPositionsLowHigh');
+//        });
         Route::group(['prefix' => 'api/map'], function () {
             Route::match(['get', 'post'], 'filter', 'Customer\MapController@filter')->name('map.filter');
             Route::post('plates_filter', 'Customer\MapController@MapPlatesfilter')->name('map.platesFilter');
@@ -72,7 +72,6 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::group(['prefix' => 'saas', 'namespace' => 'Saas'], function () {
             Route::resource('packages', 'PackageController');
             Route::resource('models', 'ModelsController');
-            Route::resource('packageRequests', 'PackageRequestsController');
             Route::resource('modelfeatures', 'ModelFeaturesController')->only(['index', 'show']);
             Route::resource('features', 'FeatureController')->only(['index']);
             Route::get('packages/assignuser/{id}', 'PackageController@assignuser')->name('packages.assignuser');
@@ -84,8 +83,6 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::post('packages/items/{id}/edit', 'PackageController@itemseditpost')->name('packages.edititempost');
             Route::post('packages/items/modelfeatures', 'PackageController@modelfeatures')->name('packages.modelfeatures');
             Route::DELETE('packages/items/delete/{id}', 'PackageController@itemsdelete')->name('packages.deleteitem');
-            Route::DELETE('packageRequests/items/delete/{id}', 'PackageRequestsController@itemsdelete')->name('packageRequests.deleteitem');
-            Route::post('packageRequests/assignUser', 'PackageRequestsController@assignUser')->name('packageRequests.assignUser');
         });
 
         Route::group(['prefix' => 'customer', 'namespace' => 'Customer'], function () {
@@ -125,6 +122,11 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::get('customerPackages/assignuser/{id}', 'CustomerPackagesController@assignuser')->name('customerPackages.assignuser');
             Route::post('customerPackages/assignuser/{id}/create', 'CustomerPackagesController@assignuserpost')->name('customerPackages.assignuserpost');
             Route::post('customerPackages/requestPackage', 'CustomerPackagesController@requestPackage')->name('customerPackages.requestPackage');
+
+            //Position Routes
+            Route::resource('positions', 'PositionController');
+            Route::post('positions/bulkRestore', 'PositionController@restore')->name('positions.bulkRestore');
+            Route::post('positions/bulkDelete', 'PositionController@forceDelete')->name('positions.bulkDelete');
         });
 
         Route::group(['prefix' => 'media', 'namespace' => 'Media'], function () {

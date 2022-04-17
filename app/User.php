@@ -3,7 +3,11 @@
 namespace App;
 
 use App\Models\Branch;
+use App\Models\Position;
 use App\Services\SeederCheck;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -101,7 +105,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
@@ -129,6 +133,10 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @param $builder
+     * @return mixed
+     */
     public function scopeAvailable($builder)
     {
         $builder->where(function ($query) {
@@ -139,17 +147,34 @@ class User extends Authenticatable implements JWTSubject
         return $builder;
     }
 
-    public function branches()
+    /**
+     * @return BelongsToMany
+     */
+    public function branches(): BelongsToMany
     {
         return $this->belongsToMany(Branch::class, 'branches_users');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo('App\User', 'parent_id');
     }
 
-    public function user_settings()
+    /**
+     * @return HasOne
+     */
+    public function position(): HasOne
+    {
+        return $this->hasOne(Position::class, 'id','position_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function user_settings(): HasOne
     {
         return $this->hasOne('App\UserSetting');
     }

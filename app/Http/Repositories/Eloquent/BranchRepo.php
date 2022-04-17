@@ -19,6 +19,6 @@ class BranchRepo extends AbstractRepo implements BranchRepoInterface
 
     public function getactiveBranches()
     {
-        return $this->model::with('region')->where('user_id', parentID())->latest()->get();
+        return $this->model->with('region')->where('user_id', parentID())->latest()->get();
     }
 }

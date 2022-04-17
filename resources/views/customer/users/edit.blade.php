@@ -19,15 +19,20 @@
                         </div>
                         <div class="iq-card-body">
                             <div class="new-user-info">
-                                <form  method="POST"  id="createuser"  action="{{ route('customerUsers.update',[$id]) }}">
+                                <form method="POST" id="createuser"
+                                      action="{{ route('customerUsers.update', $user->id) }}">
                                     @csrf
                                     <input type="hidden" id="form_type" name="form_type" value="edit">
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="row">
 
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
-                                            <label for="name"><i class="fas fa-user"></i> {{__('app.auth.name')}} *</label>
-                                            <input required type="text" name="name" class="form-control  @error('name') is-invalid @enderror" id="name" placeholder="{{__('app.auth.name')}}" value="{{ old('name') ? old('name') :$user->name}}">
+                                            <label for="name"><i class="fas fa-user"></i> {{__('app.auth.name')}}
+                                                *</label>
+                                            <input required type="text" name="name"
+                                                   class="form-control  @error('name') is-invalid @enderror" id="name"
+                                                   placeholder="{{__('app.auth.name')}}"
+                                                   value="{{ $user->name ? $user->name :$user->name}}">
                                             @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -35,8 +40,12 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
-                                            <label for="email"><i class="fas fa-paper-plane"></i>  {{__('app.auth.email')}} *</label>
-                                            <input required type="email"  name="email" class="form-control  @error('email') is-invalid @enderror" id="email" placeholder="{{__('app.auth.email')}}" value="{{ old('email')? old('email') :$user->email }}">
+                                            <label for="email"><i
+                                                    class="fas fa-paper-plane"></i> {{__('app.auth.email')}} *</label>
+                                            <input required type="email" name="email"
+                                                   class="form-control  @error('email') is-invalid @enderror" id="email"
+                                                   placeholder="{{__('app.auth.email')}}"
+                                                   value="{{ $user->email? $user->email :$user->email }}">
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -44,11 +53,15 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
-                                            <label for="phone"><i class="fas fa-phone-alt"></i> {{__('app.auth.phone')}}</label>
-                                            <input  name="phone" type="number"
+                                            <label for="phone"><i class="fas fa-phone-alt"></i> {{__('app.auth.phone')}}
+                                            </label>
+                                            <input name="phone" type="number"
                                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                   min=11 maxlength=13 class="form-control  @error('phone') is-invalid @enderror"
-                                                  @error('phone') is-invalid @enderror id="phone" placeholder="{{__('app.auth.phone')}}" value="{{ old('phone')? old('phone') :$user->phone }}">
+                                                   min=11 maxlength=13
+                                                   class="form-control  @error('phone') is-invalid @enderror"
+                                                   @error('phone') is-invalid @enderror id="phone"
+                                                   placeholder="{{__('app.auth.phone')}}"
+                                                   value="{{ $user->phone? $user->phone :$user->phone }}">
                                             @error('phone')
                                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -57,8 +70,11 @@
 
                                         </div>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
-                                            <label for="password"><i class="fas fa-key"></i> {{__('app.auth.password')}} *</label>
-                                            <input  type="password"  name="password" class="form-control  @error('password') is-invalid @enderror" id="password" placeholder="{{__('app.auth.password')}}">
+                                            <label for="password"><i class="fas fa-key"></i> {{__('app.auth.password')}}
+                                                *</label>
+                                            <input type="password" name="password"
+                                                   class="form-control  @error('password') is-invalid @enderror"
+                                                   id="password" placeholder="{{__('app.auth.password')}}">
                                             @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -67,35 +83,51 @@
                                         </div>
 
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
-                                            <label for="password_confirmation"><i class="fas fa-key"></i> {{__('app.auth.password_confirmation')}}</label>
-                                            <input  type="password" class="form-control mb-0  @error('password_confirmation') is-invalid @enderror" id="password_confirmation" placeholder="{{__('app.auth.password_confirmation')}}"  name="password_confirmation" >
+                                            <label for="password_confirmation"><i
+                                                    class="fas fa-key"></i> {{__('app.auth.password_confirmation')}}
+                                            </label>
+                                            <input type="password"
+                                                   class="form-control mb-0  @error('password_confirmation') is-invalid @enderror"
+                                                   id="password_confirmation"
+                                                   placeholder="{{__('app.auth.password_confirmation')}}"
+                                                   name="password_confirmation">
                                             @error('password_confirmation')
                                             <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
+
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                            <label for="code">{{__('app.position')}}</label>
+                                            <select class="form-control nice-select position_select" name='position_id'>
+                                                <option value="">@lang('app.no_position')</option>
+                                                @foreach ($positions as $position)
+                                                    <option
+                                                        value="{{ $position->id }}" {{ $user->position_id == $position->id ? 'selected' : '' }}>{{ $position->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('position_id')
+                                            <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label class="d-block w-100">&nbsp;&nbsp;</label>
-
-
                                             <label for="speedtest" class="custom-checkbox">
                                                 <span>{{__('app.test_speed')}}</span>
-                                                <input class="trashselect" type="checkbox" {{ $user->speedtest == 1 ? 'checked' : '' }} name="speedtest" id="speedtest" >
+                                                <input class="trashselect" type="checkbox"
+                                                       {{ $user->speedtest == 1 ? 'checked' : '' }} name="speedtest"
+                                                       id="speedtest">
                                                 <span class="checkmark"></span>
                                             </label>
-
-
-                                            {{-- <input type="checkbox" style="" name="speedtest"
-                                                   checked="checked" id="speedtest"
-                                                   class=" @error('speedtest') is-invalid @enderror">
-                                            <label for="speedtest">{{__('app.test_speed')}}</label> --}}
                                             @error('speedtest')
                                             <span class="invalid-feedback" role="alert">
                                                <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror
-
                                         </div>
 
                                     </div>
