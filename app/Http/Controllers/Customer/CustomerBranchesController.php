@@ -186,7 +186,8 @@ class CustomerBranchesController extends Controller
                     'address' => $request->name,
                     'lat' => $request->lat,
                     'lng' => $request->lng,
-                    'code' =>$request->code
+                    'code' =>$request->code,
+                    'active' =>1
                 ];
                 $this->sendBranchCoordinates($post);
             }
@@ -311,7 +312,8 @@ class CustomerBranchesController extends Controller
                     'address' => $request->name,
                     'lat' => $request->lat,
                     'lng' => $request->lng,
-                    'code' =>$request->code
+                    'code' =>$request->code,
+                    'active' =>$branch->active
                 ];
                 $this->sendBranchCoordinates($post);
             }
@@ -368,6 +370,21 @@ class CustomerBranchesController extends Controller
         $item = $this->repo->findOrFail($id);
         $item->active = !$item->active;
         $item->save();
+
+        try {
+            $post = [
+                'address' => $item->name,
+                'lat' => $item->lat,
+                'lng' => $item->lng,
+                'code' =>$item->code,
+                'active' =>$item->active
+            ];
+            $this->sendBranchCoordinates($post);
+
+        }catch (\Exception $e) {
+
+        }
+
         return redirect()->back();
 
     }
