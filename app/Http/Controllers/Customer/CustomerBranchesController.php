@@ -187,7 +187,7 @@ class CustomerBranchesController extends Controller
                     'lat' => $request->lat,
                     'lng' => $request->lng,
                     'code' =>$request->code,
-                    'active' =>1
+                    'active' =>true
                 ];
                 $this->sendBranchCoordinates($post);
             }
@@ -379,7 +379,9 @@ class CustomerBranchesController extends Controller
                 'code' =>$item->code,
                 'active' =>$item->active
             ];
+
             $this->sendBranchCoordinates($post);
+
 
         }catch (\Exception $e) {
 
