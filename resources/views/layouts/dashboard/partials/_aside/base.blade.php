@@ -129,6 +129,22 @@
                     </div>
                     <div class="border-bottom clearfix"></div>
 
+                    <div class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/escalations' ? 'active' : '' }}">
+                        <div class="col-12 justify-content-center">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ url('customer/escalations') }}" class="iq-waves-effect">
+                                    <img src="{{ resolveDark() }}/img/icon_menu/escalations.svg" alt="Reports" class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ url('customer/escalations') }}" class="iq-waves-effect menutext">
+                                    {{ __('app.escalations') }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-bottom clearfix"></div>
+
                     <div
                         class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customer/reports' ? 'active' : '' }}">
                         <div class="col-12 justify-content-center">

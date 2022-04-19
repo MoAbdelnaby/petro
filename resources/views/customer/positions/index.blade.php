@@ -11,7 +11,7 @@
             <div class="text-center alert-cont">
             </div>
             <div class="row col-12 p-0 m-0 text-right d-block mb-2">
-                @if(auth()->user()->type=="customer" || auth()->user()->type==" subadmin" && count($trashs))
+                @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin" && count($trashs))
                     <button type="button" class="btn btn-primary float-left" data-toggle="modal"
                             data-target="#RecycleBin">
                         <i class="fas fa-recycle"></i> {{ __('app.Recycle_Bin') }}
@@ -96,13 +96,11 @@
                     </div>
                 </div>
 
-                @can('create-CustomerBranches')
-                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
-                        <a class="btn btn-primary" href="{{route('positions.create')}}">
-                            <i class="fa fa-plus"></i> {{__('app.new_position')}}
-                        </a>
-                    @endif
-                @endcan
+                @if(in_array(auth()->user()->type,['customer','subadmin']))
+                    <a class="btn btn-primary" href="{{route('positions.create')}}">
+                        <i class="fa fa-plus"></i> {{__('app.new_position')}}
+                    </a>
+                @endif
             </div>
             <div class="row">
                 <div class="col-sm-12">
@@ -129,7 +127,7 @@
                                                         <td>{{$item->users_count}}</td>
                                                         <td>{{optional($item->parentPosition)->name??'----'}}</td>
                                                         <td>
-                                                            @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
+                                                            @if(in_array(auth()->user()->type,['customer','subadmin']))
                                                                 <a class="btn btn-sm btn-info"
                                                                    href="{{ route('positions.edit',[$item->id]) }}">
                                                                     <i class="fas fa-edit"></i> {{__('app.edit')}}

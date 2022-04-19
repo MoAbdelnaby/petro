@@ -92,7 +92,7 @@
                                                             </td>
                                                             <td>{{$item->type }}</td>
                                                             <td>
-                                                                @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
+                                                                @if(in_array(auth()->user()->type,['customer','subadmin']))
                                                                     @if($item->status && Storage::disk('public')->exists($item->url))
                                                                         <a class="btn btn-sm btn-primary"
                                                                            href="{{Storage::disk('public')->url($item->url) }}">{{__('app.customers.branches.download')}}</a>

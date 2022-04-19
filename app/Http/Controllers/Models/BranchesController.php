@@ -182,7 +182,7 @@ class BranchesController extends Controller
 
         } elseif ($user->type == "customer" || $user->type == "subadmin") {
 
-            if ($current_branch->user_id != $user->id && $user->type != "subadmin" ) {
+            if ($current_branch->user_id != $user->id && $user->type != "subadmin") {
                 return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
             }
 
@@ -501,7 +501,7 @@ class BranchesController extends Controller
         } elseif ($user->type == "customer" || $user->type == "subadmin") {
 
 
-            if ($current_branch->user_id != $user->id && $user->type != "subadmin" ) {
+            if ($current_branch->user_id != $user->id && $user->type != "subadmin") {
                 return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
             }
 
@@ -588,9 +588,9 @@ class BranchesController extends Controller
         $filter = ['show_by' => 'branch', 'branch_type' => 'branch', 'branch_data' => $current_branch->id];
         $invoice_chart = ReportService::handle('invoice', $filter);
         $duration_ratio = ReportService::handle('stayingAverage', $filter);
-
         $invoice_chart = !empty($invoice_chart['charts']) ? $invoice_chart['charts']['bar'] : [];
-        if (empty($invoice_chart['charts'])) {
+
+        if (empty($duration_ratio['charts'])) {
             $duration_ratio = 0;
         } else {
             $duration_ratio = round(array_sum(\Arr::pluck($duration_ratio['charts']['bar'], 'value')) / 3);
@@ -797,9 +797,16 @@ class BranchesController extends Controller
             }
         }
 
-        $invoice_chart = ReportService::invoiceComparisonReport('custom', [$current_branch->id], $start, $end);
-        $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$current_branch->id], $start, $end);
-        $duration_ratio = $duration_ratio[0]['duration'] ?? 0;
+        $filter = ['show_by' => 'branch', 'branch_type' => 'branch', 'branch_data' => $current_branch->id];
+        $invoice_chart = ReportService::handle('invoice', $filter);
+        $duration_ratio = ReportService::handle('stayingAverage', $filter);
+
+        $invoice_chart = !empty($invoice_chart['charts']) ? $invoice_chart['charts']['bar'] : [];
+        if (empty($duration_ratio['charts'])) {
+            $duration_ratio = 0;
+        } else {
+            $duration_ratio = round(array_sum(\Arr::pluck($duration_ratio['charts']['bar'], 'value')) / 3);
+        }
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
 

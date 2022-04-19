@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
  */
-
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('lang/{lang}', 'HomeController@select')->name('select');
@@ -29,14 +27,6 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
     Route::group(['middleware' => 'subCustomerCheck'], function () {
         Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
         Route::get('userNotify', 'HomeController@getNotify')->name('notfication');
-
-//        Route::group(['prefix' => 'api/charts'], function () {
-//            Route::post('getTotalPeople', 'Models\DashController@getPeopleCount');
-//            Route::get('getFilterImage/{id}', 'Models\DashController@FilterImage');
-//            Route::post('getHeatMapData', 'Models\DashController@getPositionsData');
-//            Route::post('ignoreDisabledData', 'Models\DashController@heatmapDisabledRegion');
-//            Route::post('heatmapLowHigh', 'Models\DashController@getPositionsLowHigh');
-//        });
         Route::group(['prefix' => 'api/map'], function () {
             Route::match(['get', 'post'], 'filter', 'Customer\MapController@filter')->name('map.filter');
             Route::post('plates_filter', 'Customer\MapController@MapPlatesfilter')->name('map.platesFilter');
@@ -127,6 +117,10 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::resource('positions', 'PositionController');
             Route::post('positions/bulkRestore', 'PositionController@restore')->name('positions.bulkRestore');
             Route::post('positions/bulkDelete', 'PositionController@forceDelete')->name('positions.bulkDelete');
+
+            //Escalations Routs
+            Route::resource('escalations', 'EscalationController')->except('show');
+            Route::put('escalations/branch-status/update', 'EscalationController@updateBranchStatus')->name('escalations.updateStatus');
         });
 
         Route::group(['prefix' => 'media', 'namespace' => 'Media'], function () {

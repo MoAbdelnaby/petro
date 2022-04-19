@@ -756,14 +756,13 @@
     <script src="{{asset('js/config.js')}}"></script>
     <script src="{{asset('js/report/invoice.js')}}"></script>
     <script>
+        branchInvoiceBar('invoiceChart',@json($invoice_chart));
 
-
-        {{--comparisonInvoiceBar('invoiceChart',@json($invoice_chart));--}}
-        {{--$.ajaxSetup({--}}
-        {{--    headers: {--}}
-        {{--        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-        {{--    }--}}
-        {{--});--}}
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
         var you_sure = "{{ __('app.Are_you_sure_to_send') }}",
             message = "{{ __('app.message') }}",

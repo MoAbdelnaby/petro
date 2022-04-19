@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Console\Commands\BranchStatusApi;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\BranchRepo;
 use App\Http\Repositories\Eloquent\CustomerRepo;
@@ -11,11 +12,15 @@ use App\Models\Package;
 use App\Models\PackageRequest;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
+use App\Notifications\BranchStatusNotification;
 use App\Services\ConfigService;
 use App\Services\Report\ReportService;
 use App\User;
 use App\userSetting;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +47,10 @@ class CustomerPackagesController extends Controller
         $this->branchRepo = $branchRepo;
     }
 
+    /**
+     * @return View
+     * @throws Exception
+     */
     public function statistics()
     {
         $config = ConfigService::get();
@@ -71,7 +80,7 @@ class CustomerPackagesController extends Controller
         }
 
         return view('customerhome', [
-            'statistics' => ReportService::statistics($filter['start'] , $filter['end']),
+            'statistics' => ReportService::statistics($filter['start'], $filter['end']),
             'report' => $report,
             'config' => $config,
             'off' => $off,
@@ -83,7 +92,7 @@ class CustomerPackagesController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
@@ -143,7 +152,7 @@ class CustomerPackagesController extends Controller
     /**
      * Create the Package for dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function create()
     {
@@ -182,7 +191,7 @@ class CustomerPackagesController extends Controller
      * update the Permission for dashboard.
      *
      * @param Permission $permission
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function edit($id)
     {

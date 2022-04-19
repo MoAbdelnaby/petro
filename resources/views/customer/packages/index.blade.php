@@ -45,7 +45,7 @@
                                                 @endforeach
                                             </ul>
                                         </div>
-                                        @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
+                                        @if(in_array(auth()->user()->type,['customer','subadmin']))
                                             <div class="additional-product-action row justify-content-center mt-3">
                                                 @if($package)
                                                     <div class="product-action ml-2">
@@ -160,7 +160,7 @@
                                                                 @endforeach
                                                             </td>
                                                             <td class="col-3">
-                                                                @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
+                                                                @if(in_array(auth()->user()->type,['customer','subadmin']))
 
                                                                     <span class="text-center  border-0 border-radius-0">
                                                                         <a class="btn btn-info waves-effect waves-light"
@@ -287,7 +287,7 @@
                                                             <div class="ratting-item-div">
                                                                 <div class="clearfix border-bottom mt-1 mb-1"></div>
                                                                 <ul class="ratting-item d-flex align-items-center justify-content-center p-0 m-0 pb-2">
-                                                                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
+                                                                    @if(in_array(auth()->user()->type,['customer','subadmin']))
                                                                         <li class="text-center  border-0 border-radius-0 mr-1"
                                                                             style="">
                                                                             <a class="btn btn-info waves-effect waves-light"

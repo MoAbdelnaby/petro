@@ -70,7 +70,7 @@
                                                                             <ul class="ratting-item d-flex align-items-center justify-content-center p-0 m-0">
 
 
-                                                                                @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
+                                                                                @if(in_array(auth()->user()->type,['customer','subadmin']))
                                                                                 <li class="text-center" style="background-color: var(--iq-primary);margin:auto;padding: 3px 0;border-right:1px solid #eee;border-radius:0 0 0 10px;color: white;width:50%;font-size: 16px;"> <a  href="{{ route('customerPackages.packageDetails',[$item->id]) }}" style="color: white;">{{__('app.saas.packages.items.Show')}}</a></li>
                                                                                <li class="text-center" style="background-color: var(--iq-primary);margin:auto;padding: 3px 0;border-radius:0 0 10px 0; width:50%;color: white;font-size: 16px;"> <a  href=""  onclick="submit_form('package_request_form');"  style="color: white;">{{__('app.customers.packages.table.upgrade')}}</a></li>
 @endif

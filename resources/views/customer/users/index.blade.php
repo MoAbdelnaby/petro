@@ -119,7 +119,7 @@
                 </div>
 
                 @can('create-CustomerUsers')
-                    @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
+                    @if(in_array(auth()->user()->type,['customer','subadmin']))
                         <a class="btn btn-primary" href="{{route('customerUsers.create')}}">
                             <i class="fas fa-plus"></i> &nbsp;{{__('app.new')}}
                         </a>
@@ -198,7 +198,7 @@
                                                         @endif
                                                     </td>
                                                     <td style="width: max-content;display: inline-block">
-                                                        @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
+                                                        @if(in_array(auth()->user()->type,['customer','subadmin']))
                                                             @php
                                                                 $user_branches = [];
                                                                     foreach ($user->branches as $brn)
@@ -319,7 +319,7 @@
                                                     <div class="border-bottom my-2"></div>
                                                     <div class="col-12">
                                                         <div class="text-center px-0 pb-2">
-                                                            @if(auth()->user()->type=="customer" || auth()->user()->type=="subadmin")
+                                                            @if(in_array(auth()->user()->type,['customer','subadmin']))
                                                                 @php
                                                                     $user_branches = [];
                                                                         foreach ($user->branches as $brn)

@@ -168,7 +168,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function position(): HasOne
     {
-        return $this->hasOne(Position::class, 'id','position_id');
+        return $this->hasOne(Position::class, 'id', 'position_id');
     }
 
     /**

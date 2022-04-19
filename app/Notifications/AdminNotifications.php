@@ -63,7 +63,6 @@ class AdminNotifications extends Notification
             'user_type' => $this->notificationData['type'],
             'created_by' => $this->name,
             'message' => 'add_user_notification_message',
-
             'come_from' => 'user_model',
         ];
     }
