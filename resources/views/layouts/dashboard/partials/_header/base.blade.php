@@ -110,20 +110,6 @@
                                     </span>
                                 @endforeach
                                 <a href="{{ route("notfication") }}" class="text-center">{{ __('app.show_all') }}</a>
-
-                                {{--                                @foreach($oldRequest as $old)--}}
-                                {{--                                    <a href=""  onclick="delete_oldrequest('saas/packageRequests/items/delete',{{$old->id}});" class="iq-sub-card notify{{$old->id}}" id="row{{$old->id}}">--}}
-                                {{--                                        <div class="media align-items-center">--}}
-                                {{--                                            <div class="">--}}
-                                {{--                                                <img class="avatar-40 rounded" src="{{url('/')}}/images/user/1.jpg" alt="">--}}
-                                {{--                                            </div>--}}
-                                {{--                                            <div class="media-body ml-3">--}}
-                                {{--                                                <h6 class="mb-0 ">{{ __('app.Your_Request_to') }} {{$old->package->name}} {{ __('app.has_been') }}  {{$old->status}}</h6>--}}
-                                {{--                                                <small class="float-right font-size-12">{{$old->created_at->diffForHumans()}}</small>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a>--}}
-                                {{--                                @endforeach--}}
                             </div>
                         </div>
                     </div>

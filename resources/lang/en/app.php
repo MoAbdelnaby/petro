@@ -1659,5 +1659,8 @@ return [
     'add_this_position' => 'Add This Position',
     'update_position' => 'Update Position',
     'add' => 'Add',
-    'action_took_success' => 'Action taken Successfully'
+    'action_took_success' => 'Action taken Successfully',
+    'branch_name_is' => 'Branch Name',
+    'branch_code_is' => 'Branch Code',
+    'region_name_is' => 'Region Name',
 ];

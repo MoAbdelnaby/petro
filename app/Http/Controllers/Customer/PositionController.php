@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\PositionRepo;
 use App\Http\Requests\PositionRequest;
+use App\Http\Resources\PositionResource;
 use App\Models\Position;
-use App\userSetting;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -36,14 +36,46 @@ class PositionController extends Controller
     public function index()
     {
         try {
-            $items = $this->repo->orderBy('id', 'DESC')->with('parentPosition')->withCount('users')->get();
+            $query = $this->repo->orderBy('parent_id', 'ASC');
+            $items = $query->with('parentPosition')->withCount('users')->get();
             $trashs = $this->repo->onlyTrashed()->withCount('users')->primary()->get();
 
-            return view('customer.positions.index', compact('items', 'trashs'));
+            $positions = PositionResource::make($query->get());
+
+            $tree = "<ul class='tree'>";
+            foreach ($positions as $position) {
+                $tree .= "<li><span>{$position['name']}</span>";
+                if (count($position['children'])) {
+                    $tree .= $this->childView($position);
+                }
+            }
+            $tree .= '<ul>';
+
+            return view('customer.positions.index', compact('items', 'tree', 'trashs'));
 
         } catch (\Exception $e) {
             return unKnownError($e->getMessage());
         }
+    }
+
+    /**
+     * @param $position
+     * @return string
+     */
+    private function childView($position)
+    {
+
+        $html = '<ul>';
+        foreach ($position['children'] as $arr) {
+            $html .= "<li><span>{$arr['name']}</span>";
+            if (count($arr['children'])) {
+                $html .= $this->childView($arr);
+            } else {
+                $html .= "</li>";
+            }
+        }
+        $html .= "</ul>";
+        return $html;
     }
 
     /**
