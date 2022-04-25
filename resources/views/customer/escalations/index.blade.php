@@ -31,8 +31,8 @@
     .odd-row .treeItem .AddNew {
         width: 60px;
         height: 60px;
-        border: 3px solid #fff;
-        display: block;
+        border: 3px solid #ad2cca;
+        display: none;
         position: absolute;
         top: 35px;
         right: -30px;
@@ -42,15 +42,15 @@
         background: #fff;
         font-size: 32px;
         color: #ad2cca;
-        transform: rotate(-45deg) rotateX(90deg);
+        transform: rotate(-45deg);
         transition: all ease-in-out .4s;
         cursor: pointer;
     }
     .even-row .treeItem .AddNew {
         width: 60px;
         height: 60px;
-        border: 3px solid #fff;
-        display: block;
+        border: 3px solid #ad2cca;
+        display: none;
         position: absolute;
         top: 35px;
         left: -30px;
@@ -60,26 +60,24 @@
         background: #fff;
         font-size: 32px;
         color: #ad2cca;
-        transform: rotate(-45deg) rotateX(90deg);
+        transform: rotate(-45deg);
         transition: all ease-in-out .4s;
         cursor: pointer;
     }
     .AddNew i {
-        transition: all ease-in-out .4s;
-        transform: rotate(135deg);
-        border: 2px solid #fff;
+        border: 2px solid #ad2cca;
         display: block;
         height: 100%;
         line-height: 50px;
-    }
-    .treeItem:hover .AddNew{
-        transform: rotate(45deg) rotateX(0deg);
-        transition: all ease-in-out .4s;
+        transform: rotate(45deg);
 
     }
-    .treeItem:hover .AddNew i{
-        transform: rotate(-45deg);
-        transition: all ease-in-out .4s;
+
+    .treeItems .AddNew{
+        display: none;
+    }
+    .treeItems .col-12.row:last-child .AddNew:last-child{
+        display: block;
     }
     .odd-row .delete-item {
         border-radius: 34px;
@@ -246,7 +244,7 @@
                             </div>
                         </div>
                         <div class="iq-card-body p-2">
-
+                            @if(count($positions))
                             <div class="row pb-5 px-2">
                                 <div class="endRowTree left">
                                     {{-- <div class="endrowItem"></div> --}}
@@ -259,12 +257,21 @@
                                 <div class="endRowTree right">
                                     {{-- <div class="endrowItem"></div> --}}
                                 </div>
-            
+                                <div class="col-12 text-center mt-5">
+                                    <span id="SaveChanges">Save</span>
+                                </div>
                             </div>
+                            @else
+                            <div class="text-center col-12 p-5">
+                                <h3 class="mb-3">
+                                    <i class="fa fa-sitemap"></i>
+                                    No Positions Found</h3>
+                                    <a class="btn btn-primary" href="{{ route('positions.create') }}">Add New Position</a>
+                            </div>
+                                
+                            @endif
 
-                            <div class="col-12 text-center">
-                                <span id="SaveChanges">Save</span>
-                            </div>
+                            
 
                         </div>
                     </div>
@@ -339,12 +346,17 @@
                                 `</span>`+
                             `</span>`+
                         `</h4>`+
-                        `<span class="AddNew">`+
-                            `<i class="fa fa-layer-plus"></i>`+
-                        `</span>`+
                     `</div>`;
                     $('.row.col .row.col-12:nth-child('+Math.ceil(i/4)+')').append(ItemHtml);
                 }
+
+
+                var addNew = `<span class="AddNew">`+
+                            `<i class="fa fa-layer-plus"></i>`+
+                        `</span>`;
+
+                        $('.treeItem .AddNew').remove();
+                        $('.treeItem:last-child').append(addNew);
 
             }
             drowTree(escalations);
