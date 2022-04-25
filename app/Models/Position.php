@@ -60,4 +60,26 @@ class Position extends Model
     {
         return $this->hasOne(Position::class, 'id', 'parent_id');
     }
+
+    /**
+     * @return HasMany
+     */
+    public function children(): HasMany
+    {
+        $locations_users = \DB::table('users_locations')
+            ->where('user_id', auth()->id())
+            ->pluck('location_id')
+            ->toArray();
+
+        $model = Models::where('name', 'FireModel')->first();
+
+        $locations_models = \DB::table('models_locations')
+            ->where('model_id', $model->id)
+            ->pluck('location_id')
+            ->toArray();
+
+        $locations = array_intersect($locations_users, $locations_models);
+
+        return $this->hasMany(__CLASS__, 'parent_id')->whereIn('id', $locations);
+    }
 }
