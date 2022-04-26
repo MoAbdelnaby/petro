@@ -322,7 +322,11 @@
     <script>
         $(document).ready(function () {
             var escalations = [];
-            escalations = @json($escalations);
+            @if(count($escalations))
+                escalations = @json($escalations);
+            @else
+                escalations = [{position: 0, time: 60}];
+            @endif
 
             drawTree(escalations);
 
