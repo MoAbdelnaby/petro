@@ -44,7 +44,15 @@ class PositionController extends Controller
 
             $tree = "<ul class='tree'>";
             foreach ($positions as $position) {
-                $tree .= "<li><span>{$position['name']}</span>";
+                $tree .= "<li><span>{$position['name']}</span>
+                        <a class='btn btn-sm btn-info'
+                           href=" . route('positions.edit', [$position['id']]) . " >
+                            <i class='fas fa-edit' ></i>
+                        </a >
+                        <a class='btn btn-sm btn-danger'
+                           onclick=delete_alert(" . $position['id'] . ")>
+                           <i class='fas fa-trash-alt'></i>
+                           </a>";
                 if (count($position['children'])) {
                     $tree .= $this->childView($position);
                 }
@@ -64,17 +72,25 @@ class PositionController extends Controller
      */
     private function childView($position)
     {
-
         $html = '<ul>';
         foreach ($position['children'] as $arr) {
-            $html .= "<li><span>{$arr['name']}</span>";
+            $html .= "<li><span>{$arr['name']}</span>
+                     <a class='btn btn-sm btn-info'
+                       href=" . route('positions.edit', [$arr['id']]) . " >
+                        <i class='fas fa-edit' ></i>
+                    </a >
+                    <a class='btn btn-sm btn-danger'
+                       onclick=delete_alert(" . $arr['id'] . ")>
+                       <i class='fas fa-trash-alt'></i>
+                       </a>";
+
             if (count($arr['children'])) {
                 $html .= $this->childView($arr);
             } else {
-                $html .= "</li>";
+                $html .= "</li > ";
             }
         }
-        $html .= "</ul>";
+        $html .= "</ul > ";
         return $html;
     }
 
@@ -139,13 +155,13 @@ class PositionController extends Controller
     }
 
     /**
-     * @param $id
+     * @param Position $position
      * @return JsonResponse
      */
-    public function destroy($id): JsonResponse
+    public function destroy(Position $position): JsonResponse
     {
         try {
-            $this->repo->delete($id);
+            $position->delete();
 
             return response()->json(['danger' => __('app.position_deleted_success')]);
 
@@ -161,7 +177,9 @@ class PositionController extends Controller
     public function restore(Request $request): RedirectResponse
     {
         try {
-            $this->repo->onlyTrashed()->find($request->trashs)->each(fn($e) => $e->restore());
+            $this->repo->onlyTrashed()->find($request->trashs)->each(function($e) {
+                $e->restore();
+            });
 
             return redirect(url('customer/positions'))->with('success', __('app.success_restore_message'));
         } catch (\Exception $e) {
@@ -176,7 +194,9 @@ class PositionController extends Controller
     public function forceDelete(Request $request): RedirectResponse
     {
         try {
-            $this->repo->onlyTrashed()->find($request->trashs)->each(fn($e) => $e->forceDelete());
+            $this->repo->onlyTrashed()->find($request->trashs)->each(function($e) {
+                $e->forceDelete();
+            });
 
             return redirect(url('customer/positions'))->with('success', __('app.success_delete_message'));
         } catch (\Exception $e) {

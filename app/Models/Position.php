@@ -19,6 +19,29 @@ class Position extends Model
     protected $fillable = ['name', 'description', 'parent_id', 'user_id'];
 
     /**
+     * @return void
+     */
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function($position) {
+            foreach($position->children as $child){
+                $child->delete();
+            }
+        });
+        static::restoring(function($position) {
+            foreach($position->children as $child){
+                $child->restore();
+            }
+        });
+        static::forceDeleted(function($position) {
+            foreach($position->children as $child){
+                $child->forceDelete();
+            }
+        });
+    }
+
+    /**
      * @param $query
      * @return mixed
      */
@@ -66,20 +89,6 @@ class Position extends Model
      */
     public function children(): HasMany
     {
-        $locations_users = \DB::table('users_locations')
-            ->where('user_id', auth()->id())
-            ->pluck('location_id')
-            ->toArray();
-
-        $model = Models::where('name', 'FireModel')->first();
-
-        $locations_models = \DB::table('models_locations')
-            ->where('model_id', $model->id)
-            ->pluck('location_id')
-            ->toArray();
-
-        $locations = array_intersect($locations_users, $locations_models);
-
-        return $this->hasMany(__CLASS__, 'parent_id')->whereIn('id', $locations);
+        return $this->hasMany(__CLASS__, 'parent_id')->with('children');
     }
 }
