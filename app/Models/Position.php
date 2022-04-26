@@ -29,13 +29,15 @@ class Position extends Model
                 $child->delete();
             }
         });
+
         static::restoring(function($position) {
-            foreach($position->children as $child){
+            foreach($position->children()->withTrashed()->get() as $child){
                 $child->restore();
             }
         });
+
         static::forceDeleted(function($position) {
-            foreach($position->children as $child){
+            foreach($position->children()->withTrashed()->get() as $child){
                 $child->forceDelete();
             }
         });

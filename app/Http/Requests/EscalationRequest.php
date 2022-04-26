@@ -26,8 +26,7 @@ class EscalationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'position_id' => 'required|numeric|exists:positions,id',
-            'time_minute' => 'required|numeric',
+            'items' => 'required|json',
         ];
     }
 

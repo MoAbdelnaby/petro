@@ -196,7 +196,7 @@
 
                 @if(in_array(auth()->user()->type,['customer','subadmin']))
                     <a class="btn btn-primary" href="{{route('positions.create')}}">
-                        <i class="fa fa-plus"></i> {{__('app.new_position')}}
+                        <i class="fa fa-plus"></i> {{__('app.add_new_position')}}
                     </a>
                 @endif
             </div>
@@ -204,51 +204,19 @@
                 <div class="col-sm-12">
                     <div class="iq-card">
                         <div class="iq-card-body Regions">
-                            <div class="row">
-                                <div class="col-sm-12 mt-3 related-product">
-                                    <figure>
-                                          {!! $tree !!}
-                                    </figure>
-                                    <div class="related-product-block position-relative">
-                                        <div class="product_table table-responsive row p-0 m-0 col-12">
-                                            <table class="table dataTable ui celled table-bordered text-center">
-                                                <thead>
-                                                <th>{{ __('app.Name') }}</th>
-                                                <th>{{ __('app.description') }}</th>
-                                                <th>{{ __('app.users_count') }}</th>
-                                                <th>{{ __('app.parent') }}</th>
-                                                <th>{{ __('app.Settings') }}</th>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($items as $item)
-                                                    <tr class="item{{$item->id}}">
-                                                        <td>{{$item->name}}</td>
-                                                        <td>{{$item->description}}</td>
-                                                        <td>{{$item->users_count}}</td>
-                                                        <td>{{optional($item->parentPosition)->name??'----'}}</td>
-                                                        <td>
-                                                            @if(in_array(auth()->user()->type,['customer','subadmin']))
-                                                                <a class="btn btn-sm btn-info"
-                                                                   href="{{ route('positions.edit',[$item->id]) }}">
-                                                                    <i class="fas fa-edit"></i> {{__('app.edit')}}
-                                                                </a>
-                                                                <a class="btn btn-sm btn-danger"
-                                                                   style="cursor: pointer;" data-toggle="tooltip"
-                                                                   data-placement="top" title=""
-                                                                   data-original-title="Delete"
-                                                                   onclick="delete_alert({{ $item->id }});"><i
-                                                                        class="fas fa-trash-alt"></i> {{__('app.delete')}}
-                                                                </a>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                            @if(count($positions))
+                                <figure>{!! $tree !!}</figure>
+                            @else
+                                <div class="text-center col-12 p-5">
+                                    <h3 class="mb-5">
+                                        <i class="fa fa-sitemap"></i>
+                                        @lang('app.no_position_found')
+                                    </h3>
+                                    <a class="btn btn-info" href="{{route('positions.create')}}">
+                                        <i class="fa fa-plus"></i> {{__('app.add_new_position')}}
+                                    </a>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

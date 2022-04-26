@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Console\Commands\BranchStatusApi;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\BranchRepo;
 use App\Http\Repositories\Eloquent\CustomerRepo;
@@ -12,7 +11,6 @@ use App\Models\Package;
 use App\Models\PackageRequest;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
-use App\Notifications\BranchStatusNotification;
 use App\Services\ConfigService;
 use App\Services\Report\ReportService;
 use App\User;

@@ -347,9 +347,9 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($item->invoiceUrl)
+                                                        @if($item->fileUrl)
                                                             <a target="_blank" style="padding: 0 5px 0 5px"
-                                                               href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceUrl}}"
+                                                               href="{{config('app.azure_storage').config('app.azure_container').$item->fileUrl}}"
                                                                class="btn btn-info">
                                                                 @lang('app.View')
                                                             </a>

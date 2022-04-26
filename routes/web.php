@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use App\Services\InserBranchData;
 use Carbon\Carbon;

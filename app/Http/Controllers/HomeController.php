@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendWelcomeMessage;
-use App\Models\Branch;
-use App\User;
-use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Session;
 
@@ -64,9 +60,13 @@ class HomeController extends Controller
         }
     }
 
-    public function getNotify() {
-        $notfications = \DB::table("notifications")->where("notifiable_id",Auth::id())->orderBy("created_at","DESC")->paginate(25);
-//        return response()->json(json_decode($notfications['data'][0]->data)->message);
-        return view('notfication',compact('notfications'));
+    /**
+     * @return View
+     */
+    public function getNotify()
+    {
+        $notfications = \DB::table("notifications")->where("notifiable_id", Auth::id())->orderBy("created_at", "DESC")->paginate(25);
+
+        return view('notfication', compact('notfications'));
     }
 }

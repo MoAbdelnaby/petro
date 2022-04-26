@@ -757,20 +757,19 @@ function delete_option(url) {
                         toast.addEventListener('mouseenter', Swal.stopTimer)
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }
-                })
-                if (data) {
+                });
 
-                    location.reload();
-
-                    $('#row' + Delete_Key).css('background', '#FF4D4D');
-                    $('#row' + Delete_Key).fadeOut(1200);
-                    $('.item' + Delete_Key).fadeOut(1200);
-                    Delete_Key = 0;
-                } else {
-                    $('.errdiv').show();
-                    $('.err').html(data);
-                    $('.errdiv').fadeOut(5000);
-                }
+                // if (data) {
+                //     location.reload();
+                //     $('#row' + Delete_Key).css('background', '#FF4D4D');
+                //     $('#row' + Delete_Key).fadeOut(1200);
+                //     $('.item' + Delete_Key).fadeOut(1200);
+                //     Delete_Key = 0;
+                // } else {
+                //     $('.errdiv').show();
+                //     $('.err').html(data);
+                //     $('.errdiv').fadeOut(5000);
+                // }
 
                     var session = 'Item Deleted Successfully';
                     const Toast1 = Swal.mixin({

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SendInvoiceMessage;
 use App\Models\Branch;
 use App\Models\Carprofile;
-use App\Models\InvoiceLog;
+use App\Models\TemplateFileLog;
 use App\Models\MessageLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -77,7 +77,7 @@ class TemplateMessageController extends Controller
             ]);
 
 
-           $invoice = InvoiceLog::create([
+           $invoice = TemplateFileLog::create([
                 'PlateNumber' => $PlateNumber,
                 'invoice' => $request->invoice,
                 'distance' => $request->distance,
@@ -108,7 +108,7 @@ class TemplateMessageController extends Controller
             return response()->json(['success'=>false,'message' => 'No invoice found'], 500);
         }
 
-        $path = config('app.azure_storage') . config('app.azure_container') . $data->invoiceUrl;
+        $path = config('app.azure_storage') . config('app.azure_container') . $data->fileUrl;
 
         return response()->json(['invoice'=>$path,'name'=>basename($path),'rowid'=>$request->carprofile_id]);
 

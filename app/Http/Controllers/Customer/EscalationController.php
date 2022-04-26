@@ -7,10 +7,12 @@ use App\Http\Requests\EscalationRequest;
 use App\Models\Escalation;
 use App\Models\EscalationBranch;
 use App\Models\Position;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class EscalationController extends Controller
 {
@@ -28,8 +30,13 @@ class EscalationController extends Controller
     public function index()
     {
         try {
+            $escalations = Escalation::primary()->orderBy('sort', 'ASC')
+                ->selectRaw('position_id as position, time_minute as time')
+                ->get()
+                ->toArray();
+
             return view('customer.escalations.index', [
-                'escalations' => Escalation::primary()->orderBy('sort', 'ASC')->get(),
+                'escalations' => $escalations,
                 'positions' => Position::primary()->latest()->get()
             ]);
         } catch (\Exception $e) {
@@ -45,12 +52,20 @@ class EscalationController extends Controller
     {
         try {
             $data = $request->validated();
-            $data['sort'] = Escalation::primary()->max('sort') ? Escalation::primary()->max('sort') + 1 : 0;
+            Escalation::query()->delete();
+
+            $escalations = json_decode($data['items'], true);
+
             $data['user_id'] = parentID();
+            foreach ($escalations as $index => $escalation) {
+                if ($escalation['position'] == 0) continue;
+                $data['sort'] = $index;
+                $data['time_minute'] = $escalation['time'];
+                $data['position_id'] = $escalation['position'];
+                Escalation::create($data);
+            }
 
-            Escalation::create($data);
-
-            return redirect(url('customer/escalations'))->with('success', __('app.escalation_created_success'));
+            return redirect(url('customer/escalations'))->with('success', __('app.escalation_updated_success'));
         } catch (\Exception $e) {
             return unKnownError($e->getMessage());
         }
@@ -77,13 +92,16 @@ class EscalationController extends Controller
 
     /**
      * @param Escalation $escalation
-     * @return RedirectResponse
+     * @return Application|JsonResponse|RedirectResponse|Redirector
      */
     public function destroy(Escalation $escalation)
     {
         try {
             $escalation->delete();
 
+            if(\request()->wantsJson()){
+                return response()->json(['danger' => __('app.escalation_deleted_success')]);
+            }
             return redirect(url('customer/escalations'))->with('success', __('app.escalation_deleted_success'));
 
         } catch (\Exception $e) {

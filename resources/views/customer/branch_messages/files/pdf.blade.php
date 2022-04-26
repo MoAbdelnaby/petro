@@ -92,8 +92,8 @@
                 <th scope="row">{{$item->plateNumber}}</th>
                 <th scope="row">{{str_replace('whatsapp:+','',$item->phone)}}</th>
                 <th scope="row">
-                    @if($item->invoiceUrl)
-                        <a href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceUrl}}" class="btn">
+                    @if($item->fileUrl)
+                        <a href="{{config('app.azure_storage').config('app.azure_container').$item->fileUrl}}" class="btn">
                             View
                         </a>
                     @else

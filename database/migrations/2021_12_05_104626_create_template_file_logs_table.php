@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInvoiceLogsTable extends Migration
+class CreateTemplateFileLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateInvoiceLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_logs', function (Blueprint $table) {
+        Schema::create('template_file_logs', function (Blueprint $table) {
             $table->id();
-            $table->mediumText('invoice');
+            $table->mediumText('file')->nullable();
             $table->string('template_id');
-            $table->string('distance');
+            $table->string('distance')->nullable();
             $table->string('phone');
             $table->string('PlateNumber');
             $table->string('branch_code')->nullable();
             $table->string('storage')->nullable();
+            $table->enum('type',['invoice','estimate'])->nullable();
+            $table->string('invoiceNumber')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ class CreateInvoiceLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_logs');
+        Schema::dropIfExists('template_file_logs');
     }
 }

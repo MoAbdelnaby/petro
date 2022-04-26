@@ -37,29 +37,28 @@ class PositionController extends Controller
     {
         try {
             $query = $this->repo->orderBy('parent_id', 'ASC');
-            $items = $query->with('parentPosition')->withCount('users')->get();
             $trashs = $this->repo->onlyTrashed()->withCount('users')->primary()->get();
 
             $positions = PositionResource::make($query->get());
 
             $tree = "<ul class='tree'>";
             foreach ($positions as $position) {
-                $tree .= "<li><span>{$position['name']}</span>
-                        <a class='btn btn-sm btn-info'
+                $tree .= "<li><span>{$position['name']}
+                                <a class='btn btn-sm btn-info' style='font-size: 10px;width: 27px;'
                            href=" . route('positions.edit', [$position['id']]) . " >
                             <i class='fas fa-edit' ></i>
                         </a >
-                        <a class='btn btn-sm btn-danger'
+                        <a class='btn btn-sm btn-danger' style='font-size: 10px;width: 27px;'
                            onclick=delete_alert(" . $position['id'] . ")>
                            <i class='fas fa-trash-alt'></i>
-                           </a>";
+                           </a></span>";
                 if (count($position['children'])) {
                     $tree .= $this->childView($position);
                 }
             }
             $tree .= '<ul>';
 
-            return view('customer.positions.index', compact('items', 'tree', 'trashs'));
+            return view('customer.positions.index', compact( 'tree', 'trashs','positions'));
 
         } catch (\Exception $e) {
             return unKnownError($e->getMessage());
@@ -72,25 +71,29 @@ class PositionController extends Controller
      */
     private function childView($position)
     {
-        $html = '<ul>';
-        foreach ($position['children'] as $arr) {
-            $html .= "<li><span>{$arr['name']}</span>
-                     <a class='btn btn-sm btn-info'
+        if(count($position['children'])) {
+            $html = '<ul>';
+            foreach ($position['children'] as $arr) {
+                $html .= "<li><span>{$arr['name']}
+                        <a class='btn btn-sm btn-info' style='font-size: 10px;width: 27px;'
                        href=" . route('positions.edit', [$arr['id']]) . " >
                         <i class='fas fa-edit' ></i>
                     </a >
-                    <a class='btn btn-sm btn-danger'
+                    <a class='btn btn-sm btn-danger' style='font-size: 10px;width: 27px;'
                        onclick=delete_alert(" . $arr['id'] . ")>
                        <i class='fas fa-trash-alt'></i>
-                       </a>";
+                       </a></span>
+                   ";
 
-            if (count($arr['children'])) {
-                $html .= $this->childView($arr);
-            } else {
-                $html .= "</li > ";
+                if (count($arr['children'])) {
+                    $html .= $this->childView($arr);
+                } else {
+                    $html .= "</li > ";
+                }
             }
+            $html .= "</ul > ";
         }
-        $html .= "</ul > ";
+
         return $html;
     }
 

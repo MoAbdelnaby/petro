@@ -20,7 +20,7 @@
             <td>{{$item->message}}</td>
             <td>{{$item->plateNumber}}</td>
             <td>{{str_replace('whatsapp:+','',$item->phone)}}</td>
-            <td>{{ $item->invoiceUrl ? config('app.azure_storage').config('app.azure_container').$item->invoiceUrl : '---'}}</td>
+            <td>{{ $item->fileUrl ? config('app.azure_storage').config('app.azure_container').$item->fileUrl : '---'}}</td>
             <td>{{$item->created_at}}</td>
         </tr>
     @endforeach

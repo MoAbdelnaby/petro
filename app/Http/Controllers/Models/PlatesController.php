@@ -344,10 +344,8 @@ class PlatesController extends Controller
 
     }
 
-
     public function sendMessage(Request $request)
     {
-
         try {
             $contacts = [];
             $messageTemplate = [];

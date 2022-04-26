@@ -77,6 +77,16 @@ if (!function_exists('setting')) {
 
 }
 
+if (!function_exists('handlePlateNumber')) {
+    function handlePlateNumber($plate_en = null, $plate_ar = null): string
+    {
+        $plate_number_ar = "upper: " . str_replace(' ', '.', $plate_ar);
+        $plate_number_en = "lower: " . str_replace(' ', '.', $plate_en);
+
+        return $plate_number_ar . " " . $plate_number_en;
+    }
+}
+
 if (!function_exists('languages')) {
     function languages()
     {

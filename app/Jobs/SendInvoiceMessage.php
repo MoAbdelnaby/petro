@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Branch;
 use App\Models\Carprofile;
-use App\Models\InvoiceLog;
+use App\Models\TemplateFileLog;
 use App\Models\MessageLog;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -40,7 +40,7 @@ class SendInvoiceMessage implements ShouldQueue
      */
     public function handle()
     {
-        $invoice = InvoiceLog::find($this->invoice_id);
+        $invoice = TemplateFileLog::find($this->invoice_id);
         $file = $invoice->invoice;
 
         if (!empty($file)) {
@@ -77,7 +77,7 @@ class SendInvoiceMessage implements ShouldQueue
             ->update(
                 [
                     'carprofile_id' => $carprofile ? $carprofile->id : null,
-                    'invoiceUrl' => $filepath,
+                    'fileUrl' => $filepath,
                     'status' => $whatsapp['success'] === false ? 'failed':'sent',
                     'error_reason' => $whatsapp['success'] === false ? 'twillo error' : null
                 ]
@@ -94,7 +94,7 @@ class SendInvoiceMessage implements ShouldQueue
 //                        'message' => str_replace(['{{1}}', '{{2}}'], $invoice->distance, NOTIFY),
 //                        'phone' => $invoice->phone,
 //                        'carprofile_id' => $carprofile ? $carprofile->id : null,
-//                        'invoiceUrl' => $filepath,
+//                        'fileUrl' => $filepath,
 //                        'status' => $whatsapp['success'] === false ? 'failed':'sent',
 //                        'error_reason' => $whatsapp['success'] === false ? 'twillo error' : null
 //                    ]
