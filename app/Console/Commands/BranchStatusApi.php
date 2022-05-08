@@ -165,6 +165,8 @@ class BranchStatusApi extends Command
                                 ->where('branch_id', $branch->br_id)
                                 ->first();
 
+//                            $this->comment($branch->br_id, $check);
+
                             if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
 
                                 dispatch(new SendBranchStatusMailJob($branch, $minutes, $user->email, $user->name));
