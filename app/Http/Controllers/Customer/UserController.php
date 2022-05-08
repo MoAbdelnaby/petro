@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Repositories\Eloquent\BranchRepo;
 use App\Http\Repositories\Eloquent\CustomerRepo;
 use App\Http\Repositories\Eloquent\UsersRepo;
+use App\Http\Requests\UserRequest;
 use App\Models\Branch;
 use App\Models\ModelFeature;
+use App\Models\Position;
 use App\Models\Region;
 use App\Models\UserModelBranch;
 use App\Models\UserWatchModels;
@@ -16,25 +18,25 @@ use App\Notifications\assigendNotification;
 use App\User;
 use App\UserSetting;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
      * @return void
      */
-    protected $usersRepo;
-    protected $packageRepo;
-    protected $branchRepo;
+    protected UsersRepo $usersRepo;
+    protected CustomerRepo $packageRepo;
+    protected BranchRepo $branchRepo;
 
     public function __construct(UsersRepo $usersRepo, CustomerRepo $packageRepo, BranchRepo $branchRepo)
     {
@@ -45,179 +47,161 @@ class UserController extends Controller
         $this->usersRepo = $usersRepo;
         $this->packageRepo = $packageRepo;
         $this->branchRepo = $branchRepo;
-
     }
 
-
+    /**
+     * @return View|JsonResponse|RedirectResponse
+     */
     public function index()
     {
-        $users = $this->usersRepo->getRelative(parentID());
-        $trashs = User::onlyTrashed()->where('parent_id', parentID())->where('type', 'subcustomer')->get();
-        $userWatchModels = UserWatchModels::with('usermodelbranch')->get();
-        $regions = Region::with('branches')->where('user_id', parentID())->where('active', true)->get();
+        try {
+            $users = $this->usersRepo->getRelative(parentID());
+            $trashs = User::onlyTrashed()->where('parent_id', parentID())->where('type', 'subcustomer')->get();
+            $userWatchModels = UserWatchModels::with('usermodelbranch')->get();
+            $regions = Region::with('branches')->where('user_id', parentID())->where('active', true)->get();
+            $package = $this->packageRepo->getactivePackage();
 
-        $package = $this->packageRepo->getactivePackage();
-
-        if (Auth::check()) {
-            $userSettings = UserSetting::where('user_id', Auth::user()->id)->first();
-        }
-
-        if ($package) {
-            $items = $this->packageRepo->getPackagesItems($package->id);
-
-            $result = [];
-            foreach ($items as $item) {
-
-                $assignedbranches = UserModelBranch::with('usermodel')->with('branch')->where('active', 1)->where('user_model_id', $item->id)->get();
-
-                foreach ($assignedbranches as $assignedbranch) {
-                    $result[] = $assignedbranch;
-                }
+            if (Auth::check()) {
+                $userSettings = UserSetting::where('user_id', Auth::user()->id)->first();
             }
 
-            $userModelBranches = $result;
+            if ($package) {
+                $items = $this->packageRepo->getPackagesItems($package->id);
+                $result = [];
+                foreach ($items as $item) {
+                    $assignedbranches = UserModelBranch::with('usermodel')->with('branch')->where('active', 1)->where('user_model_id', $item->id)->get();
+                    foreach ($assignedbranches as $assignedbranch) {
+                        $result[] = $assignedbranch;
+                    }
+                }
 
-            $branches = Branch::where('user_id', parentID())->get();
+                $userModelBranches = $result;
+                $branches = Branch::where('user_id', parentID())->get();
+            } else {
+                $userModelBranches = [];
+                $branches = [];
+            }
 
+            return view('customer.users.index', compact('trashs', 'regions', 'users', 'userModelBranches', 'userWatchModels', 'branches', 'userSettings'));
 
-        } else {
-            $userModelBranches = [];
-            $branches = [];
+        } catch (\Exception $e) {
+            return unKnownError($e->getMessage());
         }
-
-        return view('customer.users.index', compact('trashs', 'regions', 'users', 'userModelBranches', 'userWatchModels', 'branches', 'userSettings'));
     }
 
+    /**
+     * @return View
+     */
     public function create()
     {
-        return view('customer.users.create');
+        $positions = Position::primary()->get();
+
+        return view('customer.users.create', compact('positions'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return JsonResponse
+     * @param UserRequest $request
+     * @return Redirector|RedirectResponse
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|max:70|email|unique:users|regex:/^\S+@\S+\.\S+$/',
-            'name' => 'required|string|min:2|max:60',
-            'phone' => 'nullable|string|min:11|max:13|unique:users,phone|regex:/^[0-9\-\(\)\/\+\s]*$/',
-            'password' => 'required|min:8|confirmed',
-            'speedtest' => 'nullable',
-        ]);
-        if ($validator->errors()->count()) {
-            return redirect()->back()->withErrors($validator->errors())->withInput();
+        try {
+            $data = $request->validated();
+            $data['parent_id'] = parentID();
+            $data['speedtest'] = ($request->speedtest == 'on');
+
+            $user = $this->usersRepo->create($data);
+            $user->syncRoles('customer');
+
+            /*Notification to admins*/
+            $admins = User::where('type', 'customer')->get();
+            foreach ($admins as $admin) {
+                $admin->notify(new AdminNotifications($user, Auth::user()->name));
+            }
+
+            return redirect('/customer/customerUsers')->with('success', __('app.users.success_create_message'));
+
+        } catch (\Exception $e) {
+            return unKnownError($e->getMessage());
         }
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'type' => $request->type,
-            'password' => $request->password,
-            'parent_id' => parentID()
-        ];
-
-        if ($request->has('speedtest') && $request->speedtest == 'on') {
-            $data['speedtest'] =  1;
-        }
-
-        $user = User::create($data);
-        $user->syncRoles('customer');
-
-        /*notification to admins*/
-        $admins = User::where('type','customer')->get();
-        foreach ($admins as $admin) {
-            $admin->notify(new AdminNotifications($user,Auth::user()->name));
-        }
-        /*end */
-
-//        dd($user);
-        return redirect('/customer/customerUsers')->with('success', __('app.users.success_create_message'));
-
     }
 
     /**
-     * update the Permission for dashboard.
-     *
-     * @param Request $request
-     * @return Builder|Model|object
+     * @param $id
+     * @return View|RedirectResponse
      */
     public function edit($id)
     {
+        try {
+            $user = User::where('id',$id)->with('roles')->first();
+            $positions = Position::primary()->get();
 
-        $user = User::with('roles')->where('id', $id)->first();
-        return view('customer.users.edit', compact('id', 'user'));
-
-    }
-
-
-    /**
-     * update a permission.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function update(Request $request, $id)
-    {
-//        dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|max:70|email|regex:/^\S+@\S+\.\S+$/|unique:users,email,' . $id,
-            'name' => 'required|string|min:2|max:60',
-            'phone' => 'nullable|min:6|max:13|regex:/^[0-9\-\(\)\/\+\s]*$/|unique:users,phone,' . $id,
-            'password' => 'sometimes|nullable|min:8|confirmed',
-        ]);
-
-        if ($validator->errors()->count()) {
-            return redirect()->back()->withErrors($validator->errors())->withInput();
-        }
-
-        $user = User::where('id', $id)->first();
-        $data  = $validator->validated();
-        if ($request->has('speedtest') && $request->speedtest == 'on') {
-            $data['speedtest'] =  1;
-        }else{
-            $data['speedtest'] =  0;
-        }
-
-        if($request->has('password')){
-            if(is_null($request->password)){
-                $data = Arr::except($data,['password']);
+            if ((auth()->user()->type == "subadmin" && $user->type != "subadmin") || auth()->user()->type == "customer") {
+                return view('customer.users.edit', compact( 'user', 'positions'));
             }
-        }
 
-        if ($user) {
-            $user->update($data);
+            return redirect()->back()->with('danger', 'Can not edit this user');
+        } catch (\Exception $e) {
+            return unKnownError($e->getMessage());
         }
-
-        return redirect('/customer/customerUsers')->with('success', __('app.users.success_update_message'));
     }
 
     /**
-     * Delete more than one permission.
-     *
+     * @param UserRequest $request
+     * @param $id
+     * @return RedirectResponse|Redirector|void
+     */
+    public function update(UserRequest $request, $id)
+    {
+        try {
+            $user = User::find($id);
+
+            if ((auth()->user()->type == "subadmin" && $user->type != "subadmin") || auth()->user()->type == "customer") {
+
+                $data = $request->validated();
+                $data['speedtest'] = ($request->speedtest == 'on');
+
+                if (is_null($request->password)) {
+                    $data = Arr::except($data, ['password']);
+                }
+
+                $user->update($data);
+
+                return redirect('/customer/customerUsers')->with('success', __('app.users.success_update_message'));
+            }
+            abort(403);
+        } catch (\Exception $e) {
+            return unKnownError($e->getMessage());
+        }
+    }
+
+    /**
      * @param Request $request
      * @return JsonResponse
      */
     public function destroy(Request $request)
     {
         $user = User::where('id', $request->id)->first();
-        if ($user && $user->id != parentID() && $user->id != primaryID()) {
-            activity()
-                ->causedBy(auth()->user())
-                ->inLog('user')
-                ->performedOn($user)
-                ->withProperties(['deleted_at' => Carbon::now()->format('Y-m-d H:i:s')])
-                ->log(auth()->user()->name . ' Deleted - ' . $user->name ?? $user->id);
+        if ((auth()->user()->type == "subadmin" && $user->type != "subadmin") || auth()->user()->type == "customer") {
+            if ($user && $user->id != parentID() && $user->id != primaryID()) {
+                activity()
+                    ->causedBy(auth()->user())
+                    ->inLog('user')
+                    ->performedOn($user)
+                    ->withProperties(['deleted_at' => Carbon::now()->format('Y-m-d H:i:s')])
+                    ->log(auth()->user()->name . ' Deleted - ' . $user->name ?? $user->id);
 
-            $user->delete();
-            return response()->json(['message' => __('app.success_delete_message'), 'alertmsg' => __('app.success')], 200);
+                $user->delete();
+                return response()->json(['message' => __('app.success_delete_message'), 'alertmsg' => __('app.success')], 200);
+            }
         }
         return response()->json(['message' => __('app.cannotdelete'), 'alertmsg' => __('app.fail')], 500);
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function assignUser(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -230,15 +214,15 @@ class UserController extends Controller
         }
 
         UserWatchModels::firstOrCreate(
-            [
-                'user_id' => $request->user_id,
-                'user_model_branch_id' => $request->user_model_branch_id
-            ]
+            ['user_id' => $request->user_id, 'user_model_branch_id' => $request->user_model_branch_id]
         );
         return redirect()->back()->with('success', 'User Assigned Successfully');
-
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function assignUserToBranch(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -258,6 +242,9 @@ class UserController extends Controller
 
     }
 
+    /**
+     * @return Factory|View
+     */
     public function myModels()
     {
         $userWatchModels = UserWatchModels::with('usermodelbranch')->where('user_id', auth()->user()->id)->get();
@@ -280,16 +267,25 @@ class UserController extends Controller
             $result[] = $item;
         }
         $userWatchModels = $result;
+
         return view('customer.users.myModels', compact('userWatchModels'));
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function myBranches()
     {
         $user = Auth::user();
         $items = $user->branches;
+
         return view('customer.users.myBranches', compact('items'));
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function restore(Request $request)
     {
         try {
@@ -300,6 +296,10 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function forceDelete(Request $request)
     {
         try {
@@ -310,13 +310,22 @@ class UserController extends Controller
         }
     }
 
-    public function UserSetting(){
+    /**
+     * @return Application|Factory|View
+     */
+    public function UserSetting()
+    {
         $user = Auth::user();
         $notify = $user->mail_notify;
-        return view('settings.user.setting', ['notify'=>$notify]);
+        return view('settings.user.setting', ['notify' => $notify]);
     }
 
-    public function MailsettingUpdate(Request $request){
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function MailsettingUpdate(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'mail_notify' => 'required|in:on,off',
         ]);
@@ -327,6 +336,5 @@ class UserController extends Controller
         $user->update($validator->validated());
         return redirect()->back()->with('success', __('app.mail_status_success'));
     }
-
 
 }

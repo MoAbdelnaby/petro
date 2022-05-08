@@ -6,6 +6,8 @@ use Carbon\Carbon;
 
 abstract class BaseReport
 {
+    public $filter;
+
     /**
      * Prepare Important Properties to execute report
      *
@@ -14,6 +16,8 @@ abstract class BaseReport
      */
     public function prepare($filter): array
     {
+        $this->filter = $filter;
+
         $data = $this->handleListQuery($filter);
         $key = ucfirst($data["type"]);
         $func_name = "get{$key}Query";
@@ -51,12 +55,12 @@ abstract class BaseReport
      */
     public function handleDateFilter($query, $filter, bool $timeStamp = false)
     {
-        $filter['start'] = empty($filter['start']) ? "2022-01-01" : $filter['start'];
+        $filter['start'] = empty($filter['start']) ? now()->startOfYear()->toDateString() : $filter['start'];
 
         if ($filter['start'] ?? false) {
-            $start = ($filter['start'] > date('Y-m-d')) ? now()->subDay() : Carbon::parse($filter['start']);
+            $start = ($filter['start'] > date('Y-m-d')) ? now(): Carbon::parse($filter['start']);
             if ($timeStamp) {
-                $query->where($filter['column'], '>=', $start->format('Y-m-d h:i:s'));
+                $query->where($filter['column'], '>=', $start->format('Y-m-d H:i:s'));
             } else {
                 $query->whereDate($filter['column'], '>=', $start->format('Y-m-d'));
             }
@@ -65,7 +69,7 @@ abstract class BaseReport
         if ($filter['end'] ?? false) {
             $end = ($filter['end'] > date('Y-m-d')) ? now() : Carbon::parse($filter['end']);
             if ($timeStamp) {
-                $query->where($filter['column'], '<=', $end->format('Y-m-d h:i:s'));
+                $query->where($filter['column'], '<=', $end->format('Y-m-d H:i:s'));
             } else {
                 $query->whereDate($filter['column'], '<=', $end->format('Y-m-d'));
             }

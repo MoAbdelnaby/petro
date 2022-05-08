@@ -1,5 +1,4 @@
-
- @if(session('danger'))
+@if(session('danger'))
     @push('js')
         <script>
             var session = '{{session('danger')}}';
@@ -15,8 +14,8 @@
                 }
             })
             Toast.fire({
-            icon: 'error',
-            title: session
+                icon: 'error',
+                title: session
             })
         </script>
     @endpush
@@ -38,8 +37,8 @@
                 }
             })
             Toast.fire({
-            icon: 'success',
-            title: session
+                icon: 'success',
+                title: session
             })
         </script>
     @endpush

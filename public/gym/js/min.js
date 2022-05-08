@@ -36,14 +36,117 @@ $(document).ready(function () {
   $('#paginationSimpleNumbers tr').on('click',function (e) {
     // var screenshot = $(this).closest('div').attr('id');
     trid = $(this).attr('id');
-    console.log(trid);
-   // trid = $('tr').attr('id');
-    //var src = $(this).attr("src");
+
+    let img2 = $(this).data('screen2');
+    let checkInDate = $(this).find('.checkin-date').text();
+      let checkOutDate = $(this).find('.checkout-date').text();
+      let period = $(this).find('.period').text();
+      let area = $(this).find('.area').text();
+      let arPlate = $(this).find('.ar-plate').text();
+      let enPlate = $(this).find('.en-plate').text();
+      let status = $(this).find('.status > span').clone();
+
+
+      // modal elements
+      let modal = $('#basicExampleModal0');
+
+      let checkInDateElm = modal.find('.checkin-date .info');
+      let checkOutDateElm = modal.find('.checkout-date .info');
+      let periodElm = modal.find('.period .info');
+      let areaElm = modal.find('.area .info');
+      let arPlateElm = modal.find('.ar-plate .info');
+      let enPlateElm = modal.find('.en-plate .info');
+      let statusElm = modal.find('.status .info');
+      let slides = modal.find('.slide img');
+      let thumbs = modal.find('.thumb img');
+
+
       $('#image_to_show').attr('src', trid);
+      slides[0].setAttribute('src', trid);
+      slides[1].setAttribute('src', img2);
+      thumbs[0].setAttribute('src', trid);
+      thumbs[1].setAttribute('src', img2);
+      checkInDateElm.text(checkInDate);
+      checkOutDateElm.text(checkOutDate);
+      periodElm.text(period);
+      areaElm.text(area)
+      arPlateElm.text(arPlate)
+      enPlateElm.text(enPlate);
+
+      statusElm.html(status)
+      // if(img2){
+      //     console.log($('#images-cont'))
+      //      $('#car_image').remove();
+      //     $('#images-cont').prepend(`<img src="${img2}" id="car_image" alt="car" />`)
+      //
+      // }
+
   })
 
 
+
   });
+
+
+
+$('#basicExampleModal0').on('shown.bs.modal', function (e) {
+    let slideIndex = 1;
+    displaySlide(slideIndex);
+
+    function moveSlides(n) {
+        displaySlide(slideIndex += n);
+    }
+    function setSlide(n){
+        if(!n || n === slideIndex) return;
+        slideIndex = n;
+        let totalslides =
+            document.querySelectorAll("#images-cont .slide");
+        let totalthumbs =
+            document.querySelectorAll("#images-cont .thumb");
+        for (let i = 0; i < totalslides.length; i++) {
+            totalslides[i].style.display = "none";
+            totalthumbs[i].classList.remove('active')
+        }
+
+        totalslides[slideIndex - 1].style.display = "flex";
+        totalthumbs[slideIndex - 1].classList.add('active')
+
+    }
+
+    $("#images-cont .next").on('click', () => moveSlides(1))
+    $("#images-cont .previous").on('click', () => moveSlides(-1))
+    $("#images-cont .thumb").on('click', function() {
+        let i = $(this).data('thumb');
+        console.log(i)
+        setSlide(+i);
+    })
+    /* Main function */
+    function displaySlide(n) {
+        let i;
+        let totalslides =
+            document.querySelectorAll("#images-cont .slide");
+        let totalthumbs =
+            document.querySelectorAll("#images-cont .thumb");
+        if (n > totalslides.length) {
+            slideIndex = 1;
+        }
+        if (n < 1) {
+            slideIndex = totalslides.length;
+        }
+        for (i = 0; i < totalslides.length; i++) {
+            totalslides[i].style.display = "none";
+            totalthumbs[i].classList.remove('active')
+        }
+
+        totalslides[slideIndex - 1].style.display = "flex";
+        totalthumbs[slideIndex - 1].classList.add('active')
+    }
+})
+
+$('#basicExampleModal0').on('hidden.bs.modal', function (e) {
+    $("#images-cont .next").off();
+    $("#images-cont .previous").off();
+})
 
 
 

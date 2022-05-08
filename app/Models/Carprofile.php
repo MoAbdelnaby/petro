@@ -23,6 +23,9 @@ class Carprofile extends Model
     public function failMessage() {
         return $this->hasOne(FailedMessage::class);
     }
+    public function invoiceStatus() {
+        return $this->hasOne(MessageLog::class)->where('type','invoice');
+    }
 
     function getPathScreenshotAttribute()
     {
@@ -31,6 +34,18 @@ class Carprofile extends Model
 
         } else {
             return 'http://104.211.179.36/'.'/storage'. $this->screenshot;
+//            return url('/storage'. $this->screenshot);
+        }
+    }
+
+    function getPathAreaScreenshotAttribute()
+    {
+        $path = "/places/". $this->branch_id."/".$this->created_at->format('Y')."/".$this->created_at->format('M') ."/". $this->created_at->format('d')."/";
+        if ($this->disk == 'azure') {
+            return config('app.azure_storage').config('app.azure_container')."/storage".$path.str_replace('/screenshot/','',$this->area_screenshot);
+
+        } else {
+            return 'http://104.211.179.36/'.'/storage'. $this->area_screenshot;
 //            return url('/storage'. $this->screenshot);
         }
     }

@@ -2,12 +2,11 @@
 
 namespace App\Services\Report;
 
-use App\Models\AreaDurationDay;
 use App\Models\AreaStatus;
 use App\Models\Branch;
 use App\Models\Carprofile;
 use App\Models\Region;
-use App\Services\Report\type\InvoiceReport;
+use App\Services\Report\type\PlaceReport;
 use App\User;
 use Carbon\Carbon;
 use Exception;
@@ -18,54 +17,36 @@ class ReportService
     /**
      * @param string $start
      * @param null $end
-     * @param array $lists
+     * @param null $lists
      * @return array
      */
-    public static function statistics($start = "2022-01-01", $end = null, $lists = null): array
+    public static function statistics($start = null, $end = null, $lists = null): array
     {
         $users = User::primary()->count();
-        $branches = Branch::active()->primary()->count();
+        $branches = Branch::primary()->count();
+        $active_branches = Branch::active()->primary()->count();
         $regions = Region::active()->primary()->count();
-
         $filter = [
             'start' => $start,
             'default' => true,
+            'column' => 'checkInDate',
             'end' => $end
         ];
 
-        $report = new InvoiceReport();
-        $integration_invoice = $report->handleReportCompare($filter, 'invoice', 'id');
-
-        //System Models Staticis
-        $cars = Carprofile::where('status', 'completed');
-        $invoice = Carprofile::where('status', 'completed');
-        $welcome = Carprofile::where('status', 'completed');
-        $backout = Carprofile::where('status', 'completed')->whereIn('branch_id', $integration_invoice);
-        $serving = Carprofile::where('status', 'completed');
-        $work = AreaDurationDay::query();
-        $empty = AreaDurationDay::query();
+        //System Models Statics
+        $cars = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+        $invoice = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+        $welcome = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+        $backout = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+        $serving = Carprofile::where('status', 'completed')->where('plate_status', 'success');
         $areas = AreaStatus::query();
 
-        if ($start) {
-            $start = Carbon::parse($start)->format('Y-m-d');
-            $cars->whereDate('checkInDate', '>=', $start);
-            $invoice->whereDate('checkInDate', '>=', $start);
-            $welcome->whereDate('checkInDate', '>=', $start);
-            $backout->whereDate('checkInDate', '>=', $start);
-            $serving->whereDate('checkInDate', '>=', $start);
-            $work->whereDate('date', '>=', $start);
-            $empty->whereDate('date', '>=', $start);
-        }
-        if ($end) {
-            $end = Carbon::parse($end)->format('Y-m-d');
-            $cars->whereDate('checkInDate', '<=', $end);
-            $invoice->whereDate('checkInDate', '<=', $end);
-            $welcome->whereDate('checkInDate', '<=', $end);
-            $backout->whereDate('checkInDate', '<=', $end);
-            $serving->whereDate('checkInDate', '<=', $end);
-            $work->whereDate('date', '<=', $end);
-            $empty->whereDate('date', '<=', $end);
-        }
+        //Handle filter date [start-end]
+        self::handleDateFilter($cars, $filter, true);
+        self::handleDateFilter($invoice, $filter, true);
+        self::handleDateFilter($welcome, $filter, true);
+        self::handleDateFilter($backout, $filter, true);
+        self::handleDateFilter($serving, $filter, true);
 
         if (!empty($lists)) {
             if (!is_array($lists)) {
@@ -76,8 +57,6 @@ class ReportService
             $invoice->whereIn('branch_id', $lists);
             $welcome->whereIn('branch_id', $lists);
             $backout->whereIn('branch_id', $lists);
-            $work->whereIn('branch_id', $lists);
-            $empty->whereIn('branch_id', $lists);
             $serving->whereIn('branch_id', $lists);
             $areas->whereIn('branch_id', $lists);
         }
@@ -87,11 +66,15 @@ class ReportService
         $invoice = $invoice->where('invoice', '<>', null)->count();
         $welcome = $welcome->where('welcome', '<>', null)->count();
         $backout = $backout->where('invoice', '=', null)->count();
-        $work = $work->sum('work_by_minute');
-        $empty = $empty->sum('empty_by_minute');
         $serving = $serving->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
 
+        //Handle work-empty duration statistics based on date
+        $placeReport = new PlaceReport();
+        $work = $placeReport->handleDurationDay($filter, 'work', $lists);
+        $empty = $placeReport->handleDurationDay($filter, 'empty', $lists);
+
         return [
+            'active_branches' => $active_branches,
             'branches' => $branches,
             'users' => $users,
             'regions' => $regions,
@@ -102,7 +85,7 @@ class ReportService
             'backout' => $backout,
             'work' => $work,
             'empty' => $empty,
-            'serving' => $serving,
+            'serving' => $serving ?? 0,
         ];
     }
 
@@ -129,7 +112,7 @@ class ReportService
      * @param null $lists
      * @return array
      */
-    public static function downloadStatistics($start = "2022-01-01", $end = null, $lists = null): array
+    public static function downloadStatistics($start = null, $end = null, $lists = null): array
     {
         if (!is_array($lists)) {
             $lists = str_contains($lists, ',') ? explode(',', (string)$lists) : $lists;
@@ -137,75 +120,92 @@ class ReportService
         $branches = \Arr::wrap($lists);
 
         if (empty($branches)) {
-            $branches = Branch::active()->primary()->pluck('id')->toArray();
+            $branches = Branch::active()->primary()->get();
         }
 
         foreach ($branches as $branch) {
-            //System Models Staticis
-            $cars = Carprofile::where('status', 'completed');
-            $invoice = Carprofile::where('status', 'completed');
-            $welcome = Carprofile::where('status', 'completed');
-            $backout = Carprofile::where('status', 'completed');
-            $serving = Carprofile::where('status', 'completed');
-            $work = AreaDurationDay::query();
-            $empty = AreaDurationDay::query();
+            $filter = [
+                'start' => $start,
+                'default' => true,
+                'column' => 'checkInDate',
+                'end' => $end
+            ];
+
+            //System Models Statics
+            $cars = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+            $invoice = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+            $welcome = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+            $backout = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+            $serving = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
             $areas = AreaStatus::query();
 
-            if ($start) {
-                $start = Carbon::parse($start)->format('Y-m-d');
-                $cars->whereDate('checkInDate', '>=', $start);
-                $invoice->whereDate('checkInDate', '>=', $start);
-                $welcome->whereDate('checkInDate', '>=', $start);
-                $backout->whereDate('checkInDate', '>=', $start);
-                $serving->whereDate('checkInDate', '>=', $start);
-                $work->whereDate('date', '>=', $start);
-                $empty->whereDate('date', '>=', $start);
-            }
-            if ($end) {
-                $end = Carbon::parse($end)->format('Y-m-d');
-                $cars->whereDate('checkInDate', '<=', $end);
-                $invoice->whereDate('checkInDate', '<=', $end);
-                $welcome->whereDate('checkInDate', '<=', $end);
-                $backout->whereDate('checkInDate', '<=', $end);
-                $serving->whereDate('checkInDate', '<=', $end);
-                $work->whereDate('date', '<=', $end);
-                $empty->whereDate('date', '<=', $end);
-            }
+            //Handle filter date [start-end]
+            self::handleDateFilter($cars, $filter, true);
+            self::handleDateFilter($invoice, $filter, true);
+            self::handleDateFilter($welcome, $filter, true);
+            self::handleDateFilter($backout, $filter, true);
+            self::handleDateFilter($serving, $filter, true);
 
-            $cars->where('branch_id', $branch);
-            $invoice->where('branch_id', $branch);
-            $welcome->where('branch_id', $branch);
-            $backout->where('branch_id', $branch);
-            $work->where('branch_id', $branch);
-            $empty->where('branch_id', $branch);
-            $serving->where('branch_id', $branch);
-            $areas->where('branch_id', $branch);
+            $areas = $areas->count();
+            $cars = $cars->count();
+            $invoice = $invoice->where('invoice', '<>', null)->count();
+            $welcome = $welcome->where('welcome', '<>', null)->count();
+            $backout = $backout->where('invoice', '=', null)->count();
+            $serving = $serving->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
 
-            $branch_name = Branch::where('id', $branch)->first()['name'];
-            $areas_count = $areas->count();
-            $cars_count = $cars->count();
-            $invoice_count = $invoice->where('invoice', '<>', null)->count();
-            $welcome_count = $welcome->where('welcome', '<>', null)->count();
-            $backout_count = $backout->where('invoice', '=', null)->count();
-            $work_count = round($work->sum('work_by_minute') / 60);
-            $empty_count = round($empty->sum('empty_by_minute') / 60);
-            $serving_count = $serving->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
+            //Handle work-empty duration statistics based on date
+            $placeReport = new PlaceReport();
+            $work = $placeReport->handleDurationDay($filter, 'work', $lists);
+            $empty = $placeReport->handleDurationDay($filter, 'empty', $lists);
 
             $result[] = [
-                'Branch Name' => $branch_name ?? 0,
-                'Start Date' => $start ?? "2022-01-01",
+                'Branch Name' => $branch->name ?? 0,
+                'Start Date' => $start ?? now()->startOfYear()->toDateString(),
                 'End Date' => $end ?? now()->toDateString(),
-                'Area Count' => $areas_count ?? 0,
-                'Car Count' => $cars_count ?? 0,
-                'Invoice' => $invoice_count ?? 0,
-                'Backout' => $backout_count ?? 0,
-                'Welcome Message' => $welcome_count ?? 0,
-                'Work Duration(Hours)' => $work_count ?? 0,
-                'Empty Duration(Hours)' => $empty_count ?? 0,
-                'Serving Average(Minutes)' => $serving_count ?? 0
+                'Area Count' => $areas ?? 0,
+                'Car Count' => $cars ?? 0,
+                'Invoice' => $invoice ?? 0,
+                'Backout' => $backout ?? 0,
+                'Welcome Message' => $welcome ?? 0,
+                'Work Duration(Hours)' => $work ? round($work / 60) : 0,
+                'Empty Duration(Hours)' => $empty ? round($empty / 60) : 0,
+                'Serving Average(Minutes)' => $serving ?? 0
             ];
         }
 
         return $result ?? [];
+    }
+
+    /**
+     * Helper Function Use to handle time range
+     *
+     * @param $query
+     * @param $filter
+     * @param bool $timeStamp
+     * @return mixed
+     */
+    public static function handleDateFilter($query, $filter, bool $timeStamp = false)
+    {
+        $filter['start'] = empty($filter['start']) ? now()->startOfYear()->toDateString() : $filter['start'];
+
+        if ($filter['start'] ?? false) {
+            $start = (Carbon::parse($filter['start']) > now()) ? now() : Carbon::parse($filter['start']);
+            if ($timeStamp) {
+                $query->where($filter['column'], '>=', $start->format('Y-m-d H:i:s'));
+            } else {
+                $query->whereDate($filter['column'], '>=', $start->format('Y-m-d'));
+            }
+        }
+
+        if ($filter['end'] ?? false) {
+            $end = Carbon::parse($filter['end']) > now() ? now() : Carbon::parse($filter['end']);
+            if ($timeStamp) {
+                $query->where($filter['column'], '<=', $end->format('Y-m-d H:i:s'));
+            } else {
+                $query->whereDate($filter['column'], '<=', $end->format('Y-m-d'));
+            }
+        }
+
+        return $query;
     }
 }

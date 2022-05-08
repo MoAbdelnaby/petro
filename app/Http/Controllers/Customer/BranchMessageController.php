@@ -6,11 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BranchMessageRequest;
 use App\Models\Branch;
 use App\Models\BranchFiles;
-use App\Models\Carprofile;
 use App\Models\MessageLog;
-use App\Models\Reminder;
-use App\Services\CustomerPhone;
-use App\Services\ExportFileFactory;
 use App\UserSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,8 +25,7 @@ class BranchMessageController extends Controller
 
         $userSettings = UserSetting::where('user_id', auth()->id())->first();
 
-        $query = MessageLog::where('status', 'sent')
-            ->with('branch')
+        $query = MessageLog::with('branch')
             ->when(($request->branch_id != null), function ($q) {
                 return $q->where('branch_id', \request('branch_id'));
             })->latest();
@@ -40,16 +35,21 @@ class BranchMessageController extends Controller
         }
 
         if ($request->end_date) {
-            $query->whereDate('created_at', '>=', $request->end_date);
+            $query->whereDate('created_at', '<=', $request->end_date);
         }
 
         if ($request->message_type) {
             $query->where('type',  $request->message_type);
         }
+        if ($request->status) {
+            $query->where('status',  $request->status);
+        }
+
+        $totalcount = $query->count();
 
         $data = $query->paginate(10);
 
-        return view("customer.branch_messages.index", compact('branches', 'data', 'userSettings'));
+        return view("customer.branch_messages.index", compact('branches','totalcount', 'data', 'userSettings'));
     }
 
     public function export($request)

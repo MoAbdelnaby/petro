@@ -77,6 +77,16 @@ if (!function_exists('setting')) {
 
 }
 
+if (!function_exists('handlePlateNumber')) {
+    function handlePlateNumber($plate_en = null, $plate_ar = null): string
+    {
+        $plate_number_ar = "upper: " . str_replace(' ', '.', $plate_ar);
+        $plate_number_en = "lower: " . str_replace(' ', '.', $plate_en);
+
+        return $plate_number_ar . " " . $plate_number_en;
+    }
+}
+
 if (!function_exists('languages')) {
     function languages()
     {
@@ -116,11 +126,11 @@ if (!function_exists('primaryID')) {
         return auth()->user()->parent_id ?? auth()->id();
     }
 }
+
 if (!function_exists('parentID')) {
     function parentID()
     {
-
-        return auth()->user()->parent_id != null && auth()->user()->type == "subcustomer" ? auth()->user()->parent_id : auth()->id();
+        return auth()->user()->parent_id != null || auth()->user()->type == "subcustomer" || auth()->user()->type == "subadmin" ? auth()->user()->parent_id : auth()->id();
     }
 }
 
@@ -132,7 +142,6 @@ if (!function_exists('primarySlug')) {
 }
 
 if (!function_exists('convert2ArabicNum')) {
-
     function convert2ArabicNum($string = null)
     {
         $newNumbers = range(0, 9);
@@ -140,7 +149,6 @@ if (!function_exists('convert2ArabicNum')) {
         return $string ? str_replace($newNumbers, $arabic, $string) : null;
     } // convert2ArabicNum
 }
-
 
 if (!function_exists('convert2EnglishNum')) {
 
@@ -153,12 +161,11 @@ if (!function_exists('convert2EnglishNum')) {
 }
 
 
-if ( ! function_exists('put_permanent_env'))
-{
+if (!function_exists('put_permanent_env')) {
     function put_permanent_env($key, $value)
     {
         $path = app()->environmentFilePath();
-        $escaped = preg_quote('='.env($key), '/');
+        $escaped = preg_quote('=' . env($key), '/');
         file_put_contents($path, preg_replace(
             "/^{$key}{$escaped}/m",
             "{$key}={$value}",
@@ -222,6 +229,32 @@ if (!function_exists('UR_exists')) {
     }
 }
 
+if (!function_exists('handleDateFilter')) {
+    function handleDateFilter($query, $filter, bool $timeStamp = false)
+    {
+        $filter['start'] = empty($filter['start']) ? now()->startOfYear()->toDateString() : $filter['start'];
+
+        if ($filter['start'] ?? false) {
+            $start = (Carbon::parse($filter['start']) > now()) ? now() : Carbon::parse($filter['start']);
+            if ($timeStamp) {
+                $query->where($filter['column'], '>=', $start->format('Y-m-d H:i:s'));
+            } else {
+                $query->whereDate($filter['column'], '>=', $start->format('Y-m-d'));
+            }
+        }
+
+        if ($filter['end'] ?? false) {
+            $end = Carbon::parse($filter['end']) > now() ? now() : Carbon::parse($filter['end']);
+            if ($timeStamp) {
+                $query->where($filter['column'], '<=', $end->format('Y-m-d H:i:s'));
+            } else {
+                $query->whereDate($filter['column'], '<=', $end->format('Y-m-d'));
+            }
+        }
+
+        return $query;
+    }
+}
 
 if (!function_exists('weekOfMonth')) {
     function weekOfMonth($date)
@@ -368,6 +401,25 @@ if (!function_exists('unKnownError')) {
             : redirect()->back()->with(['danger' => $message]);
     }
 }
+function array_merge_numeric_values(): array
+{
+    $arrays = func_get_args();
+    $merged = array();
+    foreach ($arrays as $array) {
+        foreach ($array as $key => $value) {
+            if (!is_numeric($value)) {
+                continue;
+            }
+            if (!isset($merged[$key])) {
+                $merged[$key] = $value;
+            } else {
+                $merged[$key] += $value;
+            }
+        }
+    }
+    return $merged;
+}
+
 if (!function_exists('getStartEndDate')) {
     function getStartEndDate($time = null): array
     {

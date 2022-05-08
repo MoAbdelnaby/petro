@@ -13,7 +13,7 @@
 
         <div class="card-body px-lg-5">
             <!-- Form -->
-            <form method="POST" id="submited_form"  class="text-center" style="color: #757575;" action="{{ route('password.update')  }}">
+            <form method="POST" id="submited_form"  class="text-center" style="color: #757575;" action="{{ route('user_reset_password')  }}">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
                 <div class="md-form mt-3 @error('email') has-error @enderror">
@@ -43,7 +43,7 @@
                     @enderror
                 </div>
                 <!-- Sign in button -->
-                <button  class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect mt-2" type="submit"  id="registerbtn">{{__('app.auth.ResetPassword')}}</button>
+                <button  class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect mt-2" type="submit" >{{__('app.auth.ResetPassword')}}</button>
 
             </form>
         <!-- Form -->

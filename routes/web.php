@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use App\Services\InserBranchData;
 use Carbon\Carbon;
@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
  */
-
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('lang/{lang}', 'HomeController@select')->name('select');
@@ -23,18 +21,12 @@ Route::get('dark/{code}', 'HomeController@dark')->name('dark');
 Route::post('user_settings/{col}', 'UserSettingsController@update')->name('user_settings');
 Auth::routes();
 
+Route::post('user/password/reset', 'Auth\UserController@resetPassword')->name('user_reset_password');
+
 Route::group(['middleware' => ['auth', 'speed']], function () {
     Route::group(['middleware' => 'subCustomerCheck'], function () {
         Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
         Route::get('userNotify', 'HomeController@getNotify')->name('notfication');
-
-        Route::group(['prefix' => 'api/charts'], function () {
-            Route::post('getTotalPeople', 'Models\DashController@getPeopleCount');
-            Route::get('getFilterImage/{id}', 'Models\DashController@FilterImage');
-            Route::post('getHeatMapData', 'Models\DashController@getPositionsData');
-            Route::post('ignoreDisabledData', 'Models\DashController@heatmapDisabledRegion');
-            Route::post('heatmapLowHigh', 'Models\DashController@getPositionsLowHigh');
-        });
         Route::group(['prefix' => 'api/map'], function () {
             Route::match(['get', 'post'], 'filter', 'Customer\MapController@filter')->name('map.filter');
             Route::post('plates_filter', 'Customer\MapController@MapPlatesfilter')->name('map.platesFilter');
@@ -70,7 +62,6 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::group(['prefix' => 'saas', 'namespace' => 'Saas'], function () {
             Route::resource('packages', 'PackageController');
             Route::resource('models', 'ModelsController');
-            Route::resource('packageRequests', 'PackageRequestsController');
             Route::resource('modelfeatures', 'ModelFeaturesController')->only(['index', 'show']);
             Route::resource('features', 'FeatureController')->only(['index']);
             Route::get('packages/assignuser/{id}', 'PackageController@assignuser')->name('packages.assignuser');
@@ -82,8 +73,6 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::post('packages/items/{id}/edit', 'PackageController@itemseditpost')->name('packages.edititempost');
             Route::post('packages/items/modelfeatures', 'PackageController@modelfeatures')->name('packages.modelfeatures');
             Route::DELETE('packages/items/delete/{id}', 'PackageController@itemsdelete')->name('packages.deleteitem');
-            Route::DELETE('packageRequests/items/delete/{id}', 'PackageRequestsController@itemsdelete')->name('packageRequests.deleteitem');
-            Route::post('packageRequests/assignUser', 'PackageRequestsController@assignUser')->name('packageRequests.assignUser');
         });
 
         Route::group(['prefix' => 'customer', 'namespace' => 'Customer'], function () {
@@ -95,6 +84,7 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::get('config/{type}/get', 'ConfigController@index')->name('config.index');
             Route::post('config/update', 'ConfigController@update')->name('config.update');
             Route::get('reports', 'ReportController@index')->name('reports.index');
+            Route::post('reports/filter', 'ReportController@filter')->name('reports.filter');
             Route::get('report/region/{region}/show-branches', 'ReportController@getBranchByRegion');
             Route::get('report/city/{region}/show-regions', 'ReportController@getRegionByCity');
             Route::get('reports/{type}/show', 'ReportController@show')->name('reports.show');
@@ -116,12 +106,21 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::post('customerUsers/assignUser', 'UserController@assignUser')->name('customerUsers.assignUser');
             Route::post('customerUsers/assignUserToBranch', 'UserController@assignUserToBranch')->name('customerUsers.assignUserToBranch');
             Route::get('myModels', 'UserController@myModels')->name('myModels');
-            Route::get('branches-status', 'BranchModelsController@BranchesStatus')->name('branches_status');
+            Route::get('branches-status', 'BranchModelsController@branchesStatus')->name('branches_status');
             Route::get('branches-log/{id}', 'BranchModelsController@getLogs');
-            Route::get('branches-staibility/{id}', 'BranchModelsController@getStaibility');
+            Route::get('branches-stability/{id}', 'BranchModelsController@getStability');
             Route::get('customerPackages/assignuser/{id}', 'CustomerPackagesController@assignuser')->name('customerPackages.assignuser');
             Route::post('customerPackages/assignuser/{id}/create', 'CustomerPackagesController@assignuserpost')->name('customerPackages.assignuserpost');
             Route::post('customerPackages/requestPackage', 'CustomerPackagesController@requestPackage')->name('customerPackages.requestPackage');
+
+            //Position Routes
+            Route::resource('positions', 'PositionController');
+            Route::post('positions/bulkRestore', 'PositionController@restore')->name('positions.bulkRestore');
+            Route::post('positions/bulkDelete', 'PositionController@forceDelete')->name('positions.bulkDelete');
+
+            //Escalations Routs
+            Route::resource('escalations', 'EscalationController')->except('show');
+            Route::put('escalations/branch-status/update', 'EscalationController@updateBranchStatus')->name('escalations.updateStatus');
         });
 
         Route::group(['prefix' => 'media', 'namespace' => 'Media'], function () {

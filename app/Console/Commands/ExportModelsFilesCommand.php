@@ -2,19 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\AreaDuration;
-use App\Models\AreaStatus;
 use App\Models\BranchFiles;
-use App\Models\PlaceMaintenance;
-use App\Models\UserModelBranch;
-use App\Services\AreaDurationTotal;
-use App\Services\ExportBranchMessage;
 use App\Services\ExportFileFactory;
 use App\Services\ExportModelsFiles;
-use App\Services\ExportPlacesFiles;
-use App\Services\ExportPlatesFiles;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ExportModelsFilesCommand extends Command
@@ -57,10 +48,10 @@ class ExportModelsFilesCommand extends Command
 
             $files = BranchFiles::where('status', 0)->whereNull('url')->get();
 
-            $factory= new ExportFileFactory();
+            $factory = new ExportFileFactory();
 
             foreach ($files as $file) {
-                if($object = $factory->handle($file->model_type)){
+                if ($object = $factory->handle($file->model_type)) {
                     $object->export($file);
                 }
             }

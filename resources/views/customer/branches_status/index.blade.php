@@ -13,11 +13,8 @@
         .invalid-feedback {
             display: block;
         }
-
-
     </style>
 @endpush
-
 @section('content')
     <!-- Page Content  -->
     <div id="content-page" class="content-page">
@@ -53,8 +50,8 @@
                                     </div>
 
                                     <div class="col-lg-6 col-md-6">
-                                        <div class="card text-center col-12  ">
-                                            <div class="card-header row offline ">
+                                        <div class="card text-center col-12">
+                                            <div class="card-header row offline">
                                                 <div class="col-4">
                                                     <img width="100" fill="red"
                                                          src="{{ asset("images/offline-svgrepo-com.svg") }}" alt="">
@@ -69,45 +66,131 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div class="card-body">
-
                                     <div class="related-product-block position-relative col-12">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <select class="form-control nice-select" name="online_status"
+                                                            id="online_status">
+                                                        <option value="">@lang('app.all_status')</option>
+                                                        <option value="online"
+                                                            {{request('online_status') == 'online' ? 'selected' : ''}}>
+                                                            @lang('app.branch_online')
+                                                        </option>
+                                                        <option
+                                                            value="offline" {{request('online_status') == 'offline' ? 'selected' : ''}}>
+                                                            @lang('app.branch_offline')
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" name="from_day" min="0"
+                                                                   placeholder="Day" type="number" max="365"
+                                                                   id="from_day" value="{{request('from_day')}}"
+                                                                   oninput="javascript: if (this.value > this.max) this.value = this.value.slice(0, this.maxLength);"
+                                                                   maxlength="3">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" name="from_hour" min="0"
+                                                                   placeholder="Hour" type="number" max="60"
+                                                                   id="from_hour" value="{{request('from_hour')}}"
+                                                                   oninput="javascript: if (this.value > this.max) this.value = this.value.slice(0, this.maxLength);"
+                                                                   maxlength="2">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" name="from_minute" min="0"
+                                                                   placeholder="Minute" type="number" max="60"
+                                                                   id="from_minute" value="{{request('from_minute')}}"
+                                                                   oninput="javascript: if (this.value > this.max) this.value = this.value.slice(0, this.maxLength);"
+                                                                   maxlength="2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <span class="badge badge-primary">
+                                                    {{trans('app.last_stability_range')}}
+                                                </span>
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" name="to_day" placeholder="Day"
+                                                                   min="0"
+                                                                   id="to_day" value="{{request('to_day')}}"
+                                                                   type="number" max="365"
+                                                                   oninput="javascript: if (this.value > this.max) this.value = this.value.slice(0, this.maxLength);"
+                                                                   maxlength="3">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" name="to_hour" min="0"
+                                                                   placeholder="Hour" type="number" max="60"
+                                                                   oninput="javascript: if (this.value > this.max) this.value = this.value.slice(0, this.maxLength);"
+                                                                   maxlength="2"
+                                                                   id="to_hour" value="{{request('to_hour')}}">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <input class="form-control" name="to_minute" min="0"
+                                                                   placeholder="Minute" type="number" max="60"
+                                                                   oninput="javascript: if (this.value > this.max) this.value = this.value.slice(0, this.maxLength);"
+                                                                   maxlength="2"
+                                                                   id="to_minute" value="{{request('to_minute')}}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <button type="submit" class="btn btn-primary"
+                                                            id="apply_filter">@lang('app.Apply')</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                         <div class="product_table table-responsive row p-0 m-0 col-12">
-                                            <table class="table dataTable ui celled table-bordered text-center">
+                                            <table class="table dataTable ui celled table-bordered text-center"
+                                                   id="BranchStatusTable">
                                                 <thead class="">
                                                 <th>#</th>
                                                 <th>{{__('app.branch_name')}}</th>
                                                 <th>{{ __('app.branch_status') }}</th>
-                                                <th>{{ __('app.last_staibility') }}</th>
+                                                <th>{{ __('app.last_stability') }}</th>
                                                 <th>{{ __('app.last_connected') }}</th>
                                                 <th>{{ __('app.Actions') }}</th>
                                                 </thead>
                                                 <tbody class="trashbody">
                                                 @foreach($branches as $k => $branch)
+                                                    @if(!isset($last_stability[$branch->branch_code]['stability']))
+                                                        @continue
+                                                    @endif
+                                                    @if($filter_status == true)
+                                                        @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
+                                                        @else
+                                                            @continue
+                                                        @endif
+                                                    @endif
+                                                    @if(request('online_status') == 'offline')
+                                                        @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
+                                                            @continue
+                                                        @endif
+                                                    @endif
                                                     <tr>
                                                         <td>{{ $k+1 }}</td>
                                                         <td>
-                                                            {{ \App\Models\Branch::where('code', $branch->branch_code)->first()->name }}
+                                                            {{  $branch->name ?? ''}}
                                                         </td>
                                                         <td>
                                                             @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
                                                                 <i class="fas fa-circle"
-                                                                   style="color: green"></i> {{ __('app.branch_online')  }}
+                                                                   style="color: green"></i>
+                                                                {{ __('app.branch_online')  }}
                                                             @else
-                                                                <i class="fas fa-circle"
-                                                                   style="color: red"></i> {{ __('app.branch_offline') }}
+                                                                <i class="fas fa-circle" style="color: red"></i>
+                                                                {{ __('app.branch_offline') }}
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
-                                                                @if(isset($last_stability[$branch->branch_code]))
-                                                                    {{$last_stability[$branch->branch_code]['stability']}}
-                                                                @else
-                                                                    {{"0 ". __('app.minute')}}
-                                                                @endif
+                                                                {{$last_stability[$branch->branch_code]['stability']??"0 ". __('app.minute')}}
                                                             @else
                                                                 {{"0 ". __('app.minute')}}
                                                             @endif
@@ -131,10 +214,11 @@
                                                                href="branches-log/{{$branch->branch_code}}"
                                                                target="_blank">{{ __('app.Show') }}</a>
                                                             <a class="btn btn-info"
-                                                               href="branches-staibility/{{$branch->branch_code}}"
-                                                               target="_blank">{{ __('app.staibility') }}</a>
+                                                               href="branches-stability/{{$branch->branch_code}}"
+                                                               target="_blank">{{ __('app.stability') }}</a>
                                                         </td>
                                                     </tr>
+
                                                 @endforeach
                                                 </tbody>
                                             </table>
@@ -151,4 +235,14 @@
     </div>
 @endsection
 
+@push('js')
+    <script>
+        $("#online_status").on('change', function () {
+            let filter = $(this).val();
+            let url = `${app_url}/customer/branches-status`;
+            let inputs = `<input name='online_status' value='${filter}'>`;
 
+            $(`<form action=${url} method="get">${inputs}</form>`).appendTo('body').submit().remove();
+        });
+    </script>
+@endpush

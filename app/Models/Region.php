@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Services\SeederCheck;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -33,7 +34,7 @@ class Region extends Model
         return $query->where('parent_id', '=', null);
     }
 
-    public function branches()
+    public function branches(): HasMany
     {
         return $this->hasMany(Branch::class);
     }

@@ -62,7 +62,7 @@
 
 
                                             <div class="product-action ml-2">
-                                                @if(auth()->user()->type=="customer")
+                                                @if(in_array(auth()->user()->type,['customer','subadmin']))
                                                 <form  method="POST" action="{{ route('customerPackages.requestPackage') }}" id="package_request_form">
                                                     @csrf
                                                     <input type="hidden" name="package_id" id="package_id" value="{{$package->id}}">

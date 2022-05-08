@@ -16,6 +16,9 @@ use App\Services\Report\ReportService;
 use App\User;
 use App\userSetting;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +45,10 @@ class CustomerPackagesController extends Controller
         $this->branchRepo = $branchRepo;
     }
 
+    /**
+     * @return View
+     * @throws Exception
+     */
     public function statistics()
     {
         $config = ConfigService::get();
@@ -62,20 +69,16 @@ class CustomerPackagesController extends Controller
         });
         $off = $branches->count() - $on;
 
-        if (request('time_range')) {
-            $date = getStartEndDate(request('time_range'));
-        }
-
         $report = [];
         foreach (['place', 'plate', 'stayingAverage', 'invoice'] as $type) {
             $filter = $this->getTopBranch($type, request()->all());
-            $filter['start'] = $date['start'] ?? "2022-01-01";
+            $filter['start'] = $date['start'] ?? now()->startOfYear()->toDateString();
             $filter['end'] = $date['end'] ?? now()->toDateString();
             $report[$type] = ReportService::handle($type, $filter);
         }
 
         return view('customerhome', [
-            'statistics' => ReportService::statistics($date['start'] ?? '2022-01-01', $date['end'] ?? null),
+            'statistics' => ReportService::statistics($filter['start'], $filter['end']),
             'report' => $report,
             'config' => $config,
             'off' => $off,
@@ -87,7 +90,7 @@ class CustomerPackagesController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
@@ -147,7 +150,7 @@ class CustomerPackagesController extends Controller
     /**
      * Create the Package for dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function create()
     {
@@ -186,7 +189,7 @@ class CustomerPackagesController extends Controller
      * update the Permission for dashboard.
      *
      * @param Permission $permission
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function edit($id)
     {
@@ -349,7 +352,7 @@ class CustomerPackagesController extends Controller
         $branches = DB::table("view_top_branch_$type")->pluck('branch_id')->toArray();
 
         return [
-            'start' => $filter['start'] ?? "2022-01-01",
+            'start' => $filter['start'] ?? now()->startOfYear()->toDateString(),
             'end' => $filter['end'] ?? null,
             'show_by' => 'branch',
             'branch_type' => 'comparison',

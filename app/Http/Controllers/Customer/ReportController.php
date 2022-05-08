@@ -30,7 +30,7 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
-        $statics = ReportService::statistics($request->start ?? '2022-01-01', $request->end, $request->lists);
+        $statics = ReportService::statistics($request->start , $request->end, $request->lists);
 
         if (!empty(request('lists'))) {
             $lists = request('lists');
@@ -94,7 +94,7 @@ class ReportController extends Controller
         $branches = DB::table("view_top_branch_$type")->pluck('branch_id')->toArray();
 
         return [
-            'start' => $filter['start'] ?? "2022-01-01",
+            'start' => $filter['start'] ?? now()->startOfYear()->toDateString(),
             'end' => $filter['end'] ?? null,
             'show_by' => 'branch',
             'default' => true,
@@ -118,7 +118,7 @@ class ReportController extends Controller
             $data = ReportService::handle($type, $filter) ?? [];
             $list = \Arr::flatten($data, 1);
 
-            $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : '2022-01-01';
+            $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : now()->startOfYear()->toDateString();
             $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();
             $name = "{$type}_excel_file_{$start}_to_{$end}.xls";
 
@@ -170,9 +170,9 @@ class ReportController extends Controller
      */
     public function downloadStatistics(Request $request)
     {
-        $data = ReportService::downloadStatistics($request->start ?? '2022-01-01', $request->end ?? null, $request->lists ?? null);
+        $data = ReportService::downloadStatistics($request->start, $request->end, $request->lists);
         $type = "statistics";
-        $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : '2022-01-01';
+        $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : now()->startOfYear()->toDateString();
         $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();
         $name = "{$type}_excel_file_{$start}_to_{$end}.xls";
 
@@ -221,5 +221,9 @@ class ReportController extends Controller
         } catch (\Exception $e) {
             return unKnownError($e->getMessage());
         }
+    }
+
+    public function filter(Request $request){
+        return $this->index($request);
     }
 }

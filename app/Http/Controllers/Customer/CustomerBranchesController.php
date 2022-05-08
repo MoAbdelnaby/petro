@@ -49,7 +49,7 @@ class CustomerBranchesController extends Controller
             if (!in_array($id, $branches)) {
                 return redirect()->back()->with('danger', __('app.gym.empty_branch'));
             }
-        } elseif ($user->type == "customer") {
+        } elseif ($user->type == "customer" || $user->type == "subadmin") {
 
             $item = $this->repo->findOrFail($id);
 
@@ -109,7 +109,7 @@ class CustomerBranchesController extends Controller
     public function store(Request $request)
     {
         $request_data = $request->validate([
-            'name' => 'required|string|min:2|max:60|unique:branches,name,NULL,id,deleted_at,NULL,user_id,' . auth()->id(),
+            'name' => 'required|string|min:2|max:60|unique:branches,name,NULL,id,deleted_at,NULL,user_id,' . parentID(),
             'photo' => 'nullable|image',
             'code' => 'required|unique:branches,code',
             'region_id' => 'required',
@@ -141,7 +141,7 @@ class CustomerBranchesController extends Controller
                 }
                 $reg = Region::create([
                     'name' => $request->region_id,
-                    'user_id' => auth()->user()->id,
+                    'user_id' => primaryID(),
 
                 ]);
                 $data['region_id'] = $reg->id;
@@ -154,7 +154,7 @@ class CustomerBranchesController extends Controller
                 $request->photo->storeAs('branches', $fileName, 'public');
                 $data = array_merge($data, ['photo' => 'branches/' . $fileName]);
             }
-            $params = Arr::except(array_merge($data, ['user_id' => auth()->user()->id]), 'models');
+            $params = Arr::except(array_merge($data, ['user_id' => primaryID()]), 'models');
 
             $branch = $this->repo->create($params);
             if ($branch)
@@ -186,7 +186,8 @@ class CustomerBranchesController extends Controller
                     'address' => $request->name,
                     'lat' => $request->lat,
                     'lng' => $request->lng,
-                    'code' =>$request->code
+                    'code' =>$request->code,
+                    'active' =>true
                 ];
                 $this->sendBranchCoordinates($post);
             }
@@ -224,7 +225,7 @@ class CustomerBranchesController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:2|max:60|unique:branches,name,' . $id . ',id,deleted_at,NULL,user_id,' . auth()->id(),
+            'name' => 'required|string|min:2|max:60|unique:branches,name,' . $id . ',id,deleted_at,NULL,user_id,' . parentID(),
             'photo' => 'nullable|image',
             'region_id' => 'required',
             'top' => 'required',
@@ -257,7 +258,7 @@ class CustomerBranchesController extends Controller
                 }
                 $reg = Region::create([
                     'name' => $request->region_id,
-                    'user_id' => auth()->user()->id,
+                    'user_id' => primaryID(),
                 ]);
                 $data['region_id'] = $reg->id;
             }
@@ -271,7 +272,7 @@ class CustomerBranchesController extends Controller
                 $data = array_merge($data, ['photo' => 'branches/' . $fileName]);
             }
 
-            $params = array_merge($data, ['user_id' => auth()->user()->id]);
+            $params = array_merge($data, ['user_id' => primaryID()]);
 
             $branch = Branch::whereId($id)->with('areas')->first();
 
@@ -311,7 +312,8 @@ class CustomerBranchesController extends Controller
                     'address' => $request->name,
                     'lat' => $request->lat,
                     'lng' => $request->lng,
-                    'code' =>$request->code
+                    'code' =>$request->code,
+                    'active' =>$branch->active
                 ];
                 $this->sendBranchCoordinates($post);
             }
@@ -368,6 +370,24 @@ class CustomerBranchesController extends Controller
         $item = $this->repo->findOrFail($id);
         $item->active = !$item->active;
         $item->save();
+        $data = $item->refresh();
+
+        try {
+            $post = [
+                'address' => $data->name,
+                'lat' => $data->lat,
+                'lng' => $data->lng,
+                'code' =>$data->code,
+                'active' =>$data->active
+            ];
+
+            $this->sendBranchCoordinates($post);
+
+
+        }catch (\Exception $e) {
+
+        }
+
         return redirect()->back();
 
     }

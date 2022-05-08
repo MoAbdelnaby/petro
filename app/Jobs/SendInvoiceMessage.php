@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Branch;
 use App\Models\Carprofile;
-use App\Models\InvoiceLog;
+use App\Models\TemplateFileLog;
 use App\Models\MessageLog;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -25,10 +25,12 @@ class SendInvoiceMessage implements ShouldQueue
      * @return void
      */
     public $invoice_id;
+    public $messageLog_id;
 
-    public function __construct($invoice_id)
+    public function __construct($invoice_id,$messageLog_id)
     {
         $this->invoice_id = $invoice_id;
+        $this->messageLog_id = $messageLog_id;
     }
 
     /**
@@ -38,24 +40,10 @@ class SendInvoiceMessage implements ShouldQueue
      */
     public function handle()
     {
-        $invoice = InvoiceLog::find($this->invoice_id);
-
-        $phone = phoneHandeler($invoice->phone);
-        $PlateNumber = str_replace(' ', '', $invoice->PlateNumber);
+        $invoice = TemplateFileLog::find($this->invoice_id);
         $file = $invoice->invoice;
 
         if (!empty($file)) {
-
-//            $plate_en = implode(' ',str_split($invoice->PlateNumber));
-//            $carprofile = Carprofile::where('plate_status', 'success')
-//                ->where('plate_en', $plate_en)
-//                ->whereDate('created_at', Carbon::today())
-//                ->latest()->first();
-//            if ($carprofile) {
-//                $path = "/invoices/" . $carprofile->branch_id . "/" . $carprofile->created_at->format('Y') . "/" . $carprofile->created_at->format('M') . "/" . $carprofile->created_at->format('d') . "/";
-//            } else {
-//                $path = "/invoices/nobranch/" . $invoice->created_at->format('Y') . "/" . $invoice->created_at->format('M') . "/" . $invoice->created_at->format('d') . "/";
-//            }
 
             $branch = Branch::where('code', $invoice->branch_code)->first();
             if ($branch) {
@@ -69,13 +57,11 @@ class SendInvoiceMessage implements ShouldQueue
             $filepath = $path . $filename;
             Storage::disk('azure')->put($filepath, $base64data);
             $azurepath = config('app.azure_storage') . config('app.azure_container') . $filepath;
-//            $invoice->update([
-//                'storage' => 'azure'
-//            ]);
+
             $whatsapp_url = $_ENV['WHATSAPP_TEMPLATE_URL'] ?? 'https://whatsapp-wakeb.azurewebsites.net/api/petro_template';
             $whatsapp = Http::post($whatsapp_url, [
                 'template_id' => '1',
-                'phone' => 'whatsapp:+' . $phone,
+                'phone' => 'whatsapp:+' . $invoice->phone,
                 'invoice' => $azurepath,
                 'distance' => $invoice->distance
             ]);
@@ -83,32 +69,37 @@ class SendInvoiceMessage implements ShouldQueue
             $plate_en = implode(' ',str_split($invoice->PlateNumber));
             $carprofile = Carprofile::where('plate_status', 'success')
                 ->where('plate_en', $plate_en)
+                ->where('branch_id', $branch->id)
                 ->whereDate('created_at', Carbon::today())
                 ->latest()->first();
 
-            if ($whatsapp['success'] === false) {
-                MessageLog::create([
-                    'PlateNumber' => $PlateNumber,
-                    'type' => 'invoice',
-                    'message' => str_replace(['{{1}}', '{{2}}'], $invoice->distance, NOTIFY),
-                    'phone' => $phone,
-                    'branch_id' => $branch->id ?? null,
+             MessageLog::where('id',$this->messageLog_id)
+            ->update(
+                [
                     'carprofile_id' => $carprofile ? $carprofile->id : null,
-                    'invoiceUrl' => $filepath,
-                    'status' => 'failed',
-                    'error_reason' => 'twillo error'
-                ]);
-            }
+                    'fileUrl' => $filepath,
+                    'status' => $whatsapp['success'] === false ? 'failed':'sent',
+                    'error_reason' => $whatsapp['success'] === false ? 'twillo error' : null
+                ]
+            );
 
-            MessageLog::create([
-                'PlateNumber' => $PlateNumber,
-                'type' => 'invoice',
-                'message' => str_replace(['{{1}}', '{{2}}'], $invoice->distance, NOTIFY),
-                'phone' => $phone,
-                'branch_id' => $branch->id ?? null,
-                'carprofile_id' => $carprofile ? $carprofile->id : null,
-                'invoiceUrl' => $filepath
-            ]);
+//               MessageLog::updateOrCreate(
+//                    [
+//                        'PlateNumber' => $invoice->PlateNumber,
+//                        'branch_id' => $branch->id,
+//                        'created_at' => Carbon::today()->toDateString(),
+//                    ],
+//                    [
+//                        'type' => 'invoice',
+//                        'message' => str_replace(['{{1}}', '{{2}}'], $invoice->distance, NOTIFY),
+//                        'phone' => $invoice->phone,
+//                        'carprofile_id' => $carprofile ? $carprofile->id : null,
+//                        'fileUrl' => $filepath,
+//                        'status' => $whatsapp['success'] === false ? 'failed':'sent',
+//                        'error_reason' => $whatsapp['success'] === false ? 'twillo error' : null
+//                    ]
+//                );
+
 
             if ($carprofile) {
                 $carprofile->update([

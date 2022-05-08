@@ -42,8 +42,8 @@ class InserBranchData
             ]);
 
             if (!empty($branch)) {
-                $bracnhes = $user->branches->pluck('id')->toArray();
-                $all_branches = array_values(array_unique(array_merge($bracnhes, [$branch->id])));
+                $branches = $user->branches->pluck('id')->toArray();
+                $all_branches = array_values(array_unique(array_merge($branches, [$branch->id])));
                 $user->branches()->sync($all_branches);
             }
         }

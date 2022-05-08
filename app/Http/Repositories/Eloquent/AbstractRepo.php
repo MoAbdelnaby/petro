@@ -4,60 +4,60 @@ namespace App\Http\Repositories\Eloquent;
 
 use App\Http\Repositories\Interfaces\AbstractRepoInterface;
 use App\Http\Requests\PaginateRequest;
-use App\Models\Region;
-use App\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Str;
-use phpDocumentor\Reflection\Types\False_;
-
 
 class AbstractRepo implements AbstractRepoInterface
 {
-    protected   $model;
+    protected $model;
 
-    public function __construct(string $model)
+    /**
+     * @throws BindingResolutionException
+     */
+    public function __construct($model)
     {
-        $this->model = $model;
+        $this->model = app()->make($model);
     }
 
     public function findOrFail($id)
     {
-        return $this->model::findOrfail($id);
+        return $this->model->findOrfail($id);
     }
 
     public function first($id)
     {
-        return $this->model::where('id', $id)->first();
+        return $this->model->where('id', $id)->first();
     }
+
     public function getWhere(array $data)
     {
-        return $this->model::where($data)->orderBy('id', 'DESC')->paginate(10);
+        return $this->model->where($data)->orderBy('id', 'DESC')->paginate(10);
     }
 
     public function getAll()
     {
-        return $this->model::orderBy('id', 'DESC')->paginate(13);
+        return $this->model->orderBy('id', 'DESC')->paginate(13);
     }
 
     public function restore($id)
     {
-        $row = $this->model::onlyTrashed()->find($id);
-        if($row)
-        {
+        $row = $this->model->onlyTrashed()->find($id);
+        if ($row) {
             $row->restore();
-            return true ;
+            return true;
         }
         return false;
 
     }
+
     public function forceDelete($id)
     {
-        $row = $this->model::onlyTrashed()->find($id);
-        if($row)
-        {
+        $row = $this->model->onlyTrashed()->find($id);
+        if ($row) {
             $row->forceDelete();
-            return true ;
+            return true;
         }
         return false;
     }
@@ -65,8 +65,8 @@ class AbstractRepo implements AbstractRepoInterface
 
     public function bulkRestore(array $trashs)
     {
-        $allRows = $this->model::onlyTrashed()->find($trashs);
-        if($allRows) {
+        $allRows = $this->model->onlyTrashed()->find($trashs);
+        if ($allRows) {
             foreach ($allRows as $row) {
                 $row->restore();
             }
@@ -74,10 +74,11 @@ class AbstractRepo implements AbstractRepoInterface
         }
         return false;
     }
+
     public function bulkForceDelete(array $trashs)
     {
-        $allRows = $this->model::onlyTrashed()->find($trashs);
-        if($allRows) {
+        $allRows = $this->model->onlyTrashed()->find($trashs);
+        if ($allRows) {
             foreach ($allRows as $row) {
                 $row->forceDelete();
             }
@@ -116,32 +117,40 @@ class AbstractRepo implements AbstractRepoInterface
             return $this->model->orderBy($request->field, $request->sort)->paginate($request->limit);
         }
 
-        return $this->model::orderBy($request->field, $request->sort)->paginate($request->limit);
+        return $this->model->orderBy($request->field, $request->sort)->paginate($request->limit);
     }
 
     public function create(array $data)
     {
-        return $this->model::create($data);
+        return $this->model->create($data);
     }
 
     public function update(array $data, $id)
     {
-        $item = $this->model::where('id', $id)->first();
+        $item = $this->model->where('id', $id)->first();
         return $item->update($data);
     }
 
     public function delete($id)
     {
 
-        $model = $this->model::findOrFail($id);
+        $model = $this->model->findOrFail($id);
         activity()
             ->causedBy(auth()->user())
-            ->inLog(Str::lower(Str::afterLast($this->model,'\\')))
+            ->inLog(Str::lower(Str::afterLast($this->model, '\\')))
             ->performedOn($model)
-            ->withProperties(['deleted_at'=>Carbon::now()->format('Y-m-d H:i:s')])
-            ->log(auth()->user()->name.' Deleted - '.$model->name ?? $model->id );
+            ->withProperties(['deleted_at' => Carbon::now()->format('Y-m-d H:i:s')])
+            ->log(auth()->user()->name . ' Deleted - ' . $model->name ?? $model->id);
 
         return $model->delete();
 
+    }
+
+    public function __call(string $method, array $parameters)
+    {
+        if (!method_exists($this, $method)) {
+            return $this->model->{$method}(...$parameters);
+        }
+        return $this->$method($parameters);
     }
 }

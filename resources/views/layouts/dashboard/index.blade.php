@@ -40,6 +40,12 @@
     <link rel="stylesheet" href=" {{url('/assets')}}/noty/noty.css ">
     <script src=" {{url('/assets')}}/noty/noty.min.js "></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+
+
+
+    
 </head>
 <body class="sidebar-main " data-mode="{{session()->has('darkMode') ? 'dark' : ''}}">
 
@@ -145,7 +151,8 @@
                     "previous": PrevP,
                     "Next": NextP,
                 }
-            }
+            },
+            "bLengthChange" : false,
         });
 
         // toggle icon menu
@@ -256,6 +263,11 @@
                 $(this).hide();
             }
         });
+
+
+
+        
+
 
 
     });

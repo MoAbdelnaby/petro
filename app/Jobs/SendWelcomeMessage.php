@@ -96,6 +96,7 @@ class SendWelcomeMessage implements ShouldQueue
                             'PlateNumber' => $this->plate,
                             'type' => 'welcome',
                             'message' => WELCOME,
+                            'status' => 'sent',
                             'phone' => str_replace('whatsapp:+', '', $phone),
                             'branch_id' => $this->branch_id
                         ]);

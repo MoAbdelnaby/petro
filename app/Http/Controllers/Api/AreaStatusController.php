@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\AreaStatus;
 use App\Models\Branch;
-use App\Models\Customer;
 use App\Services\CustomerPhone;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
 class AreaStatusController extends Controller
 {
-    public $plate='2931VJA';
+    public $plate = '2931VJA';
 
     public function handle()
     {
@@ -37,7 +36,7 @@ class AreaStatusController extends Controller
     public function status($code)
     {
         try {
-            $branch = Branch::where('code',$code)->first();
+            $branch = Branch::where('code', $code)->first();
             $data = AreaStatus::where('branch_id', $branch->id)
                 ->select('area', 'status')
                 ->groupBy('area')

@@ -15,7 +15,7 @@
             @can('create-CustomerBranches')
                 <div class="row col-12 p-0 m-0 text-right d-block mb-2 clearfix">
 
-                    @if (auth()->user()->type == 'customer' && count($trashs))
+                    @if (auth()->user()->type=="customer" || auth()->user()->type=="subadmin" && count($trashs))
                         <button type="button" class="btn btn-primary float-left" data-toggle="modal" data-target="#RecycleBin">
                             <i class="fas fa-recycle"></i> {{ __('app.Recycle_Bin') }}
                         </button>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
 
-                    @if (auth()->user()->type == 'customer')
+                    @if (in_array(auth()->user()->type,['customer','subadmin']))
                         <a class="btn btn-primary float-right" href="{{ route('customerBranches.create') }}">
                             <i class="fa fa-plus"></i> {{ __('app.customers.branches.new') }}
                         </a>
@@ -190,7 +190,7 @@
                                                                     </a>
                                                                 </td>
                                                                 <td>
-                                                                    @if (auth()->user()->type == 'customer')
+                                                                    @if (in_array(auth()->user()->type,['customer','subadmin']))
                                                                         <a class="btn btn-sm btn-info"
                                                                             href="{{ route('customerBranches.services', [$item->id]) }}">
                                                                             services
@@ -255,7 +255,7 @@
                                                                 <div class="clearfix border-bottom mt-1 mb-1"></div>
                                                                 <div
                                                                     class="ratting-item d-flex align-items-center justify-content-center p-0 m-0 pb-2">
-                                                                    @if (auth()->user()->type == 'customer')
+                                                                    @if (in_array(auth()->user()->type,['customer','subadmin']))
                                                                         <a class="btn  btn-info"
                                                                             href="{{ route('customerBranches.services', [$item->id]) }}">
                                                                             services

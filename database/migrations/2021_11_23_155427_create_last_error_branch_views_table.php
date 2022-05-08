@@ -15,11 +15,11 @@ class CreateLastErrorBranchViewsTable extends Migration
     {
         DB::unprepared("SET @@sql_mode :=''");
         \DB::statement("CREATE VIEW last_error_branch_views AS(
-        SELECT * FROM branch_net_works
-        WHERE id IN (
-        SELECT MAX(id) FROM branch_net_works
-        GROUP BY branch_code
-        )
+            SELECT * FROM branch_net_works
+            WHERE id IN (
+            SELECT MAX(id) FROM branch_net_works
+            GROUP BY branch_code
+            )
         )
         ");
         DB::unprepared("SET @@sql_mode :='ONLY_FULL_GROUP_BY'");

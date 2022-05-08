@@ -94,7 +94,7 @@
                                             <label for="password_confirmation"><i
                                                     class="fas fa-key"></i> {{__('app.type')}}
                                             </label>
-                                            <select name="type" id="type" class="form-control">
+                                            <select name="type" id="type" class="form-control nice-select">
                                                 <option value="subadmin">{{ __('app.subadmin') }}</option>
                                                 <option value="subcustomer">{{ __('app.subcustomer') }}</option>
                                             </select>
@@ -104,29 +104,37 @@
                                                 </span>
                                             @enderror
                                         </div>
+
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                            <label for="code">{{__('app.position')}}</label>
+                                            <select class="form-control nice-select position_select" name='position_id'>
+                                                <option value="">@lang('app.no_position')</option>
+                                                @foreach ($positions as $position)
+                                                    <option value="{{ $position->id }}" {{ old('position_id') == $position->id ? 'selected' : '' }}>{{ $position->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('position_id')
+                                            <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-lg-6"></div>
                                         <div class="form-group col-lg-4 col-md-6 col-sm-12">
                                             <label class="d-block w-100">&nbsp;&nbsp;</label>
-
-
                                             <label for="speedtest" class="custom-checkbox">
                                                 <span>{{__('app.test_speed')}}</span>
                                                 <input class="trashselect" type="checkbox" name="speedtest" id="speedtest" >
                                                 <span class="checkmark"></span>
                                             </label>
-
-                                            {{-- <input type="checkbox" style="" name="speedtest"
-                                                   checked="checked" id="speedtest"
-                                                   class=" @error('speedtest') is-invalid @enderror">
-                                            <label for="speedtest">{{__('app.test_speed')}}</label> --}}
                                             @error('speedtest')
                                              <span class="invalid-feedback" role="alert">
                                                <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror
-
                                         </div>
-
                                     </div>
+
                                     <div class="border-bottom my-2"></div>
                                     <button type="submit" class="btn btn-primary">{{__('app.users.save')}}</button>
                                     <button type="button" class="btn btn-danger back">{{__('app.back')}}</button>

@@ -16,7 +16,7 @@
             </div>
 
             <div class="row col-12 p-0 m-0 text-right d-block mb-2 clearfix">
-                @if (auth()->user()->type == 'customer')
+                @if (in_array(auth()->user()->type,['customer','subadmin']))
                     <a class="btn btn-primary float-right" href="{{ route('customerBranches.services.create', $id) }}">
                         <i class="fa fa-plus"></i> {{ __('app.service.create') }}
                     </a>

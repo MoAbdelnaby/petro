@@ -16,6 +16,11 @@ class PlateReport extends BaseReport
         $this->selectQuery = 'COUNT(carprofiles.id) as count';
     }
 
+    /**
+     * @param $list
+     * @param $selectQuery
+     * @return void
+     */
     public function getCityQuery($list, $selectQuery = null): void
     {
         $selectQuery = $selectQuery ?? $this->selectQuery;
@@ -36,6 +41,11 @@ class PlateReport extends BaseReport
         $this->query = $query;
     }
 
+    /**
+     * @param $list
+     * @param $selectQuery
+     * @return void
+     */
     public function getRegionQuery($list, $selectQuery = null): void
     {
         $selectQuery = $selectQuery ?? $this->selectQuery;
@@ -43,18 +53,23 @@ class PlateReport extends BaseReport
         $query = DB::table($this->mainTable)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->join("regions", "regions.id", '=', "branches.region_id")
-            ->where("branches.user_id", '=', parentID())
             ->where("regions.user_id", '=', parentID())
+            ->where("regions.active", '=', true)
+            ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
             ->where("$this->mainTable.status", '=', 'completed')
             ->where("$this->mainTable.plate_status", '=', 'success')
-            ->where("regions.active", '=', true)
             ->whereIn("regions.id", $list)
             ->selectRaw("regions.id as list_id, regions.name as list_name, $selectQuery");
 
         $this->query = $query;
     }
 
+    /**
+     * @param $list
+     * @param $selectQuery
+     * @return void
+     */
     public function getBranchQuery($list, $selectQuery = null): void
     {
         $selectQuery = $selectQuery ?? $this->selectQuery;
@@ -71,6 +86,11 @@ class PlateReport extends BaseReport
         $this->query = $query;
     }
 
+    /**
+     * @param $list
+     * @param $selectQuery
+     * @return void
+     */
     public function getAreaQuery($list, $selectQuery = null): void
     {
         $selectQuery = $selectQuery ?? $this->selectQuery;

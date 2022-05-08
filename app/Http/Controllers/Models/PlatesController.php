@@ -13,7 +13,7 @@ use App\Models\Invoice;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
 use App\Services\CustomerPhone;
-use App\Services\ReportService;
+use App\Services\Report\ReportService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,9 +53,9 @@ class PlatesController extends Controller
                 return redirect()->route('myBranches')->with('danger', __('app.gym.empty_branch'));
             }
 
-        } elseif ($user->type == "customer") {
+        } elseif ($user->type == "customer" || $user->type == "subadmin") {
             $branch = Branch::findOrFail($usermodelbranch->branch_id);
-            if ($branch->user_id != $user->id) {
+            if ($branch->user_id != $user->id && $user->type != "subadmin") {
                 return redirect()->route('customerPackages.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
             }
         }
@@ -84,7 +84,7 @@ class PlatesController extends Controller
         if ($results->isNotEmpty()) {
             foreach ($results as $result) {
                 $final_branches[] = (object)[
-                    'name' => $result->branch->name,
+                    'name' => $result->branch ? $result->branch->name : '',
                     'user_model_branch_id' => $result->id
                 ];
             }
@@ -124,9 +124,16 @@ class PlatesController extends Controller
             }
         }
 
-        $invoice_chart = ReportService::invoiceComparisonReport('custom', [$usermodelbranch->branch_id]);
-        $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$usermodelbranch->id]);
-        $duration_ratio = $duration_ratio[0]['duration']??0;
+        $filter = ['show_by' => 'branch', 'branch_type' => 'branch', 'branch_data' => $usermodelbranch->branch_id];
+        $invoice_chart = ReportService::handle('invoice', $filter);
+        $duration_ratio = ReportService::handle('stayingAverage', $filter);
+        $invoice_chart = !empty($invoice_chart['charts']) ? $invoice_chart['charts']['bar'] : [];
+
+        if (empty($duration_ratio['charts'])) {
+            $duration_ratio = 0;
+        } else {
+            $duration_ratio = round(array_sum(\Arr::pluck($duration_ratio['charts']['bar'], 'value')) / 3);
+        }
 
         return view('customer.preview.plates.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'starttime', 'branch', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
     }
@@ -165,9 +172,9 @@ class PlatesController extends Controller
                 return redirect()->route('myBranches')->with('danger', __('app.gym.empty_branch'));
             }
 
-        } elseif ($user->type == "customer") {
+        } elseif ($user->type == "customer" || $user->type == "subadmin") {
             $item = Branch::findOrFail($usermodelbranch->branch_id);
-            if ($item->user_id != $user->id) {
+            if ($item->user_id != $user->id && $user->type != "subadmin") {
                 return redirect()->route('customerPackages.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
             }
         }
@@ -284,9 +291,16 @@ class PlatesController extends Controller
             $i++;
         }
 
-        $invoice_chart = ReportService::invoiceComparisonReport('custom', [$usermodelbranch->branch_id], $start, $end);
-        $duration_ratio = ReportService::stayingAverageComparisonReport('custom', [$usermodelbranch->id], $start, $end);
-        $duration_ratio = $duration_ratio[0]['duration']??0;
+        $filter = ['show_by' => 'branch', 'branch_type' => 'branch', 'branch_data' => $usermodelbranch->id, 'start' => $start, 'end' => $end];
+        $invoice_chart = ReportService::handle('invoice', $filter);
+        $duration_ratio = ReportService::handle('stayingAverage', $filter);
+
+        $invoice_chart = !empty($invoice_chart['charts']) ? $invoice_chart['charts']['bar'] : [];
+        if (empty($duration_ratio['charts'])) {
+            $duration_ratio = 0;
+        } else {
+            $duration_ratio = round(array_sum(\Arr::pluck($duration_ratio['charts']['bar'], 'value')) / 3);
+        }
 
         return view('customer.preview.plates.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'starttime', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
     }
@@ -330,10 +344,8 @@ class PlatesController extends Controller
 
     }
 
-
     public function sendMessage(Request $request)
     {
-
         try {
             $contacts = [];
             $messageTemplate = [];

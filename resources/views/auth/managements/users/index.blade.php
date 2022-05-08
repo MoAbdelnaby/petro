@@ -79,7 +79,7 @@
                                         <td>
                                             <div class="flex align-items-center list-user-action">
                                                 @can('edit-users')
-                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="{{ route('users.edit',[$user->id]) }}"><i class="ri-pencil-line"></i></a>
+                                                <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="{{ route('users.edit',$user->id) }}"><i class="ri-pencil-line"></i></a>
                                                 @endcan
                                                  @can('delete-users')
                                                 <a class="iq-bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" onclick="delete_alert({{ $user->id }});" ><i class="ri-delete-bin-line"></i></a>

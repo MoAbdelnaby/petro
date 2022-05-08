@@ -4,6 +4,10 @@
     {{__('app.home')}}
 @endsection
 
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endpush
+
 @section('content')
     <div id="content-page" class="content-page home_page" style="margin-top: -30px">
         <div class="container-fluid">
@@ -105,7 +109,7 @@
                                                         <div class="d-flex align-items-center">
                                                             <div
                                                                 class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
-                                                                <i class="fa fa-id-card"></i></div>
+                                                                <i class="fa-solid fa-location-dot"></i></div>
                                                             <h3>{{$statistics['regions']}}</h3>
                                                         </div>
                                                         <div
@@ -125,10 +129,12 @@
                                                     <div
                                                         class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                                         <div class="d-flex align-items-center">
-                                                            <div
-                                                                class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                                <i class="fa fa-subway"></i></div>
-                                                            <h3>{{$statistics['branches']}}</h3></div>
+                                                            <div class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                <i class="fa-solid fa-code-branch"></i>
+                                                            </div>
+                                                            <h3>{{$statistics['active_branches']}}</h3>
+                                                            <h4>&nbsp;({{$statistics['branches']??0}})</h4>
+                                                        </div>
                                                         <div
                                                             class="iq-map text-danger font-size-32">
                                                             <i class="ri-bar-chart-grouped-line"></i></div>
@@ -148,7 +154,7 @@
                                                         <div class="d-flex align-items-center">
                                                             <div
                                                                 class="rounded-circle iq-card-icon iq-bg-warning mr-2">
-                                                                <i class="fa fa-bars"></i></div>
+                                                                <i class="fa-solid fa-server"></i></div>
                                                             <h3>2</h3>
                                                         </div>
                                                         <div
@@ -232,7 +238,7 @@
                                                         <div class="d-flex align-items-center">
                                                             <div
                                                                 class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                                <i class="fa fa-outdent"></i></div>
+                                                                <i class="fas fa-file-excel text-danger"></i></div>
                                                             <h3>{{$statistics['backout']}}</h3></div>
                                                         <div
                                                             class="iq-map text-danger font-size-32">
@@ -252,14 +258,14 @@
                                                         class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                                         <div class="d-flex align-items-center">
                                                             <div
-                                                                class="rounded-circle iq-card-icon iq-bg-warning mr-2">
-                                                                <i class="fa fa-file-text"></i>
+                                                                class="rounded-circle iq-card-icon  mr-2" style="background: #00ff9e29">
+                                                                <i class="fa fa-file-text text-success"></i>
                                                             </div>
                                                             <h3>{{$statistics['invoice']}}</h3>
                                                         </div>
                                                         <div
                                                             class="iq-map text-warning font-size-32">
-                                                            <i class="ri-bar-chart-grouped-line"></i></div>
+                                                            <i class="ri-bar-chart-grouped-line text-success"></i></div>
                                                     </div>
                                                 </a>
                                             </div>
@@ -303,7 +309,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??'2022-01-01'}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -378,7 +384,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??'2022-01-01'}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -453,7 +459,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??'2022-01-01'}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -528,7 +534,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??'2022-01-01'}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"

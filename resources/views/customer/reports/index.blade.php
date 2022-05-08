@@ -5,7 +5,12 @@
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
+
 @push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
     <style>
         .select2-container {
             width: 100% !important;
@@ -77,7 +82,8 @@
                                     </div>
                                     <div class="mb-2 filter-pills-cont">
                                         <div class="filter-dropdown">
-                                            <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm" href="{{route('reports.index')}}">
+                                            <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm"
+                                               href="{{route('reports.index')}}">
                                                 <i class="fas fa-bookmark"></i> &nbsp;{{ __('app.Default_report') }}
                                             </a>
                                             <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm static_download">
@@ -85,18 +91,20 @@
                                             </a>
                                             <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
                                                data-toggle="dropdown" href="#">
-                                                <i class="fas fa-sort-alt"></i> &nbsp;{{ __('app.Filter') }}
+                                                <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
                                             </a>
                                             <div class="filter-content" aria-labelledby="dropdownMenuButton">
-                                                <form action="" method="get" class="filter-form">
+                                                <form action="{{route('reports.filter')}}" method="post"
+                                                      class="filter-form">
                                                     @csrf
                                                     <div class="row">
-                                                        <div id="branch_container" class="col-md-12 ">
+                                                        <div id="branch_container" class="col-md-12">
                                                             <div class="row">
-                                                                <div class=" col-md-8 p-0" id="branch_selection">
+                                                                <div class=" col-md-10" id="branch_selection">
                                                                     <lebel>{{ __('app.Select_branches') }}:</lebel>
 
-                                                                    <select class="form-control select_2 required" multiple  id="select_branch" name="lists[]">
+                                                                    <select class="form-control select_2 required"
+                                                                            multiple id="select_branch" name="lists[]">
                                                                         @foreach($branches as $branch)
                                                                             <option value="{{$branch->id}}"
                                                                                     @if(in_array($branch->id,request('lists')??[])) selected @endif>{{$branch->name}}</option>
@@ -106,14 +114,19 @@
                                                                         Please select branch.
                                                                     </div>
                                                                 </div>
-                                                                <div class=" col-md-4 " >
-                                                                    <label for="selectallbranches" class="custom-checkbox pl-1 pl-4 mt-4">
-                                                                        <input class="trashselect" type="checkbox" name="trashs[]" id="selectallbranches" value="1">
-                                                                        <span class="checkmark"></span> Select All
-                                                                        
-                                                                    </label> 
+                                                                <div class="col-md-2"
+                                                                     style="margin-left: -25px; padding-top: 5px">
+                                                                    <label for="selectallbranches"
+                                                                           class="custom-checkbox pl-4 mt-4">
+                                                                        <input class="trashselect" type="checkbox"
+                                                                               name="trashs[]" id="selectallbranches"
+                                                                               value="1">
+                                                                        <span class="checkmark"></span>
+                                                                        <strong>All</strong>
+
+                                                                    </label>
                                                                     {{-- <input type="checkbox" id="selectallbranches" > Select All --}}
-{{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
+                                                                    {{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -161,8 +174,12 @@
                                     <h2>{{ __("app.Branches")}} : </h2>
                                     @if($list_report)
                                         <ul>
-                                            @foreach($list_report as $elemnt)
+                                            @foreach($list_report as $index => $elemnt)
                                                 <li>{{$elemnt}}</li>
+                                                @if($index == 4)
+                                                    <li>.....</li>
+                                                    @break
+                                                @endif
                                             @endforeach
                                         </ul>
                                     @else
@@ -196,7 +213,7 @@
                                             </i>
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??"2022-01-01"}}
+                                                {{request('start')??now()->startOfYear()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -244,7 +261,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div
                                                                     class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
-                                                                    <i class="fa fa-id-card"></i></div>
+                                                                    <i class="fa-solid fa-location-dot"></i></div>
                                                                 <h3>{{$statistics['regions']}}</h3>
                                                             </div>
                                                             <div
@@ -266,8 +283,10 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div
                                                                     class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                                    <i class="fa fa-subway"></i></div>
-                                                                <h3>{{$statistics['branches']}}</h3></div>
+                                                                    <i class="fa-solid fa-code-branch"></i></div>
+                                                                <h3>{{$statistics['active_branches']}}</h3>
+                                                                <h4>&nbsp;({{$statistics['branches']??0}})</h4>
+                                                            </div>
                                                             <div
                                                                 class="iq-map text-danger font-size-32">
                                                                 <i class="ri-bar-chart-grouped-line"></i></div>
@@ -287,7 +306,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div
                                                                     class="rounded-circle iq-card-icon iq-bg-warning mr-2">
-                                                                    <i class="fa fa-bars"></i></div>
+                                                                    <i class="fa-solid fa-server"></i></div>
                                                                 <h3>2</h3>
                                                             </div>
                                                             <div
@@ -370,8 +389,9 @@
                                                             class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                                             <div class="d-flex align-items-center">
                                                                 <div
-                                                                    class="rounded-circle iq-card-icon iq-bg-warning mr-2">
-                                                                    <i class="fa fa-file-text"></i>
+                                                                    class="rounded-circle iq-card-icon  mr-2"
+                                                                    style="background: #00ff9e29">
+                                                                    <i class="fa fa-file-text text-success"></i>
                                                                 </div>
                                                                 <h3>{{$statistics['invoice']}}</h3>
                                                             </div>
@@ -394,7 +414,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div
                                                                     class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                                    <i class="fa fa-outdent"></i></div>
+                                                                    <i class="fas fa-file-excel text-danger"></i></div>
                                                                 <h3>{{$statistics['backout']}}</h3></div>
                                                             <div
                                                                 class="iq-map text-danger font-size-32">
@@ -505,21 +525,17 @@
 @push('js')
     <script>
         $(document).ready(function () {
-
-            $("#selectallbranches").click(function(){
-                if($("#selectallbranches").is(':checked') ){
-                    console.log('checked');
-                    $("#select_branch > option").prop("selected","selected");
+            $("#selectallbranches").click(function () {
+                if ($("#selectallbranches").is(':checked')) {
+                    $("#select_branch > option").prop("selected", "selected");
                     $("#select_branch").trigger("change");
-                }else{
-                    console.log('removed');
+                } else {
                     $("#select_branch").val(null);
                     $("#select_branch").trigger("change");
                 }
             });
 
-
-            $("#checkValButton").click(function(){
+            $("#checkValButton").click(function () {
                 alert($("#select_branch").val());
             });
 

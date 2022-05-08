@@ -4,18 +4,17 @@ namespace App\Console\Commands;
 
 use App\BranchStatus;
 use App\Jobs\SendBranchStatusMailJob;
-use App\Mail\mailUserBranch;
-use App\Models\Branch;
 use App\Models\BranchSetting;
 use App\Models\CarPLatesSetting;
+use App\Models\Escalation;
+use App\Models\EscalationBranch;
 use App\Models\PlaceMaintenanceSetting;
 use App\Models\UserModelBranch;
-use App\Notifications\branchConnectionNotification;
+use App\Notifications\BranchStatusNotification;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Mail;
 
 class BranchStatusApi extends Command
 {
@@ -52,8 +51,7 @@ class BranchStatusApi extends Command
     {
         $res = [];
         $data = [];
-        $minutes = 0;
-        $AiValue =15;
+        $AiValue = 15;
 
         $now = Carbon::now();
         $branches = DB::table("last_error_branch_views as branchError")
@@ -69,15 +67,50 @@ class BranchStatusApi extends Command
             if ($now->subMinutes($AiValue) < $branch->created_at) {
                 $data['status'] = 'online';
                 $data['last_error'] = $branch->error;
+
+                EscalationBranch::where('branch_id', $branch->br_id)->update(['time_minute' => 0, 'status' => 0]);
+
             } else {
                 $data['status'] = 'offline';
                 $data['last_error'] = $branch->error;
 
-                $current = Branch::with('users')->find($branch->br_id);
+                $escalations = Escalation::orderBy('sort')->get();
+                foreach ($escalations as $escalation) {
+                    $escalationBranch = EscalationBranch::where('escalation_id', $escalation->id)->where('branch_id', $branch->br_id)->first();
+                    if ($escalationBranch) {
+                        //check escalation notification to stop when action
+                        if ($escalationBranch->noticed == true) {
+                            break;
+                        }
 
-                $users = $current->users;
-                if (count($users) > 0) {
-                    $this->sendErrorToAdmin($branch, $users);
+                        if ($escalationBranch->status == true) {
+                            $escalationBranch->time_minute += $AiValue;
+                            $escalationBranch->save();
+                            if ($escalationBranch->time_minute < $escalation->time_minute) {
+                                break;
+                            }
+                        } else {
+                            $escalationBranch->status = true;
+                            $escalationBranch->save();
+                            $users = User::where('position_id', $escalation->position_id)->get();
+                            if (count($users) > 0) {
+                                $this->sendErrorToAdmin($branch, $users, $escalationBranch->id);
+                            }
+                            break;
+                        }
+                    } else {
+                        $escalationBranch = EscalationBranch::create([
+                            'escalation_id' => $escalation->id,
+                            'branch_id' => $branch->br_id,
+                            'status' => true,
+                        ]);
+
+                        $users = User::where('position_id', $escalation->position_id)->get();
+                        if (count($users) > 0) {
+                            $this->sendErrorToAdmin($branch, $users, $escalationBranch->id);
+                        }
+                        break;
+                    }
                 }
             }
 
@@ -96,57 +129,58 @@ class BranchStatusApi extends Command
 
     /**
      * @param $branch
-     * @param $data
      * @param $users
+     * @param $escalationBranchId
      */
-    protected function sendErrorToAdmin($branch, $users): void
+    protected function sendErrorToAdmin($branch, $users, $escalationBranchId): void
     {
         try {
-
-
             $branchSetting = BranchSetting::find(1);
             if ($branchSetting->type == 'hours') {
                 $minutes = $branchSetting->duration * 60;
             } else {
                 $minutes = $branchSetting->duration;
             }
-            $userModelBranch = UserModelBranch::where('branch_id',$branch->br_id)->first();
-                $this->comment($userModelBranch->id);
-            if($userModelBranch) {
+            $userModelBranch = UserModelBranch::where('branch_id', $branch->br_id)->first();
+            $this->comment($userModelBranch->id);
+            if ($userModelBranch) {
                 $branch_work = PlaceMaintenanceSetting::where('user_model_branch_id', $userModelBranch->id)->where('active', 1)->first();
                 if (!$branch_work) {
                     $branch_work = CarPLatesSetting::where('user_model_branch_id', $userModelBranch->id)->where('active', 1)->first();
                 }
                 $this->comment($branch_work->id);
+
                 if ($branch_work) {
                     $now = Carbon::now();
                     $start = Carbon::parse($branch_work->start_time);
                     $end = Carbon::parse($branch_work->end_time);
-                    if( $now < $end &&  $now > $start) {
+                    if ($now < $end && $now > $start) {
                         $this->comment('start2');
-                        if ($now->subMinutes($minutes) > $branch->created_at) {
-                            foreach ($users as $user) {
-                                $check = DB::table('branches_users')
+//                        if ($now->subMinutes($minutes) > $branch->created_at) {
+                        foreach ($users as $user) {
+                            $check = DB::table('branches_users')
+                                ->where('user_id', $user->id)
+                                ->where('branch_id', $branch->br_id)
+                                ->first();
+
+                            if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
+
+                                $user->notify(new BranchStatusNotification($branch, $escalationBranchId));
+
+                                dispatch(new SendBranchStatusMailJob($branch, $minutes, $user->email, $user->name));
+
+                                DB::table('branches_users')
                                     ->where('user_id', $user->id)
                                     ->where('branch_id', $branch->br_id)
-                                    ->first();
-                                if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
-                                    dispatch(new SendBranchStatusMailJob($branch,$minutes,$user->email,$user->name));
-                                    DB::table('branches_users')
-                                        ->where('user_id', $user->id)
-                                        ->where('branch_id', $branch->br_id)
-                                        ->update(['notified' => '1']);
-                                }
+                                    ->update(['notified' => '1']);
                             }
                         }
+//                        }
                     }
                 }
             }
-
         } catch (\Exception $e) {
 
         }
-
-
     }
 }

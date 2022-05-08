@@ -56,9 +56,9 @@ class PlacesController extends Controller
                 return redirect()->route('myBranches')->with('danger', __('app.gym.empty_branch'));
             }
 
-        } elseif ($user->type == "customer") {
+        } elseif ($user->type == "customer" || $user->type == "subadmin") {
             $item = $usermodelbranch->branch;
-            if ($item->user_id != $user->id) {
+            if ($item->user_id != $user->id && $user->type != "subadmin") {
                 return redirect()->route('customerPackages.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
             }
         }

@@ -76,7 +76,7 @@ class RegionController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:2|max:60|unique:regions,name,NULL,id,deleted_at,NULL,user_id,' . auth()->id(),
+            'name' => 'required|string|min:2|max:60|unique:regions,name,NULL,id,deleted_at,NULL,user_id,' . parentID(),
             'photo' => 'nullable|image',
             'parent_id' => 'required|exists:regions,id',
         ]);
@@ -93,7 +93,7 @@ class RegionController extends Controller
             $data = array_merge($data, ['photo' => 'regions/' . $fileName]);
         }
 
-        $params = array_merge($data, ['user_id' => auth()->user()->id, 'display_name' => $data['name'] ?? '']);
+        $params = array_merge($data, ['user_id' => parentID(), 'display_name' => $data['name'] ?? '']);
         $insert = $this->repo->create($params);
         if ($insert) {
             foreach (User::where('type', 'customer')->get() as $user) {
@@ -131,7 +131,7 @@ class RegionController extends Controller
     public function update(Request $request, $id): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:2|max:60|unique:branches,name,' . $id . ',id,deleted_at,NULL,user_id,' . auth()->id(),
+            'name' => 'required|string|min:2|max:60|unique:branches,name,' . $id . ',id,deleted_at,NULL,user_id,' . parentID(),
             'photo' => 'nullable|image',
             'parent_id' => 'nullable|exists:regions,id',
         ]);
@@ -160,7 +160,7 @@ class RegionController extends Controller
             $data = array_merge($data, ['photo' => 'regions/' . $fileName]);
         }
 
-        $params = array_merge($data, ['user_id' => auth()->user()->id]);
+        $params = array_merge($data, ['user_id' => parentID()]);
 
         $this->repo->update($params, $id);
 
