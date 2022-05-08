@@ -87,11 +87,12 @@ class BranchStatusApi extends Command
                             break;
                         }
                         if ($escalationBranch->status == true) {
-                            $escalationBranch->time_minute += $AiValue;
-                            $escalationBranch->save();
-                            if ($escalationBranch->time_minute < $escalation->time_minute) {
+                            if (($escalationBranch->time_minute + $AiValue) < $escalation->time_minute) {
                                 break;
                             }
+
+                            $escalationBranch->time_minute += $AiValue;
+                            $escalationBranch->save();
                         } else {
                             $escalationBranch->status = true;
                             $escalationBranch->save();
@@ -165,6 +166,7 @@ class BranchStatusApi extends Command
                                 ->first();
 
                             if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
+
                                 dispatch(new SendBranchStatusMailJob($branch, $minutes, $user->email, $user->name));
 
                                 $this->comment('Email Sent');
