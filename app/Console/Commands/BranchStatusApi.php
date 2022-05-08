@@ -68,6 +68,10 @@ class BranchStatusApi extends Command
                 $data['status'] = 'online';
                 $data['last_error'] = $branch->error;
 
+                DB::table('branches_users')
+                    ->where('branch_id', $branch->br_id)
+                    ->update(['notified' => '0']);
+
                 EscalationBranch::where('branch_id', $branch->br_id)->update(['time_minute' => 0, 'status' => 0]);
 
             } else {
@@ -82,7 +86,6 @@ class BranchStatusApi extends Command
                         if ($escalationBranch->noticed == true) {
                             break;
                         }
-
                         if ($escalationBranch->status == true) {
                             $escalationBranch->time_minute += $AiValue;
                             $escalationBranch->save();
@@ -142,20 +145,18 @@ class BranchStatusApi extends Command
                 $minutes = $branchSetting->duration;
             }
             $userModelBranch = UserModelBranch::where('branch_id', $branch->br_id)->first();
-            $this->comment($userModelBranch->id);
+
             if ($userModelBranch) {
                 $branch_work = PlaceMaintenanceSetting::where('user_model_branch_id', $userModelBranch->id)->where('active', 1)->first();
                 if (!$branch_work) {
                     $branch_work = CarPLatesSetting::where('user_model_branch_id', $userModelBranch->id)->where('active', 1)->first();
                 }
-                $this->comment($branch_work->id);
 
                 if ($branch_work) {
                     $now = Carbon::now();
                     $start = Carbon::parse($branch_work->start_time);
                     $end = Carbon::parse($branch_work->end_time);
                     if ($now < $end && $now > $start) {
-                        $this->comment('start2');
 //                        if ($now->subMinutes($minutes) > $branch->created_at) {
                         foreach ($users as $user) {
                             $check = DB::table('branches_users')
@@ -164,15 +165,16 @@ class BranchStatusApi extends Command
                                 ->first();
 
                             if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
-
-                                $user->notify(new BranchStatusNotification($branch, $escalationBranchId));
-
                                 dispatch(new SendBranchStatusMailJob($branch, $minutes, $user->email, $user->name));
+
+                                $this->comment('Email Sent');
 
                                 DB::table('branches_users')
                                     ->where('user_id', $user->id)
                                     ->where('branch_id', $branch->br_id)
                                     ->update(['notified' => '1']);
+
+                                $user->notify(new BranchStatusNotification($branch, $escalationBranchId));
                             }
                         }
 //                        }
