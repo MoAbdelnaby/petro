@@ -158,6 +158,7 @@ class BranchStatusApi extends Command
                     $end = Carbon::parse($branch_work->end_time);
                     if ($now < $end && $now > $start) {
 //                        if ($now->subMinutes($minutes) > $branch->created_at) {
+                        $this->comment('Start');
                         foreach ($users as $user) {
                             $check = DB::table('branches_users')
                                 ->where('user_id', $user->id)
