@@ -88,11 +88,10 @@ class BranchStatusApi extends Command
                         }
                         if ($escalationBranch->status == true) {
                             if (($escalationBranch->time_minute + $AiValue) < $escalation->time_minute) {
+                                $escalationBranch->time_minute += $AiValue;
+                                $escalationBranch->save();
                                 break;
                             }
-
-                            $escalationBranch->time_minute += $AiValue;
-                            $escalationBranch->save();
                         } else {
                             $escalationBranch->status = true;
                             $escalationBranch->save();
