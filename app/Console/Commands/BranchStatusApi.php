@@ -169,7 +169,12 @@ class BranchStatusApi extends Command
 
                             if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
 
-                                dispatch(new SendBranchStatusMailJob($branch, $minutes, $user->email, $user->name));
+                                try {
+                                    dispatch(new SendBranchStatusMailJob($branch, $minutes, $user->email, $user->name));
+                                    $user->notify(new BranchStatusNotification($branch, $escalationBranchId));
+                                }catch (\Exception $e){
+                                    $this->comment($e->getMessage());
+                                }
 
                                 $this->comment('Email Sent');
 
@@ -178,7 +183,6 @@ class BranchStatusApi extends Command
                                     ->where('branch_id', $branch->br_id)
                                     ->update(['notified' => '1']);
 
-                                $user->notify(new BranchStatusNotification($branch, $escalationBranchId));
                             }
                         }
 //                        }
