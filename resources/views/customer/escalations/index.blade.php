@@ -232,7 +232,7 @@
             background-color: #1b075c;
         }
 
-        .treeItem:first-child:hover .delete-item {
+        .rowTree:nth-child(1) .treeItem:first-child:hover .delete-item {
             display: none;
         }
 
@@ -333,14 +333,13 @@
             // remove item
             $('.row.col').delegate('.delete-item', 'click', function () {
                 var index = $(this).parents('.treeItem').attr('data-array');
-                escalations.splice(index);
-                drawEndRow(escalations);
+                escalations.splice(index,1);
+                drawTree(escalations);
             });
 
             // AddNew item
             $('.row.col').delegate('.AddNew', 'click', function () {
                 escalations.push({position: 0, time: 60});
-                drawEndRow(escalations);
                 drawTree(escalations);
             });
 
@@ -356,7 +355,7 @@
                 drawTree(escalations);
             });
 
-            console.log(escalations);
+            
 
             $("#saveEscalation").on('click', function (e) {
                 e.preventDefault();
@@ -374,7 +373,9 @@
         function drawTree(escalations) {
             let positions = @json($positions);
 
-            $('.row.col .row.col-12').remove();
+            $('.rowTree').remove();
+            $('.endRowTree .endrowItem').remove();
+
             let countRows1 = escalations.length / 4;
             var i;
             // console.log(Math.ceil(countRows1));
@@ -385,7 +386,7 @@
                     var clas = "odd-row";
                 }
 
-                $('.row.col').append(`<div class="col-12 ` + clas + ` row p-0 m-0 2020"></div>`);
+                $('.row.col').append(`<div class="col-12 ` + clas + ` rowTree row p-0 m-0 2020"></div>`);
             }
             for (var i = 1; i <= escalations.length; i++) {
                 var ItemHtml = `<div data-array="` + (i - 1) + `" class="treeItem col-3">` +
@@ -416,6 +417,16 @@
                     `</h4>` +
                     `</div>`;
                 $('.row.col .row.col-12:nth-child(' + Math.ceil(i / 4) + ')').append(ItemHtml);
+
+                if (i % 4 == 0)
+                if ((i/4) % 2 == 0) {
+                    var clas = "even-row";
+                    $('.endRowTree.left').append('<div class="endrowItem" style="top:' + (((i/4) - 1) * 155) + 'px"></div>');                    
+                } else {
+                    var clas = "odd-row";
+                    $('.endRowTree.right').append('<div class="endrowItem" style="top:' + (((i/4) - 1) * 155) + 'px"></div>');                    
+                }
+
             }
 
             var addNew = `<span class="AddNew">` +
@@ -426,17 +437,20 @@
             $('.treeItem:last-child').append(addNew);
         }
 
-        function drawEndRow(escalations) {
-            let countRows1 = escalations.length / 4;
-            if (escalations.length % 4 == 0) {
-                for (let r = 1; r <= Math.ceil(countRows1); r++) {
-                    if (r % 2 == 0) {
-                        $('.endRowTree.left').append('<div class="endrowItem" style="top:' + ((r - 1) * 155) + 'px"></div>');
-                    } else {
-                        $('.endRowTree.right').append('<div class="endrowItem" style="top:' + ((r - 1) * 155) + 'px"></div>');
-                    }
-                }
-            }
-        }
+        // function drawEndRow(escalations) {
+            
+        //     $('.endRowTree .endrowItem').remove();
+        //     let countRows1 = escalations.length / 4;
+        //     console.log(countRows1 % 1);
+        //     if (escalations.length % 4 == 0 && countRows1 % 1 == 0) {
+        //         for (let r = 1; r <= Math.ceil(countRows1); r++) {
+        //             if (r % 2 == 0) {
+        //                 $('.endRowTree.left').append('<div class="endrowItem" style="top:' + ((r - 1) * 155) + 'px"></div>');
+        //             } else {
+        //                 $('.endRowTree.right').append('<div class="endrowItem" style="top:' + ((r - 1) * 155) + 'px"></div>');
+        //             }
+        //         }
+        //     }
+        // }
     </script>
 @endpush

@@ -21,6 +21,11 @@
         .search-model .col-md-6 {
             display: none;
         }
+
+        div.dataTables_wrapper div.dataTables_paginate, div.dataTables_wrapper div.dataTables_info {
+            display: none !important;
+        }
+
     </style>
 @endpush
 
@@ -77,7 +82,6 @@
 
                                         </thead>
                                         <tbody class="trashbody">
-
                                         @foreach($trashs as $trash)
                                             <tr>
                                                 <td>
@@ -104,9 +108,15 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-
                                         </tbody>
                                     </table>
+                                    <div class="col-md-6">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-end mb-0">
+                                                {!! $users->appends(request()->query())->links() !!}
+                                            </ul>
+                                        </nav>
+                                    </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -205,22 +215,20 @@
                                                                     $user_branches[] = $brn->id;
                                                                     $user_brs = json_encode(implode(",",$user_branches));
                                                             @endphp
-                                                            @if($user->type != "subadmin")
+                                                            @if($user->type != 'subadmin')
                                                                 <a class="btn btn-sm btn-info" data-toggle="tooltip"
                                                                    data-placement="top" title=""
                                                                    data-original-title="Assign to Branch"
                                                                    onclick="assign_user_to_branch_model_alert({{ $user->id }},{{ $user_brs }},{{ $branches }},{{ $regions }});"
                                                                    style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>
                                                             @endif
-                                                            @if(auth()->user()->type =="subadmin"  && $user->type != "subadmin" || auth()->user()->type=="customer")
-                                                                <a class="btn btn-sm btn-primary"
-                                                                   href="{{ route('customerUsers.edit',$user->id) }}"
-                                                                   style="color: white;">{{__('app.customers.branches.edit')}}</a>
-                                                                <a class="btn btn-sm btn-danger" rel="{{ $user->id }}"
-                                                                   data-toggle="tooltip" data-placement="top" title=""
-                                                                   data-original-title="Delete"
-                                                                   onclick="delete_alert({{ $user->id }});">{{__('app.customers.branches.delete')}}</a>
-                                                            @endif
+                                                            <a class="btn btn-sm btn-primary"
+                                                               href="{{ route('customerUsers.edit',$user->id) }}"
+                                                               style="color: white;">{{__('app.customers.branches.edit')}}</a>
+                                                            <a class="btn btn-sm btn-danger" rel="{{ $user->id }}"
+                                                               data-toggle="tooltip" data-placement="top"
+                                                               data-original-title="Delete"
+                                                               onclick="delete_alert({{ $user->id }});">{{__('app.customers.branches.delete')}}</a>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -327,7 +335,7 @@
                                                                         $user_brs = json_encode(implode(",",$user_branches));
 
                                                                 @endphp
-                                                                @if($user->type != "subadmin")
+                                                                @if($user->type != 'subadmin')
                                                                     <a class="btn btn-info" data-toggle="tooltip"
                                                                        data-placement="top" title=""
                                                                        data-original-title="{{ __('app.Assign_to_Branch') }}"
@@ -351,18 +359,13 @@
                                 @endif
                             </div>
                             <div class="row justify-content-between mt-3">
-                                <div id="user-list-page-info" class="col-md-6">
-                                    <span>{{ __('app.Showing') }} 1 {{ __('app.to') }} {{count($users)}} {{ __('app.of') }} {{count($users)}} {{ __('app.entries') }}</span>
-                                </div>
-
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <nav aria-label="Page navigation example">
                                         <ul class="pagination justify-content-end mb-0">
-                                            {{ $users->links() }}
+                                            {!! $users->appends(request()->query())->links() !!}
                                         </ul>
                                     </nav>
                                 </div>
-
                             </div>
                         </div>
                     </div>
