@@ -47,87 +47,91 @@ class BranchStatusApi extends Command
      *
      * @return array
      */
-    public function handle(): array
+    public function handle()
     {
-        $res = [];
-        $data = [];
-        $AiValue = 15;
+        try {
+            $res = [];
+            $data = [];
+            $AiValue = 15;
 
-        $now = Carbon::now();
-        $branches = DB::table("last_error_branch_views as branchError")
-            ->join("branches as branch", "branchError.branch_code", "=", "branch.code")
-            ->select("branch.id as br_id", "branch.name as name", "branchError.*")
-            ->get();
+            $now = Carbon::now();
+            $branches = DB::table("last_error_branch_views as branchError")
+                ->join("branches as branch", "branchError.branch_code", "=", "branch.code")
+                ->select("branch.id as br_id", "branch.name as name", "branchError.*")
+                ->get();
 
-        //Check If Online Before 15 Min
-        foreach ($branches as $branch) {
-            $branchStatus = BranchStatus::where('branch_code', $branch->branch_code)->first();
-            $data['last_connected'] = $now->diffForHumans($branch->created_at, true);
+            //Check If Online Before 15 Min
+            foreach ($branches as $branch) {
+                $branchStatus = BranchStatus::where('branch_code', $branch->branch_code)->first();
+                $data['last_connected'] = $now->diffForHumans($branch->created_at, true);
 
-            if ($now->subMinutes($AiValue) < $branch->created_at) {
-                $data['status'] = 'online';
-                $data['last_error'] = $branch->error;
+                if ($now->subMinutes($AiValue) < $branch->created_at) {
+                    $data['status'] = 'online';
+                    $data['last_error'] = $branch->error;
 
-                DB::table('branches_users')
-                    ->where('branch_id', $branch->br_id)
-                    ->update(['notified' => '0']);
+                    DB::table('branches_users')
+                        ->where('branch_id', $branch->br_id)
+                        ->update(['notified' => '0']);
 
-                EscalationBranch::where('branch_id', $branch->br_id)->update(['time_minute' => 0, 'status' => 0]);
+                    EscalationBranch::where('branch_id', $branch->br_id)->update(['time_minute' => 0, 'status' => 0]);
 
-            } else {
-                $data['status'] = 'offline';
-                $data['last_error'] = $branch->error;
+                } else {
+                    $data['status'] = 'offline';
+                    $data['last_error'] = $branch->error;
 
-                $escalations = Escalation::orderBy('sort')->get();
-                foreach ($escalations as $escalation) {
-                    $escalationBranch = EscalationBranch::where('escalation_id', $escalation->id)->where('branch_id', $branch->br_id)->first();
-                    if ($escalationBranch) {
-                        //check escalation notification to stop when action
-                        if ($escalationBranch->noticed == true) {
-                            break;
-                        }
-                        if ($escalationBranch->status == true) {
-                            if (($escalationBranch->time_minute + $AiValue) < $escalation->time_minute) {
-                                $escalationBranch->time_minute += $AiValue;
+                    $escalations = Escalation::orderBy('sort')->get();
+                    foreach ($escalations as $escalation) {
+                        $escalationBranch = EscalationBranch::where('escalation_id', $escalation->id)->where('branch_id', $branch->br_id)->first();
+                        if ($escalationBranch) {
+                            //check escalation notification to stop when action
+                            if ($escalationBranch->noticed == true) {
+                                break;
+                            }
+                            if ($escalationBranch->status == true) {
+                                if (($escalationBranch->time_minute + $AiValue) < $escalation->time_minute) {
+                                    $escalationBranch->time_minute += $AiValue;
+                                    $escalationBranch->save();
+                                    break;
+                                }
+                            } else {
+                                $escalationBranch->status = true;
                                 $escalationBranch->save();
+                                $users = User::where('position_id', $escalation->position_id)->get();
+                                if (count($users) > 0) {
+                                    $this->sendErrorToAdmin($branch, $users, $escalationBranch->id);
+                                }
                                 break;
                             }
                         } else {
-                            $escalationBranch->status = true;
-                            $escalationBranch->save();
+                            $escalationBranch = EscalationBranch::create([
+                                'escalation_id' => $escalation->id,
+                                'branch_id' => $branch->br_id,
+                                'status' => true,
+                            ]);
+
                             $users = User::where('position_id', $escalation->position_id)->get();
                             if (count($users) > 0) {
                                 $this->sendErrorToAdmin($branch, $users, $escalationBranch->id);
                             }
                             break;
                         }
-                    } else {
-                        $escalationBranch = EscalationBranch::create([
-                            'escalation_id' => $escalation->id,
-                            'branch_id' => $branch->br_id,
-                            'status' => true,
-                        ]);
-
-                        $users = User::where('position_id', $escalation->position_id)->get();
-                        if (count($users) > 0) {
-                            $this->sendErrorToAdmin($branch, $users, $escalationBranch->id);
-                        }
-                        break;
                     }
+                }
+
+                $data['branch_code'] = $branch->branch_code;
+                $data['branch_name'] = $branch->name;
+
+                if ($branchStatus) {
+                    $res[] = $branchStatus->update($data);
+                } else {
+                    $res[] = BranchStatus::create($data);
                 }
             }
 
-            $data['branch_code'] = $branch->branch_code;
-            $data['branch_name'] = $branch->name;
-
-            if ($branchStatus) {
-                $res[] = $branchStatus->update($data);
-            } else {
-                $res[] = BranchStatus::create($data);
-            }
+            return $res;
+        } catch (\Exception $e) {
+            $this->comment($e->getMessage());
         }
-
-        return $res;
     }
 
     /**
@@ -138,6 +142,7 @@ class BranchStatusApi extends Command
     protected function sendErrorToAdmin($branch, $users, $escalationBranchId): void
     {
         try {
+            $this->comment('Start1');
             $branchSetting = BranchSetting::find(1);
             if ($branchSetting->type == 'hours') {
                 $minutes = $branchSetting->duration * 60;
@@ -158,7 +163,7 @@ class BranchStatusApi extends Command
                     $end = Carbon::parse($branch_work->end_time);
                     if ($now < $end && $now > $start) {
 //                        if ($now->subMinutes($minutes) > $branch->created_at) {
-                        $this->comment('Start');
+                        $this->comment('Start2');
                         foreach ($users as $user) {
                             $check = DB::table('branches_users')
                                 ->where('user_id', $user->id)
@@ -172,7 +177,7 @@ class BranchStatusApi extends Command
                                 try {
                                     dispatch(new SendBranchStatusMailJob($branch, $minutes, $user->email, $user->name));
                                     $user->notify(new BranchStatusNotification($branch, $escalationBranchId));
-                                }catch (\Exception $e){
+                                } catch (\Exception $e) {
                                     $this->comment($e->getMessage());
                                 }
 
@@ -190,7 +195,7 @@ class BranchStatusApi extends Command
                 }
             }
         } catch (\Exception $e) {
-
+            $this->comment($e->getMessage());
         }
     }
 }
