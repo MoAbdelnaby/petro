@@ -59,7 +59,7 @@ class EscalationController extends Controller
             $data['user_id'] = parentID();
             foreach ($escalations as $index => $escalation) {
                 if ($escalation['position'] == 0) continue;
-                $data['sort'] = $index;
+                $data['sort'] = ++$index;
                 $data['time_minute'] = $escalation['time'];
                 $data['position_id'] = $escalation['position'];
                 Escalation::create($data);
