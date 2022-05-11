@@ -50,7 +50,7 @@ return [
     'azure_storage' => env('AZURE_STORAGE_LOCAL_ADDRESS', ''),
     'azure_container' => env('AZURE_STORAGE_CONTAINER', ''),
     'petromin_cordinates' => env('WHATSAPP_PETROMIN_CORDINATES', 'https://whatsapp-wakeb.azurewebsites.net/api/sendPetrominCordinates'),
-
+    'local_media_url' => env('LOCAL_MEDIA_URL',''),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
