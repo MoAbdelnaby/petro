@@ -130,8 +130,7 @@ if (!function_exists('primaryID')) {
 if (!function_exists('parentID')) {
     function parentID()
     {
-        return 3;
-        // return auth()->user()->parent_id != null || auth()->user()->type == "subcustomer" || auth()->user()->type == "subadmin" ? auth()->user()->parent_id : auth()->id();
+        return auth()->user()->parent_id ?? auth()->id();
     }
 }
 

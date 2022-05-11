@@ -28,8 +28,6 @@ class BranchMessageRequest extends FormRequest
         return [
             'type' => 'sometimes|nullable|required|in:xls,pdf,search',
             'branch_id' => 'sometimes|required_unless:type,search',
-//            'start_date' => 'sometimes|nullable|date|date_format:Y-m-d|before:end_date',
-//            'end_date' => 'sometimes|nullable|date|date_format:Y-m-d|after:start_date',
             'start_date' => 'sometimes|nullable|date|date_format:Y-m-d|before_or_equal:end_date',
             'end_date' => 'sometimes|nullable|date|date_format:Y-m-d|after_or_equal:start_date',
         ];

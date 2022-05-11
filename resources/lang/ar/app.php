@@ -1660,4 +1660,6 @@ return array(
     'region_name_is' => "اسم المنطقة" ,
     'no_position_found' => 'لا يوجد مناصب',
     'add_new_position' => 'أضافة منصب جديد',
+    'backout_reasons' =>  'Backout Reasons',
+
 );

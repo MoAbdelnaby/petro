@@ -148,6 +148,10 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::get('branches/message-log', 'Customer\BranchMessageController@index')->name('branch.message_log');
         Route::post('branches/export', 'Customer\BranchMessageController@export')->name('branch.export');
         Route::get('branches/message-exported', 'Customer\BranchMessageController@exportedFile')->name('branch.exported_file');
+
+        Route::get('branches/backout-reasons', 'Customer\BackoutReasonController@index')->name('branch.backout_reasons');
+        Route::post('branches/backout-reasons/export', 'Customer\BackoutReasonController@export')->name('branch.backout_reason_export');
+        Route::get('branches/backout-reasons/exported', 'Customer\BackoutReasonController@exportedFile')->name('branch.backout_reason_exported');
     });
 
     ///////////////////Sub-Customer Routes//////////

@@ -103,7 +103,7 @@ return [
     'Duration_Empty' => 'Duration Empty',
     'Car_Plate_statistics' => 'Car Plate statistics',
     'Car_Count' => 'Car Count',
-    'carprofile' => 'car Profile',
+    'carprofile' => 'Car Profile',
     'Times' => 'Times',
     'Home_Page' => 'Home Page',
     'Invoice_Sent' => 'Invoice Sent',
@@ -1187,7 +1187,7 @@ return [
         'DurationEmpty' => 'Empty Duration',
         'DurationWork' => 'Work Duration',
         'car_plates' => 'Car plates',
-        'plate_no' => 'plate',
+        'plate_no' => 'Plate',
         'plate_number_en' => 'Number English',
         'plate_char_en' => 'Char English',
         'plate_number_ar' => 'Number Arabic',
@@ -1665,4 +1665,8 @@ return [
     'region_name_is' => 'Region Name',
     'no_position_found' => 'No Position Found',
     'add_new_position' => 'Add New Position',
+    'backout_reasons' => 'Backout Reasons',
+    'reason' => 'Reason',
+    'manage' => 'Manage',
+    'customer_name' => 'Customer Name'
 ];

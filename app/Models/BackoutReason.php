@@ -25,4 +25,5 @@ class BackoutReason extends Model
         'reason3',
         'car_profile_id',
     ];
+
 }
