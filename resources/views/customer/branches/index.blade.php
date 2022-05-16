@@ -201,19 +201,19 @@
                                                             </td>
                                                             @if(auth()->user()->wakeb_user)
                                                                 <td>
-                                                                    <a href="{{ route('branches.change_installed', [$item->id]) }}">
-                                                                        @if ($item->installed == 1)
-                                                                            <span class="badge badge-success"
-                                                                                  title="{{__('app.click_to_not_install')}}">
-                                                                                {{ __('app.installed') }}
-                                                                            </span>
-                                                                        @else
-                                                                            <span class="badge badge-danger"
-                                                                                  title="{{__('app.click_to_install')}}">
-                                                                                {{ __('app.no_installed') }}
-                                                                            </span>
-                                                                        @endif
-                                                                    </a>
+                                                                    <div
+                                                                        class="custom-control custom-switch custom-switch-icon custom-switch-color custom-control-inline"
+                                                                        style="cursor: pointer">
+                                                                        <input type="checkbox"
+                                                                               class="custom-control-input bg-success installed_switch"
+                                                                               id="switch{{$item->id}}"
+                                                                               style="width: 1.6rem; height: 1.4rem; cursor: pointer"
+                                                                               {{$item->installed?'checked':''}} data-url="{{ route('branches.change_installed', [$item->id]) }}">
+                                                                        <label class="custom-control-label"
+                                                                               for="switch{{$item->id}}"
+                                                                               style="width: 1.6rem; height: 1.4rem; cursor: pointer">
+                                                                        </label>
+                                                                    </div>
                                                                 </td>
                                                             @endif
                                                             <td>
@@ -341,12 +341,57 @@
 @push('js')
     <script>
         $(document).ready(function () {
+            $(document).on('change','.installed_switch', function () {
+                console.log( $(this).data('url'));
+                let item = $(this);
+
+                $.ajax({
+                    url: $(this).data('url'),
+                    dataType: "JSON",
+                    type: "POST",
+                    success: function (data) {
+                        Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        }).fire({
+                            icon: 'success',
+                            title: data.message
+                        })
+                    },
+                    error: function (data) {
+                        Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        }).fire({
+                            icon: 'error',
+                            title: "Failed to update status"
+                        })
+                        item.prop('checked',false);
+                    }
+                });
+            });
+
             $('.selectall').on('click', function () {
                 $(this).closest('.table').find('.trashbody .trashselect').prop('checked', $(this).prop(
                     'checked'));
                 $('.restore_all').toggle();
                 $('.remove_all').toggle();
             });
+
 
             $('.trashbody .trashselect').on('click', function () {
                 var checked = $(".trashbody input[type=checkbox]:checked").length;

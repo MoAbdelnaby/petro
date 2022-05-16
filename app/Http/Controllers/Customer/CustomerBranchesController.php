@@ -11,6 +11,7 @@ use App\Models\UserPackages;
 use App\Notifications\branchNotification;
 use App\User;
 use App\userSetting;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -429,21 +430,21 @@ class CustomerBranchesController extends Controller
      * Chagne insalled branch staus
      *
      * @param $id
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function changeInstalled($id): RedirectResponse
+    public function changeInstalled($id): JsonResponse
     {
         if (\auth()->user()->wakeb_user) {
             try {
                 $item = $this->repo->findOrFail($id);
-                $item->installed = !$item->installed;
+                $item->installed = !(bool)$item->installed;
                 $item->save();
 
-                return redirect()->back()->with('success', __('app.installed_status_change_success'));
+                return response()->json(['message' => __('app.installed_status_change_success')]);
             } catch (\Exception $e) {
                 return unKnownError($e->getMessage());
             }
         }
-        abort(403);
+        return response()->json(['message' => 'You not have permission'], 400);
     }
 }

@@ -467,7 +467,8 @@ return array(
     'checkInDate' => 'تحقق في التاريخ',
     'checkOutDate' => 'موعد انتهاء الأقامة',
     'config' => 'الاعدادات',
-    'copyrights' => 'جميع الحقوق محفوظة لشركة واكب',
+    'copyrights' => '',
+    'all_rights_reserved' => 'جميع الحقوق محفوظة.',
     'customers' => array(
         'second' => 'ثانية',
 
@@ -1515,7 +1516,7 @@ return array(
         'user_title' => 'كل المستخدمين',
         'users' => 'كل المستخدمين',
     ),
-    'website_name' => 'لوحة التحكم',
+    'website_name' => 'بترومين',
     'year' => 'عام',
     'service' => [
         'service' => 'خدمات',

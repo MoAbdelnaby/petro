@@ -53,7 +53,8 @@ return [
     'Spanish' => 'Spanish',
     'German' => 'German',
     'invoice_review' => 'Invoice Preview',
-    'copyrights' => 'Copyright 2020 wakeb All Rights Reserved.',
+    'copyrights' => 'Copyright (c)',
+    'all_rights_reserved' => 'All Rights Reserved.',
     'Dark' => 'Dark Mode',
     'Default' => 'Light',
     'overall' => 'Overall',
@@ -1675,5 +1676,6 @@ return [
     'click_to_install' => 'Click to Install',
     'installed_status' => 'Installed Status',
     'installed_status_change_success' => 'Installed Status Changed successfully',
-    'no_linked' => 'Not Linked'
+    'no_linked' => 'Not Linked',
+    'failed_to_update' => 'Failed to update status',
 ];

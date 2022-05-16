@@ -199,7 +199,7 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::post('mailsettingUpdate', 'UserController@MailsettingUpdate')->name('user.MailsettingUpdate');
 
         //New
-        Route::get('customerBranches/change-installed/{id}', 'CustomerBranchesController@changeInstalled')->name('branches.change_installed');
+        Route::post('customerBranches/change-installed/{id}', 'CustomerBranchesController@changeInstalled')->name('branches.change_installed');
     });
 });
 

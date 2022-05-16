@@ -10,7 +10,7 @@
 {{--                </ul>--}}
 {{--            </div>--}}
             <div class="col-lg-12 text-center">
-                {{__('app.copyrights')}}
+                {{__('app.copyrights') .' '.date('Y') .' '.__('app.website_name').' '.__('app.all_rights_reserved')}}
             </div>
         </div>
     </div>
