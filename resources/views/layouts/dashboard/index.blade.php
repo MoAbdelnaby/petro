@@ -8,7 +8,7 @@
     @yield('meta')
     <title>{{__('app.website_name')}} | @yield('page_title',__('app.dashboard'))</title>
 
-    <link rel="shortcut icon" href="{{url('/images')}}/Logo.svg"/>
+    <link rel="shortcut icon" href="{{url('/images')}}/petromin.png"/>
     <!-- Bootstrap CSS -->
     @if(app()->getLocale() =='en')
         <link rel="stylesheet" href="{{resolveLang()}}/css/bootstrap.min.css">
@@ -45,7 +45,7 @@
 
 
 
-    
+
 </head>
 <body class="sidebar-main " data-mode="{{session()->has('darkMode') ? 'dark' : ''}}">
 
@@ -266,7 +266,7 @@
 
 
 
-        
+
 
 
 

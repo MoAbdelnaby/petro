@@ -225,6 +225,7 @@ class BranchesController extends Controller
         if ($count < 1) {
             return redirect()->route('customerBranches.index')->with('danger', __('app.customers.branchmodels.modelnotfound'));
         }
+
         $start = null;
         $end = null;
         $starttime = null;
@@ -809,7 +810,5 @@ class BranchesController extends Controller
         }
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
-
     }
-
 }

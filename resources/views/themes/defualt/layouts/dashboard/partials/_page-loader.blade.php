@@ -8,10 +8,10 @@
 {{--    </div>--}}
     <div class="loading-view">
         @if(session('darkMode') =="on")
-            <img src="{{asset('images/wakebwhite.ico')}}" alt="" class="mb-2" width="120px">
+            <img src="{{asset('images/petrominwhite.ico')}}" alt="" class="mb-3" width="120px">
 
         @else
-            <img src="{{asset('images/wakebdark.ico')}}" alt="" class="mb-2" width="120px">
+            <img src="{{asset('images/petromindark.ico')}}" alt="" class="mb-3" width="120px">
         @endif
         <span></span>
     </div>

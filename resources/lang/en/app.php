@@ -47,7 +47,7 @@ return [
     'profile_success_message' => 'Profile Updated Successfully',
     'change_success_message' => 'Password Updated Successfully',
     'change_password' => 'Change Password',
-    'website_name' => 'General Dashboard',
+    'website_name' => 'Petromin',
     'Arabic' => 'Arabic',
     'English' => 'English',
     'Spanish' => 'Spanish',
@@ -1668,5 +1668,11 @@ return [
     'backout_reasons' => 'Backout Reasons',
     'reason' => 'Reason',
     'manage' => 'Manage',
-    'customer_name' => 'Customer Name'
+    'customer_name' => 'Customer Name',
+    'installed' => 'Installed',
+    'no_installed' => 'Not Installed',
+    'click_to_not_install' => 'Click to Not Install',
+    'click_to_install' => 'Click to Install',
+    'installed_status' => 'Installed Status',
+    'installed_status_change_success' => 'Installed Status Changed successfully'
 ];

@@ -8,7 +8,7 @@
     @yield('meta')
     <title>{{__('app.website_name')}} | @yield('page_title',__('app.dashboard'))</title>
 
-    <link rel="shortcut icon" href="{{url('/images')}}/Logo.svg" />
+    <link rel="shortcut icon" href="{{url('/images')}}/petromin.png" />
 
 
     <!-- Bootstrap CSS -->

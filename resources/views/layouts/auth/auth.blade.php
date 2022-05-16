@@ -8,7 +8,7 @@
     @yield('meta')
     <title>{{__('app.website_name')}} | @yield('page_title',__('app.dashboard'))</title>
 
-     <link rel="shortcut icon" href="{{url('/images')}}/Logo.svg" />
+     <link rel="shortcut icon" href="{{url('/images')}}/petromin.png" />
       <!-- Bootstrap CSS -->
     <link href="{{url('/gym')}}/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="{{url('/gym')}}/css/mdb.min.css" rel="stylesheet" type="text/css"/>
@@ -26,7 +26,7 @@
         <div class="logo">
             <div class="row">
                 <div class="col-md-2 text-center">
-                    <a href="{{Url('/')}}" ><img src="{{url('/gym')}}/img/Group 5928.png" width="170px" alt=""></a>
+                    <a href="{{Url('/')}}" ><img src="{{url('/gym')}}/img/petromin.png" width="170px" alt=""></a>
                 </div>
 
                 <div class="col-md-10">

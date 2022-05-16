@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-sm-6 text-center">
                     <div class="sign-in-detail text-white">
-                        <a class="sign-in-logo mb-5" href="{{Url('/')}}"><img src="{{url('/images')}}/wakeball/wakebwhitetext.png"  class="img-fluid" alt="logo"></a>
+                        <a class="sign-in-logo mb-5" href="{{Url('/')}}"><img src="{{url('/images')}}/wakeball/petrominwhitetext.png"  class="img-fluid" alt="logo"></a>
                         <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true" data-items="1" data-items-laptop="1" data-items-tab="1" data-items-mobile="1" data-items-mobile-sm="1" data-margin="0">
                             <div class="item">
                                 <img src="{{url('/images')}}/login/1.png" class="img-fluid mb-4" alt="logo">

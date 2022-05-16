@@ -33,7 +33,7 @@
                             </div>
                             <div class="container-fluid">
                                 <div class="row mb-3 mt-3 justify-content-center">
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-lg-4 col-md-4">
                                         <div class="card text-center">
                                             <div class="card-header row online mx-0 px-0">
                                                 <div class="col-4">
@@ -49,7 +49,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-lg-4 col-md-4">
                                         <div class="card text-center col-12">
                                             <div class="card-header row offline">
                                                 <div class="col-4">
@@ -61,6 +61,26 @@
                                                               style="color: red"></i> {{ __('app.branch_offline') }}</b>
                                                     </h5>
                                                     <h3><b>{{ $off }}</b></h3>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="card text-center col-12">
+                                            <div class="card-header row offline">
+                                                <div class="col-4">
+                                                    <img width="100" fill="red"
+                                                         src="{{ asset("assets/images/not_installed.png") }}"
+                                                         style="width: 70px; margin-top: 25px"
+                                                         alt="">
+                                                </div>
+                                                <div class="col-8">
+                                                    <h5><b><i class="fas fa-circle"
+                                                              style="color: red"></i> {{ __('app.no_installed') }}</b>
+                                                    </h5>
+                                                    <h3><b>{{ $no_installed }}</b></h3>
                                                 </div>
 
                                             </div>
@@ -155,6 +175,9 @@
                                                 <th>{{ __('app.branch_status') }}</th>
                                                 <th>{{ __('app.last_stability') }}</th>
                                                 <th>{{ __('app.last_connected') }}</th>
+                                                @if(auth()->user()->wakeb_user)
+                                                    <th>{{ __('app.installed_status') }}</th>
+                                                @endif
                                                 <th>{{ __('app.Actions') }}</th>
                                                 </thead>
                                                 <tbody class="trashbody">
@@ -209,6 +232,27 @@
                                                                 {{ $diff->i }} {{ __('Minute'.($diff->i > 1 ? 's' : '')) }}
                                                             @endif
                                                         </td>
+                                                        @if(auth()->user()->wakeb_user)
+                                                            @if(isset($branch->installed))
+                                                                <td>
+                                                                    <a href="{{ route('branches.change_installed', [$branch->id]) }}">
+                                                                        @if ($branch->installed == 1)
+                                                                            <span class="badge badge-success"
+                                                                                  title="{{__('app.click_to_not_install')}}">
+                                                                                {{ __('app.installed') }}
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="badge badge-danger"
+                                                                                  title="{{__('app.click_to_install')}}">
+                                                                                {{ __('app.no_installed') }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </a>
+                                                                </td>
+                                                            @else
+                                                                <td>---</td>
+                                                            @endif
+                                                        @endif
                                                         <td>
                                                             <a class="btn btn-primary"
                                                                href="branches-log/{{$branch->branch_code}}"

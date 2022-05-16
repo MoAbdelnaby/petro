@@ -3,9 +3,9 @@
     <div class="iq-sidebar-logo d-flex justify-content-center p-0">
         <a href="{{ route('home') }}">
             {{-- @if (session()->has('darkMode')) --}}
-            {{-- <img alt="Logo" src="{{url('/images')}}/wakeball/wakebwhite.png" class="img-fluid mainlogo" width="50"  alt="" style="height: 33px;"/> --}}
+            {{-- <img alt="Logo" src="{{url('/images')}}/wakeball/petrominwhite.png" class="img-fluid mainlogo" width="50"  alt="" style="height: 33px;"/> --}}
             {{-- @else --}}
-            {{-- <img  src="{{url('/images')}}/wakeball/wakebdark.png"  class="img-fluid mainlogo" width="50"  alt="" style="height: 33px;"> --}}
+            {{-- <img  src="{{url('/images')}}/wakeball/petromindark.png"  class="img-fluid mainlogo" width="50"  alt="" style="height: 33px;"> --}}
             {{-- @endif --}}
 
         </a>
@@ -419,12 +419,6 @@
                                             class="ri-profile-line"></i>{{ __('app.side_bar.saas_control.modelfeatures') }}
                                     </a></li>
                             @endcan
-                            {{-- @can('list-packageRequests') --}}
-                            <li><a href="{{ route('packageRequests.index') }}"><i
-                                        class="ri-profile-line"></i>{{ __('app.side_bar.saas_control.packageRequests') }}
-                                </a></li>
-                            {{-- @endcan --}}
-
 
                             {{-- @can('list-modelstatus') --}}
                             {{-- <li><a href="{{route('modelstatus.index')}}"><i class="ri-profile-line"></i>{{__('app.side_bar.saas_control.modelstatus')}}</a></li> --}}

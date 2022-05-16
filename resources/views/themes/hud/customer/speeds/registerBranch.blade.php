@@ -110,7 +110,7 @@
 
         #contentPage {
             width: 100%;
-            background: url(http://petromin-v2.test/images/logo.svg) no-repeat;
+            background: url(http://petromin-v2.test/images/petromin.png) no-repeat;
             background-attachment: fixed;
             background-position: left bottom;
             background-size: 7%;

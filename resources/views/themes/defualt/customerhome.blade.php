@@ -578,10 +578,10 @@
         @else
             <div class="nothingtoshoehere">
                 @if (session()->has('darkMode'))
-                    <img alt="Logo" src="{{url('/images')}}/wakeball/wakebwhite.png" class="img-fluid mainlogo mb-3"
+                    <img alt="Logo" src="{{url('/images')}}/wakeball/petrominwhite.png" class="img-fluid mainlogo mb-3"
                          width="150" alt="" style=""/>
                 @else
-                    <img src="{{url('/images')}}/wakeball/wakebdark.png" class="img-fluid mainlogo  mb-3"
+                    <img src="{{url('/images')}}/wakeball/petromindark.png" class="img-fluid mainlogo  mb-3"
                          width="150" alt="" style="">
                 @endif
                 <h2>{{ __('app.No_Thing_TO_Show_Here') }}</h2>

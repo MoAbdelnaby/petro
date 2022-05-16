@@ -11,7 +11,7 @@
     @yield('meta')
     <title>{{__('app.website_name')}} | @yield('page_title',__('app.dashboard'))</title>
 
-    <link rel="shortcut icon" href="{{url('/images')}}/Logo.svg"/>
+    <link rel="shortcut icon" href="{{url('/images')}}/petromin.png"/>
     <!-- Bootstrap CSS -->
     {{-- @if(app()->getLocale() =='en')
         <link rel="stylesheet" href="{{resolveLang()}}/css/bootstrap.min.css">
@@ -36,9 +36,9 @@
 
 <body data-mode="{{session()->has('darkMode') ? 'dark' : ''}}">
     <div id="app" class="app">
-       
+
             @include('themes.hud.layouts.dashboard.layout')
-        
+
     </div>
 
 
@@ -54,7 +54,7 @@
     <script src="{{ asset('/themed/hud/assets/plugins/apexcharts/dist/apexcharts.min.js') }}" type="283841832c82ceaf15000b90-text/javascript"></script>
     <script src="{{ asset('/themed/hud/assets/js/demo/dashboard.demo.js') }}" type="283841832c82ceaf15000b90-text/javascript"></script>
     @stack('js')
-    
+
     <script src="{{ asset('/themed/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js') }}" data-cf-settings="283841832c82ceaf15000b90-|49" defer=""></script>
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"6eb4bd1daf3c59fb","version":"2021.12.0","r":1,"token":"4db8c6ef997743fda032d4f73cfeff63","si":100}'
         crossorigin="anonymous"></script>
@@ -70,7 +70,7 @@
                 a.src = g;
                 m.parentNode.insertBefore(a, m)
             })(window, document, 'script', '../../www.google-analytics.com/analytics.js', 'ga');
-    
+
             ga('create', 'UA-53034621-1', 'auto');
             ga('send', 'pageview');
         </script>

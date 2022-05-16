@@ -11,6 +11,7 @@ use App\Models\UserPackages;
 use App\Notifications\branchNotification;
 use App\User;
 use App\userSetting;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -158,7 +159,7 @@ class CustomerBranchesController extends Controller
 
             $branch = $this->repo->create($params);
             if ($branch)
-                foreach (User::where('type','customer')->get() as $user) {
+                foreach (User::where('type', 'customer')->get() as $user) {
                     $user->notify(new branchNotification($branch, Auth::user()->name));
                 }
 
@@ -181,13 +182,13 @@ class CustomerBranchesController extends Controller
 
             DB::commit();
 
-            if($request->has('lat')) {
+            if ($request->has('lat')) {
                 $post = [
                     'address' => $request->name,
                     'lat' => $request->lat,
                     'lng' => $request->lng,
-                    'code' =>$request->code,
-                    'active' =>true
+                    'code' => $request->code,
+                    'active' => true
                 ];
                 $this->sendBranchCoordinates($post);
             }
@@ -307,13 +308,13 @@ class CustomerBranchesController extends Controller
 
             DB::commit();
 
-            if($request->has('lat')) {
+            if ($request->has('lat')) {
                 $post = [
                     'address' => $request->name,
                     'lat' => $request->lat,
                     'lng' => $request->lng,
-                    'code' =>$request->code,
-                    'active' =>$branch->active
+                    'code' => $request->code,
+                    'active' => $branch->active
                 ];
                 $this->sendBranchCoordinates($post);
             }
@@ -363,8 +364,7 @@ class CustomerBranchesController extends Controller
         }
     }
 
-    //    change active
-
+    //change active
     public function changeActive($id)
     {
         $item = $this->repo->findOrFail($id);
@@ -377,14 +377,14 @@ class CustomerBranchesController extends Controller
                 'address' => $data->name,
                 'lat' => $data->lat,
                 'lng' => $data->lng,
-                'code' =>$data->code,
-                'active' =>$data->active
+                'code' => $data->code,
+                'active' => $data->active
             ];
 
             $this->sendBranchCoordinates($post);
 
 
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
 
         }
 
@@ -411,7 +411,8 @@ class CustomerBranchesController extends Controller
     }
 
 
-    public function sendBranchCoordinates($post) {
+    public function sendBranchCoordinates($post)
+    {
 
         $ch = curl_init(config('app.petromin_cordinates'));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -424,4 +425,28 @@ class CustomerBranchesController extends Controller
     } // end entryResponse
 
 
+    /**
+     * Chagne insalled branch staus
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function changeInstalled($id): RedirectResponse
+    {
+        if (\auth()->user()->wakeb_user) {
+            try {
+                $item = $this->repo->findOrFail($id);
+                $item->installed = !$item->installed;
+                if ($item->installed == false) {
+                    $item->active = false;
+                }
+                $item->save();
+
+                return redirect()->back()->with('success', __('app.installed_status_change_success'));
+            } catch (\Exception $e) {
+                return unKnownError($e->getMessage());
+            }
+        }
+        abort(403);
+    }
 }

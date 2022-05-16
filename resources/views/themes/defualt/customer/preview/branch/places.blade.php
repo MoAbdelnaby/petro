@@ -14,7 +14,7 @@
 
         <div class="text-center main-logo">
             <a href="#" class="logo-m">
-                <img src="{{resolveDark()}}/img/Group 5928.png" class="image mb-4 mt-4 mx-auto" style="width: 170px">
+                <img src="{{resolveDark()}}/img/petromin.png" class="image mb-4 mt-4 mx-auto" style="width: 170px">
             </a>
             <span>
                 <img src="{{resolveDark()}}/img/list.png" alt="">
@@ -199,7 +199,7 @@
 
         <div class="text-center page-logo">
             <a href="{{route('home')}}" class="logo-m">
-                <img src="{{resolveDark()}}/img/Group 5928.png" class="image mb-4 mt-4 mx-auto" style="width: 170px">
+                <img src="{{resolveDark()}}/img/petromin.png" class="image mb-4 mt-4 mx-auto" style="width: 170px">
             </a>
         </div>
 

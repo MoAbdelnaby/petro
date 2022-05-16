@@ -197,6 +197,9 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::get('myBranches', 'UserController@myBranches')->name('myBranches');
         Route::get('settings', 'UserController@UserSetting')->name('subcustomer.settings');
         Route::post('mailsettingUpdate', 'UserController@MailsettingUpdate')->name('user.MailsettingUpdate');
+
+        //New
+        Route::get('customerBranches/change-installed/{id}', 'CustomerBranchesController@changeInstalled')->name('branches.change_installed');
     });
 });
 
