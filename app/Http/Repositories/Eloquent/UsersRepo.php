@@ -21,6 +21,7 @@ class UsersRepo extends AbstractRepo implements UsersRepoInterface
         return $this->model->with('branches', 'position')
             ->where('parent_id', $user_id)
             ->whereIn('type', ['subcustomer', 'subadmin'])
+            ->where('wakeb_user',0)
             ->latest()
             ->paginate(10);
     }

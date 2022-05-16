@@ -19,7 +19,7 @@
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ route('home') }}"
-                                   class="iq-waves-effect menutext">{{ __('app.website_name') }}</a>
+                                   class="iq-waves-effect menutext">{{ __('app.dashboard') }}</a>
                             </div>
                         </div>
                     </div>
