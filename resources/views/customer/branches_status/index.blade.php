@@ -53,12 +53,12 @@
                                         <div class="card text-center col-12">
                                             <div class="card-header row offline">
                                                 <div class="col-4">
-                                                    <img width="100" fill="red"
+                                                    <img width="100" fill="#f14336"
                                                          src="{{ asset("images/offline-svgrepo-com.svg") }}" alt="">
                                                 </div>
                                                 <div class="col-8">
                                                     <h5><b><i class="fas fa-circle"
-                                                              style="color: red"></i> {{ __('app.branch_offline') }}</b>
+                                                              style="color: #f14336"></i> {{ __('app.branch_offline') }}</b>
                                                     </h5>
                                                     <h3><b>{{ $off }}</b></h3>
                                                 </div>
@@ -69,18 +69,21 @@
 
                                     <div class="col-lg-4 col-md-4">
                                         <div class="card text-center col-12">
-                                            <div class="card-header row offline">
+                                            <div class="card-header row offline" style=" border-bottom: 5px solid #fed329 !important;">
                                                 <div class="col-4">
-                                                    <img width="100" fill="red"
+                                                    <img width="100" fill="#fed329"
                                                          src="{{ asset("assets/images/not_installed.png") }}"
                                                          style="width: 70px; margin-top: 25px"
                                                          alt="">
                                                 </div>
                                                 <div class="col-8">
-                                                    <h5><b><i class="fas fa-circle"
-                                                              style="color: red"></i> {{ __('app.no_installed') }}</b>
+                                                    <h5>
+                                                        <b>
+                                                            <i class="fas fa-circle"  style="color: #fed329"></i>
+                                                            {{ __('app.no_linked') }}
+                                                        </b>
                                                     </h5>
-                                                    <h3><b>{{ $no_installed }}</b></h3>
+                                                    <h3><b style="color: #fed329">{{ max($installed - ($on+$off),0) }}</b></h3>
                                                 </div>
 
                                             </div>
@@ -167,7 +170,7 @@
                                             </div>
                                         </form>
                                         <div class="product_table table-responsive row p-0 m-0 col-12">
-                                            <table class="table dataTable ui celled table-bordered text-center"
+                                            <table class="table dataTable ui celled table-borde#f14336 text-center"
                                                    id="BranchStatusTable">
                                                 <thead class="">
                                                 <th>#</th>
@@ -207,7 +210,7 @@
                                                                    style="color: green"></i>
                                                                 {{ __('app.branch_online')  }}
                                                             @else
-                                                                <i class="fas fa-circle" style="color: red"></i>
+                                                                <i class="fas fa-circle" style="color: #f14336"></i>
                                                                 {{ __('app.branch_offline') }}
                                                             @endif
                                                         </td>

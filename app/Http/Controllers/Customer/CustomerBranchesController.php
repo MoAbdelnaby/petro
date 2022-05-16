@@ -437,9 +437,6 @@ class CustomerBranchesController extends Controller
             try {
                 $item = $this->repo->findOrFail($id);
                 $item->installed = !$item->installed;
-                if ($item->installed == false) {
-                    $item->active = false;
-                }
                 $item->save();
 
                 return redirect()->back()->with('success', __('app.installed_status_change_success'));

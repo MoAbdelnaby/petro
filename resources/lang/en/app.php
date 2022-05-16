@@ -1674,5 +1674,6 @@ return [
     'click_to_not_install' => 'Click to Not Install',
     'click_to_install' => 'Click to Install',
     'installed_status' => 'Installed Status',
-    'installed_status_change_success' => 'Installed Status Changed successfully'
+    'installed_status_change_success' => 'Installed Status Changed successfully',
+    'no_linked' => 'Not Linked'
 ];

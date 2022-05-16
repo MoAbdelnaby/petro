@@ -134,7 +134,7 @@
                                                             <div class="rounded-circle iq-card-icon iq-bg-danger mr-2">
                                                                 <i class="fa-solid fa-code-branch"></i>
                                                             </div>
-                                                            <h3>{{$statistics['active_branches']}}</h3>
+                                                            <h3>{{$statistics['installed_branches']}}</h3>
                                                             <h4>&nbsp;({{$statistics['branches']??0}})</h4>
                                                         </div>
                                                         <div

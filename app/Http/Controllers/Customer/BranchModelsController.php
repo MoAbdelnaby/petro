@@ -291,7 +291,7 @@ class BranchModelsController extends Controller
 
         $off = Branch::active()->primary()->count() - $on;
 
-        $no_installed = Branch::primary()->where('installed', 0)->count();
+        $installed = Branch::primary()->where('installed', 1)->count();
 
         //Last Stability
         $first_errors = DB::table('branch_net_works')
@@ -341,7 +341,7 @@ class BranchModelsController extends Controller
         }
 
         return view("customer.branches_status.index", compact('branches', 'last_stability',
-            'off', 'on', 'filter_status', 'no_installed'));
+            'off', 'on', 'filter_status', 'installed'));
     }
 
     /**

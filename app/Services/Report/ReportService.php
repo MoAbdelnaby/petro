@@ -25,6 +25,7 @@ class ReportService
         $users = User::primary()->count();
         $branches = Branch::primary()->count();
         $active_branches = Branch::active()->primary()->count();
+        $installed_branches = Branch::active()->primary()->installed()->count();
         $regions = Region::active()->primary()->count();
         $filter = [
             'start' => $start,
@@ -75,6 +76,7 @@ class ReportService
 
         return [
             'active_branches' => $active_branches,
+            'installed_branches' => $installed_branches,
             'branches' => $branches,
             'users' => $users,
             'regions' => $regions,
