@@ -96,7 +96,7 @@
                     <span class="menu-icon"><i class="fas fa-fw fa-language"></i></span>
                     <span class="menu-text">{{ __('app.side_bar.auth_control.translations') }}</span>
                 </a>
-            </div>        
+            </div>
             @else
 
                 @if (auth()->user()->type == 'subcustomer')
@@ -135,7 +135,7 @@
                         <span class="menu-caret"><b class="caret"></b></span>
                     </a>
                     <div class="menu-submenu" style="display: block;">
-                        @can('list-users')                        
+                        @can('list-users')
                         <div class="menu-item">
                             <a href="{{ route('users.index') }}" class="menu-link">
                                 <span class="menu-text">{{ __('app.side_bar.auth_control.users') }}</span>
@@ -167,7 +167,7 @@
                         <span class="menu-caret"><b class="caret"></b></span>
                     </a>
                     <div class="menu-submenu" style="display: block;">
-                        @can('list-packages')                        
+                        @can('list-packages')
                         <div class="menu-item">
                             <a href="{{ route('packages.index') }}" class="menu-link">
                                 <span class="menu-text">{{ __('app.side_bar.saas_control.packages') }}</span>
@@ -195,12 +195,6 @@
                             </a>
                         </div>
                         @endcan
-                        <div class="menu-item">
-                            <a href="{{ route('packageRequests.index') }}" class="menu-link">
-                                <span class="menu-text">{{ __('app.side_bar.saas_control.packageRequests') }}</span>
-                            </a>
-                        </div>
-                        
                     </div>
                 </div>
 

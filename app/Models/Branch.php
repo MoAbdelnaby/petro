@@ -25,6 +25,11 @@ class Branch extends Model
         return $query->where('active', true);
     }
 
+    public function scopeInstalled($query)
+    {
+        return $query->where('installed', true);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'branches_users');

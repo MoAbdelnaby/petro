@@ -98,7 +98,7 @@
             </div>
         </div>
         @endif
-   
+
     @if(in_array('home' ,array_values($config['place']['statistics'][1])))
         <div class="row mt-5">
             <div class="col-xl-3 col-lg-6">
@@ -113,7 +113,7 @@
                         <i class="fa fa-id-card fa-4x"></i>
                         </div>
                     </div>
-                    
+
                     <!-- card-arrow -->
                     <div class="card-arrow">
                         <div class="card-arrow-top-left"></div>
@@ -135,7 +135,7 @@
                         <i class="fa fa-subway fa-4x"></i>
                         </div>
                     </div>
-                    
+
                     <!-- card-arrow -->
                     <div class="card-arrow">
                         <div class="card-arrow-top-left"></div>
@@ -157,7 +157,7 @@
                         <i class="fa fa-bars fa-4x"></i>
                         </div>
                     </div>
-                    
+
                     <!-- card-arrow -->
                     <div class="card-arrow">
                         <div class="card-arrow-top-left"></div>
@@ -179,7 +179,7 @@
                         <i class="fa fa-users fa-4x"></i>
                         </div>
                     </div>
-                    
+
                     <!-- card-arrow -->
                     <div class="card-arrow">
                         <div class="card-arrow-top-left"></div>
@@ -201,7 +201,7 @@
                         <i class="fa fa-bus fa-4x"></i>
                         </div>
                     </div>
-                    
+
                     <!-- card-arrow -->
                     <div class="card-arrow">
                         <div class="card-arrow-top-left"></div>
@@ -223,7 +223,7 @@
                         <i class="fa fa-car fa-4x"></i>
                         </div>
                     </div>
-                    
+
                     <!-- card-arrow -->
                     <div class="card-arrow">
                         <div class="card-arrow-top-left"></div>
@@ -245,7 +245,7 @@
                         <i class="fa fa-outdent fa-4x"></i>
                         </div>
                     </div>
-                    
+
                     <!-- card-arrow -->
                     <div class="card-arrow">
                         <div class="card-arrow-top-left"></div>
@@ -267,7 +267,7 @@
                         <i class="fa fa-file-text fa-4x"></i>
                         </div>
                     </div>
-                    
+
                     <!-- card-arrow -->
                     <div class="card-arrow">
                         <div class="card-arrow-top-left"></div>
@@ -294,9 +294,9 @@
                     <div class="pt-4 mb-5" id="BranchPlateLineCon" style="display: none">
                         <div id="BranchPlateLine" class="chartDiv" style="min-height: 450px"></div>
                     </div>
-                
+
                 </div>
-                
+
                 <!-- arrow -->
                 <div class="card-arrow">
                 <div class="card-arrow-top-left"></div>
@@ -306,7 +306,7 @@
                 </div>
             </div>
 
-            
+
         </div>
     </div>
 
@@ -325,9 +325,9 @@
                     <div class="pt-4 mb-5" id="BranchPlaceLineCon" style="display: none">
                         <div id="BranchPlaceLine" class="chartDiv" style="min-height: 450px"></div>
                     </div>
-                
+
                 </div>
-                
+
                 <!-- arrow -->
                 <div class="card-arrow">
                 <div class="card-arrow-top-left"></div>
@@ -337,7 +337,7 @@
                 </div>
             </div>
 
-            
+
         </div>
     </div>
 
@@ -356,9 +356,9 @@
                     <div class="pt-4 mb-5" id="BranchPlaceLineCon" style="display: none">
                         <div id="BranchPlaceLine" class="chartDiv" style="min-height: 450px"></div>
                     </div>
-                
+
                 </div>
-                
+
                 <!-- arrow -->
                 <div class="card-arrow">
                 <div class="card-arrow-top-left"></div>
@@ -368,7 +368,7 @@
                 </div>
             </div>
 
-            
+
         </div>
     </div>
     <div class="row mt-5">
@@ -386,9 +386,9 @@
                     <div class="pt-4 mb-5" id="BranchStayingSideBarCon" style="display: none">
                         <div id="BranchStayingSideBar" class="chartDiv" style="min-height: 450px"></div>
                     </div>
-                
+
                 </div>
-                
+
                 <!-- arrow -->
                 <div class="card-arrow">
                 <div class="card-arrow-top-left"></div>
@@ -398,7 +398,7 @@
                 </div>
             </div>
 
-            
+
         </div>
     </div>
     <div class="row mt-5">
@@ -416,9 +416,9 @@
                     <div class="pt-4 mb-5" id="BranchInvoiceLineCon" style="display: none">
                         <div id="BranchInvoiceLine" class="chartDiv" style="min-height: 450px"></div>
                     </div>
-                
+
                 </div>
-                
+
                 <!-- arrow -->
                 <div class="card-arrow">
                 <div class="card-arrow-top-left"></div>
@@ -428,17 +428,17 @@
                 </div>
             </div>
 
-            
+
         </div>
     </div>
 
     @else
             <div class="nothingtoshoehere">
                 @if (session()->has('darkMode'))
-                    <img alt="Logo" src="{{url('/images')}}/wakeball/wakebwhite.png" class="img-fluid mainlogo mb-3"
+                    <img alt="Logo" src="{{url('/images')}}/wakeball/petrominwhite.png" class="img-fluid mainlogo mb-3"
                          width="150" alt="" style=""/>
                 @else
-                    <img src="{{url('/images')}}/wakeball/wakebdark.png" class="img-fluid mainlogo  mb-3"
+                    <img src="{{url('/images')}}/wakeball/petromindark.png" class="img-fluid mainlogo  mb-3"
                          width="150" alt="" style="">
                 @endif
                 <h2>{{ __('app.No_Thing_TO_Show_Here') }}</h2>

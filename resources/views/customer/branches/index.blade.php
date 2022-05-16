@@ -16,13 +16,15 @@
                 <div class="row col-12 p-0 m-0 text-right d-block mb-2 clearfix">
 
                     @if (auth()->user()->type=="customer" || auth()->user()->type=="subadmin" && count($trashs))
-                        <button type="button" class="btn btn-primary float-left" data-toggle="modal" data-target="#RecycleBin">
+                        <button type="button" class="btn btn-primary float-left" data-toggle="modal"
+                                data-target="#RecycleBin">
                             <i class="fas fa-recycle"></i> {{ __('app.Recycle_Bin') }}
                         </button>
                     @endif
-                    <!-- Modal -->
-                    <div class="modal fade" id="RecycleBin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
+                <!-- Modal -->
+                    <div class="modal fade" id="RecycleBin" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -36,58 +38,63 @@
                                         @csrf
                                         <div class="col-12 mb-2">
                                             <button type="submit" style="display: none"
-                                                class="restore_all btn btn-sm btn-primary mr-2"><i class="fas fa-recycle"></i>
+                                                    class="restore_all btn btn-sm btn-primary mr-2"><i
+                                                    class="fas fa-recycle"></i>
                                                 {{ __('app.restore_all') }}</button>
                                             <button type="submit" style="display: none"
-                                                class="remove_all btn btn-sm btn-danger"><i class="fas fa-trash">
+                                                    class="remove_all btn btn-sm btn-danger"><i class="fas fa-trash">
                                                 </i>{{ __('app.delete_all') }}</button>
 
                                         </div>
                                         <table style="width: 100%;" class="table dataTable table-bordered text-center">
 
                                             <thead class="bg-primary">
-                                                <td> <label for="selectall" class="custom-checkbox pl-1">
-                                                        <input type="checkbox" id="selectall" class="selectall" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <th>{{ __('app.Image') }}</th>
-                                                <th>{{ __('app.users.table.name') }}</th>
-                                                <th>{{ __('app.customers.branches.table.code') }}</th>
-                                                <th>{{ __('app.customers.branches.table.areas') }}</th>
-                                                <th>{{ __('app.region') }}</th>
-                                                <th>{{ __('app.Settings') }}</th>
+                                            <td><label for="selectall" class="custom-checkbox pl-1">
+                                                    <input type="checkbox" id="selectall" class="selectall"/>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <th>{{ __('app.Image') }}</th>
+                                            <th>{{ __('app.users.table.name') }}</th>
+                                            <th>{{ __('app.customers.branches.table.code') }}</th>
+                                            <th>{{ __('app.customers.branches.table.areas') }}</th>
+                                            <th>{{ __('app.region') }}</th>
+                                            <th>{{ __('app.Settings') }}</th>
 
                                             </thead>
                                             <tbody class="trashbody">
 
-                                                @foreach ($trashs as $trash)
-                                                    <tr>
-                                                        <td>
-                                                            <label for="{{ $trash->id }}" class="custom-checkbox pl-1">
-                                                                <input class="trashselect" type="checkbox" name="trashs[]"
-                                                                    id="{{ $trash->id }}" value="{{ $trash->id }}">
-                                                                <span class="checkmark"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <img src="{{ $trash->photo ? url('storage/' . $trash->photo) : (session()->has('darkMode') ? url('/images/models/dark/branch.svg') : url('/images/models/default/branch.svg')) }}"
-                                                                width="auto" height="50" alt="product-image">
-                                                        </td>
-                                                        <td>{{ $trash->name }}</td>
-                                                        <td>{{ $trash->code }}</td>
-                                                        <td>{{ $trash->area_count }}</td>
-                                                        <td>{{ $trash->region->name ?? '' }}</td>
+                                            @foreach ($trashs as $trash)
+                                                <tr>
+                                                    <td>
+                                                        <label for="{{ $trash->id }}" class="custom-checkbox pl-1">
+                                                            <input class="trashselect" type="checkbox" name="trashs[]"
+                                                                   id="{{ $trash->id }}" value="{{ $trash->id }}">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <img
+                                                            src="{{ $trash->photo ? url('storage/' . $trash->photo) : (session()->has('darkMode') ? url('/images/models/dark/branch.svg') : url('/images/models/default/branch.svg')) }}"
+                                                            width="auto" height="50" alt="product-image">
+                                                    </td>
+                                                    <td>{{ $trash->name }}</td>
+                                                    <td>{{ $trash->code }}</td>
+                                                    <td>{{ $trash->area_count }}</td>
+                                                    <td>{{ $trash->region->name ?? '' }}</td>
 
-                                                        <td style='white-space: nowrap'>
-                                                            <button style="display: inline-block" type="submit" class="trash_restore btn btn-sm btn-primary"
+                                                    <td style='white-space: nowrap'>
+                                                        <button style="display: inline-block" type="submit"
+                                                                class="trash_restore btn btn-sm btn-primary"
                                                                 style="color: white;"><i class="fas fa-recycle"></i>
-                                                                {{ __('app.Restore') }}</button>
-                                                            <button  style="display: inline-block" type="submit" class="trash_delete btn btn-sm btn-danger"><i class="fas fa-trash"></i>
-                                                                {{ __('app.customers.branches.delete') }}</button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                                            {{ __('app.Restore') }}</button>
+                                                        <button style="display: inline-block" type="submit"
+                                                                class="trash_delete btn btn-sm btn-danger"><i
+                                                                class="fas fa-trash"></i>
+                                                            {{ __('app.customers.branches.delete') }}</button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
 
                                             </tbody>
                                         </table>
@@ -95,7 +102,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger"
-                                        data-dismiss="modal">{{ __('app.Cancel') }}</button>
+                                            data-dismiss="modal">{{ __('app.Cancel') }}</button>
                                     <button type="button" class="btn btn-primary">{{ __('app.Apply') }}</button>
                                 </div>
                             </div>
@@ -119,7 +126,7 @@
                                     <div class="related-heading mb-5">
                                         <h2>
                                             <img src="{{ resolveDark() }}/img/branch.svg" width="30" alt="product-image"
-                                                class="img-fluid"></a>
+                                                 class="img-fluid"></a>
                                             {{ __('app.customers.branches.page_title.index') }}
                                         </h2>
                                         <span>
@@ -153,72 +160,94 @@
                                                     id="DataTables_Table_0" role="grid"
                                                     aria-describedby="DataTables_Table_0_info">
                                                     <thead>
-                                                        <tr role="row">
-                                                            <th>{{ __('app.Image') }}</th>
-                                                            <th>{{ __('app.Name') }}</th>
-                                                            <th>{{ __('app.customers.branches.table.code') }}</th>
-                                                            <th>{{ __('app.customers.branches.table.area_count') }}</th>
-                                                            <th>{{ __('app.region') }}</th>
-                                                            <th>{{ __('app.Status') }}</th>
-                                                            <th>{{ __('app.Settings') }}</th>
-                                                        </tr>
+                                                    <tr role="row">
+                                                        <th>{{ __('app.Image') }}</th>
+                                                        <th>{{ __('app.Name') }}</th>
+                                                        <th>{{ __('app.customers.branches.table.code') }}</th>
+                                                        <th>{{ __('app.customers.branches.table.area_count') }}</th>
+                                                        <th>{{ __('app.region') }}</th>
+                                                        <th>{{ __('app.Status') }}</th>
+                                                        @if(auth()->user()->wakeb_user)
+                                                            <th>{{ __('app.installed_status') }}</th>
+                                                        @endif
+                                                        <th>{{ __('app.Settings') }}</th>
+                                                    </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($items as $item)
-                                                            <tr class="item{{ $item->id }}">
+                                                    @foreach ($items as $item)
+                                                        <tr class="item{{ $item->id }}">
+                                                            <td>
+                                                                <img
+                                                                    src="{{ $item->photo ? url('storage/' . $item->photo) : (session()->has('darkMode') ? url('/images/models/dark/branch.svg') : url('/images/models/default/branch.svg')) }}"
+                                                                    width="auto" height="30px" alt="product-image"
+                                                                    class="img-fluid">
+                                                            </td>
+                                                            <td>{{ $item->name }}</td>
+                                                            <td>{{ $item->code }}</td>
+                                                            <td>{{ $item->area_count }}</td>
+                                                            <td>{{ $item->region->name ?? '' }}</td>
+                                                            <td>
+                                                                <a href="{{ route('branches.change_active', [$item->id]) }}">
+                                                                    @if ($item->active == 1)
+                                                                        <i
+                                                                            class="fas fa-check-square {{ $item->active == 1 ? 'True' : 'False' }}"></i>
+                                                                        {{ __('app.active') }}
+                                                                    @else
+                                                                        <i
+                                                                            class="fas fa-window-close {{ $item->active == 1 ? 'True' : 'False' }}"></i>
+                                                                        {{ __('app.deactivate') }}
+                                                                    @endif
+                                                                </a>
+                                                            </td>
+                                                            @if(auth()->user()->wakeb_user)
                                                                 <td>
-                                                                    <img src="{{ $item->photo ? url('storage/' . $item->photo) : (session()->has('darkMode') ? url('/images/models/dark/branch.svg') : url('/images/models/default/branch.svg')) }}"
-                                                                        width="auto" height="30px" alt="product-image"
-                                                                        class="img-fluid">
-                                                                </td>
-                                                                <td>{{ $item->name }}</td>
-                                                                <td>{{ $item->code }}</td>
-                                                                <td>{{ $item->area_count }}</td>
-                                                                <td>{{ $item->region->name ?? '' }}</td>
-                                                                <td>
-                                                                    <a
-                                                                        href="{{ route('branches.change_active', [$item->id]) }}">
-                                                                        @if ($item->active == 1)
-                                                                            <i
-                                                                                class="fas fa-check-square {{ $item->active == 1 ? 'True' : 'False' }}"></i>
-                                                                            {{ __('app.active') }}
+                                                                    <a href="{{ route('branches.change_installed', [$item->id]) }}">
+                                                                        @if ($item->installed == 1)
+                                                                            <span class="badge badge-success"
+                                                                                  title="{{__('app.click_to_not_install')}}">
+                                                                                {{ __('app.installed') }}
+                                                                            </span>
                                                                         @else
-                                                                            <i
-                                                                                class="fas fa-window-close {{ $item->active == 1 ? 'True' : 'False' }}"></i>
-                                                                            {{ __('app.deactivate') }}
+                                                                            <span class="badge badge-danger"
+                                                                                  title="{{__('app.click_to_install')}}">
+                                                                                {{ __('app.no_installed') }}
+                                                                            </span>
                                                                         @endif
                                                                     </a>
                                                                 </td>
-                                                                <td>
-                                                                    @if (in_array(auth()->user()->type,['customer','subadmin']))
-                                                                        <a class="btn btn-sm btn-info"
-                                                                            href="{{ route('customerBranches.services', [$item->id]) }}">
-                                                                            services
-                                                                        </a>
+                                                            @endif
+                                                            <td>
+                                                                @if (in_array(auth()->user()->type,['customer','subadmin']))
+                                                                    <a class="btn btn-sm btn-info"
+                                                                       href="{{ route('customerBranches.services', [$item->id]) }}">
+                                                                        services
+                                                                    </a>
 
-                                                                        <a class="btn btn-sm btn-info"
-                                                                            href="{{ route('customerBranches.show', [$item->id]) }}">{{ __('app.customers.branches.show') }}</a>
+                                                                    <a class="btn btn-sm btn-info"
+                                                                       href="{{ route('customerBranches.show', [$item->id]) }}">{{ __('app.customers.branches.show') }}</a>
 
-                                                                        <a class="btn btn-sm btn-primary"
-                                                                            href="{{ route('customerBranches.edit', [$item->id]) }}">{{ __('app.customers.branches.edit') }}</a>
-                                                                        <a class="btn btn-sm btn-danger" onclick="delete_alert({{ $item->id }});">{{ __('app.customers.branches.delete') }}</a>
-                                                                    @endif
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
+                                                                    <a class="btn btn-sm btn-primary"
+                                                                       href="{{ route('customerBranches.edit', [$item->id]) }}">{{ __('app.customers.branches.edit') }}</a>
+                                                                    <a class="btn btn-sm btn-danger"
+                                                                       onclick="delete_alert({{ $item->id }});">{{ __('app.customers.branches.delete') }}</a>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
                                         @else
                                             <div id="PACKAGEITEMS"
-                                                class="product_list row p-0 m-0 col-12 {{ $userSettings ? ($userSettings->show_items == 'large' ? 'large' : '') : '' }}">
+                                                 class="product_list row p-0 m-0 col-12 {{ $userSettings ? ($userSettings->show_items == 'large' ? 'large' : '') : '' }}">
                                                 @foreach ($items as $item)
                                                     <div
                                                         class="product_item col-xs-12 col-sm-6 col-md-6 {{ $userSettings ? ($userSettings->show_items == 'large' ? 'col-lg-6' : 'col-lg-3') : '' }} item{{ $item->id }}">
                                                         <div class="iq-card">
                                                             <div class="product-miniature">
                                                                 <div class="thumbnail-container text-center pb-0">
-                                                                    <img src="{{ $item->photo ? url('storage/' . $item->photo) : (session()->has('darkMode') ? url('/images/models/dark/branch.svg') : url('/images/models/default/branch.svg')) }}"
+                                                                    <img
+                                                                        src="{{ $item->photo ? url('storage/' . $item->photo) : (session()->has('darkMode') ? url('/images/models/dark/branch.svg') : url('/images/models/default/branch.svg')) }}"
                                                                         width="auto" height="100" alt="product-image"
                                                                         class="img-fluid">
 
@@ -231,7 +260,8 @@
                                                                     <h5><small><span><i class="fas fa-oil-can"></i>
                                                                                 {{ __('app.customers.branches.table.area_count') }}</span>
                                                                             : {{ $item->area_count }}</small></h5>
-                                                                    <h5><small><span><i class="fas fa-map-marker-alt"></i>
+                                                                    <h5><small><span><i
+                                                                                    class="fas fa-map-marker-alt"></i>
                                                                                 {{ __('app.region') }}</span> :
                                                                             {{ $item->region->name ?? '' }}</small></h5>
                                                                     <h5 class="d-block">
@@ -257,16 +287,16 @@
                                                                     class="ratting-item d-flex align-items-center justify-content-center p-0 m-0 pb-2">
                                                                     @if (in_array(auth()->user()->type,['customer','subadmin']))
                                                                         <a class="btn  btn-info"
-                                                                            href="{{ route('customerBranches.services', [$item->id]) }}">
+                                                                           href="{{ route('customerBranches.services', [$item->id]) }}">
                                                                             services
                                                                         </a>
 
                                                                         <a class="btn  btn-info"
-                                                                            href="{{ route('customerBranches.show', [$item->id]) }}">{{ __('app.customers.branches.show') }}</a>
+                                                                           href="{{ route('customerBranches.show', [$item->id]) }}">{{ __('app.customers.branches.show') }}</a>
                                                                         <a class="btn btn-primary mx-1"
-                                                                            href="{{ route('customerBranches.edit', [$item->id]) }}">{{ __('app.customers.branches.edit') }}</a>
+                                                                           href="{{ route('customerBranches.edit', [$item->id]) }}">{{ __('app.customers.branches.edit') }}</a>
                                                                         <a class="btn btn-danger"
-                                                                            onclick="delete_alert({{ $item->id }});">{{ __('app.customers.branches.delete') }}</a>
+                                                                           onclick="delete_alert({{ $item->id }});">{{ __('app.customers.branches.delete') }}</a>
                                                                     @endif
                                                                 </div>
 
@@ -286,20 +316,21 @@
 
 
             <!-- myModalDelete -->
-            <div id="myModalDelete" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="myModalDelete" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                 aria-hidden="true">
                 <div class="modal-dialog modal-md modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <h3 class="text-danger"> <i class="far fa-question-circle"></i>
+                            <h3 class="text-danger"><i class="far fa-question-circle"></i>
                                 {{ __('app.Confirmation') }}
                             </h3>
                             <h5> {{ __('app.customers.branches.delete_message') }}</h5>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary"
-                                data-dismiss="modal">{{ __('app.customers.branches.close') }}</button>
+                                    data-dismiss="modal">{{ __('app.customers.branches.close') }}</button>
                             <button type="button" class="btn btn-danger"
-                                onclick="delete_option('customer/customerBranches');">{{ __('app.customers.branches.delete') }}</button>
+                                    onclick="delete_option('customer/customerBranches');">{{ __('app.customers.branches.delete') }}</button>
                         </div>
                     </div>
                 </div>
@@ -309,15 +340,15 @@
 @endsection
 @push('js')
     <script>
-        $(document).ready(function() {
-            $('.selectall').on('click', function() {
+        $(document).ready(function () {
+            $('.selectall').on('click', function () {
                 $(this).closest('.table').find('.trashbody .trashselect').prop('checked', $(this).prop(
                     'checked'));
                 $('.restore_all').toggle();
                 $('.remove_all').toggle();
             });
 
-            $('.trashbody .trashselect').on('click', function() {
+            $('.trashbody .trashselect').on('click', function () {
                 var checked = $(".trashbody input[type=checkbox]:checked").length;
                 if (checked > 1) {
                     $('.restore_all').show();
@@ -328,19 +359,19 @@
                 }
             });
 
-            $('.restore_all').on('click', function() {
+            $('.restore_all').on('click', function () {
                 $("#trash_form").attr('action', app_url + "/customer/customerBranches/bulkRestore");
             });
-            $('.trash_restore').on('click', function(e) {
+            $('.trash_restore').on('click', function (e) {
                 e.preventDefault();
                 $(this).parent('td').siblings().find('.trashselect').prop('checked', 'checked');
                 $("#trash_form").attr('action', app_url + "/customer/customerBranches/bulkRestore");
                 $("#trash_form").submit();
             });
-            $('.remove_all').on('click', function() {
+            $('.remove_all').on('click', function () {
                 $("#trash_form").attr('action', app_url + "/customer/customerBranches/bulkDelete");
             });
-            $('.trash_delete').on('click', function(e) {
+            $('.trash_delete').on('click', function (e) {
                 e.preventDefault();
                 $(this).parent('td').siblings().find('.trashselect').prop('checked', 'checked');
                 $(this).closest('.trashselect').prop('checked', 'checked');

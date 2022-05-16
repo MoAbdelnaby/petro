@@ -30,7 +30,7 @@
 {{--        @endif--}}
         <link href="{{resolveDark()}}/css/style.css" rel="stylesheet" type="text/css"/>
         @stack('css')
-        <link rel="shortcut icon" href="{{url('/images')}}/Logo.svg"/>
+        <link rel="shortcut icon" href="{{url('/images')}}/petromin.png"/>
     </head>
 
     <body>

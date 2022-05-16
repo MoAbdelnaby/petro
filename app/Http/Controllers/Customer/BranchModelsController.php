@@ -257,14 +257,14 @@ class BranchModelsController extends Controller
     {
         if ($request->online_status == 'online') {
             $branches = DB::table('last_error_branch_views')
-                ->selectRaw('last_error_branch_views.*,branches.name')
+                ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
                 ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
                 ->where('last_error_branch_views.created_at', '>=', Carbon::now()->subMinutes(15))
                 ->where('last_error_branch_views.created_at', '<=', Carbon::now())
                 ->get();
         } else {
             $branches = DB::table('last_error_branch_views')
-                ->selectRaw('last_error_branch_views.*,branches.name')
+                ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
                 ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
                 ->get();
 
@@ -272,6 +272,8 @@ class BranchModelsController extends Controller
                 ->get()
                 ->map(function ($item) use ($branches) {
                     $branches->push((object)[
+                        'id' => $item->id,
+                        'installed' => $item->installed,
                         'name' => $item->name,
                         'branch_code' => $item->code,
                         'user_id' => $item->user_id,
@@ -288,6 +290,8 @@ class BranchModelsController extends Controller
             ->count();
 
         $off = Branch::active()->primary()->count() - $on;
+
+        $no_installed = Branch::primary()->where('installed', 0)->count();
 
         //Last Stability
         $first_errors = DB::table('branch_net_works')
@@ -336,7 +340,8 @@ class BranchModelsController extends Controller
             $filter_status = true;
         }
 
-        return view("customer.branches_status.index", compact('branches', 'last_stability', 'off', 'on', 'filter_status'));
+        return view("customer.branches_status.index", compact('branches', 'last_stability',
+            'off', 'on', 'filter_status', 'no_installed'));
     }
 
     /**
@@ -362,10 +367,11 @@ class BranchModelsController extends Controller
         $start = Carbon::now()->startOfYear();
         $end = Carbon::now();
 
-        if (isset($request->start)) {
+        if ($request->start) {
             $start = $request->start;
         }
-        if (isset($request->end)) {
+
+        if ($request->end) {
             $end = $request->end;
         }
 

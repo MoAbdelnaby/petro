@@ -1805,14 +1805,14 @@ select.form-control option:hover{
     margin-left: 200px;
 }
 .iq-sidebar-logo a{
-    background: url("./../../images/wakeball/wakebdarktext.png");
+    background: url("./../../images/wakeball/petromintext.png");
     width: 140px;
     height: 30px;
     background-size: 100% auto;
     background-repeat: no-repeat;
 }
 .sidebar-main .iq-sidebar-logo a{
-    background: url("./../../images/wakeball/wakebdark.png");
+    background: url("./../../images/wakeball/petromindark.png");
     width: 50px;
     height: 30px;
     background-size: 100% auto;
@@ -1821,7 +1821,7 @@ select.form-control option:hover{
 }
 
 .sidebar-main  .iq-sidebar:hover .iq-sidebar-logo a{
-    background: url("./../../images/wakeball/wakebdarktext.png");
+    background: url("./../../images/wakeball/petromintext.png");
     width: 140px;
     height: 30px;
     background-size: 100% 100%;

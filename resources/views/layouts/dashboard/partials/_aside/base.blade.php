@@ -451,11 +451,6 @@
                                             class="ri-profile-line"></i>{{ __('app.side_bar.saas_control.modelfeatures') }}
                                     </a></li>
                             @endcan
-                            <li>
-                                <a href="{{ route('packageRequests.index') }}"><i
-                                        class="ri-profile-line"></i>{{ __('app.side_bar.saas_control.packageRequests') }}
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     @endhasrole
