@@ -145,11 +145,12 @@ class UserController extends Controller
         //            'password' => Hash::make($request->password),
         //            'parent_id' => primaryID()
         //        ]);
-
-        if ($request->type == 'customer' || $request->type == 'subcustomer') {
-            $user->syncRoles('customer');
-        } else {
-            $user->syncRoles($request->roles);
+        if ($request->has('type')) {
+            if (in_array($request->type, ['customer', 'subcustomer', 'subadmin'])) {
+                $user->syncRoles('customer');
+            } else {
+                $user->syncRoles($request->roles);
+            }
         }
 
         return redirect('/auth/users')->with('success', __('app.users.success_message'));
@@ -213,7 +214,7 @@ class UserController extends Controller
         if ($validator->errors()->count()) {
             return redirect()->back()->withErrors($validator->errors());
         }
-        User::where('email',$request->email)->update(['password' => bcrypt($request->password)]);
+        User::where('email', $request->email)->update(['password' => bcrypt($request->password)]);
 
         return redirect()->route('login')->with('success', __('app.change_success_message'));
 
@@ -250,10 +251,12 @@ class UserController extends Controller
                 $user->save();
             }
 
-            if ($user->type == 'customer' || $user->type == 'subcustomer') {
-                $user->syncRoles('customer');
-            } else {
-                $user->syncRoles($request->roles);
+            if ($request->has('type')) {
+                if (in_array($request->type, ['customer', 'subcustomer', 'subadmin'])) {
+                    $user->syncRoles('customer');
+                } else {
+                    $user->syncRoles($request->roles);
+                }
             }
         }
 
@@ -291,10 +294,12 @@ class UserController extends Controller
         if ($user) {
             $user->update($data);
 
-            if ($request->type == 'customer' || $request->type == 'subcustomer') {
-                $user->syncRoles('customer');
-            } else {
-                $user->syncRoles($request->roles);
+            if ($request->has('type')) {
+                if (in_array($request->type, ['customer', 'subcustomer', 'subadmin'])) {
+                    $user->syncRoles('customer');
+                } else {
+                    $user->syncRoles($request->roles);
+                }
             }
         }
 
