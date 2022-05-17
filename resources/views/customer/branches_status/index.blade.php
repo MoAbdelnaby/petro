@@ -58,7 +58,8 @@
                                                 </div>
                                                 <div class="col-8">
                                                     <h5><b><i class="fas fa-circle"
-                                                              style="color: #f14336"></i> {{ __('app.branch_offline') }}</b>
+                                                              style="color: #f14336"></i> {{ __('app.branch_offline') }}
+                                                        </b>
                                                     </h5>
                                                     <h3><b>{{ $off }}</b></h3>
                                                 </div>
@@ -69,7 +70,8 @@
 
                                     <div class="col-lg-4 col-md-4">
                                         <div class="card text-center col-12">
-                                            <div class="card-header row offline" style=" border-bottom: 5px solid #fed329 !important;">
+                                            <div class="card-header row offline"
+                                                 style=" border-bottom: 5px solid #fed329 !important;">
                                                 <div class="col-4">
                                                     <img width="100" fill="#fed329"
                                                          src="{{ asset("assets/images/not_installed.png") }}"
@@ -79,11 +81,13 @@
                                                 <div class="col-8">
                                                     <h5>
                                                         <b>
-                                                            <i class="fas fa-circle"  style="color: #fed329"></i>
+                                                            <i class="fas fa-circle" style="color: #fed329"></i>
                                                             {{ __('app.no_linked') }}
                                                         </b>
                                                     </h5>
-                                                    <h3><b style="color: #fed329">{{ max($installed - ($on+$off),0) }}</b></h3>
+                                                    <h3>
+                                                        <b style="color: #fed329">{{ max($installed - ($on+$off),0) }}</b>
+                                                    </h3>
                                                 </div>
 
                                             </div>
@@ -238,19 +242,19 @@
                                                         @if(auth()->user()->wakeb_user)
                                                             @if(isset($branch->installed))
                                                                 <td>
-                                                                    <a href="{{ route('branches.change_installed', [$branch->id]) }}">
-                                                                        @if ($branch->installed == 1)
-                                                                            <span class="badge badge-success"
-                                                                                  title="{{__('app.click_to_not_install')}}">
-                                                                                {{ __('app.installed') }}
-                                                                            </span>
-                                                                        @else
-                                                                            <span class="badge badge-danger"
-                                                                                  title="{{__('app.click_to_install')}}">
-                                                                                {{ __('app.no_installed') }}
-                                                                            </span>
-                                                                        @endif
-                                                                    </a>
+                                                                    <div
+                                                                        class="custom-control custom-switch custom-switch-icon custom-switch-color custom-control-inline"
+                                                                        style="cursor: pointer">
+                                                                        <input type="checkbox"
+                                                                               class="custom-control-input bg-success installed_switch"
+                                                                               id="switch{{$branch->id}}"
+                                                                               style="width: 1.6rem; height: 1.4rem; cursor: pointer"
+                                                                               {{$branch->installed?'checked':''}} data-url="{{ route('branches.change_installed', [$branch->id]) }}">
+                                                                        <label class="custom-control-label"
+                                                                               for="switch{{$branch->id}}"
+                                                                               style="width: 1.6rem; height: 1.4rem; cursor: pointer">
+                                                                        </label>
+                                                                    </div>
                                                                 </td>
                                                             @else
                                                                 <td>---</td>
@@ -290,6 +294,51 @@
             let inputs = `<input name='online_status' value='${filter}'>`;
 
             $(`<form action=${url} method="get">${inputs}</form>`).appendTo('body').submit().remove();
+        });
+
+        $(document).ready(function () {
+            $(document).on('change', '.installed_switch', function () {
+                let item = $(this);
+
+                $.ajax({
+                    url: $(this).data('url'),
+                    dataType: "JSON",
+                    type: "POST",
+                    success: function (data) {
+                        Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        }).fire({
+                            icon: 'success',
+                            title: data.message
+                        })
+                    },
+                    error: function (data) {
+                        Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        }).fire({
+                            icon: 'error',
+                            title: "Failed to update status"
+                        })
+                        item.prop('checked', false);
+                    }
+                });
+            });
         });
     </script>
 @endpush
