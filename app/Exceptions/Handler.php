@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
         }
         if ($exception instanceof MethodNotAllowedHttpException) {
             return response()->json(['success' => false,'message' => 'Method Not Allowed',], 404);
-           }
+        }
 
         if ($exception instanceof ErrorException) {
             if (preg_match('/^file_put_contents/', $exception->getMessage())) {
