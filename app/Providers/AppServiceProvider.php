@@ -30,25 +30,24 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-            if(env('APP_ENV') === 'production') {
-                $this->app['request']->server->set('HTTPS', true);
-            }
+        if (env('APP_ENV') === 'production') {
+            $this->app['request']->server->set('HTTPS', true);
+        }
 
-	try {
-        view()->composer('*', function ($view) {
-            if (Auth::check()) {
+        try {
+            view()->composer('*', function ($view) {
+                if (Auth::check()) {
 //                $oldRequest = PackageRequest::with('package')->onlyTrashed()->where('active',1)->where('user_id', Auth::user()->id)->get();
-                $oldRequest = [];
-            } else {
-                $oldRequest = [];
-            }
-            $view->with('oldRequest', $oldRequest);
-        });
+                    $oldRequest = [];
+                } else {
+                    $oldRequest = [];
+                }
+                $view->with('oldRequest', $oldRequest);
+            });
 
             View::share('userSettings', UserSetting::where('user_id', 3)->first());
-	}
-	catch (\Exception $e) {
-	    //
-	}
+        } catch (\Exception $e) {
+            //
+        }
     }
 }
