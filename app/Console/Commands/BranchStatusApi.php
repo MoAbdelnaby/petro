@@ -53,6 +53,7 @@ class BranchStatusApi extends Command
             $res = [];
             $data = [];
             $AiValue = 15;
+            $callTime = env('Branch_Status_Time', 5);
 
             $now = Carbon::now();
             $branches = DB::table("last_error_branch_views as branchError")
@@ -88,8 +89,8 @@ class BranchStatusApi extends Command
                                 break;
                             }
                             if ($escalationBranch->status == true) {
-                                if (($escalationBranch->time_minute + $AiValue) < $escalation->time_minute) {
-                                    $escalationBranch->time_minute += $AiValue;
+                                if (($escalationBranch->time_minute + $callTime) < $escalation->time_minute) {
+                                    $escalationBranch->time_minute += $callTime;
                                     $escalationBranch->save();
                                     break;
                                 }
