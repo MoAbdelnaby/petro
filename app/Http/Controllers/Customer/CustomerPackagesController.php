@@ -52,22 +52,6 @@ class CustomerPackagesController extends Controller
     public function statistics()
     {
         $config = ConfigService::get();
-        $query = DB::table('last_error_branch_views');
-        $branches = $query->get();
-        $on = $query->where('created_at', '>=', Carbon::now()->subMinutes(15))
-            ->where('created_at', '<=', Carbon::now())->count();
-
-        Branch::whereNotIn('code', $branches->pluck('branch_code'))->get()->map(function ($item) use ($branches) {
-            $branches->push((object)[
-                'id' => 111,
-                'branch_code' => $item->code,
-                'user_id' => $item->user_id,
-                'error' => '',
-                'created_at' => Carbon::now()->subYear(),
-                'updated_at' => Carbon::now()->subYear(),
-            ]);
-        });
-        $off = $branches->count() - $on;
 
         $report = [];
         foreach (['place', 'plate', 'stayingAverage', 'invoice'] as $type) {
@@ -81,8 +65,6 @@ class CustomerPackagesController extends Controller
             'statistics' => ReportService::statistics($filter['start'], $filter['end']),
             'report' => $report,
             'config' => $config,
-            'off' => $off,
-            'on' => $on
         ]);
     }
 

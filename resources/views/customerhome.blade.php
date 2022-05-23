@@ -71,7 +71,7 @@
                                                         <h5><b><i class="fas fa-circle"
                                                                   style="color: green"></i> {{ __('app.branch_online')  }}
                                                             </b></h5>
-                                                        <h3><b>{{ $on }}</b></h3>
+{{--                                                        <h3><b>{{ $on }}</b></h3>--}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,7 +90,7 @@
                                                         <h5><b><i class="fas fa-circle"
                                                                   style="color: red"></i> {{ __('app.branch_offline') }}
                                                             </b></h5>
-                                                        <h3><b>{{ $off }}</b></h3>
+{{--                                                        <h3><b>{{ $off }}</b></h3>--}}
                                                     </div>
                                                 </div>
                                             </div>

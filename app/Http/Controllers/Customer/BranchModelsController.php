@@ -262,6 +262,27 @@ class BranchModelsController extends Controller
                 ->where('last_error_branch_views.created_at', '>=', Carbon::now()->subMinutes(15))
                 ->where('last_error_branch_views.created_at', '<=', Carbon::now())
                 ->get();
+        } else  if ($request->online_status == 'offline') {
+            $branches = DB::table('last_error_branch_views')
+                ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
+                ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
+                ->where('last_error_branch_views.created_at', '<=', Carbon::now()->subMinutes(15))
+                ->get();
+
+//            Branch::active()->primary()
+//                ->get()
+//                ->map(function ($item) use ($branches) {
+//                    $branches->push((object)[
+//                        'id' => $item->id,
+//                        'installed' => $item->installed,
+//                        'name' => $item->name,
+//                        'branch_code' => $item->code,
+//                        'user_id' => $item->user_id,
+//                        'error' => '',
+//                        'created_at' => Carbon::now()->subYear(),
+//                        'updated_at' => Carbon::now()->subYear(),
+//                    ]);
+//                });
         } else {
             $branches = DB::table('last_error_branch_views')
                 ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
