@@ -50,6 +50,7 @@ class BranchStatusApi extends Command
     public function handle()
     {
         try {
+            $this->comment('CASE 1');
             $res = [];
             $data = [];
             $AiValue = 15;
@@ -63,6 +64,8 @@ class BranchStatusApi extends Command
 
             //Check If Online Before 15 Min
             foreach ($branches as $branch) {
+                $this->comment('CASE 2');
+                $this->comment($branch->name);
                 $branchStatus = BranchStatus::where('branch_code', $branch->branch_code)->first();
                 $data['last_connected'] = $now->diffForHumans($branch->created_at, true);
 
@@ -77,11 +80,13 @@ class BranchStatusApi extends Command
                     EscalationBranch::where('branch_id', $branch->br_id)->update(['time_minute' => 0, 'status' => 0]);
 
                 } else {
+                    $this->comment('CASE 3');
                     $data['status'] = 'offline';
                     $data['last_error'] = $branch->error;
 
                     $escalations = Escalation::orderBy('sort')->get();
                     foreach ($escalations as $escalation) {
+                        $this->comment('CASE 4');
                         $escalationBranch = EscalationBranch::where('escalation_id', $escalation->id)->where('branch_id', $branch->br_id)->first();
                         if ($escalationBranch) {
                             //check escalation notification to stop when action
@@ -89,12 +94,14 @@ class BranchStatusApi extends Command
                                 break;
                             }
                             if ($escalationBranch->status == true) {
+                                $this->comment('CASE 5');
                                 if (($escalationBranch->time_minute + $callTime) < $escalation->time_minute) {
                                     $escalationBranch->time_minute += $callTime;
                                     $escalationBranch->save();
                                     break;
                                 }
                             } else {
+                                $this->comment('CASE 6');
                                 $escalationBranch->status = true;
                                 $escalationBranch->save();
                                 $users = User::where('position_id', $escalation->position_id)->get();
@@ -104,6 +111,7 @@ class BranchStatusApi extends Command
                                 break;
                             }
                         } else {
+                            $this->comment('CASE 7');
                             $escalationBranch = EscalationBranch::create([
                                 'escalation_id' => $escalation->id,
                                 'branch_id' => $branch->br_id,
@@ -112,6 +120,7 @@ class BranchStatusApi extends Command
 
                             $users = User::where('position_id', $escalation->position_id)->get();
                             if (count($users) > 0) {
+                                $this->comment('CASE 8');
                                 $this->sendErrorToAdmin($branch, $users, $escalationBranch->id);
                             }
                             break;
