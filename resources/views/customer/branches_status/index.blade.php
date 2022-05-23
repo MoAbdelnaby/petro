@@ -189,20 +189,7 @@
                                                 </thead>
                                                 <tbody class="trashbody">
                                                 @foreach($branches as $k => $branch)
-                                                    @if(!isset($last_stability[$branch->branch_code]['stability']))
-                                                        @continue
-                                                    @endif
-                                                    @if($filter_status == true)
-                                                        @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
-                                                        @else
-                                                            @continue
-                                                        @endif
-                                                    @endif
-                                                    @if(request('online_status') == 'offline')
-                                                        @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
-                                                            @continue
-                                                        @endif
-                                                    @endif
+
                                                     <tr>
                                                         <td>{{ $k+1 }}</td>
                                                         <td>
