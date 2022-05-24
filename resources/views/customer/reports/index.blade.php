@@ -338,7 +338,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','place')}}" class="iq-card-body"
+                                                    <a href="{{route('reports.show','place')}}" class="iq-card-body card_report"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.area_count') }}</h6>
@@ -360,7 +360,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','plate')}}" class="iq-card-body"
+                                                    <a href="{{route('reports.show','plate')}}" class="iq-card-body card_report"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.Car_Count') }}</h6>
@@ -380,7 +380,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','invoice')}}" class="iq-card-body"
+                                                    <a href="{{route('reports.show','invoice')}}" class="iq-card-body card_report"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.Invoice') }}</h6>
@@ -404,7 +404,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','backout')}}" class="iq-card-body"
+                                                    <a href="{{route('reports.show','backout')}}" class="iq-card-body card_report"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.backout') }}</h6>
@@ -425,7 +425,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','serving')}}" class="iq-card-body"
+                                                    <a href="{{route('reports.show','serving')}}" class="iq-card-body card_report"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.staying_car_average') }}</h6>
@@ -447,7 +447,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','place')}}" class="iq-card-body"
+                                                    <a href="{{route('reports.show','place')}}" class="iq-card-body card_report"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.Duration_Work') }}</h6>
@@ -468,7 +468,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','place')}}" class="iq-card-body"
+                                                    <a href="{{route('reports.show','place')}}" class="iq-card-body card_report"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.Duration_Empty') }}</h6>
@@ -490,7 +490,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','welcome')}}" class="iq-card-body"
+                                                    <a href="{{route('reports.show','welcome')}}" class="iq-card-body card_report"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.Welcome') }}</h6>
@@ -523,6 +523,10 @@
     </div>
 @endsection
 @push('js')
+    @php $compare = false; @endphp
+    @if(count(Arr::wrap(request('lists'))) > 1))
+        @php $compare = true; @endphp
+    @endif
     <script>
         $(document).ready(function () {
             $("#selectallbranches").click(function () {
@@ -564,6 +568,24 @@
                 }
 
                 $(`<form action=${url}>${inputs}</form>`).appendTo('body').submit().remove();
+            });
+
+            //Show Card Report
+            $(".card_report").on('click', function (e) {
+                e.preventDefault();
+                let url = $(this).attr('href');
+
+                let token = $('meta[name="csrf-token"]').attr("content");
+                let inputs = `<input name="_token" value="${token}">`;
+                    inputs += `<input name="show_by" value="branch" >`;
+                    inputs += `<input name="branch_type" value="{{$compare?'comparison':'branch'}}" >`;
+{{--                    inputs += `<input name="branch_comparison" value="@json(request('lists'))" >`;--}}
+                    inputs += `<input name="branch_data" value="{{Arr::first(request('lists'))}}" >`;
+                    inputs += `<input name="start" value="{{request('start')}}" >`;
+                    inputs += `<input name="end" value="{{request('end')}}" >`;
+
+                console.log(inputs,token,url);
+                $(`<form action=${url} method="get">${inputs}</form>`).appendTo('body').submit().remove();
             });
         })
     </script>
