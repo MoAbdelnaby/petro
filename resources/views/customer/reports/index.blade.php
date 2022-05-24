@@ -530,13 +530,22 @@
         </div>
     </div>
 @endsection
+
 @push('js')
-    @php $compare = false; @endphp
+    @php
+
+        $compare = false;
+    @endphp
+
     @if(count(Arr::wrap(request('lists'))) > 1))
     @php $compare = true; @endphp
     @endif
+
     <script>
         $(document).ready(function () {
+            {{--var check_request = JSON.parse("{{ json_encode(request()->all()) }}");--}}
+            var check_request = "{{count(request()->all())}}";
+
             $("#selectallbranches").click(function () {
                 if ($("#selectallbranches").is(':checked')) {
                     $("#select_branch > option").prop("selected", "selected");
@@ -566,6 +575,7 @@
             $(".static_download").on('click', function (e) {
                 e.preventDefault();
 
+
                 let currentForm = @json(request()->query());
                 let url = '{{route('report.downloadStatistics')}}';
                 let token = $('meta[name="csrf-token"]').attr("content");
@@ -580,23 +590,29 @@
 
             //Show Card Report
             $(".card_report").on('click', function (e) {
+
                 e.preventDefault();
                 let url = $(this).attr('href');
-                let branch_comparsion = @json(request('lists')??[]);
+                if (parseInt(check_request) > 0) {
+                    let branch_comparsion = @json(request('lists') ?? []);
 
-                let token = $('meta[name="csrf-token"]').attr("content");
-                let inputs = `<input name="_token" value="${token}">`;
-                inputs += `<input name="show_by" value="branch" >`;
-                inputs += `<input name="branch_type" value="{{$compare?'comparison':'branch'}}" >`;
-                branch_comparsion.forEach(el => {
-                    inputs += `<input name="branch_comparison[]" value="${el}" >`;
-                });
-                inputs += `<input name="branch_data" value="{{Arr::first(request('lists'))}}" >`;
-                inputs += `<input name="start" value="{{request('start')??now()->startOfYear()}}" >`;
-                inputs += `<input name="end" value="{{request('end')??now()->toDateString()}}" >`;
+                    let token = $('meta[name="csrf-token"]').attr("content");
+                    let inputs = `<input name="_token" value="${token}">`;
+                    inputs += `<input name="show_by" value="branch" >`;
+                    inputs += `<input name="branch_type" value="{{$compare ? 'comparison' : 'branch'}}" >`;
+                    branch_comparsion.forEach(el => {
+                        inputs += `<input name="branch_comparison[]" value="${el}" >`;
+                    });
+                    inputs += `<input name="branch_data" value="{{Arr::first(request('lists'))}}" >`;
+                    inputs += `<input name="start" value="{{request('start') ?? now()->startOfYear()}}" >`;
+                    inputs += `<input name="end" value="{{request('end') ?? now()->toDateString()}}" >`;
 
-                console.log(inputs);
-                $(`<form action=${url} method="get">${inputs}</form>`).appendTo('body').submit().remove();
+                    // console.log(inputs);
+                    $(`<form action=${url} method="get">${inputs}</form>`).appendTo('body').submit().remove();
+                } else {
+                    $(`<form action=${url} method="get"></form>`).appendTo('body').submit().remove();
+                }
+
             });
         })
     </script>
