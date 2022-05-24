@@ -439,7 +439,7 @@
                             @foreach($regions as $key=>$reg)
                                 @if(count($reg->branches))
                                     @foreach($reg->branches as $branche)
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <label class="custom-checkbox" rel="{{$branche->id}}"> {{ $branche->name }}
                                                 <input type="checkbox" rel2="{{ $branche->name }}">
                                                 <span class="checkmark"></span>
@@ -468,28 +468,15 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            $('.assignusertobranch').select2({
-                placeholder: 'assign branches',
-                tags: false,
-                tokenSeparators: [',', ' ']
-            });
-            $('.delete').click(function () {
-                var rel = $(this).attr('rel');
-                $('#myModalDelete form').attr('action', "customer/customerUsers/" + rel);
-            });
-            $('.assign_body').delegate(".checkall", "click", function () {
-                $(this).closest('.tab-pane').find('.branchselect').prop('checked', $(this).prop('checked'));
-            });
 
             let regions = <?= json_encode($Branches ?? []) ?>;
             // searchBranch function
-            $('#searchBranch').keyup(function () {
-                var text = $(this).val();
-                // console.log(text.length)
+            $('#searchBranch').on('keyup',function () {
+                var text = $(this).val().toLowerCase();
                 if (text.length > 0) {
                     var search_result = 0;
                     for (var i = 0; i < regions.length; i++) {
-                        if (regions[i].name.search(text) >= 0) {
+                        if (regions[i].name.toLowerCase().search(text) >= 0) {
                             $('#assignform .search-model').find('input[rel2="' + regions[i].name + '"]').closest('.col-md-6').css({'display': 'block'});
                             search_result = search_result + 1;
                         } else {
@@ -510,6 +497,24 @@
                 }
 
             });
+
+
+
+
+            $('.assignusertobranch').select2({
+                placeholder: 'assign branches',
+                tags: false,
+                tokenSeparators: [',', ' ']
+            });
+            $('.delete').click(function () {
+                var rel = $(this).attr('rel');
+                $('#myModalDelete form').attr('action', "customer/customerUsers/" + rel);
+            });
+            $('.assign_body').delegate(".checkall", "click", function () {
+                $(this).closest('.tab-pane').find('.branchselect').prop('checked', $(this).prop('checked'));
+            });
+
+
 
 
             $('#myModalAssign .search-model input:checkbox').click(function () {

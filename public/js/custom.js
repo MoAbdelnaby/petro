@@ -95,7 +95,7 @@ function getmodelfeatures() {
                 type: "POST",
                 dataType: 'json',
                 success: function (response) {
-                    console.log(response);
+                    // console.log(response);
                     $("#packagefeature").empty();
                     response.forEach(function (item, index) {
                         $("#packagefeature").append(`
@@ -365,7 +365,7 @@ function searchrole() {
 
     $('#generalroleSearch').on('keyup', function (e) {
         let search = $('#generalroleSearch').val();
-        console.log(search);
+        // console.log(search);
         $.ajax({
             data: {
                 'search': search,
@@ -413,7 +413,7 @@ function searchpermission() {
 
     $('#generalpermissionSearch').on('keyup', function (e) {
         let search = $('#generalpermissionSearch').val();
-        console.log(search);
+        // console.log(search);
         $.ajax({
             data: {
                 'search': search,
@@ -463,7 +463,7 @@ function searchpackage() {
 
     $('#generalpackageSearch').on('keyup', function (e) {
         let search = $('#generalpackageSearch').val();
-        console.log(search);
+        // console.log(search);
         $.ajax({
             data: {
                 'search': search,
@@ -524,7 +524,7 @@ function searchfeature() {
 
     $('#generalfeatureSearch').on('keyup', function (e) {
         let search = $('#generalfeatureSearch').val();
-        console.log(search);
+        // console.log(search);
         $.ajax({
             data: {
                 'search': search,
@@ -678,7 +678,7 @@ function assign_user_to_branch_model_alert(val, u_brs, branches, regions) {
             '</div>');
 
         $.each(value.branches, function (i, br) {
-            console.log(value.branches.length)
+            // console.log(value.branches.length)
             if (user_branches.includes(br.id.toString())) {
                 $element.find('.join').append(`<div class="col-md-6 col-lg-4">
                 <label class="custom-checkbox" id="` + br.id + `" >` + br.name + `
@@ -865,7 +865,7 @@ $('#myModalAssign .nav-tabs .nav-link').on('click',function (){
     var chekedInputs = $($(this).attr('href')).find('.col-md-6.col-lg-4 input:checked').length;
     var length = $($(this).attr('href')).find('.col-md-6.col-lg-4').length;
    if(length <= 1){
-       console.log(length)
+       // console.log(length)
        $($(this).attr('href')).html('<div class="noBrache"><i class="fas fa-code-branch"></i> <h2> No Branch available <small>No Branch available No Branch available</small></h2></div>');
    }
 });

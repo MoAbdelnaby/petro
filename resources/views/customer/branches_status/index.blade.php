@@ -28,7 +28,7 @@
                                 <h2>
                                     <img src="{{resolveDark()}}/img/icon_menu/building.svg" width="24"
                                          class="tab_icon-img" alt="">
-                                    {{ __('app.Branch_Status_Header') }}
+                                    {{ __('app.Branch_Status_Header'). " ( " . $installed ." ) " }}
                                 </h2>
                             </div>
                             <div class="container-fluid">
