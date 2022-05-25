@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Session;
-
+use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
@@ -68,5 +68,16 @@ class HomeController extends Controller
         $notfications = \DB::table("notifications")->where("notifiable_id", Auth::id())->orderBy("created_at", "DESC")->paginate(25);
 
         return view('notfication', compact('notfications'));
+    }
+
+    public function testMail(Request $request)
+    {
+        try {
+            \Mail::raw('Test Mail Settings!', function($msg) {$msg->to('msaeed@wakeb.tech')->subject('Test Email Settings'); });
+            return response()->json(['message' => 'Mail sent successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['data' => [], 'message' => $e->getMessage(), 'code' => 500], 500);
+        }
+
     }
 }

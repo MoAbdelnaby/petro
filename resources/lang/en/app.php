@@ -14,6 +14,7 @@ return [
     'Upload' => 'Upload',
     'MBS' => 'MB.S',
     'TestTime' => 'Test Time',
+    'TestMail' => 'Test Mail Settings',
     'downloadSpeed' => 'Download Speed',
     'uploadSpeed' => 'Upload Speed',
     'Show' => 'Show',

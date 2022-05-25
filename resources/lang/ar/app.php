@@ -14,6 +14,7 @@ return array(
     'mailSetting' => 'إعدادت الميل',
     'MBS' => 'ميجا بيت / ث',
     'TestTime' => 'وقت الاختبار',
+    'TestMail' => 'اختبار اعدادات البريد',
     'Upload' => 'تحميل',
     'downloadSpeed' => 'سرعة التنزيل',
     'uploadSpeed' => 'سرعة تحميل',
