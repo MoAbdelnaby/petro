@@ -146,9 +146,11 @@ class SettingController extends Controller
             'env.MAIL_ENCRYPTION' => 'required',
         ]);
         if ($validator->errors()->count()) {
+            if($request->ajax()){
+                return response()->json(['data' => [], 'message' => $validator->errors(), 'code' => 422], 422);
+            }
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-
         $data = Arr::only($request->env,
             [
                 'MAIL_MAILER',
@@ -159,10 +161,13 @@ class SettingController extends Controller
                 'MAIL_ENCRYPTION'
             ]
         );
+        $data =  Arr::add($data, 'MAIL_FROM_ADDRESS', $request->env['MAIL_USERNAME']);
         foreach ($data as $key=>$value) {
             put_permanent_env($key,$value);
         }
-        // TO Be Continue ...
+        if($request->ajax()){
+            return response()->json(['data' => [], 'message' => __('app.settings.success_message')]);
+        }
 
         session()->flash('success', __('app.settings.success_message'));
 
