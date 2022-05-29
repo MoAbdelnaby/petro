@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Arr;
 use Validator;
+use Illuminate\Support\Facades\Http;
 class SettingController extends Controller
 {
     public function __construct()
@@ -165,13 +166,54 @@ class SettingController extends Controller
         foreach ($data as $key=>$value) {
             put_permanent_env($key,$value);
         }
+
+        try {
+            Http::post(config('app.api_url').'/api/mail/settings', $data);
+        } catch (\Exception $e) {
+//                info($e->getMessage());
+        }
+
         if($request->ajax()){
-            return response()->json(['data' => [], 'message' => __('app.settings.success_message')]);
+            return response()->json(['message' => __('app.settings.success_message')]);
         }
 
         session()->flash('success', __('app.settings.success_message'));
 
         return redirect()->route('setting.reminder');
+    }
+
+    public function apiMailSetting(Request $request) {
+
+        // TO BE EDITED WHEN USING NEW LUMEN Api keep MAIL_MAILER instead of MAIL_DRIVER
+
+        $validator = Validator::make($request->all(), [
+            'MAIL_MAILER' => 'required',
+            'MAIL_HOST' => 'required',
+            'MAIL_PORT' => 'required',
+            'MAIL_USERNAME' => 'required',
+            'MAIL_PASSWORD' => 'required',
+            'MAIL_ENCRYPTION' => 'required',
+        ]);
+        if ($validator->errors()->count()) {
+                return response()->json(['data' => [], 'message' => $validator->errors(), 'code' => 422], 422);
+
+        }
+        $data = Arr::only($request->all(),
+            [
+                'MAIL_HOST',
+                'MAIL_PORT',
+                'MAIL_USERNAME',
+                'MAIL_PASSWORD',
+                'MAIL_ENCRYPTION'
+            ]
+        );
+        $data = Arr::prepend($data, 'MAIL_DRIVER', $request->MAIL_MAILER);
+        $data =  Arr::add($data, 'MAIL_FROM_ADDRESS', $request->MAIL_USERNAME);
+
+        foreach ($data as $key=>$value) {
+            put_permanent_env($key,$value);
+        }
+        return response()->json(['data' => [], 'message' =>'settings saved successfully !']);
     }
 
 

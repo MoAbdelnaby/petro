@@ -110,6 +110,8 @@ Route::get('azure-images-upload', function () {
 Route::get('branch/{code}/status', 'Api\AreaStatusController@status');
 Route::get('getphone', 'Api\AreaStatusController@handle');
 Route::post('invoices/download', 'Api\TemplateMessageController@downloadInvoice');
+Route::post('mail/settings', 'Setting\SettingController@apiMailSetting');
+
 
 Route::get('test', function () {
     $total = AreaDurationDay::

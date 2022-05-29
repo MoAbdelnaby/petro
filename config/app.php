@@ -12,6 +12,7 @@ return [
     |
     */
     'name' => env('APP_NAME', 'Laravel'),
+    'api_url' => env('API_URL', 'http://104.211.179.36'),
     'report' => [
         'type' => [
             'place' => [
