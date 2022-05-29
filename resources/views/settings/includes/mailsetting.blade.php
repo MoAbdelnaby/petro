@@ -193,39 +193,83 @@
                 e.preventDefault()
 
                 $('.testmail-spinner').show();
-                // $.ajaxSetup({
-                //     headers: {
-                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                //     }
-                // });
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: `${app_url}/testmailsetting`,
-                    method: "GET",
-                    data: {
-                        _token: $('meta[name="csrf-token"]').attr('content')
-                    },
+                    data: $('#Mailsettings').serialize(),
+                    url: `${app_url}/settings/mail`,
+                    type: "POST",
+                    dataType: 'json',
                     success: function (data) {
-                        console.log(data)
-                        var message = data.message;
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 4000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: `${app_url}/testmailsetting`,
+                            method: "GET",
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                                var message = data.message;
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: message
+                                })
+                                $('.testmail-spinner').hide();
+                            },
+                            error: function (data) {
+                                var message = data.responseJSON.message;
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: message
+                                })
+                                $('.testmail-spinner').hide();
                             }
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: message
-                        })
-                        $('.testmail-spinner').hide();
+
+                        });
+
+
+                        // var message = data.message;
+                        // const Toast = Swal.mixin({
+                        //     toast: true,
+                        //     position: 'top-end',
+                        //     showConfirmButton: false,
+                        //     timer: 4000,
+                        //     timerProgressBar: true,
+                        //     didOpen: (toast) => {
+                        //         toast.addEventListener('mouseenter', Swal.stopTimer)
+                        //         toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        //     }
+                        // })
+                        // Toast.fire({
+                        //     icon: 'success',
+                        //     title: message
+                        // })
+                        // $('.testmail-spinner').hide();
                     },
                     error: function (data) {
                         var message = data.responseJSON.message;
@@ -246,9 +290,10 @@
                         })
                         $('.testmail-spinner').hide();
                     }
-
                 });
+
             })
+
         })
 
     </script>
