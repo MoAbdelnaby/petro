@@ -23,7 +23,7 @@ class CreateMessageLogsTable extends Migration
             $table->string('storage')->nullable();
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('carprofile_id')->nullable();
-            $table->enum('status', ['failed', 'sent'])->default('sent');
+            $table->enum('status', ['failed', 'sent','received'])->default('received');
             $table->string('error_reason')->nullable();
             $table->timestamps();
         });
