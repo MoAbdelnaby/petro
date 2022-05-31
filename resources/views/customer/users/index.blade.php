@@ -196,16 +196,40 @@
                                                     <td>{{$user->position?$user->position->name:'---'}}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>{{ $user->phone??'---' }}</td>
-                                                    <td>
+                                                    <td >
+                                                        <div class="product-description">
+                                                            <h5 class="d-block position-relative">
+                                                                <small><i
+                                                                        class="far fa-sitemap"></i> {{__('app.saas.packages.items.active_branches')}}
+                                                                </small>
+                                                                <span class="float-right showbranchesAll"><i
+                                                                        class="fas fa-info"></i></span>
+                                                                {{--                                                                                @if(!empty($item->itembranches) and count($item->itembranches) > 5 )--}}
+                                                                <div class="branchesAll">
 
-                                                        @if($user->branches->count())
-                                                            @foreach($user->branches as $brn)
-                                                                <span class="nav-item li-btn-sm btn-info"><i
-                                                                        class="far fa-sitemap"></i> {{$brn->name}}</span>
-                                                            @endforeach
-                                                        @else
-                                                            <span class="nav-item li-btn-sm "> {{ __('----') }}</span>
-                                                        @endif
+                                                                    <div class="content-branches" style="    width: max-content;text-align: left;">
+                                                                        @foreach($user->branches as $brn)
+                                                                            <h6>
+                                                                                <i class="far fa-sitemap"></i> {{$brn->name}}
+                                                                            </h6>
+                                                                        @endforeach
+                                                                    </div>
+
+                                                                </div>
+                                                                {{--                                                                                @endif--}}
+
+                                                            </h5>
+                                                        </div>
+
+
+{{--                                                        @if($user->branches->count())--}}
+{{--                                                            @foreach($user->branches as $brn)--}}
+{{--                                                                <span class="nav-item li-btn-sm btn-info"><i--}}
+{{--                                                                        class="far fa-sitemap"></i> {{$brn->name}}</span>--}}
+{{--                                                            @endforeach--}}
+{{--                                                        @else--}}
+{{--                                                            <span class="nav-item li-btn-sm "> {{ __('----') }}</span>--}}
+{{--                                                        @endif--}}
                                                     </td>
                                                     <td style="width: max-content;display: inline-block">
                                                         @if(in_array(auth()->user()->type,['customer','subadmin']))
@@ -468,6 +492,34 @@
 @push('js')
     <script>
         $(document).ready(function () {
+// close branches in small popup
+            // show branches in small popup
+            // var t = 0;
+            // $('.showbranchesAll').click(function () {
+            //
+            //     $('#content-page .branchesAll').hide();
+            //     if(t == 0){
+            //         $(this).parent().find('.branchesAll').show();
+            //         t = 1;
+            //     }
+            //     else {
+            //         $(this).parent().find('.branchesAll').hide();
+            //         t = 0;
+            //
+            //     }
+            //
+            //
+            //     // $(this).toggleClass('showbranchesAll closebranchesAll');
+            //
+            // });
+            // close branches in small popup
+            // $('#content-page').delegate('span.closebranchesAll','click',function () {
+            //     console.log(0)
+            //     $(this).siblings('.branchesAll').toggle();
+            //     $(this).toggleClass('showbranchesAll');
+            //     $(this).find('i').toggleClass('fa-times-circle fa-info');
+            // });
+
 
             let regions = <?= json_encode($Branches ?? []) ?>;
             // searchBranch function
@@ -562,6 +614,7 @@
                 $("#trash_form").attr('action', app_url + "/customer/customerUsers/bulkDelete");
                 $("#trash_form").submit();
             });
+
         });
     </script>
 
