@@ -178,9 +178,24 @@
         //     return ((cou * (wi + 50)) + "px");
         // });
         // show branches in small popup
+
+        var t = 0;
         $('.showbranchesAll').click(function () {
-            $(this).parent('h5').find('.branchesAll').toggle();
-            $(this).find('i').toggleClass('fa-times-circle fa-info');
+
+            $('#content-page .branchesAll').hide();
+            if(t == 0){
+                $(this).parent().find('.branchesAll').show();
+                t = 1;
+            }
+            else {
+                $(this).parent().find('.branchesAll').hide();
+                t = 0;
+
+            }
+
+
+            // $(this).toggleClass('showbranchesAll closebranchesAll');
+
         });
         // close branches in small popup
         $('.closebranchesAll').click(function () {
