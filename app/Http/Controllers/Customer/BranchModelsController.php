@@ -260,6 +260,7 @@ class BranchModelsController extends Controller
             $branches = DB::table('last_error_branch_views')
                 ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
                 ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
+                ->whereNull('branches.deleted_at')
                 ->where('last_error_branch_views.created_at', '>=', Carbon::now()->subMinutes(15))
                 ->where('last_error_branch_views.created_at', '<=', Carbon::now())
                 ->get();
@@ -267,6 +268,7 @@ class BranchModelsController extends Controller
             $branches = DB::table('last_error_branch_views')
                 ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
                 ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
+                ->whereNull('branches.deleted_at')
                 ->where('last_error_branch_views.created_at', '<=', Carbon::now()->subMinutes(15))
                 ->get();
 
@@ -274,6 +276,7 @@ class BranchModelsController extends Controller
             $branches = DB::table('last_error_branch_views')
                 ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
                 ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
+                ->whereNull('branches.deleted_at')
                 ->get();
 
 //            Branch::active()->primary()
