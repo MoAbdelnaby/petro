@@ -172,7 +172,7 @@ class PlatesRepo extends AbstractRepo implements PlatesRepoInterface
         }
 
         $query = Carprofile::with(['failMessage','invoiceStatus'])->selectRaw('carprofiles.*')
-            ->where('status', 'completed')
+            ->whereIn('status', ['completed','pending'])
             ->where('plate_status', '!=','error')
             ->where('branch_id', $branch_id);
 

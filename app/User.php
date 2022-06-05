@@ -32,6 +32,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $query->where('parent_id', parentID());
     }
+    public function scopeLast30($query)
+    {
+        return $query->where('created_at', '>=',now()->subDays(30)->toDateString());
+    }
 
     public function getAuthPassword()
     {

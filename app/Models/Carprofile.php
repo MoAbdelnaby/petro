@@ -20,6 +20,11 @@ class Carprofile extends Model
         return $this->belongsTo(Branch::class);
     }
 
+    public function scopeLast30($query)
+    {
+        return $query->where('created_at', '>=',now()->subDays(30)->toDateString());
+    }
+
     public function failMessage() {
         return $this->hasOne(FailedMessage::class);
     }

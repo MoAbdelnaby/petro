@@ -162,7 +162,7 @@ class ReportService
 
             $result[] = [
                 'Branch Name' => $branch->name ?? 0,
-                'Start Date' => $start ?? now()->startOfYear()->toDateString(),
+                'Start Date' => $start ?? now()->subDays(30)->toDateString(),
                 'End Date' => $end ?? now()->toDateString(),
                 'Area Count' => $areas ?? 0,
                 'Car Count' => $cars ?? 0,
@@ -188,7 +188,7 @@ class ReportService
      */
     public static function handleDateFilter($query, $filter, bool $timeStamp = false)
     {
-        $filter['start'] = empty($filter['start']) ? now()->startOfYear()->toDateString() : $filter['start'];
+        $filter['start'] = empty($filter['start']) ? now()->subDays(30)->toDateString() : $filter['start'];
 
         if ($filter['start'] ?? false) {
             $start = (Carbon::parse($filter['start']) > now()) ? now() : Carbon::parse($filter['start']);

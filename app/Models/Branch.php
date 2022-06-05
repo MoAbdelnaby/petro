@@ -29,6 +29,10 @@ class Branch extends Model
     {
         return $query->where('installed', true);
     }
+    public function scopeLast30($query)
+    {
+        return $query->where('created_at', '>=',now()->subDays(30)->toDateString());
+    }
 
     public function users()
     {

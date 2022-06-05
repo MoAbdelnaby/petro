@@ -551,6 +551,7 @@
                                                             </th>
                                                             <th class="th-sm">{{__('app.gym.plate_no_en')}}
 
+                                                            <th class="th-sm">{{ __('app.car_status') }}</th>
                                                             <th class="th-sm">{{ __('app.Status') }}</th>
                                                             <th class="th-sm">{{ __('app.Welcome_Message') }}</th>
                                                             <th class="th-sm">{{ __('app.Invoice') }}</th>
@@ -575,6 +576,15 @@
                                                                 </td>
                                                                 <td class="open en-plate">
                                                                     {{$item->plate_en}}
+                                                                </td>
+                                                                <td>
+                                                                    @if($item->status == 'completed')
+                                                                        <span
+                                                                            class="badge badge-pill badge-success">{{ __('Completed') }}</span>
+                                                                    @else
+                                                                        <span
+                                                                            class="badge badge-pill badge-info">{{ __('Pending') }}</span>
+                                                                    @endif
                                                                 </td>
                                                                 <td class="open status" id="status{{$item->id}}"
                                                                     style="position:relative;">

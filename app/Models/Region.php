@@ -18,6 +18,10 @@ class Region extends Model
     {
         return $query->where('user_id', parentID());
     }
+    public function scopeLast30($query)
+    {
+        return $query->where('created_at', '>=',now()->subDays(30)->toDateString());
+    }
 
     public function scopeActive($query)
     {
