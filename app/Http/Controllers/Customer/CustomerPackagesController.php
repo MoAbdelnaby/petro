@@ -335,7 +335,7 @@ class CustomerPackagesController extends Controller
         $branches = DB::table("view_top_branch_$type")->pluck('branch_id')->toArray();
 
         return [
-            'start' => $filter['start'] ?? now()->startOfYear()->toDateString(),
+            'start' => $filter['start'] ?? Carbon::now()->subDays(30)->toDateString(),
             'end' => $filter['end'] ?? null,
             'show_by' => 'branch',
             'branch_type' => 'comparison',
