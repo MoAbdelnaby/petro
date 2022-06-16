@@ -1670,5 +1670,10 @@ return array(
     'click_to_install' => 'انقر للتثبيت',
     'install_status' => 'حالة التثبيت',
     'install_status_change_success' => 'تم تغيير حالة التثبيت بنجاح',
-    'no_linked' => 'غير مرتبط'
+    'no_linked' => 'غير مرتبط',
+    'send_mail' => 'إرسال الاميل',
+    'provide_valid_email' => 'يرجى إضافة عنوان بريد إلكتروني صالح',
+    'add_recipientEmail' => 'أضف البريد الإلكتروني للمستلم',
+    'email' => 'البريد الإلكتروني',
+    'recipientEmail' => 'البريد الإلكتروني المستلم',
 );

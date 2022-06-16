@@ -39,7 +39,7 @@
 
 .iq-sidebar .iq-sidebar-logo,
 .iq-sidebar .iq-sidebar-logo a {
-    transition: all 0.1s 0.2s !important;
+    transition: all 0.2s 0.1s !important;
 }
 
 .sidebar-main .iq-sidebar:hover .iq-sidebar-logo .iq-sidebar-logo a {
