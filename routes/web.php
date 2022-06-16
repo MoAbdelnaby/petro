@@ -201,7 +201,7 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         //New
         Route::post('customerBranches/change-installed/{id}', 'CustomerBranchesController@changeInstalled')->name('branches.change_installed');
     });
-    Route::get('testmailsetting','HomeController@testMail');
+    Route::get('testmailsetting/{mail?}','HomeController@testMail');
 });
 
 Route::get('branches/register', 'Models\ConnectionSpeedController@registerBranch')->name('branch.register');
