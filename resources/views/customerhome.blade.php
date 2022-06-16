@@ -54,7 +54,7 @@
 {{--                                            </li>--}}
 {{--                                        </ul>--}}
 {{--                                    </div>--}}
-                                    <div>
+                                    <div class="filter-dropdown">
                                         <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
                                            data-toggle="dropdown" href="#">
                                             <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
