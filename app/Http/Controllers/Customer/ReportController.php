@@ -62,6 +62,7 @@ class ReportController extends Controller
             $regions = Region::active()->primary()->child()->select('id', 'name')->get();
             $cities = Region::active()->primary()->parent()->select('id', 'name')->get();
 
+
             $filter = (empty($request->except('_token')) || is_null($request->show_by))
                 ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
 

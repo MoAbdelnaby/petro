@@ -123,6 +123,8 @@ class ReportService
 
         if (empty($branches)) {
             $branches = Branch::active()->primary()->get();
+        }else{
+            $branches = Branch::find($branches);
         }
 
         foreach ($branches as $branch) {
