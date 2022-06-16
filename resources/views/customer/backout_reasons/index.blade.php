@@ -84,10 +84,10 @@
 
                                     </h2>
                                     <div class="actions-cont c-flex">
-{{--                                        <a href="{{route('branch.exported_file')}}" target="_blank"--}}
-{{--                                           class=" btn btn-info waves-effect waves-light">--}}
-{{--                                            <i class="fas fa-file-archive-o"></i> {{ __('app.prepared_files') }}--}}
-{{--                                        </a>--}}
+                                        <a href="{{route('branch.backout_reason_exported')}}" target="_blank"
+                                           class=" btn btn-info waves-effect waves-light">
+                                            <i class="fas fa-file-archive-o"></i> {{ __('app.prepared_files') }}
+                                        </a>
                                         <div class="filter-dropdown position-relative">
                                             <a class="btn-filter btn btn-primary waves-effect waves-light"
                                                data-toggle="dropdown" href="#">
@@ -137,14 +137,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="d-flex justify-content-between form-actions-cont mt-4">
-{{--                                                        <button type="submit" id="export_excel" data-type="xls"--}}
-{{--                                                                class="btn btn-primary submit_form waves-effect waves-light">--}}
-{{--                                                            <i class="fas fa-file-excel-o"></i> {{ __('app.ExportExcel') }}--}}
-{{--                                                        </button>--}}
-{{--                                                        <button type="submit" id="export_excel" data-type="pdf"--}}
-{{--                                                                class="btn btn-primary submit_form waves-effect waves-light">--}}
-{{--                                                            <i class="fas fa-file-pdf-o"></i> {{ __('app.ExportPdf') }}--}}
-{{--                                                        </button>--}}
+                                                        <button type="submit" id="export_excel" data-type="xls"
+                                                                class="btn btn-primary submit_form waves-effect waves-light">
+                                                            <i class="fas fa-file-excel-o"></i> {{ __('app.ExportExcel') }}
+                                                        </button>
+                                                        <button type="submit" id="export_excel" data-type="pdf"
+                                                                class="btn btn-primary submit_form waves-effect waves-light">
+                                                            <i class="fas fa-file-pdf-o"></i> {{ __('app.ExportPdf') }}
+                                                        </button>
                                                         <button type="submit" id="search" data-type="search"
                                                                 class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
                                                             <i class="fas fa-search"></i> {{ __('app.Search') }}

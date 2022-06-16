@@ -6,13 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
-
-
-
 @section('content')
     <div id="content-page" class="content-page">
-
-
         <div class="container-fluid">
             <div class="row col-12 p-0 m-0 text-right d-block mb-2 ">
                 <a href="{{ route('service.create') }}" class=" ml-3 btn btn-primary">
@@ -72,7 +67,7 @@
                                                     <td>{{ $item->description_en }}</td>
                                                     <td style="min-width:200px">
                                                         <a href="{{ route('service.edit', $item->id) }}" class="btn btn-primary m-1">{{ __('app.Edit') }}</a>
-                                                        <a class="btn btn-danger"   onclick="delete_alert({{ $item->id }});" >{{ __('app.Delete') }}</a>
+                                                        <a class="btn btn-danger" onclick="delete_alert({{ $item->id }});" >{{ __('app.Delete') }}</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -80,7 +75,6 @@
                                     </table>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -88,9 +82,7 @@
         </div>
     </div>
 
-
     @foreach ($services as $item)
-
         <div class="modal fade" id="show-branches-{{ $item->id }}" tabindex="-1"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -128,7 +120,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('app.users.close')}}</button>
-                    <button type="button" class="btn btn-danger" onclick="delete_option('customer/customerUsers');">{{__('app.users.delete')}}</button>
+                    <button type="button" class="btn btn-danger" onclick="delete_option('service');">{{__('app.users.delete')}}</button>
                 </div>
             </div>
         </div>
@@ -143,7 +135,7 @@
 
             $('.delete').click(function (){
                 var rel = $(this).attr('rel');
-                $('#myModalDelete form').attr('action',"customer/customerUsers/"+rel);
+                $('#myModalDelete form').attr('action',"service/"+rel);
             });
 
 

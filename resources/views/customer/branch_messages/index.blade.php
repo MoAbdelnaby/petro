@@ -86,7 +86,7 @@
 
                                     </h2>
                                     <div class="actions-cont c-flex">
-                                        <a href="{{route('branch.exported_file')}}" target="_blank"
+                                        <a href="{{route('branch.backout_reason_exported')}}" target="_blank"
                                            class=" btn btn-info waves-effect waves-light">
                                             <i class="fas fa-file-archive-o"></i> {{ __('app.prepared_files') }}
                                         </a>

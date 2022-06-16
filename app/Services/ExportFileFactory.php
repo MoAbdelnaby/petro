@@ -17,6 +17,9 @@ class ExportFileFactory
         } elseif ($type == 'message') {
 
             return new ExportBranchMessage();
+        } elseif ($type == 'backout') {
+
+            return new ExportBackoutReason();
         }
         return false;
     }

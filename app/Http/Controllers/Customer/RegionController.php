@@ -62,7 +62,7 @@ class RegionController extends Controller
      */
     public function create(): Renderable
     {
-        $regions = Region::whereNull('parent_id')->where('user_id', parentID())->where('active', true)->get();
+        $regions = Region::whereNull('parent_id')->where('user_id', parentID())->get();
 
         return view('customer.regions.create', compact('regions'));
     }

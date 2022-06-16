@@ -74,33 +74,34 @@
     <table class="styled-table dataTable">
         <thead>
         <tr>
-            <th class="th-sm">#</th>
-            <th class="th-sm">{{__('app.type')}}</th>
-            <th class="th-sm">{{__('app.branch')}}</th>
-            <th class="th-sm">{{__('app.gym.plate_no')}}</th>
-            <th class="th-sm">{{__('app.auth.phone')}}</th>
-            <th class="th-sm">{{__('app.Invoice')}}</th>
-            <th class="th-sm">{{__('app.createdIn')}}</th>
+            <th>#</th>
+            <th>Station Code</th>
+            <th>Latest PlateNumber</th>
+            <th>Bay Code</th>
+            <th>Customer Name</th>
+            <th>Customer Phone</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Reason1</th>
+            <th>Reason2</th>
+            <th>Reason3</th>
         </tr>
         </thead>
         <tbody>
         @foreach($list['data'] as $index=>$item)
             <tr>
-                <th scope="row">{{++$index}}</th>
-                <th scope="row">{{$item->type}}</th>
-                <th scope="row">{{$item->branch_name}}</th>
-                <th scope="row">{{$item->plateNumber}}</th>
-                <th scope="row">{{str_replace('whatsapp:+','',$item->phone)}}</th>
-                <th scope="row">
-                    @if($item->fileUrl)
-                        <a href="{{config('app.azure_storage').config('app.azure_container').$item->fileUrl}}" class="btn">
-                            View
-                        </a>
-                    @else
-                        ---
-                    @endif
-                </th>
-                <th scope="row" style='min-width: 70px'>{{$item->created_at}}</th>
+            <tr>
+                <td>{{++$index}}</td>
+                <td>{{$item->station_code}}</td>
+                <td>{{$item->LatestPlateNumber}}</td>
+                <td>{{$item->BayCode}}</td>
+                <td>{{$item->CustomerName}}</td>
+                <td>{{$item->CustomerPhone}}</td>
+                <td>{{$item->make}}</td>
+                <td>{{$item->model}}</td>
+                <td>{{$item->reason1}}</td>
+                <td>{{$item->reason2}}</td>
+                <td>{{$item->reason3}}</td>
             </tr>
         @endforeach
         </tbody>

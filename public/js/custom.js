@@ -759,34 +759,34 @@ function delete_option(url) {
                     }
                 });
 
-                // if (data) {
-                //     location.reload();
-                //     $('#row' + Delete_Key).css('background', '#FF4D4D');
-                //     $('#row' + Delete_Key).fadeOut(1200);
-                //     $('.item' + Delete_Key).fadeOut(1200);
-                //     Delete_Key = 0;
-                // } else {
-                //     $('.errdiv').show();
-                //     $('.err').html(data);
-                //     $('.errdiv').fadeOut(5000);
-                // }
-
-                    var session = 'Item Deleted Successfully';
-                    const Toast1 = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-                    Toast1.fire({
+                Toast.fire({
                     icon: 'success',
                     title: session
                 })
+
+                location.reload();
+                $('#row' + Delete_Key).css('background', '#FF4D4D');
+                $('#row' + Delete_Key).fadeOut(1000);
+                $('.item' + Delete_Key).fadeOut(1000);
+                Delete_Key = 0;
+
+
+                //     var session = 'Item Deleted Successfully';
+                //     const Toast1 = Swal.mixin({
+                //         toast: true,
+                //         position: 'top-end',
+                //         showConfirmButton: false,
+                //         timer: 3000,
+                //         timerProgressBar: true,
+                //         didOpen: (toast) => {
+                //             toast.addEventListener('mouseenter', Swal.stopTimer)
+                //             toast.addEventListener('mouseleave', Swal.resumeTimer)
+                //         }
+                //     })
+                //     Toast1.fire({
+                //     icon: 'success',
+                //     title: session
+                // })
 
                 setTimeout(function () {
                     $('.alert-cont').find('.bigo').remove();

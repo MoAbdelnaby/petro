@@ -18,6 +18,10 @@ class BackoutReasonController extends Controller
 {
     public function index(BranchMessageRequest $request)
     {
+        if (in_array($request->type, ['pdf', 'xls'])) {
+            return $this->export($request->all());
+        }
+
         $branches = DB::table('branches')
             ->select('branches.*')
             ->whereNull('branches.deleted_at')
@@ -27,10 +31,10 @@ class BackoutReasonController extends Controller
 
         $userSettings = UserSetting::where('user_id', auth()->id())->first();
 
-        $query = BackoutReason::query()->join('branches','branches.code','=','backout_reasons.station_code')
+        $query = BackoutReason::query()->join('branches', 'branches.code', '=', 'backout_reasons.station_code')
             ->when(($request->branch_code != null), function ($q) {
                 return $q->where('station_code', \request('branch_code'));
-            })->orderBy('backout_reasons.created_at','DESC');
+            })->orderBy('backout_reasons.created_at', 'DESC');
 
         if ($request->start_date) {
             $query->whereDate('backout_reasons.created_at', '>=', $request->start_date);
@@ -52,33 +56,32 @@ class BackoutReasonController extends Controller
     public function export($request)
     {
         $request = (object)$request;
-        $current_branch = Branch::findOrFail($request->branch_id);
-            $type = $request->type;
+        $current_branch = Branch::where('code',$request->branch_code)->first();
+        $type = $request->type;
 
-            $start_name = $request->start ?? 'first';
-            $last_name = $request->end ?? 'last';
-            $name = "{$current_branch->name}_file_from_{$start_name}_to_{$last_name}.$type";
+        $start_name = $request->start_date ?? 'first';
+        $last_name = $request->end_date ?? 'last';
+        $name = "{$current_branch->name}_file_from_{$start_name}_to_{$last_name}.$type";
 
-            $file = BranchFiles::firstOrCreate([
-                'start' => $request->start_date ?? null,
-                'end' => $request->end_date ?? null,
-//                'user_model_branch_id' => $current_branch->id,
-                'branch_id' => $current_branch->id,
-                'type' => $type,
-                'model_type' => 'backout',
-            ], [
-                'name' => $name,
-                'status' => false,
-                'user_id' => auth()->id(),
+        $file = BranchFiles::firstOrCreate([
+            'start' => $request->start_date ?? null,
+            'end' => $request->end_date ?? null,
+            'branch_id' => $current_branch->id,
+            'type' => $type,
+            'model_type' => 'backout',
+        ], [
+            'name' => $name,
+            'status' => false,
+            'user_id' => auth()->id(),
+        ]);
+
+        if ($file->status && \Storage::disk('public')->exists($file->url)) {
+            return redirect()->back()->with([
+                'success' => __('app.places.files_prepared_successfully'),
+                'branch_file' => Storage::disk('public')->url($file->url)
             ]);
-
-            if ($file->status && \Storage::disk('public')->exists($file->url)) {
-                return redirect()->back()->with([
-                    'success' => __('app.places.files_prepared_successfully'),
-                    'branch_file' => Storage::disk('public')->url($file->url)
-                ]);
-            }
-            return redirect()->back()->with('success', __('app.places.file_will_prepare_soon'));
+        }
+        return redirect(route('branch.backout_reasons'))->with('success', __('app.places.file_will_prepare_soon'));
     }
 
     public function exportedFile(Request $request)
