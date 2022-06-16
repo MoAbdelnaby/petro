@@ -37,6 +37,8 @@ abstract class BaseReport
             return $this->handleReportCompare($filter, request('integration'));
         }
 
+        $list = array_slice($list,0,9);
+
         //Prepare Base Query to get This report base On List Type
         $this->$func_name($list);
 
