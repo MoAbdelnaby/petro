@@ -94,7 +94,7 @@
                                                 <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
                                             </a>
                                             <div class="filter-content" aria-labelledby="dropdownMenuButton">
-                                                <form action="{{route('reports.filter')}}" method="post"
+                                                <form action="{{route('reports.filter')}}" method="get"
                                                       class="filter-form">
                                                     @csrf
                                                     <div class="row">
@@ -429,7 +429,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{route('reports.show','serving')}}"
+                                                    <a href="{{route('reports.show','stayingAverage')}}"
                                                        class="iq-card-body card_report"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
@@ -575,7 +575,6 @@
             $(".static_download").on('click', function (e) {
                 e.preventDefault();
 
-
                 let currentForm = @json(request()->query());
                 let url = '{{route('report.downloadStatistics')}}';
                 let token = $('meta[name="csrf-token"]').attr("content");
@@ -607,12 +606,10 @@
                     inputs += `<input name="start" value="{{request('start') ?? now()->startOfYear()}}" >`;
                     inputs += `<input name="end" value="{{request('end') ?? now()->toDateString()}}" >`;
 
-                    // console.log(inputs);
                     $(`<form action=${url} method="get">${inputs}</form>`).appendTo('body').submit().remove();
                 } else {
                     $(`<form action=${url} method="get"></form>`).appendTo('body').submit().remove();
                 }
-
             });
         })
     </script>
