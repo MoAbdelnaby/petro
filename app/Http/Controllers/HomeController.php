@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Session;
 use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
 
@@ -70,10 +71,12 @@ class HomeController extends Controller
         return view('notfication', compact('notfications'));
     }
 
-    public function testMail(Request $request)
+    public function testMail(Request $request, $mail='msaeed@wakeb.tech')
     {
         try {
-            \Mail::raw('Test Mail Settings!', function($msg) {$msg->to('msaeed@wakeb.tech')->subject('Test Email Settings'); });
+            \Mail::raw('Test Mail Settings!', function ($msg) use($mail) {
+                $msg->to($mail)->subject('Test Email Settings');
+            });
             return response()->json(['message' => 'Mail sent successfully']);
         } catch (\Exception $e) {
             return response()->json(['data' => [], 'message' => $e->getMessage(), 'code' => 500], 500);
