@@ -5,7 +5,9 @@
 @endsection
 
 @push('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 @endpush
 
 
@@ -20,47 +22,47 @@
                             <div class="iq-card-body p-0">
                                 <div class="custom-head mb-2 c-flex">
                                     <h2>{{ __('app.most_statistics') }} [ Last 30 Days ]</h2>
-{{--                                    <div class="filter-pills-cont">--}}
-{{--                                        <ul class="nav nav-pills ">--}}
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'year' ? 'active' : '' }}"--}}
-{{--                                                   data-value="year">--}}
-{{--                                                    <span class="nav-text">{{__('app.this_year')}}</span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'month' ? 'active' : ''}}"--}}
-{{--                                                   data-value="month">--}}
-{{--                                                    <span class="nav-text">{{__('app.this_month')}}</span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'last_week' ? 'active' : '' }}"--}}
-{{--                                                   data-value="last_week">--}}
-{{--                                                    <span class="nav-text ">{{__('app.last_week')}}</span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'week' ? 'active' : '' }}"--}}
-{{--                                                   data-value="week">--}}
-{{--                                                    <span class="nav-text ">{{__('app.this_week')}}</span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
-{{--                                            <li class="nav-item">--}}
-{{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'today' ? 'active' : ''}}"--}}
-{{--                                                   data-value="today">--}}
-{{--                                                    <span class="nav-text font-size-sm">{{__('app.today')}}</span>--}}
-{{--                                                </a>--}}
-{{--                                            </li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
+                                    {{--                                    <div class="filter-pills-cont">--}}
+                                    {{--                                        <ul class="nav nav-pills ">--}}
+                                    {{--                                            <li class="nav-item">--}}
+                                    {{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'year' ? 'active' : '' }}"--}}
+                                    {{--                                                   data-value="year">--}}
+                                    {{--                                                    <span class="nav-text">{{__('app.this_year')}}</span>--}}
+                                    {{--                                                </a>--}}
+                                    {{--                                            </li>--}}
+                                    {{--                                            <li class="nav-item">--}}
+                                    {{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'month' ? 'active' : ''}}"--}}
+                                    {{--                                                   data-value="month">--}}
+                                    {{--                                                    <span class="nav-text">{{__('app.this_month')}}</span>--}}
+                                    {{--                                                </a>--}}
+                                    {{--                                            </li>--}}
+                                    {{--                                            <li class="nav-item">--}}
+                                    {{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'last_week' ? 'active' : '' }}"--}}
+                                    {{--                                                   data-value="last_week">--}}
+                                    {{--                                                    <span class="nav-text ">{{__('app.last_week')}}</span>--}}
+                                    {{--                                                </a>--}}
+                                    {{--                                            </li>--}}
+                                    {{--                                            <li class="nav-item">--}}
+                                    {{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'week' ? 'active' : '' }}"--}}
+                                    {{--                                                   data-value="week">--}}
+                                    {{--                                                    <span class="nav-text ">{{__('app.this_week')}}</span>--}}
+                                    {{--                                                </a>--}}
+                                    {{--                                            </li>--}}
+                                    {{--                                            <li class="nav-item">--}}
+                                    {{--                                                <a class="nav-link btn btn-outline-secondary home_filter {{request('time_range') == 'today' ? 'active' : ''}}"--}}
+                                    {{--                                                   data-value="today">--}}
+                                    {{--                                                    <span class="nav-text font-size-sm">{{__('app.today')}}</span>--}}
+                                    {{--                                                </a>--}}
+                                    {{--                                            </li>--}}
+                                    {{--                                        </ul>--}}
+                                    {{--                                    </div>--}}
                                     <div class="filter-dropdown">
                                         <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
                                            data-toggle="dropdown" href="#">
                                             <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
                                         </a>
                                         <div class="filter-content" aria-labelledby="dropdownMenuButton">
-                                            <form action="{{route('reports.filter')}}" method="post"
+                                            <form action="{{route('reports.filter')}}" method="get"
                                                   class="filter-form">
                                                 @csrf
                                                 <div class="row">
@@ -150,7 +152,7 @@
                                                         <h5><b><i class="fas fa-circle"
                                                                   style="color: green"></i> {{ __('app.branch_online')  }}
                                                             </b></h5>
-{{--                                                        <h3><b>{{ $on }}</b></h3>--}}
+                                                        {{--                                                        <h3><b>{{ $on }}</b></h3>--}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,7 +171,7 @@
                                                         <h5><b><i class="fas fa-circle"
                                                                   style="color: red"></i> {{ __('app.branch_offline') }}
                                                             </b></h5>
-{{--                                                        <h3><b>{{ $off }}</b></h3>--}}
+                                                        {{--                                                        <h3><b>{{ $off }}</b></h3>--}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -267,7 +269,8 @@
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-3">
                                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                <a href="{{route('reports.show','invoice')}}" class="iq-card-body"
+                                                <a href="{{route('reports.show','stayingAverage')}}"
+                                                   class="iq-card-body"
                                                    style="padding: 25px 20px !important;">
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <h6 class='iq-card-title'>{{ __('app.staying_car_average') }}</h6>
@@ -339,7 +342,8 @@
                                                         class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                                         <div class="d-flex align-items-center">
                                                             <div
-                                                                class="rounded-circle iq-card-icon  mr-2" style="background: #00ff9e29">
+                                                                class="rounded-circle iq-card-icon  mr-2"
+                                                                style="background: #00ff9e29">
                                                                 <i class="fa fa-file-text text-success"></i>
                                                             </div>
                                                             <h3>{{$statistics['invoice']}}</h3>
@@ -421,6 +425,75 @@
                                             </p>
                                         </div>
                                     </div>
+
+                                    <div class="filter-dropdown">
+                                        <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
+                                           data-toggle="dropdown" href="#">
+                                            <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
+                                        </a>
+                                        <div class="filter-content" aria-labelledby="dropdownMenuButton">
+                                            <form action="{{route('reports.show','plate')}}" method="get"
+                                                  class="filter-form">
+                                                @csrf
+                                                <div class="row">
+                                                    <div id="branch_container" class="col-md-12">
+                                                        <div class="row">
+                                                            <div class=" col-md-12" id="branch_selection">
+                                                                <lebel>{{ __('app.Select_branches') }}:</lebel>
+                                                                <input type="hidden" name="show_by" value="branch">
+                                                                <input type="hidden" name="branch_type"
+                                                                       value="comparison">
+                                                                <select class="form-control select_2 required"
+                                                                        multiple id="select_branch"
+                                                                        name="branch_comparison[]">
+                                                                    @foreach($branches as $branch)
+                                                                        <option value="{{$branch->id}}"
+                                                                                @if(in_array($branch->id,request('branch_comparison')??[])) selected @endif>{{$branch->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please select branch.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group input-group input-daterange">
+                                                    <div class="d-flex align-items-end row">
+                                                        <div class="col-md-12 mt-2">
+                                                            <label
+                                                                class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
+                                                            <input type="datetime-local"
+                                                                   value="{{request('start')}}" name="start"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+
+                                                        <div class="col-md-12 mt-2">
+                                                            <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
+                                                            <input type="datetime-local" value="{{request('end')}}"
+                                                                   name="end"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center mt-4">
+                                                    <button type="submit"
+                                                            class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
+                                                        {{ __('app.Filter') }}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="pt-4 mb-5" id="BranchPlateBarCon" style="display: none">
@@ -498,6 +571,74 @@
                                             </p>
                                         </div>
                                     </div>
+                                    <div class="filter-dropdown">
+                                        <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
+                                           data-toggle="dropdown" href="#">
+                                            <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
+                                        </a>
+                                        <div class="filter-content" aria-labelledby="dropdownMenuButton">
+                                            <form action="{{route('reports.show','place')}}" method="get"
+                                                  class="filter-form">
+                                                @csrf
+                                                <div class="row">
+                                                    <div id="branch_container" class="col-md-12">
+                                                        <div class="row">
+                                                            <div class=" col-md-12" id="branch_selection">
+                                                                <lebel>{{ __('app.Select_branches') }}:</lebel>
+                                                                <input type="hidden" name="show_by" value="branch">
+                                                                <input type="hidden" name="branch_type"
+                                                                       value="comparison">
+                                                                <select class="form-control select_2 required"
+                                                                        multiple id="select_branch"
+                                                                        name="branch_comparison[]">
+                                                                    @foreach($branches as $branch)
+                                                                        <option value="{{$branch->id}}"
+                                                                                @if(in_array($branch->id,request('branch_comparison')??[])) selected @endif>{{$branch->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please select branch.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group input-group input-daterange">
+                                                    <div class="d-flex align-items-end row">
+                                                        <div class="col-md-12 mt-2">
+                                                            <label
+                                                                class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
+                                                            <input type="datetime-local"
+                                                                   value="{{request('start')}}" name="start"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+
+                                                        <div class="col-md-12 mt-2">
+                                                            <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
+                                                            <input type="datetime-local" value="{{request('end')}}"
+                                                                   name="end"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center mt-4">
+                                                    <button type="submit"
+                                                            class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
+                                                        {{ __('app.Filter') }}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="pt-4 mb-5" id="BranchPlaceBarCon" style="display: none">
                                     <div id="BranchPlaceBar" class="chartDiv" style="min-height: 450px"></div>
@@ -571,6 +712,74 @@
                                                 <b>{{ __('app.to') }} : </b>
                                                 {{request('end')??now()->toDateString()}}
                                             </p>
+                                        </div>
+                                    </div>
+                                    <div class="filter-dropdown">
+                                        <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
+                                           data-toggle="dropdown" href="#">
+                                            <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
+                                        </a>
+                                        <div class="filter-content" aria-labelledby="dropdownMenuButton">
+                                            <form action="{{route('reports.show','stayingAverage')}}" method="get"
+                                                  class="filter-form">
+                                                @csrf
+                                                <div class="row">
+                                                    <div id="branch_container" class="col-md-12">
+                                                        <div class="row">
+                                                            <div class=" col-md-12" id="branch_selection">
+                                                                <lebel>{{ __('app.Select_branches') }}:</lebel>
+                                                                <input type="hidden" name="show_by" value="branch">
+                                                                <input type="hidden" name="branch_type"
+                                                                       value="comparison">
+                                                                <select class="form-control select_2 required"
+                                                                        multiple id="select_branch"
+                                                                        name="branch_comparison[]">
+                                                                    @foreach($branches as $branch)
+                                                                        <option value="{{$branch->id}}"
+                                                                                @if(in_array($branch->id,request('branch_comparison')??[])) selected @endif>{{$branch->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please select branch.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group input-group input-daterange">
+                                                    <div class="d-flex align-items-end row">
+                                                        <div class="col-md-12 mt-2">
+                                                            <label
+                                                                class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
+                                                            <input type="datetime-local"
+                                                                   value="{{request('start')}}" name="start"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+
+                                                        <div class="col-md-12 mt-2">
+                                                            <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
+                                                            <input type="datetime-local" value="{{request('end')}}"
+                                                                   name="end"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center mt-4">
+                                                    <button type="submit"
+                                                            class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
+                                                        {{ __('app.Filter') }}
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -647,6 +856,67 @@
                                                 {{request('end')??now()->toDateString()}}
                                             </p>
                                         </div>
+                                    </div>
+                                    <div class="filter-content" aria-labelledby="dropdownMenuButton">
+                                        <form action="{{route('reports.show','invoice')}}" method="get"
+                                              class="filter-form">
+                                            @csrf
+                                            <div class="row">
+                                                <div id="branch_container" class="col-md-12">
+                                                    <div class="row">
+                                                        <div class=" col-md-12" id="branch_selection">
+                                                            <lebel>{{ __('app.Select_branches') }}:</lebel>
+                                                            <input type="hidden" name="show_by" value="branch">
+                                                            <input type="hidden" name="branch_type" value="comparison">
+                                                            <select class="form-control select_2 required"
+                                                                    multiple id="select_branch"
+                                                                    name="branch_comparison[]">
+                                                                @foreach($branches as $branch)
+                                                                    <option value="{{$branch->id}}"
+                                                                            @if(in_array($branch->id,request('branch_comparison')??[])) selected @endif>{{$branch->name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            <div class="invalid-feedback">
+                                                                Please select branch.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group input-group input-daterange">
+                                                <div class="d-flex align-items-end row">
+                                                    <div class="col-md-12 mt-2">
+                                                        <label
+                                                            class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
+                                                        <input type="datetime-local"
+                                                               value="{{request('start')}}" name="start"
+                                                               class="form-control"
+                                                               max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                               oninput="if (this.value >= this.max) this.value = this.max;"
+                                                        />
+                                                    </div>
+
+                                                    <div class="col-md-12 mt-2">
+                                                        <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
+                                                        <input type="datetime-local" value="{{request('end')}}"
+                                                               name="end"
+                                                               class="form-control"
+                                                               max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                               oninput="if (this.value >= this.max) this.value = this.max;"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center mt-4">
+                                                <button type="submit"
+                                                        class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
+                                                    {{ __('app.Filter') }}
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -849,6 +1119,7 @@
             $('.btn-filter').on('click', function () {
                 $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');
             })
+
             $('.filter-form').on('submit', function (e) {
                 if (!$(this).find('#branch_selection select').val().length) {
                     e.preventDefault();
@@ -872,33 +1143,6 @@
                 }
 
                 $(`<form action=${url}>${inputs}</form>`).appendTo('body').submit().remove();
-            });
-
-            //Show Card Report
-            $(".card_report").on('click', function (e) {
-
-                e.preventDefault();
-                let url = $(this).attr('href');
-                if (parseInt(check_request) > 0) {
-                    let branch_comparsion = @json(request('lists') ?? []);
-
-                    let token = $('meta[name="csrf-token"]').attr("content");
-                    let inputs = `<input name="_token" value="${token}">`;
-                    inputs += `<input name="show_by" value="branch" >`;
-                    inputs += `<input name="branch_type" value="comparison" >`;
-                    branch_comparsion.forEach(el => {
-                        inputs += `<input name="branch_comparison[]" value="${el}" >`;
-                    });
-                    inputs += `<input name="branch_data" value="{{Arr::first(request('lists'))}}" >`;
-                    inputs += `<input name="start" value="{{request('start') ?? now()->startOfYear()}}" >`;
-                    inputs += `<input name="end" value="{{request('end') ?? now()->toDateString()}}" >`;
-
-                    // console.log(inputs);
-                    $(`<form action=${url} method="get">${inputs}</form>`).appendTo('body').submit().remove();
-                } else {
-                    $(`<form action=${url} method="get"></form>`).appendTo('body').submit().remove();
-                }
-
             });
         })
     </script>

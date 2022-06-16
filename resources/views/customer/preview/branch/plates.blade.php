@@ -562,10 +562,23 @@
 
                                                         <tbody>
                                                         @foreach($data as $item)
+                                                            @php
+                                                                if( \Illuminate\Support\Str::startsWith('/storage',$item->path_area_screenshot) ) {
+                                                                     $area_image = 'area-image.jpg' ;
+                                                                }else {
+                                                                     $area_image = $item->path_area_screenshot;
+                                                                }
+
+                                                                if( \Illuminate\Support\Str::startsWith('/storage',$item->path_screenshot) ) {
+                                                                    $plate_image = 'area-image.jpg' ;
+                                                                }else {
+                                                                    $plate_image = $item->path_screenshot;
+                                                                }
+                                                            @endphp
 
                                                             <tr style="cursor: pointer; position: relative"
-                                                                data-screen2="{{$item->path_area_screenshot}}"
-                                                                id="{{$item->path_screenshot}}" class="record"
+                                                                data-screen2="{{$area_image}}"
+                                                                id="{{$plate_image}}" class="record"
                                                                 data-toggle="modal" data-target="#basicExampleModal0">
                                                                 <td class="checkin-date">{{$item->checkInDate}}</td>
                                                                 <td class="checkout-date">{{$item->checkOutDate}}</td>
