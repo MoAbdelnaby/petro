@@ -449,20 +449,27 @@
                                                         <tbody>
                                                         @foreach($data as $item)
                                                             @php
-                                                                if( \Illuminate\Support\Str::startsWith('/storage',$item->path_area_screenshot) ) {
-                                                                     $area_image = 'area-image.jpg' ;
-                                                                }else {
-                                                                     $area_image = $item->path_area_screenshot;
-                                                                }
+                                                                if( \Illuminate\Support\Str::startsWith($item->path_area_screenshot,'/storage') ) {
+                                                                    $area_image =  url('/gym').'/img/img-upload.png' ;
+                                                                    $image2Status = 'loading';
+                                                               }else {
 
-                                                                if( \Illuminate\Support\Str::startsWith('/storage',$item->path_screenshot) ) {
-                                                                    $plate_image = 'area-image.jpg' ;
-                                                                }else {
-                                                                    $plate_image = $item->path_screenshot;
-                                                                }
+                                                                                       $image2Status = 'loaded';
+                                                                                       $area_image = $item->path_area_screenshot;
+                                                               }
+
+                                                               if( \Illuminate\Support\Str::startsWith($item->path_screenshot,'/storage') ) {
+                                                                   $plate_image = url('/gym').'/img/img-upload.png' ;
+                                                                   $image1Status = 'loading';
+                                                               }else {
+                                                                   $plate_image = $item->path_screenshot;
+                                                                   $image1Status = 'loaded';
+                                                               }
                                                             @endphp
                                                             <tr style="cursor: pointer; position: relative"
-                                                                data-screen2="{{ $area_image }}"
+                                                                data-img2status="{{$image2Status}}"
+                                                                data-img1status="{{$image1Status}}"
+                                                                data-screen2="{{$area_image}}"
                                                                 id="{{$plate_image}}" class="record"
                                                                 data-toggle="modal" data-target="#basicExampleModal0">
                                                                 <td class="checkin-date">{{$item->checkInDate}}</td>

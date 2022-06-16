@@ -363,7 +363,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-0">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height custom-card-overflow p-0">
                             <div class="iq-card-body p-0">
                                 <div class="related-heading mb-5 c-flex">
                                     <h2 class="">{{ __('app.Car_Plate_Report') }}</h2>
@@ -507,7 +507,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-0">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height custom-card-overflow p-0">
                             <div class="iq-card-body p-0">
                                 <div class="related-heading mb-5 c-flex">
                                     <h2 class="">{{ __('app.Bay_area_report') }}</h2>
@@ -650,7 +650,7 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-0">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height custom-card-overflow p-0">
                             <div class="iq-card-body p-0">
                                 <div class="related-heading mb-5 c-flex">
                                     <h2 class="">{{ __('app.Staying_report') }}</h2>
@@ -793,7 +793,7 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-0">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height custom-card-overflow p-0">
                             <div class="iq-card-body p-0">
                                 <div class="related-heading mb-5 c-flex">
                                     <h2 class="">{{ __('app.Invoice_report') }}</h2>

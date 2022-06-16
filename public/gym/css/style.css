@@ -2681,6 +2681,11 @@ body.modal-open{
     height: 100%;
     border: 1px solid #ccc;
     padding: 4px;
+    text-align: center;
+}
+#images-cont .img-loading{
+    width: 50% !important;
+    object-fit: contain !important;
 }
 #images-cont .thumbnails .thumb.active{
     border: 3px solid #090226;

@@ -45,9 +45,10 @@ $(document).ready(function () {
       let arPlate = $(this).find('.ar-plate').text();
       let enPlate = $(this).find('.en-plate').text();
       let status = $(this).find('.status > span').clone();
+      let img1Status = $(this).data('img1status');
+      let img2Status = $(this).data('img2status');
 
-
-      // modal elements
+          // modal elements
       let modal = $('#basicExampleModal0');
 
       let checkInDateElm = modal.find('.checkin-date .info');
@@ -61,11 +62,28 @@ $(document).ready(function () {
       let thumbs = modal.find('.thumb img');
 
 
+
       $('#image_to_show').attr('src', trid);
       slides[0].setAttribute('src', trid);
       slides[1].setAttribute('src', img2);
       thumbs[0].setAttribute('src', trid);
       thumbs[1].setAttribute('src', img2);
+      if(img1Status === 'loading'){
+          $(slides[0]).addClass('img-loading')
+          $(thumbs[0]).addClass('img-loading')
+      }else{
+          $(slides[0]).removeClass('img-loading')
+          $(thumbs[0]).removeClass('img-loading')
+      }
+
+      if(img2Status === 'loading'){
+          $(slides[1]).addClass('img-loading')
+          $(thumbs[1]).addClass('img-loading')
+      }else{
+          $(slides[0]).removeClass('img-loading')
+          $(thumbs[0]).removeClass('img-loading')
+      }
+
       checkInDateElm.text(checkInDate);
       checkOutDateElm.text(checkOutDate);
       periodElm.text(period);

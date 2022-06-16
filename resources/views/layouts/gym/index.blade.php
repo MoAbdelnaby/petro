@@ -64,7 +64,7 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class=" row">
-                            <div class=" col-12 col-md-6  " id="images-cont">
+                            <div class=" col-12 col-md-6" id="images-cont">
                                <div class="active-image-cont position-relative">
                                    <div class="slide">
                                        <img src="" alt="">
@@ -144,7 +144,7 @@
                                     <div class="col-12">
                                         <div class="row-info__item status">
                                             <div class="title">
-                                                Status
+                                                Plate Detection
                                             </div>
                                             <div class="info">
 
@@ -171,7 +171,7 @@
                 <div class="modal-header border-bottom-0"></div>
                 <div class="modal-body">
                     <div class="position-relative d-block w-100 text-center">
-                        <div class="position-relative d-flex" id="images-cont">
+                        <div class="position-relative d-flex aaa" id="images-cont">
 {{--                            <img src="" id="car_image" alt="car" style="display: none">--}}
                             <img src="" id="image_to_show" alt="">
                             <button type="button" class="close" id="basicExampleClose" data-dismiss="modal" aria-label="Close">

@@ -2268,6 +2268,12 @@ div.dataTables_wrapper div.dataTables_paginate {
 .filter-dropdown .filter-content.open{
     top: 0;
 }
+
+.custom-card-overflow .iq-card-body {
+    min-height: 500px;
+    /*overflow: visible !important;*/
+}
+
 /*.filter-content .form-check:first-of-type{*/
 /*    border-bottom: 1px solid #ccc;*/
 /*}*/
