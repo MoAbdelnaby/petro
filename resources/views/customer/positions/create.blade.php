@@ -24,7 +24,7 @@
                                             <input type="text" name="name" class="form-control" id="name"
                                                    placeholder="{{__('app.Name')}}" value="{{ old('name') }}">
                                             @error('name')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span style="display: block" class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -39,7 +39,7 @@
                                                 @endforeach
                                             </select>
                                             @error('parent_id')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span  style="display: block" class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -50,7 +50,7 @@
                                                 <label for="description">{{ __('app.description') }}</label>
                                                 <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
                                                 @error('description')
-                                                <span class="text-danger">{{ $message }}</span>
+                                                <span style="display: block" class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
