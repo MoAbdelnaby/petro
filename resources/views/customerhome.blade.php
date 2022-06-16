@@ -54,6 +54,85 @@
 {{--                                            </li>--}}
 {{--                                        </ul>--}}
 {{--                                    </div>--}}
+                                    <div>
+                                        <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
+                                           data-toggle="dropdown" href="#">
+                                            <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
+                                        </a>
+                                        <div class="filter-content" aria-labelledby="dropdownMenuButton">
+                                            <form action="{{route('reports.filter')}}" method="post"
+                                                  class="filter-form">
+                                                @csrf
+                                                <div class="row">
+                                                    <div id="branch_container" class="col-md-12">
+                                                        <div class="row">
+                                                            <div class=" col-md-10" id="branch_selection">
+                                                                <lebel>{{ __('app.Select_branches') }}:</lebel>
+
+                                                                <select class="form-control select_2 required"
+                                                                        multiple id="select_branch" name="lists[]">
+                                                                    @foreach($branches as $branch)
+                                                                        <option value="{{$branch->id}}"
+                                                                                @if(in_array($branch->id,request('lists')??[])) selected @endif>{{$branch->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please select branch.
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2"
+                                                                 style="margin-left: -25px; padding-top: 5px">
+                                                                <label for="selectallbranches"
+                                                                       class="custom-checkbox pl-4 mt-4">
+                                                                    <input class="trashselect" type="checkbox"
+                                                                           name="trashs[]" id="selectallbranches"
+                                                                           value="1">
+                                                                    <span class="checkmark"></span>
+                                                                    <strong>All</strong>
+
+                                                                </label>
+                                                                {{-- <input type="checkbox" id="selectallbranches" > Select All --}}
+                                                                {{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group input-group input-daterange">
+                                                    <div class="d-flex align-items-end row">
+                                                        <div class="col-md-12 mt-2">
+                                                            <label
+                                                                class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
+                                                            <input type="datetime-local"
+                                                                   value="{{request('start')}}" name="start"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+
+                                                        <div class="col-md-12 mt-2">
+                                                            <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
+                                                            <input type="datetime-local" value="{{request('end')}}"
+                                                                   name="end"
+                                                                   class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center mt-4">
+                                                    <button type="submit"
+                                                            class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
+                                                        {{ __('app.Filter') }}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                                 @if(in_array('home' ,array_values($config['place']['InternetStatus'][1])))
                                     <div class="row pt-3 px-3 " id="sortable" data-sortable-id="0"
@@ -748,5 +827,79 @@
             /************** End Line Chart ************/
 
         });
+
+        $(document).ready(function () {
+            {{--var check_request = JSON.parse("{{ json_encode(request()->all()) }}");--}}
+            var check_request = "{{count(request()->all())}}";
+
+            $("#selectallbranches").click(function () {
+                if ($("#selectallbranches").is(':checked')) {
+                    $("#select_branch > option").prop("selected", "selected");
+                    $("#select_branch").trigger("change");
+                } else {
+                    $("#select_branch").val(null);
+                    $("#select_branch").trigger("change");
+                }
+            });
+
+            $("#checkValButton").click(function () {
+                alert($("#select_branch").val());
+            });
+
+            $('.btn-filter').on('click', function () {
+                $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');
+            })
+            $('.filter-form').on('submit', function (e) {
+                if (!$(this).find('#branch_selection select').val().length) {
+                    e.preventDefault();
+                    $(this).find('.invalid-feedback').show()
+                }
+            });
+
+            $("#select_branch").select2();
+
+            $(".static_download").on('click', function (e) {
+                e.preventDefault();
+
+
+                let currentForm = @json(request()->query());
+                let url = '{{route('report.downloadStatistics')}}';
+                let token = $('meta[name="csrf-token"]').attr("content");
+                let inputs = `<input name="_token" value="${token}">`;
+
+                for (var key of Object.keys(currentForm)) {
+                    inputs += `<input name=${key} value=${currentForm[key] ?? ''} >`;
+                }
+
+                $(`<form action=${url}>${inputs}</form>`).appendTo('body').submit().remove();
+            });
+
+            //Show Card Report
+            $(".card_report").on('click', function (e) {
+
+                e.preventDefault();
+                let url = $(this).attr('href');
+                if (parseInt(check_request) > 0) {
+                    let branch_comparsion = @json(request('lists') ?? []);
+
+                    let token = $('meta[name="csrf-token"]').attr("content");
+                    let inputs = `<input name="_token" value="${token}">`;
+                    inputs += `<input name="show_by" value="branch" >`;
+                    inputs += `<input name="branch_type" value="comparison" >`;
+                    branch_comparsion.forEach(el => {
+                        inputs += `<input name="branch_comparison[]" value="${el}" >`;
+                    });
+                    inputs += `<input name="branch_data" value="{{Arr::first(request('lists'))}}" >`;
+                    inputs += `<input name="start" value="{{request('start') ?? now()->startOfYear()}}" >`;
+                    inputs += `<input name="end" value="{{request('end') ?? now()->toDateString()}}" >`;
+
+                    // console.log(inputs);
+                    $(`<form action=${url} method="get">${inputs}</form>`).appendTo('body').submit().remove();
+                } else {
+                    $(`<form action=${url} method="get"></form>`).appendTo('body').submit().remove();
+                }
+
+            });
+        })
     </script>
 @endsection
