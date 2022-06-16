@@ -1680,4 +1680,5 @@ return [
     'installed_status_change_success' => 'Installed Status Changed successfully',
     'no_linked' => 'Not Linked',
     'failed_to_update' => 'Failed to update status',
+    'edit_service' => 'Edit Service',
 ];

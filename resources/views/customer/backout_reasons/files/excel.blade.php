@@ -2,26 +2,32 @@
     <thead>
     <tr>
         <th>#</th>
-        <th>{{__('app.type')}}</th>
-        <th>{{__('app.branch')}}</th>
-        <th>{{__('app.message')}}</th>
-        <th>{{__('app.gym.plate_no')}}</th>
-        <th>{{__('app.auth.phone')}}</th>
-        <th>{{__('app.Invoice')}}</th>
-        <th>{{__('app.createdIn')}}</th>
+        <th>Station Code</th>
+        <th>Latest PlateNumber</th>
+        <th>Bay Code</th>
+        <th>Customer Name</th>
+        <th>Customer Phone</th>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Reason1</th>
+        <th>Reason2</th>
+        <th>Reason3</th>
     </tr>
     </thead>
     <tbody>
     @foreach($list as $index=>$item)
         <tr>
             <td>{{++$index}}</td>
-            <td>{{$item->type}}</td>
-            <td>{{$item->branch_name}}</td>
-            <td>{{$item->message}}</td>
-            <td>{{$item->plateNumber}}</td>
-            <td>{{str_replace('whatsapp:+','',$item->phone)}}</td>
-            <td>{{ $item->fileUrl ? config('app.azure_storage').config('app.azure_container').$item->fileUrl : '---'}}</td>
-            <td>{{$item->created_at}}</td>
+            <td>{{$item->station_code}}</td>
+            <td>{{$item->LatestPlateNumber}}</td>
+            <td>{{$item->BayCode}}</td>
+            <td>{{$item->CustomerName}}</td>
+            <td>{{$item->CustomerPhone}}</td>
+            <td>{{$item->make}}</td>
+            <td>{{$item->model}}</td>
+            <td>{{$item->reason1}}</td>
+            <td>{{$item->reason2}}</td>
+            <td>{{$item->reason3}}</td>
         </tr>
     @endforeach
     </tbody>

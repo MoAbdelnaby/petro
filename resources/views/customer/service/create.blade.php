@@ -1,11 +1,12 @@
 @extends('layouts.dashboard.index')
+
 @section('page_title')
-    {{ __('app.customers.branches.page_title.index') }}
+    {{ __('app.edit_service') }}
 @endsection
+
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
-
 
 @section('content')
     <div id="content-page" class="content-page">

@@ -1,37 +1,32 @@
 @extends('layouts.dashboard.index')
 @section('page_title')
-    {{ __('app.customers.branches.page_title.index') }}
+    {{ __('app.edit_service') }}
 @endsection
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
-
 @php
 $branchIds = $service->branches->pluck('id')->toArray();
 @endphp
+
 @section('content')
     <div id="content-page" class="content-page">
         <div class="container-fluid">
-
-
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Create New Service</h4>
+                        <h4 class="card-title"> {{ __('app.edit_service') }}</h4>
                     </div>
                 </div>
                 <div class="iq-card-body">
                     <div class="new-user-info">
-
-
                         <form enctype="multipart/form-data" action="{{ route('service.update', $service->id) }}"
                             method="post">
                             @csrf
                             @method('PUT')
 
                             <div class="row">
-
                                 <div class="col-lg-4 col-md-12">
                                     <div class="form-group">
                                         <label for="branch_id" class="col-md-2 col-form-label text-capitalize">
@@ -40,7 +35,6 @@ $branchIds = $service->branches->pluck('id')->toArray();
 
                                         <select name="branch_id[]" class="form-control" id="service_branch_id_edit" multiple >
                                             @foreach ($branches as $item)
-{{--                                                <option value="{{ $item->id }}" {{ old('branch_id')  == $item->id || $service->branch_id == $item->id ? 'selected' : '' }}> {{ $item->name }}</option>--}}
                                                 <option value="{{ $item->id }}" {{ in_array($item->id,$branchIds) ? 'selected' : '' }}> {{ $item->name }}</option>
                                             @endforeach
                                         </select>
