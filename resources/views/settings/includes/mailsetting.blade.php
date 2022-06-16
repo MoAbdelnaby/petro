@@ -3,8 +3,16 @@
         .related-heading span i {
             border: none !important;
         }
+
+        .modal-body .invalid-feedback {
+            display: none;
+        }
+
+        #recipientEmailModal .modal-body.was-validated .form-control:invalid ~ .invalid-feedback {
+            display: block;
+        }
     </style>
-    @endpush
+@endpush
 <div class="tab-pane fade py-3 {{ $errors->has('env.*') || count($errors) == 0 ? 'show active':'' }}" id="v-pills-mail">
     <div class="">
 
@@ -98,7 +106,7 @@
                 <div class="col-lg-4 col-md-6">
 
                     <div class="form-group ">
-                            <label for="text">{{ __('MAIL PASSWORD') }}</label>
+                        <label for="text">{{ __('MAIL PASSWORD') }}</label>
                         <div class="input-group">
                             <input style="display: inline-block" type="password"
                                    name="env[MAIL_PASSWORD]"
@@ -151,10 +159,9 @@
                     @if($mail)
                         <button id="testMail"
                                 class="btn btn-info  waves-effect waves-light px-4 py-2"
+                                data-toggle="modal" data-target="#recipientEmailModal"
                                 style="width: 200px;">
-                            <span style="display: none" class="testmail-spinner spinner-grow spinner-grow-sm"
-                                  role="status" aria-hidden="true"></span>
-                            <span class="sr-only"> </span>
+
                             {{ __('app.TestMail') }}
 
                         </button>
@@ -166,30 +173,36 @@
         </form>
     </div>
 
-    <div class="modal fade" id="recipientEmailModal" tabindex="-1" role="dialog" aria-labelledby="recipientEmailModal" aria-hidden="true">
+    <div class="modal fade" id="recipientEmailModal" tabindex="-1" role="dialog" aria-labelledby="recipientEmailModal"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('app.TestMail') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('app.recipientEmail') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">{{ __('app.email') }}:</label>
+                        <input type="email" required class="form-control" id="recipient-email"
+                               placeholder="{{ __('app.add_recipientEmail') }}">
+                        <div class="invalid-feedback">
+                            {{ __('app.provide_valid_email') }}
                         </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        {{ __('app.close') }}
+                    </button>
+                    <button id="sendTestMail" type="button" class="btn btn-primary">
+                        <span style="display: none" class="testmail-spinner spinner-grow spinner-grow-sm"
+                              role="status" aria-hidden="true"></span>
+                        <span class="sr-only"> </span>
+                        {{ __('app.send_mail') }}
+                    </button>
                 </div>
             </div>
         </div>
@@ -220,6 +233,20 @@
 
             $('#testMail').on('click', function (e) {
                 e.preventDefault()
+            });
+            $('#recipientEmailModal').on('hidden.bs.modal', function () {
+                $('#recipient-email').val('');
+                $('#recipientEmailModal .modal-body').removeClass('was-validated');
+            })
+
+            $('#sendTestMail').on('click', function (e) {
+                let recipientMail = $('#recipient-email').val().trim();
+
+                if (recipientMail.length === 0 || $('#recipientEmailModal .modal-body :invalid').length > 0) {
+                    $('#recipientEmailModal .modal-body').addClass('was-validated');
+                    $('#recipientEmailModal .modal-body .invalid-feedback').show()
+                    return
+                }
 
                 $('.testmail-spinner').show();
                 $.ajax({
@@ -235,12 +262,13 @@
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            url: `${app_url}/testmailsetting`,
+                            url: `${app_url}/testmailsetting/${recipientMail}`,
                             method: "GET",
                             data: {
                                 _token: $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (data) {
+                                $('#recipientEmailModal').modal('hide');
                                 var message = data.message;
                                 const Toast = Swal.mixin({
                                     toast: true,
@@ -260,6 +288,8 @@
                                 $('.testmail-spinner').hide();
                             },
                             error: function (data) {
+                                $('.testmail-spinner').hide();
+                                $('#recipientEmailModal').modal('hide');
                                 var message = data.responseJSON.message;
                                 const Toast = Swal.mixin({
                                     toast: true,
@@ -276,7 +306,7 @@
                                     icon: 'error',
                                     title: message
                                 })
-                                $('.testmail-spinner').hide();
+
                             }
 
                         });
@@ -320,7 +350,6 @@
                         $('.testmail-spinner').hide();
                     }
                 });
-
             })
 
         })

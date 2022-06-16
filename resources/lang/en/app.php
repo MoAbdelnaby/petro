@@ -1681,4 +1681,10 @@ return [
     'no_linked' => 'Not Linked',
     'failed_to_update' => 'Failed to update status',
     'edit_service' => 'Edit Service',
+    'send_mail' => 'Send Email',
+    'provide_valid_email' => 'Please provide a valid email',
+    'add_recipientEmail' => 'add the recipient email',
+    'email' => 'Email',
+    'recipientEmail' => 'Recipient Email',
+
 ];
