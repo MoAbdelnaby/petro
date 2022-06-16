@@ -126,7 +126,7 @@ class WelcomeReport extends BaseReport
                             'CheckIn Date' => $el->checkInDate,
                             'CheckOutDate' => $el->checkOutDate,
                             'Duration' => str_replace('before', '', \Carbon\Carbon::parse($el->checkInDate)->diffForHumans($el->checkOutDate)),
-                            'Invocie' => $el->welcome
+                            'Welcome' => $el->welcome
                         ]);
                     }, $item->toArray())];
                 })->toArray();
@@ -149,7 +149,7 @@ class WelcomeReport extends BaseReport
             "list" => ucfirst($key),
             "unit" => config('app.report.type.welcome.unit'),
             "columns" => config('app.report.type.welcome.data'),
-            "display_key" => ["welcome" => __('app.Invoice'), "no_welcome" => __('app.no_welcome')]
+            "display_key" => ["welcome" => __('app.Welcome'), "no_welcome" => __('app.no_welcome')]
         ];
 
         return $report;
