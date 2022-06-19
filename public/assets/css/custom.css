@@ -668,7 +668,7 @@ body.sidebar-main .iq-sidebar {
 .iq-sidebar .iq-sidebar-logo,
 .iq-sidebar .iq-sidebar-logo a {
     /*transition: none !important;*/
-    transition: all ease-in-out 0.3s !important;
+    transition: all 0.2s 0.1s !important;
 }
 table.dataTable > thead .sorting:before,
 table.dataTable > thead .sorting:after {

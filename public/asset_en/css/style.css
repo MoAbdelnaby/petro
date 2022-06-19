@@ -1497,6 +1497,19 @@ input.increment { text-align: center; }
     top: -5px;
     font-size: 15px;
 }
+.related-heading .selection{
+    position: static !important;
+    line-height: inherit !important;
+}
+.related-heading .select2-container {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 3px 0 0;
+    position: relative !important;
+    vertical-align: middle;
+    top: 0;
+    line-height: 20px !important;
+}
 
 .related-heading span form{
     display: inline-block;
@@ -2176,7 +2189,7 @@ div.dataTables_wrapper div.dataTables_paginate {
     height: 100%;
     font-size: 16px;
     vertical-align: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: none;
 }
 .setting-heading .nav.nav-tabs .nav-item .nav-link.active{
     font-weight: 700;
@@ -2277,5 +2290,14 @@ div.dataTables_wrapper div.dataTables_paginate {
 /*.filter-content .form-check:first-of-type{*/
 /*    border-bottom: 1px solid #ccc;*/
 /*}*/
+.iq-sidebar{
+    overscroll-behavior: contain;
+}
 
+#togglePassword{
+    padding: 4px 12px;
+    border: 1px solid #ccc;
+    border-left: none;
+    background: transparent;
+}
 

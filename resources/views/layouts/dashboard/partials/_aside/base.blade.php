@@ -117,7 +117,7 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ url('customer/positions') }}" class="iq-waves-effect">
-                                    <img src="{{ resolveDark() }}/img/icon_menu/positions.svg" alt="Reports" class="img-fluid">
+                                    <img src="{{ resolveDark() }}/img/icon_menu/positions.svg" alt="positions" class="img-fluid">
                                 </a>
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center">
@@ -133,7 +133,7 @@
                         <div class="col-12 justify-content-center">
                             <div class="iq-product-cover d-flex justify-content-center">
                                 <a href="{{ url('customer/escalations') }}" class="iq-waves-effect">
-                                    <img src="{{ resolveDark() }}/img/icon_menu/escalations.svg" alt="Reports" class="img-fluid">
+                                    <img src="{{ resolveDark() }}/img/icon_menu/escalations.svg" alt="escalations" class="img-fluid">
                                 </a>
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center">
@@ -306,8 +306,8 @@
                                 <a href="{{ route('branch.backout_reasons') }}" class="iq-waves-effect">
                                     {{--                                    <i class="fa fa-envelope-open fa-2x"></i>--}}
                                     <img
-                                        src="{{ resolveDark() }}/img/icon_menu/backout.svg" alt="Settings"
-                                        class="img-fluid">
+                                        src="{{ resolveDark() }}/img/icon_menu/backout.svg" alt="backout reasons"
+                                        class="img-fluid" style="width: 32px">
                                 </a>
                             </div>
                             <div class="iq-product-cover d-flex justify-content-center">

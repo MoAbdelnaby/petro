@@ -1510,8 +1510,22 @@ input.increment { text-align: center; }
     left: 0;
     top: 0px;
     font-size: 15px;
-    line-height: 50px;
+    /*line-height: 50px;*/
 
+}
+
+.related-heading .selection{
+    position: static !important;
+    /*line-height: 20px !important;*/
+}
+.related-heading .select2-container {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 3px 0 0;
+    position: relative !important;
+    vertical-align: middle;
+    top: 0;
+    /*line-height: 20px !important;*/
 }
 
 .related-heading span form{
@@ -1833,14 +1847,14 @@ select.form-control option:hover{
     background: url("./../../images/wakeball/petromintext.png");
     width: 140px;
     height: 30px;
-    background-size: 100% auto;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 .sidebar-main .iq-sidebar-logo a{
     background: url("./../../images/wakeball/petromindark.png");
     width: 50px;
     height: 30px;
-    background-size: 100% auto;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     transition: all 0s;
 }
@@ -2326,3 +2340,9 @@ div.dataTables_wrapper div.dataTables_filter {
     right: auto;
     left: 15px;
 }
+
+.iq-sidebar{
+    overscroll-behavior: contain;
+}
+
+

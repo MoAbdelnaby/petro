@@ -2766,6 +2766,7 @@ body.modal-open{
     background: #f7f7f7;
     border-radius: 4px;
     padding: 5px 10px;
+    min-height: 36px;
 }
 .modal-body .row-info__item.status .info{
     background: #fff;
@@ -3078,4 +3079,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 14px;
     height: 38px;
 }
+
+
 

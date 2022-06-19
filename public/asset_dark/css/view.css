@@ -453,7 +453,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     background: #364c61;
 }
 .filter-content .form-control {
-    background: #364c61;
+    background: #364c61 !important;
 }
 .filter-content input[name="start_date"]{
     color: #d7d7d7;

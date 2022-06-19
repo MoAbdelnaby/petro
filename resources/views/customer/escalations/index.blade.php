@@ -355,7 +355,7 @@
                 drawTree(escalations);
             });
 
-            
+
 
             $("#saveEscalation").on('click', function (e) {
                 e.preventDefault();
@@ -395,7 +395,7 @@
                     `</span>` +
                     `<h4>` +
                     `<select class="position" name="" id="">` +
-                    `<option value="" selected>Select Position</option>`;
+                    `<option value="" selected>{{ __('app.select_position') }}</option>`;
                 for (let j = 0; j < positions.length; j++) {
                     ItemHtml += `<option ` + (escalations[i - 1].position == positions[j].id ? 'selected' : '') + ` value="` + positions[j].id + `">` + positions[j].name + `</option>`;
                 }
@@ -406,11 +406,11 @@
                     `<i class="fa fa-stopwatch"></i>` +
                     `<span>` +
                     `<select class="min" name="" id="">` +
-                    `<option ` + (escalations[i - 1].time == 15 ? 'selected' : '') + ` value="15">15 Min</option>` +
-                    `<option ` + (escalations[i - 1].time == 30 ? 'selected' : '') + ` value="30">30 Min</option>` +
-                    `<option ` + (escalations[i - 1].time == 60 ? 'selected' : '') + ` value="60">1 hour</option>` +
-                    `<option ` + (escalations[i - 1].time == 90 ? 'selected' : '') + ` value="90">Hour & half</option>` +
-                    `<option ` + (escalations[i - 1].time == 120 ? 'selected' : '') + ` value="120">2 Hours</option>` +
+                    `<option ` + (escalations[i - 1].time == 15 ? 'selected' : '') + ` value="15">15 {{ __('app.min') }}</option>` +
+                    `<option ` + (escalations[i - 1].time == 30 ? 'selected' : '') + ` value="30">30 {{ __('app.min') }}</option>` +
+                    `<option ` + (escalations[i - 1].time == 60 ? 'selected' : '') + ` value="60">1 {{ __('app.hour') }}</option>` +
+                    `<option ` + (escalations[i - 1].time == 90 ? 'selected' : '') + ` value="90">{{ __('app.hour_half') }}</option>` +
+                    `<option ` + (escalations[i - 1].time == 120 ? 'selected' : '') + ` value="120">2 {{ __('app.hours') }}</option>` +
                     `</select>` +
                     `</span>` +
                     `</span>` +
@@ -421,10 +421,10 @@
                 if (i % 4 == 0)
                 if ((i/4) % 2 == 0) {
                     var clas = "even-row";
-                    $('.endRowTree.left').append('<div class="endrowItem" style="top:' + (((i/4) - 1) * 155) + 'px"></div>');                    
+                    $('.endRowTree.left').append('<div class="endrowItem" style="top:' + (((i/4) - 1) * 155) + 'px"></div>');
                 } else {
                     var clas = "odd-row";
-                    $('.endRowTree.right').append('<div class="endrowItem" style="top:' + (((i/4) - 1) * 155) + 'px"></div>');                    
+                    $('.endRowTree.right').append('<div class="endrowItem" style="top:' + (((i/4) - 1) * 155) + 'px"></div>');
                 }
 
             }
@@ -438,7 +438,7 @@
         }
 
         // function drawEndRow(escalations) {
-            
+
         //     $('.endRowTree .endrowItem').remove();
         //     let countRows1 = escalations.length / 4;
         //     console.log(countRows1 % 1);

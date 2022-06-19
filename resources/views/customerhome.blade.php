@@ -66,20 +66,20 @@
                                                   class="filter-form">
                                                 @csrf
                                                 <div class="row">
-                                                    <div id="branch_container" class="col-md-12">
+                                                    <div  class="col-md-12 branch_container">
                                                         <div class="row">
-                                                            <div class=" col-md-10" id="branch_selection">
+                                                            <div class=" col-md-10 branch_selection" >
                                                                 <lebel>{{ __('app.Select_branches') }}:</lebel>
 
-                                                                <select class="form-control select_2 required"
-                                                                        multiple id="select_branch" name="lists[]">
+                                                                <select class="form-control select_2 required select_branch"
+                                                                        multiple id="mosta_stat_select" name="lists[]">
                                                                     @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}"
                                                                                 @if(in_array($branch->id,request('lists')??[])) selected @endif>{{$branch->name}}</option>
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">
-                                                                    Please select branch.
+                                                                    {{ __('app.please_select_branch') }}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-2"
@@ -436,15 +436,15 @@
                                                   class="filter-form">
                                                 @csrf
                                                 <div class="row">
-                                                    <div id="branch_container" class="col-md-12">
+                                                    <div id="" class="col-md-12 branch_container">
                                                         <div class="row">
-                                                            <div class=" col-md-12" id="branch_selection">
+                                                            <div class="branch_selection col-md-12" >
                                                                 <lebel>{{ __('app.Select_branches') }}:</lebel>
                                                                 <input type="hidden" name="show_by" value="branch">
                                                                 <input type="hidden" name="branch_type"
                                                                        value="comparison">
-                                                                <select class="form-control select_2 required"
-                                                                        multiple id="select_branch"
+                                                                <select class="form-control select_2 required select_branch"
+                                                                        multiple id="car_plate_select"
                                                                         name="branch_comparison[]">
                                                                     @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}"
@@ -452,7 +452,7 @@
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">
-                                                                    Please select branch.
+                                                                    {{ __('app.please_select_branch') }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -581,15 +581,15 @@
                                                   class="filter-form">
                                                 @csrf
                                                 <div class="row">
-                                                    <div id="branch_container" class="col-md-12">
+                                                    <div id="" class="col-md-12 branch_container">
                                                         <div class="row">
-                                                            <div class=" col-md-12" id="branch_selection">
+                                                            <div class=" col-md-12 branch_selection" id="">
                                                                 <lebel>{{ __('app.Select_branches') }}:</lebel>
                                                                 <input type="hidden" name="show_by" value="branch">
                                                                 <input type="hidden" name="branch_type"
                                                                        value="comparison">
-                                                                <select class="form-control select_2 required"
-                                                                        multiple id="select_branch"
+                                                                <select class="form-control select_2 required select_branch"
+                                                                        multiple id="bay_area_select"
                                                                         name="branch_comparison[]">
                                                                     @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}"
@@ -597,7 +597,7 @@
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">
-                                                                    Please select branch.
+                                                                    {{ __('app.please_select_branch') }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -724,15 +724,15 @@
                                                   class="filter-form">
                                                 @csrf
                                                 <div class="row">
-                                                    <div id="branch_container" class="col-md-12">
+                                                    <div  class="col-md-12 branch_container">
                                                         <div class="row">
-                                                            <div class=" col-md-12" id="branch_selection">
+                                                            <div class=" col-md-12 branch_selection" id="">
                                                                 <lebel>{{ __('app.Select_branches') }}:</lebel>
                                                                 <input type="hidden" name="show_by" value="branch">
                                                                 <input type="hidden" name="branch_type"
                                                                        value="comparison">
-                                                                <select class="form-control select_2 required"
-                                                                        multiple id="select_branch"
+                                                                <select class="form-control select_2 required select_branch"
+                                                                        multiple id="car_serving_select"
                                                                         name="branch_comparison[]">
                                                                     @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}"
@@ -740,7 +740,7 @@
                                                                     @endforeach
                                                                 </select>
                                                                 <div class="invalid-feedback">
-                                                                    Please select branch.
+                                                                    {{ __('app.please_select_branch') }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -862,14 +862,14 @@
                                               class="filter-form">
                                             @csrf
                                             <div class="row">
-                                                <div id="branch_container" class="col-md-12">
+                                                <div  class="col-md-12 branch_container">
                                                     <div class="row">
-                                                        <div class=" col-md-12" id="branch_selection">
+                                                        <div class=" col-md-12 branch_selection" id="">
                                                             <lebel>{{ __('app.Select_branches') }}:</lebel>
                                                             <input type="hidden" name="show_by" value="branch">
                                                             <input type="hidden" name="branch_type" value="comparison">
-                                                            <select class="form-control select_2 required"
-                                                                    multiple id="select_branch"
+                                                            <select class="form-control select_2 required select_branch"
+                                                                    multiple id="invoice_report_select"
                                                                     name="branch_comparison[]">
                                                                 @foreach($branches as $branch)
                                                                     <option value="{{$branch->id}}"
@@ -877,7 +877,7 @@
                                                                 @endforeach
                                                             </select>
                                                             <div class="invalid-feedback">
-                                                                Please select branch.
+                                                                {{ __('app.please_select_branch') }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1104,30 +1104,35 @@
 
             $("#selectallbranches").click(function () {
                 if ($("#selectallbranches").is(':checked')) {
-                    $("#select_branch > option").prop("selected", "selected");
-                    $("#select_branch").trigger("change");
+                    $(".select_branch > option").prop("selected", "selected");
+                    $(".select_branch").trigger("change");
                 } else {
-                    $("#select_branch").val(null);
-                    $("#select_branch").trigger("change");
+                    $(".select_branch").val(null);
+                    $(".select_branch").trigger("change");
                 }
             });
 
             $("#checkValButton").click(function () {
-                alert($("#select_branch").val());
+                alert($(".select_branch").val());
             });
 
             $('.btn-filter').on('click', function () {
                 $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');
             })
 
+            $(document).on('click', function () {
+                $('.filter-content').removeClass('open');
+            })
+            $('.filter-content').on('click', (e) => e.stopPropagation())
+
             $('.filter-form').on('submit', function (e) {
-                if (!$(this).find('#branch_selection select').val().length) {
+                if (!$(this).find('.branch_selection select').val().length) {
                     e.preventDefault();
                     $(this).find('.invalid-feedback').show()
                 }
             });
 
-            $("#select_branch").select2();
+            $(".select_branch").select2();
 
             $(".static_download").on('click', function (e) {
                 e.preventDefault();
