@@ -663,8 +663,22 @@ div.dataTables_wrapper div.dataTables_length select {
     border: solid #1e3044 1px;
     outline: 0;
     /*background: #111a24;*/
-    height: 38px;
+    /*height: 38px;*/
     border: 1px solid #1f3246;
+}
+
+.related-heading .selection{
+    position: static !important;
+    line-height: inherit !important;
+}
+.related-heading .select2-container {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 3px 0 0;
+    position: relative !important;
+    vertical-align: middle;
+    top: 0;
+    line-height: 20px !important;
 }
 
 .select2-container--default[dir="rtl"]
@@ -750,9 +764,83 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 
 .setting-heading .nav{
-    margin-bottom: -9px;
+    /*margin-bottom: -9px;*/
+    margin-bottom: -15px;
 }
 .tab_icon-img{
     margin-right: 0;
     margin-left: 5px;
 }
+
+.endRowTree .endrowItem{
+    transform: scale(-1);
+}
+
+.odd-row .treeItem .AddNew{
+    right: auto !important;
+    left: -30px !important;
+}
+.odd-row .treeItem:after{
+    right: auto !important;
+    left: -21px !important;
+}
+.even-row{
+    direction: ltr !important;
+}
+.even-row .treeItem .AddNew{
+    left: auto !important;
+    right: -30px !important;
+}
+.even-row .treeItem:after{
+    left: auto !important;
+    right: -21px !important;
+}
+
+.odd-row .delete-item{
+    top: 5px !important;
+    left: auto;
+    right: 10px !important;
+}
+.even-row .delete-item{
+    top: 5px !important;
+    right: auto !important;
+    left: 10px !important;
+}
+
+
+#togglePassword{
+    padding: 3px 12px;
+    border: 1px solid #ccc;
+    border-right: none;
+    background: transparent;
+}
+
+
+#basicExampleModal0 .previous{
+
+    transform: scale(-1);
+}
+#basicExampleModal0 .next{
+    right: auto !important;
+    left: 0 !important;
+    transform: scale(-1);
+}
+
+#basicExampleModal0 .close{
+    margin-left: 0 !important;
+}
+
+
+/*.tree li:first-child:before{*/
+/*    left: 0 !important;*/
+/*}*/
+/*.tree li:before{*/
+/*    right: 50% !important;*/
+/*}*/
+
+/*.tree li:last-child:before {*/
+/*    right: 0 !important;*/
+/*}*/
+/*.tree li:before{*/
+/*    left: 50% !important;*/
+/*}*/

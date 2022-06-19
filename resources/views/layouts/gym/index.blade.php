@@ -89,7 +89,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="row-info__item checkin-date">
-                                            <div class="title">CheckIn Date</div>
+                                            <div class="title">{{ __('app.gym.check_in_date') }}</div>
                                             <div class="info">
 
                                             </div>
@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="col-12 col-md-6 checkout-date">
                                         <div class="row-info__item">
-                                            <div class="title">CheckOut Date</div>
+                                            <div class="title">{{ __('app.gym.check_out_date') }}</div>
                                             <div class="info">
 
                                             </div>
@@ -107,7 +107,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="row-info__item period">
-                                            <div class="title">Period</div>
+                                            <div class="title">{{ __('app.gym.period') }}</div>
                                             <div class="info">
 
                                             </div>
@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="row-info__item area">
-                                            <div class="title">Area</div>
+                                            <div class="title">{{ __('app.gym.Area') }}</div>
                                             <div class="info">
 
                                             </div>
@@ -125,7 +125,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="row-info__item ar-plate">
-                                            <div class="title">Arabic Plate</div>
+                                            <div class="title">{{ __('app.gym.plate_no_ar') }}</div>
                                             <div class="info">
 
                                             </div>
@@ -133,7 +133,7 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="row-info__item en-plate">
-                                            <div class="title">English Plate</div>
+                                            <div class="title">{{ __('app.gym.plate_no_en') }}</div>
                                             <div class="info">
 
                                             </div>
@@ -144,7 +144,7 @@
                                     <div class="col-12">
                                         <div class="row-info__item status">
                                             <div class="title">
-                                                Plate Detection
+                                                {{ __('app.status') }}
                                             </div>
                                             <div class="info">
 

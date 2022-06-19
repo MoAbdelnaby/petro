@@ -111,7 +111,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                     <div class="invalid-feedback">
-                                                                        Please select branch.
+                                                                        {{ __('app.please_select_branch') }}
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2"
@@ -122,7 +122,7 @@
                                                                                name="trashs[]" id="selectallbranches"
                                                                                value="1">
                                                                         <span class="checkmark"></span>
-                                                                        <strong>All</strong>
+                                                                        <strong>{{ __('app.all') }}</strong>
 
                                                                     </label>
                                                                     {{-- <input type="checkbox" id="selectallbranches" > Select All --}}
@@ -183,7 +183,7 @@
                                             @endforeach
                                         </ul>
                                     @else
-                                        <h4 class="ml-4" style="line-height: 2.5">All Branches </h4>
+                                        <h4 class="ml-4" style="line-height: 2.5">{{ __("app.All_Branches")}} </h4>
                                     @endif
 
                                     <div class="duration-cont col py-0">
@@ -559,6 +559,12 @@
             $("#checkValButton").click(function () {
                 alert($("#select_branch").val());
             });
+
+
+            $(document).on('click', function () {
+                $('.filter-content').removeClass('open');
+            })
+            $('.filter-content').on('click', (e) => e.stopPropagation())
 
             $('.btn-filter').on('click', function () {
                 $(this).closest('.filter-dropdown').find('.filter-content').toggleClass('open');

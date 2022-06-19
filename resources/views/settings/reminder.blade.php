@@ -107,25 +107,25 @@
 {{--                                        </li>--}}
 
                                         <li class="nav-item">
-                                            <a class="nav-link {{ $errors->has('env.*') || count($errors) == 0 ? 'active':'' }}" id="v-pills-branch-tab" data-toggle="pill"
+                                            <a class="nav-link {{ $errors->has('env.*') || count($errors) == 0 ? 'active':'' }}" id="v-pills-mail-tab" data-toggle="pill"
                                                href="#v-pills-mail"
-                                               role="tab" aria-controls="v-pills-reminder"
+                                               role="tab" aria-controls="v-pills-mail"
                                                aria-selected="true">{{ __('app.mailSetting') }}</a>
                                         </li>
 
                                         <li class="nav-item">
                                             <a class="nav-link {{$errors->has('branch_type')  ? 'show active':'' }}" id="v-pills-branch-tab" data-toggle="pill"
                                                href="#v-pills-branch"
-                                               role="tab" aria-controls="v-pills-reminder"
+                                               role="tab" aria-controls="v-pills-branch"
                                                aria-selected="true">{{ __('app.branchSetting') }}</a>
                                         </li>
 
 
 
                                         <li class="nav-item">
-                                            <a class="nav-link {{ $errors->has('value') ? 'active':'' }} " id="v-pills-branch-tab" data-toggle="pill"
+                                            <a class="nav-link {{ $errors->has('value') ? 'active':'' }} " id="v-pills-template-tab" data-toggle="pill"
                                                href="#v-pills-branchErrorMailtemplate"
-                                               role="tab" aria-controls="v-pills-reminder"
+                                               role="tab" aria-controls="v-pills-branchErrorMailtemplate"
                                                aria-selected="true">{{ __('app.brancheErrorTemplate') }}</a>
                                         </li>
                                     </ul>

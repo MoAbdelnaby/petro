@@ -281,7 +281,7 @@ return [
     'year' => 'year',
     'month' => 'Month',
     'day' => 'day',
-    'hour' => 'hour',
+    'hour' => 'Hour',
     'Mask' => 'Mask',
     'No_Mask' => 'No Mask',
     'General_Dash_Mask_Records' => 'General Dash | Mask Records',
@@ -1686,5 +1686,10 @@ return [
     'add_recipientEmail' => 'add the recipient email',
     'email' => 'Email',
     'recipientEmail' => 'Recipient Email',
+    'please_select_branch' => 'Please Select a branch.',
+    'min' => 'Minute',
+    'hour_half' => 'Hour and half',
+    'hours' => 'Hours',
+
 
 ];

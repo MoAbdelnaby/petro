@@ -110,8 +110,8 @@
                                                                     <label for="selectallbranches" class="custom-checkbox pl-1 pl-4 mt-4">
                                                                         <input class="trashselect" type="checkbox" name="trashs[]" id="selectallbranches" value="1">
                                                                         <span class="checkmark"></span> Select All
-                                                                        
-                                                                    </label> 
+
+                                                                    </label>
                                                                     {{-- <input type="checkbox" id="selectallbranches" > Select All --}}
 {{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
                                                                 </div>
@@ -166,7 +166,7 @@
                                             @endforeach
                                         </ul>
                                     @else
-                                        <h4 class="ml-4" style="line-height: 2.5">All Branches </h4>
+                                        <h4 class="ml-4" style="line-height: 2.5">{{ __("app.All_Branches")}}</h4>
                                     @endif
 
                                     <div class="duration-cont col py-0">
