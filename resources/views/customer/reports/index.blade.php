@@ -111,7 +111,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                     <div class="invalid-feedback">
-                                                                        Please select branch.
+                                                                        {{ __('app.please_select_branch') }}
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2"
@@ -122,7 +122,7 @@
                                                                                name="trashs[]" id="selectallbranches"
                                                                                value="1">
                                                                         <span class="checkmark"></span>
-                                                                        <strong>All</strong>
+                                                                        <strong>{{ __('app.all') }}</strong>
 
                                                                     </label>
                                                                     {{-- <input type="checkbox" id="selectallbranches" > Select All --}}

@@ -1676,7 +1676,7 @@ return array(
     'add_recipientEmail' => 'أضف البريد الإلكتروني للمستلم',
     'email' => 'البريد الإلكتروني',
     'recipientEmail' => 'البريد الإلكتروني المستلم',
-    'please_select_branch' => 'من فضلك اختر فرع',
+    'please_select_branch' => 'من فضلك حدد فرع',
     'min' => 'دقسقة',
     'hour_half' => 'ساعة ونصف',
     'hours' => 'ساعات',

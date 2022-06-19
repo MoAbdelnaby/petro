@@ -1686,7 +1686,7 @@ return [
     'add_recipientEmail' => 'add the recipient email',
     'email' => 'Email',
     'recipientEmail' => 'Recipient Email',
-    'please_select_branch' => 'Please Select branch',
+    'please_select_branch' => 'Please Select a branch.',
     'min' => 'Minute',
     'hour_half' => 'Hour and half',
     'hours' => 'Hours',

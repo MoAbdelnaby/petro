@@ -2088,6 +2088,7 @@ div.dataTables_wrapper div.dataTables_paginate {
     padding: 0;
     width: 15px;
     text-align: center;
+
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover, .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:focus {
     background-color: #171741!important;

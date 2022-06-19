@@ -476,7 +476,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 .select2-container--default .select2-selection--single {
     background-color: #364c61;
-    border: 1px solid #111a24;
+    border: none;
     border-radius: 4px;
     height: 40px;
     line-height: 40px;
@@ -756,4 +756,39 @@ div.dataTables_wrapper div.dataTables_filter {
 .menu-and-filter--custom .nav-tabs .nav-item .nav-link{
     height: 100%;
 }
+.filter-pills-cont{
+    margin-bottom: 0 !important;
+    margin-top: 8px !important;
+}
+
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+.input-daterange .form-control{
+    color: #fff !important;
+}
+.home_page .iq-card-body .custom-head h2{
+    color: #fff;
+}
+.related-heading .select2-selection{
+    line-height: 30px !important;
+}
+
+.select2-container--default[dir="ltr"] .select2-selection--multiple .select2-selection__choice__remove{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-left: 1px solid #ccc !important;
+    background-color: inherit;
+}
+
+
 /* ****** */

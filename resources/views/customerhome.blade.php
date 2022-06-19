@@ -90,7 +90,7 @@
                                                                            name="trashs[]" id="selectallbranches"
                                                                            value="1">
                                                                     <span class="checkmark"></span>
-                                                                    <strong>All</strong>
+                                                                    <strong>{{ __('app.all') }}</strong>
 
                                                                 </label>
                                                                 {{-- <input type="checkbox" id="selectallbranches" > Select All --}}
@@ -1104,11 +1104,11 @@
 
             $("#selectallbranches").click(function () {
                 if ($("#selectallbranches").is(':checked')) {
-                    $(".select_branch > option").prop("selected", "selected");
-                    $(".select_branch").trigger("change");
+                    $(this).closest(".branch_container").find('.select_branch > option').prop("selected", "selected");
+                    $(this).closest(".branch_container").find('.select_branch').trigger("change");
                 } else {
-                    $(".select_branch").val(null);
-                    $(".select_branch").trigger("change");
+                    $(this).closest(".branch_container").find('.select_branch').val(null);
+                    $(this).closest(".branch_container").find('.select_branch').trigger("change");
                 }
             });
 

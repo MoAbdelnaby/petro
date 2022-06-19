@@ -1356,15 +1356,16 @@ div.dataTables_wrapper div.dataTables_filter input {
     margin-bottom: 8px;
 }
 
-#branch_container .select2-container .select2-selection--multiple .select2-selection__rendered {
+#branch_container .select2-container .select2-selection--multiple .select2-selection__rendered,
+.branch_container .select2-container .select2-selection--multiple .select2-selection__rendered{
     display: block !important;
     max-height: 170px;
     overflow-y: auto;
 }
-#branch_container  .custom-checkbox {
+#branch_container  .custom-checkbox, .branch_container  .custom-checkbox {
     line-height: 26px;
 }
-#branch_container .custom-checkbox input:checked ~ .checkmark {
+#branch_container .custom-checkbox input:checked ~ .checkmark, .branch_container .custom-checkbox input:checked ~ .checkmark {
     margin-top: 5px;
 }
 
