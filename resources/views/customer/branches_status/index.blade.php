@@ -105,7 +105,8 @@
                                     </div>
 
                                     <div class="col-lg-4 col-md-4">
-                                        <a style="cursor: pointer" id="not_linked_branch" data-toggle="modal"  data-target="notLinkedModel">
+                                        <a style="cursor: pointer" id="not_linked_branch" data-toggle="modal"
+                                           data-target="notLinkedModel">
                                             <div class="card text-center col-12">
                                                 <div class="card-header row offline"
                                                      style=" border-bottom: 5px solid #fed329 !important;">
@@ -315,7 +316,7 @@
         </div>
     </div>
 
-    <div class="modal show" id="notLinkedModel" tabindex="-1"
+    <div class="modal fade" id="notLinkedModel" tabindex="-1"
          aria-labelledby="notLinkedModel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -376,6 +377,11 @@
                 }
             });
 
+            $("#not_linked_branch").on('click', function () {
+                $("#notLinkedModel").modal('show');
+            });
+
+            console.log()
             $(document).on('change', '.installed_switch', function () {
                 let item = $(this);
                 $.ajax({
