@@ -13,6 +13,38 @@
         .invalid-feedback {
             display: block;
         }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #4285f4;
+            width: 30px;
+            height: 30px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            top: 9px;
+            left: -15%;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 @endpush
 @section('content')
@@ -34,64 +66,70 @@
                             <div class="container-fluid">
                                 <div class="row mb-3 mt-3 justify-content-center">
                                     <div class="col-lg-4 col-md-4">
-                                        <div class="card text-center">
-                                            <div class="card-header row online mx-0 px-0">
-                                                <div class="col-4">
-                                                    <img width="100" src="{{ asset("images/online-svgrepo-com.svg") }}"
-                                                         alt=""></div>
-                                                <div class="col-8">
-                                                    <h5><b><i class="fas fa-circle"
-                                                              style="color: green"></i> {{ __('app.branch_online')  }}
-                                                        </b></h5>
-                                                    <h3><b>{{ $on }}</b></h3>
+                                        <a href="{{route('branches_status',['online_status' => 'online'])}}">
+                                            <div class="card text-center">
+                                                <div class="card-header row online mx-0 px-0">
+                                                    <div class="col-4">
+                                                        <img width="100"
+                                                             src="{{ asset("images/online-svgrepo-com.svg") }}"
+                                                             alt=""></div>
+                                                    <div class="col-8">
+                                                        <h5><b><i class="fas fa-circle"
+                                                                  style="color: green"></i> {{ __('app.branch_online')  }}
+                                                            </b></h5>
+                                                        <h3><b>{{ $on }}</b></h3>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
 
                                     <div class="col-lg-4 col-md-4">
-                                        <div class="card text-center col-12">
-                                            <div class="card-header row offline">
-                                                <div class="col-4">
-                                                    <img width="100" fill="#f14336"
-                                                         src="{{ asset("images/offline-svgrepo-com.svg") }}" alt="">
+                                        <a href="{{route('branches_status',['online_status' => 'offline'])}}">
+                                            <div class="card text-center col-12">
+                                                <div class="card-header row offline">
+                                                    <div class="col-4">
+                                                        <img width="100" fill="#f14336"
+                                                             src="{{ asset("images/offline-svgrepo-com.svg") }}" alt="">
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <h5><b><i class="fas fa-circle"
+                                                                  style="color: #f14336"></i> {{ __('app.branch_offline') }}
+                                                            </b>
+                                                        </h5>
+                                                        <h3><b>{{ $off }}</b></h3>
+                                                    </div>
                                                 </div>
-                                                <div class="col-8">
-                                                    <h5><b><i class="fas fa-circle"
-                                                              style="color: #f14336"></i> {{ __('app.branch_offline') }}
-                                                        </b>
-                                                    </h5>
-                                                    <h3><b>{{ $off }}</b></h3>
-                                                </div>
-
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
 
                                     <div class="col-lg-4 col-md-4">
-                                        <div class="card text-center col-12">
-                                            <div class="card-header row offline"
-                                                 style=" border-bottom: 5px solid #fed329 !important;">
-                                                <div class="col-4">
-                                                    <img width="100" fill="#fed329"
-                                                         src="{{ asset("assets/images/not_installed.png") }}"
-                                                         style="width: 70px; margin-top: 25px"
-                                                         alt="">
-                                                </div>
-                                                <div class="col-8">
-                                                    <h5>
-                                                        <b>
-                                                            <i class="fas fa-circle" style="color: #fed329"></i>
-                                                            {{ __('app.no_linked') }}
-                                                        </b>
-                                                    </h5>
-                                                    <h3>
-                                                        <b style="color: #fed329">{{ max($installed - ($on+$off),0) }}</b>
-                                                    </h3>
-                                                </div>
+                                        <a href="javascript:;" id="not_linked_branch">
+                                            <div class="card text-center col-12">
+                                                <div class="card-header row offline"
+                                                     style=" border-bottom: 5px solid #fed329 !important;">
+                                                    <div class="col-4">
+                                                        <img width="100" fill="#fed329"
+                                                             src="{{ asset("assets/images/not_installed.png") }}"
+                                                             style="width: 70px; margin-top: 25px"
+                                                             alt="">
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <h5>
+                                                            <b>
+                                                                <i class="fas fa-circle" style="color: #fed329"></i>
+                                                                {{ __('app.no_linked') }}
+                                                            </b>
+                                                        </h5>
+                                                        <h3>
+                                                            <b style="color: #fed329">{{ max($installed - ($on+$off),0) }}</b>
+                                                        </h3>
+                                                    </div>
 
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -205,12 +243,14 @@
                                                                 {{ __('app.branch_offline') }}
                                                             @endif
                                                         </td>
-                                                        <td>
-                                                            @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
-                                                                {{$last_stability[$branch->branch_code]['stability']??"0 ". __('app.minute')}}
-                                                            @else
-                                                                {{"0 ". __('app.minute')}}
-                                                            @endif
+                                                        <td style="position: relative"
+                                                            id="stability_{{$branch->branch_code}}">
+                                                            {{--                                                            @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)--}}
+                                                            {{--                                                                {{$last_stability[$branch->branch_code]['stability']??"0 ". __('app.minute')}}--}}
+                                                            {{--                                                            @else--}}
+                                                            {{--                                                                {{"0 ". __('app.minute')}}--}}
+                                                            {{--                                                            @endif--}}
+                                                            <span class="loader"></span>
                                                         </td>
                                                         <td>
                                                             @php($diff = \Carbon\Carbon::now()->diff($branch->created_at))
@@ -247,16 +287,19 @@
                                                                 <td>---</td>
                                                             @endif
                                                         @endif
+
                                                         <td>
                                                             <a class="btn btn-primary"
                                                                href="branches-log/{{$branch->branch_code}}"
                                                                target="_blank">{{ __('app.Show') }}</a>
+                                                            <a class="btn btn-success"
+                                                               href="{{ route('customerBranches.show', [$branch->id]) }}"
+                                                               target="_blank">{{ __('app.show_bracnh') }}</a>
                                                             <a class="btn btn-info"
                                                                href="branches-stability/{{$branch->branch_code}}"
                                                                target="_blank">{{ __('app.stability') }}</a>
                                                         </td>
                                                     </tr>
-
                                                 @endforeach
                                                 </tbody>
                                             </table>
@@ -284,9 +327,25 @@
         });
 
         $(document).ready(function () {
+            //Get last stability for each branch
+            $.ajax({
+                url: "{{route('branch.last_stability')}}",
+                dataType: "JSON",
+                type: "GET",
+                success: function (data) {
+                    console.log(data.stabiliteis)
+                    data.forEach((el) => {
+                        console.log('sadfs')
+                    });
+                },
+                error: function (data) {
+
+                }
+            });
+
+
             $(document).on('change', '.installed_switch', function () {
                 let item = $(this);
-
                 $.ajax({
                     url: $(this).data('url'),
                     dataType: "JSON",

@@ -94,7 +94,7 @@
                                                 <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
                                             </a>
                                             <div class="filter-content" aria-labelledby="dropdownMenuButton">
-                                                <form action="{{route('reports.filter')}}" method="get"
+                                                <form action="{{route('reports.index')}}" method="post"
                                                       class="filter-form">
                                                     @csrf
                                                     <div class="row">

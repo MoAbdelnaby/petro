@@ -83,15 +83,18 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::get('activities', 'ActivityController@index')->name('activities.index');
             Route::get('config/{type}/get', 'ConfigController@index')->name('config.index');
             Route::post('config/update', 'ConfigController@update')->name('config.update');
+
             Route::get('reports', 'ReportController@index')->name('reports.index');
+            Route::match(['get', 'post'], 'reports', 'ReportController@index')->name('reports.index');
             Route::get('reports/filter', 'ReportController@filter')->name('reports.filter');
             Route::get('report/region/{region}/show-branches', 'ReportController@getBranchByRegion');
             Route::get('report/city/{region}/show-regions', 'ReportController@getRegionByCity');
-            Route::get('reports/{type}/show', 'ReportController@show')->name('reports.show');
+            Route::match(['get', 'post'],'reports/{type}/show', 'ReportController@show')->name('reports.show');
             Route::get('reports/{type}/download', 'ReportController@download')->name('report.download');
             Route::get('reports/download-statistics', 'ReportController@downloadStatistics')->name('report.downloadStatistics');
             Route::get('reports/{type}/export-files', 'ReportController@export')->name('reports.export');
-            Route::get('error-mangment/{id}', 'ErrorManagementController@index')->name('error_mangment.index');
+
+           Route::get('error-mangment/{id}', 'ErrorManagementController@index')->name('error_mangment.index');
             Route::get('error-mangment/{id}/filter', 'ErrorManagementController@filter')->name('error_mangment.filter');
             Route::post('error-mangment/{id}/updatePlate', 'ErrorManagementController@updatePlate')->name('error_mangment.updatePlate');
             Route::resource('customerRegions', 'RegionController');
@@ -106,12 +109,16 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::post('customerUsers/assignUser', 'UserController@assignUser')->name('customerUsers.assignUser');
             Route::post('customerUsers/assignUserToBranch', 'UserController@assignUserToBranch')->name('customerUsers.assignUserToBranch');
             Route::get('myModels', 'UserController@myModels')->name('myModels');
-            Route::get('branches-status', 'BranchModelsController@branchesStatus')->name('branches_status');
-            Route::get('branches-log/{id}', 'BranchModelsController@getLogs');
-            Route::get('branches-stability/{id}', 'BranchModelsController@getStability');
+
             Route::get('customerPackages/assignuser/{id}', 'CustomerPackagesController@assignuser')->name('customerPackages.assignuser');
             Route::post('customerPackages/assignuser/{id}/create', 'CustomerPackagesController@assignuserpost')->name('customerPackages.assignuserpost');
             Route::post('customerPackages/requestPackage', 'CustomerPackagesController@requestPackage')->name('customerPackages.requestPackage');
+
+            //Branch Status Routes
+            Route::get('branch/last-stability','BranchStatusController@lastStability')->name('branch.last_stability');
+            Route::get('branches-status', 'BranchStatusController@branchesStatus')->name('branches_status');
+            Route::get('branches-log/{id}', 'BranchStatusController@getLogs');
+            Route::get('branches-stability/{id}', 'BranchStatusController@getStability');
 
             //Position Routes
             Route::resource('positions', 'PositionController');

@@ -1691,5 +1691,5 @@ return [
     'hour_half' => 'Hour and half',
     'hours' => 'Hours',
 
-
+    'show_bracnh' => 'Show Branch'
 ];

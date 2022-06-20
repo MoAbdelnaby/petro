@@ -57,8 +57,8 @@ class CustomerPackagesController extends Controller
         foreach (['place', 'plate', 'stayingAverage', 'invoice'] as $type) {
             $filter = $this->getTopBranch($type, request()->all());
 //            $filter['start'] = $date['start'] ?? Carbon::now()->startOfMonth()->subMonth()->toDateString();
-            $filter['start'] = $date['start'] ?? Carbon::now()->subDays(30)->toDateString();
-            $filter['end'] = $date['end'] ?? now()->toDateString();
+            $filter['start'] = Carbon::now()->subDays(30)->toDateString();
+            $filter['end'] = now()->toDateString();
             $report[$type] = ReportService::handle($type, $filter);
         }
 

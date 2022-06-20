@@ -55,7 +55,9 @@ class ReportController extends Controller
      */
     public function show($type, Request $request)
     {
-        if (!in_array($type, $this->reportType)) abort(404);
+        if (!in_array($type, $this->reportType)) {
+            abort(404);
+        }
 
         try {
             $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
@@ -193,6 +195,11 @@ class ReportController extends Controller
         return redirect()->back()->with('danger', "Fail To Download File");
     }
 
+    /**
+     * @param $type
+     * @param Request $request
+     * @return JsonResponse|RedirectResponse|BinaryFileResponse
+     */
     public function export($type, Request $request)
     {
         try {
@@ -222,9 +229,5 @@ class ReportController extends Controller
         } catch (\Exception $e) {
             return unKnownError($e->getMessage());
         }
-    }
-
-    public function filter(Request $request){
-        return $this->index($request);
     }
 }
