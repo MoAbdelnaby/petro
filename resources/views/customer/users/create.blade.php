@@ -30,7 +30,7 @@
                                                    class="form-control  @error('name') is-invalid @enderror" id="name"
                                                    placeholder="{{__('app.auth.name')}}" value="{{ old('name') }}">
                                             @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -42,7 +42,7 @@
                                                    class="form-control  @error('email') is-invalid @enderror" id="email"
                                                    placeholder="{{__('app.auth.email')}}" value="{{ old('email') }}">
                                             @error('email')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -57,7 +57,7 @@
                                                    @error('phone') is-invalid @enderror id="phone"
                                                    placeholder="{{__('app.auth.phone')}}" value="{{ old('phone') }}">
                                             @error('phone')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                             @enderror
@@ -70,7 +70,7 @@
                                                    class="form-control  @error('password') is-invalid @enderror"
                                                    id="password" placeholder="{{__('app.auth.password')}}">
                                             @error('password')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -85,7 +85,7 @@
                                                    placeholder="{{__('app.auth.password_confirmation')}}"
                                                    name="password_confirmation">
                                             @error('password_confirmation')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -99,7 +99,7 @@
                                                 <option value="subcustomer">{{ __('app.subcustomer') }}</option>
                                             </select>
                                             @error('password_confirmation')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -114,7 +114,7 @@
                                                 @endforeach
                                             </select>
                                             @error('position_id')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -128,7 +128,7 @@
                                                 <span class="checkmark"></span>
                                             </label>
                                             @error('speedtest')
-                                             <span class="invalid-feedback" role="alert">
+                                             <span class="invalid-feedback d-block" role="alert">
                                                <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror

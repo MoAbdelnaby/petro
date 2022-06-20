@@ -29,7 +29,7 @@
                                             <label for="name">{{__('app.saas.models.table.name')}} *</label>
                                             <input required type="text" name="name" class="form-control  @error('name') is-invalid @enderror" id="name" placeholder="{{__('app.saas.models.table.name')}}" value="{{ old('name') }}">
                                             @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -38,7 +38,7 @@
                                             <label for="description">{{__('app.saas.models.table.description')}}</label>
                                             <textarea rows="2"  name="description" class="form-control @error('description') is-invalid @enderror" id="description" placeholder="{{__('app.saas.models.table.description')}}">{{ old('description') }}</textarea>
                                             @error('description')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror
@@ -60,7 +60,7 @@
                                             <label for="price">{{__('app.saas.models.table.price')}}</label>
                                             <input  min="0" type="number"  name="price" class="form-control @error('price') is-invalid @enderror" id="price" placeholder="{{__('app.saas.models.table.price')}}" value="{{ old('price') }}">
                                             @error('price')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror

@@ -41,7 +41,7 @@
                                             <label for="desc">{{__('app.saas.packages.items.count')}}</label>
                                             <input min="0"  type="number"  name="count" class="form-control" id="count" placeholder="{{__('app.saas.packages.items.count')}}" value="{{ old('count') }}">
                                             @error('count')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror

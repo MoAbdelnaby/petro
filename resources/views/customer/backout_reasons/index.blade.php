@@ -113,7 +113,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                                <div class="invalid-feedback name-feedback">
+                                                                <div class="invalid-feedback d-block name-feedback">
                                                                     <strong>{{$errors->has('branch_code')?$errors->first('branch_code'):''}}</strong>
                                                                 </div>
                                                             </div>
@@ -123,7 +123,7 @@
                                                             <label>{{__('app.start')}}</label>
                                                             <input type="date" name="start_date" class="form-control"
                                                                    value="{{old('start_date') ?? request('start_date')}}"/>
-                                                            <div class="invalid-feedback name-feedback">
+                                                            <div class="invalid-feedback d-block name-feedback">
                                                                 <strong>{{$errors->has('start_date')?$errors->first('start_date'):''}}</strong>
                                                             </div>
                                                         </div>
@@ -131,7 +131,7 @@
                                                             <label>{{__('app.end')}}</label>
                                                             <input type="date" name="end_date" class="form-control"
                                                                    value="{{old('end_date') ?? request('end_date')}}"/>
-                                                            <div class="invalid-feedback name-feedback">
+                                                            <div class="invalid-feedback d-block name-feedback">
                                                                 <strong>{{$errors->has('end_date')?$errors->first('end_date'):''}}</strong>
                                                             </div>
                                                         </div>

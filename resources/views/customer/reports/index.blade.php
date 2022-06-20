@@ -110,7 +110,7 @@
                                                                                     @if(in_array($branch->id,request('lists')??[])) selected @endif>{{$branch->name}}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    <div class="invalid-feedback">
+                                                                    <div class="invalid-feedback d-block">
                                                                         {{ __('app.please_select_branch') }}
                                                                     </div>
                                                                 </div>

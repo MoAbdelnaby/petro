@@ -29,7 +29,7 @@
                                             <label for="name">{{__('app.permissions.table.name')}} *</label>
                                             <input required type="text" name="name" class="form-control" id="name" placeholder="{{__('app.permissions.table.name')}}" value="{{ old('name') }}">
                                             @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -39,7 +39,7 @@
                                             <label for="display_name">{{__('app.permissions.table.display_name')}}</label>
                                             <input required type="text"  name="display_name" class="form-control" id="display_name" placeholder="{{__('app.permissions.table.display_name')}}" value="{{ old('display_name') }}">
                                             @error('display_name')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror
@@ -50,7 +50,7 @@
                                             <label for="group">{{__('app.permissions.table.group')}}</label>
                                             <input required type="text"  name="group" class="form-control" id="group" placeholder="{{__('app.permissions.table.group')}}" value="{{ old('group') }}">
                                             @error('group')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror

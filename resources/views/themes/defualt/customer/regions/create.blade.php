@@ -41,7 +41,7 @@
                                                 </span>
                                             </div>
                                             @error('image')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -55,7 +55,7 @@
                                                    placeholder="{{__('app.customers.branches.table.name')}}"
                                                    value="{{ old('name') }}">
                                             @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -70,7 +70,7 @@
                                                 @endforeach
                                             </select>
                                             @error('parent_id')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror

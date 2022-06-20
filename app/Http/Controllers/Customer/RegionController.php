@@ -78,7 +78,7 @@ class RegionController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:2|max:60|unique:regions,name,NULL,id,deleted_at,NULL,user_id,' . parentID(),
             'photo' => 'nullable|image',
-            'parent_id' => 'required|exists:regions,id',
+//            'parent_id' => 'nullable|exists:regions,id',
         ]);
 
         if ($validator->errors()->count()) {
@@ -114,11 +114,12 @@ class RegionController extends Controller
     {
         $item = $this->repo->findOrFail($id);
 
-        $regions = Region::whereNull('parent_id')
-            ->where('user_id', parentID())
-            ->where('active', true)->get();
+//        $regions = Region::whereNull('parent_id')
+//            ->where('user_id', parentID())
+//            ->where('active', true)->get();
 
-        return view('customer.regions.edit', compact('id', 'item', 'regions'));
+//        return view('customer.regions.edit', compact('id', 'item', 'regions'));
+        return view('customer.regions.edit', compact('id', 'item'));
     }
 
     /**
@@ -133,7 +134,7 @@ class RegionController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:2|max:60|unique:branches,name,' . $id . ',id,deleted_at,NULL,user_id,' . parentID(),
             'photo' => 'nullable|image',
-            'parent_id' => 'nullable|exists:regions,id',
+//            'parent_id' => 'nullable|exists:regions,id',
         ]);
 
         if ($validator->errors()->count()) {
@@ -141,13 +142,14 @@ class RegionController extends Controller
         }
 
         $region = Region::findOrFail($id);
-        if($region->parent_id == null && $request->parent_id != null){
-            return redirect()->back()->withErrors(['parent_id' => "You can't add parent for this region"])->withInput();
-        }
 
-        if($region->parent_id != null && $request->parent_id == null){
-            return redirect()->back()->withErrors(['parent_id' => "You must add parent for this region"])->withInput();
-        }
+//        if($region->parent_id == null && $request->parent_id != null){
+//            return redirect()->back()->withErrors(['parent_id' => "You can't add parent for this region"])->withInput();
+//        }
+//
+//        if($region->parent_id != null && $request->parent_id == null){
+//            return redirect()->back()->withErrors(['parent_id' => "You must add parent for this region"])->withInput();
+//        }
 
         $data = Arr::except($validator->validated(), ['photo']);
 

@@ -100,7 +100,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                                <div class="invalid-feedback name-feedback">
+                                                                <div class="invalid-feedback d-block name-feedback">
                                                                     <strong>{{$errors->has('branch_id')?$errors->first('branch_id'):''}}</strong>
                                                                 </div>
                                                             </div>
@@ -116,7 +116,7 @@
                                                                         value="invoice" {{ request('message_type') == 'invoice' ? 'selected' : '' }}>@lang('app.Invoice')</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="invalid-feedback name-feedback">
+                                                            <div class="invalid-feedback d-block name-feedback">
                                                                 <strong>{{$errors->has('message_type')?$errors->first('message_type'):''}}</strong>
                                                             </div>
                                                         </div>
@@ -124,7 +124,7 @@
                                                             <label>{{__('app.start')}}</label>
                                                             <input type="date" name="start_date" class="form-control"
                                                                    value="{{old('start_date')}}"/>
-                                                            <div class="invalid-feedback name-feedback">
+                                                            <div class="invalid-feedback d-block name-feedback">
                                                                 <strong>{{$errors->has('start_date')?$errors->first('start_date'):''}}</strong>
                                                             </div>
                                                         </div>
@@ -132,7 +132,7 @@
                                                             <label>{{__('app.end')}}</label>
                                                             <input type="date" name="end_date" class="form-control"
                                                                    value="{{old('end_date')}}"/>
-                                                            <div class="invalid-feedback name-feedback">
+                                                            <div class="invalid-feedback d-block name-feedback">
                                                                 <strong>{{$errors->has('end_date')?$errors->first('end_date'):''}}</strong>
                                                             </div>
                                                         </div>
@@ -214,7 +214,7 @@
 {{--                                                            @if(request('branch_id') != null) {{request('branch_id') == $branch->id ? 'selected' : ''}} @endif>{{$branch->name}}</option>--}}
 {{--                                                        @endforeach--}}
 {{--                                                    </select>--}}
-{{--                                                    <div class="invalid-feedback name-feedback">--}}
+{{--                                                    <div class="invalid-feedback d-block name-feedback">--}}
 {{--                                                        <strong>{{$errors->has('branch_id')?$errors->first('branch_id'):''}}</strong>--}}
 {{--                                                    </div>--}}
 {{--                                                </div>--}}
@@ -223,7 +223,7 @@
 {{--                                                <label>{{__('app.start')}}</label>--}}
 {{--                                                <input type="date" name="start_date" class="form-control"--}}
 {{--                                                       value="{{old('start_date')}}"/>--}}
-{{--                                                <div class="invalid-feedback name-feedback">--}}
+{{--                                                <div class="invalid-feedback d-block name-feedback">--}}
 {{--                                                    <strong>{{$errors->has('start_date')?$errors->first('start_date'):''}}</strong>--}}
 {{--                                                </div>--}}
 {{--                                            </div>--}}
@@ -231,7 +231,7 @@
 {{--                                                <label>{{__('app.end')}}</label>--}}
 {{--                                                <input type="date" name="end_date" class="form-control"--}}
 {{--                                                       value="{{old('end_date')}}"/>--}}
-{{--                                                <div class="invalid-feedback name-feedback">--}}
+{{--                                                <div class="invalid-feedback d-block name-feedback">--}}
 {{--                                                    <strong>{{$errors->has('end_date')?$errors->first('end_date'):''}}</strong>--}}
 {{--                                                </div>--}}
 {{--                                            </div>--}}
@@ -244,7 +244,7 @@
 {{--                                                    <option--}}
 {{--                                                        value="invoice" {{ request('message_type') == 'invoice' ? 'selected' : '' }}>@lang('app.Invoice')</option>--}}
 {{--                                                </select>--}}
-{{--                                                <div class="invalid-feedback name-feedback">--}}
+{{--                                                <div class="invalid-feedback d-block name-feedback">--}}
 {{--                                                    <strong>{{$errors->has('message_type')?$errors->first('message_type'):''}}</strong>--}}
 {{--                                                </div>--}}
 {{--                                            </div>--}}

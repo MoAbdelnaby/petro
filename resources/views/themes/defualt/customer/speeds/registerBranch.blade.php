@@ -377,7 +377,7 @@
                                 </button>
                             </div>
                             @error('branch_id')
-                            <span class="invalid-feedback my-2" role="alert">
+                            <span class="invalid-feedback d-block my-2" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror

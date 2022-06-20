@@ -34,7 +34,7 @@
                                                    placeholder="{{__('app.auth.name')}}"
                                                    value="{{ $user->name ? $user->name :$user->name}}">
                                             @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -47,7 +47,7 @@
                                                    placeholder="{{__('app.auth.email')}}"
                                                    value="{{ $user->email? $user->email :$user->email }}">
                                             @error('email')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -63,7 +63,7 @@
                                                    placeholder="{{__('app.auth.phone')}}"
                                                    value="{{ $user->phone? $user->phone :$user->phone }}">
                                             @error('phone')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                             @enderror
@@ -76,7 +76,7 @@
                                                    class="form-control  @error('password') is-invalid @enderror"
                                                    id="password" placeholder="{{__('app.auth.password')}}">
                                             @error('password')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -92,7 +92,7 @@
                                                    placeholder="{{__('app.auth.password_confirmation')}}"
                                                    name="password_confirmation">
                                             @error('password_confirmation')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -108,7 +108,7 @@
                                                 @endforeach
                                             </select>
                                             @error('position_id')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -124,7 +124,7 @@
                                                 <span class="checkmark"></span>
                                             </label>
                                             @error('speedtest')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror

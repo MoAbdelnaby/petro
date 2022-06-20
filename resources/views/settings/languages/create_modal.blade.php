@@ -16,17 +16,17 @@
                     <div class="form-group">
                         <label>{{__('app.languages.table.name')}} *</label>
                         <input type="text" name="name" class="form-control name" aria-describedby="emailHelp" placeholder="{{__('app.languages.table.name')}}">
-                        <div class="invalid-feedback name-feedback"></div>
+                        <div class="invalid-feedback d-block name-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label>{{__('app.languages.table.code')}} *</label>
                         <input type="text" name="code" class="form-control code" aria-describedby="emailHelp" placeholder="{{__('app.languages.table.code')}}">
-                        <div class="invalid-feedback code-feedback"></div>
+                        <div class="invalid-feedback d-block code-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label>{{__('app.languages.table.flag')}} *</label>
                         <input type="text" name="flag" class="form-control flag" aria-describedby="emailHelp" placeholder="{{__('app.languages.table.flag')}}">
-                        <div class="invalid-feedback flag-feedback"></div>
+                        <div class="invalid-feedback d-block flag-feedback"></div>
                     </div>
 
                     <div class="form-group">
@@ -36,7 +36,7 @@
                             <option value="ltr">{{ __('app.Left_To_Right_Direction') }}</option>
                             <option value="rtl">{{ __('app.Right_To_Left_Direction') }}</option>
                         </select>
-                        <div class="invalid-feedback direction-feedback"></div>
+                        <div class="invalid-feedback d-block direction-feedback"></div>
                     </div>
 
                 </div>

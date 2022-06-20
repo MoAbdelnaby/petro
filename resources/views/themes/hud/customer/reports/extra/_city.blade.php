@@ -22,7 +22,7 @@
                 </option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
+        <div class="invalid-feedback d-block">
             Please select at least one city.
         </div>
     </div>
@@ -36,7 +36,7 @@
                 <option value="{{$city->id}}">{{$city->name}}</option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
+        <div class="invalid-feedback d-block">
             Please select city.
         </div>
     </div>

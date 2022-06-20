@@ -37,7 +37,7 @@
                                     <label for="exampleInputEmail1">{{__('app.auth.email')}}</label>
                                     <input required type="email"  class="form-control mb-0  @error('email') is-invalid @enderror" id="email" placeholder="{{__('app.auth.email')}}"  name="email" value="{{ old('email') }}">
                                     @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                                     @enderror

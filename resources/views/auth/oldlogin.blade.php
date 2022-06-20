@@ -25,7 +25,7 @@
                                     <label for="email">{{__('app.auth.email')}}</label>
                                     <input required type="email"  class="form-control mb-0 @error('email') is-invalid @enderror" id="email" placeholder="{{__('app.auth.email')}}"  name="email" value="{{ old('email') }}">
                                     @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                                     @enderror
@@ -35,7 +35,7 @@
                                 <a href="{{Url('/password/reset')}}" class="float-right">{{__('app.auth.Forgot')}}</a>
                                     <input required type="password" class="form-control mb-0 @error('password') is-invalid @enderror" id="password" placeholder="{{__('app.auth.password')}}"  name="password" value="{{ old('password') }}">
                                     @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                      <strong>{{ $message }}</strong>
                             </span>
                                     @enderror

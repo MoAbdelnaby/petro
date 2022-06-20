@@ -49,7 +49,7 @@
                                             <label for="price">{{__('app.saas.modelfeatures.table.price')}}</label>
                                             <input  min="0" type="number"  name="price" class="form-control" id="price" placeholder="{{__('app.saas.modelfeatures.table.price')}}" value="{{ old('price')?old('price'):$item->price }}">
                                             @error('price')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror

@@ -24,7 +24,7 @@
                         @if(in_array($branch->id,request('branch_comparison')??[])) selected @endif>{{$branch->name}}</option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
+        <div class="invalid-feedback d-block">
             Please select branch.
         </div>
     </div>
@@ -38,7 +38,7 @@
                 <option value="{{$branch->id}}" @if(request('branch_data') == $branch->id) selected @endif>{{$branch->name}}</option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
+        <div class="invalid-feedback d-block">
             Please select branch.
         </div>
     </div>

@@ -16,14 +16,14 @@
                     <div class="form-group">
                         <label>{{__('app.branches.table.name')}} *</label>
                         <input type="text" name="name" class="form-control name" aria-describedby="emailHelp" placeholder="{{__('app.branches.table.name')}}">
-                        <div class="invalid-feedback name-feedback"></div>
+                        <div class="invalid-feedback d-block name-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label>{{__('app.branches.table.description')}}</label>
                         <input type="text" name="description" class="form-control description" aria-describedby="emailHelp" placeholder="{{__('app.branches.table.description')}}">
-                        <div class="invalid-feedback description-feedback"></div>
+                        <div class="invalid-feedback d-block description-feedback"></div>
                     </div>
-                    
+
 
                 </div>
                 <div class="modal-footer">

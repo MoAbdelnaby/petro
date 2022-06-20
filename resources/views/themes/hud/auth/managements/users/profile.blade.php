@@ -52,7 +52,7 @@
                                                 placeholder="{{ __('app.auth.name') }}"
                                                 value="{{ old('name') ? old('name') : $user->name }}">
                                             @error('name')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -64,7 +64,7 @@
                                                 placeholder="{{ __('app.auth.email') }}"
                                                 value="{{ old('email') ? old('email') : $user->email }}">
                                             @error('email')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -78,7 +78,7 @@
                                                 placeholder="{{ __('app.auth.phone') }}"
                                                 value="{{ old('phone') ? old('phone') : $user->phone }}">
                                             @error('phone')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror

@@ -29,7 +29,7 @@
                                             <label for="name">{{__('app.saas.features.table.name')}} *</label>
                                             <input required type="text" name="name" class="form-control" id="name" placeholder="{{__('app.saas.features.table.name')}}" value="{{ old('name') }}">
                                             @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -44,7 +44,7 @@
                                             <label for="price">{{__('app.saas.features.table.price')}}</label>
                                             <input  min="0" type="number"  name="price" class="form-control" id="price" placeholder="{{__('app.saas.features.table.price')}}" value="{{ old('price') }}">
                                             @error('price')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror

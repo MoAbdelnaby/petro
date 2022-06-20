@@ -28,7 +28,7 @@
                                             <label for="oldpassword">{{__('app.auth.oldpassword')}}</label>
                                             <input required type="password" class="form-control mb-0  @error('oldpassword') is-invalid @enderror" id="oldpassword" placeholder="{{__('app.auth.oldpassword')}}"  name="oldpassword" value="{{ old('oldpassword') }}">
                                             @error('oldpassword')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -37,7 +37,7 @@
                                             <label for="password">{{__('app.auth.password')}}</label>
                                             <input required type="password" class="form-control mb-0  @error('password') is-invalid @enderror" id="password" placeholder="{{__('app.auth.password')}}"  name="password" value="{{ old('password') }}">
                                             @error('password')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -47,7 +47,7 @@
                                             <label for="password_confirmation">{{__('app.auth.password_confirmation')}}</label>
                                             <input required type="password" class="form-control mb-0  @error('password_confirmation') is-invalid @enderror" id="password_confirmation" placeholder="{{__('app.auth.password_confirmation')}}"  name="password_confirmation" value="{{ old('password_confirmation') }}">
                                             @error('password_confirmation')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                             @enderror
