@@ -20,7 +20,7 @@
                         @if(in_array($region->id,request('region_comparison')??[])) selected @endif>{{$region->name}}</option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
+        <div class="invalid-feedback d-block">
             Please select region.
         </div>
     </div>
@@ -34,7 +34,7 @@
                 <option value="{{$region->id}}">{{$region->name}}</option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
+        <div class="invalid-feedback d-block">
             Please select region.
         </div>
     </div>

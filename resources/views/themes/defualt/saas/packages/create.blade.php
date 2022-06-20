@@ -30,7 +30,7 @@
                                                 <label for="name">{{__('app.saas.packages.table.name')}} *</label>
                                                 <input required type="text" name="name" class="form-control" id="name" placeholder="{{__('app.saas.packages.table.name')}}" value="{{ old('name') }}">
                                                 @error('name')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                                 @enderror
@@ -46,7 +46,7 @@
                                                 <label for="price_monthly">{{__('app.saas.packages.table.price_monthly')}}</label>
                                                 <input  min="0" type="number"  name="price_monthly" class="form-control" id="price_monthly" placeholder="{{__('app.saas.packages.table.price_monthly')}}" value="{{ old('price_monthly') }}">
                                                 @error('price_monthly')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                                 @enderror
@@ -56,7 +56,7 @@
                                                 <label for="desc">{{__('app.saas.packages.table.price_yearly')}}</label>
                                                 <input min="0"  type="number"  name="price_yearly" class="form-control" id="price_yearly" placeholder="{{__('app.saas.packages.table.price_yearly')}}" value="{{ old('price_yearly') }}">
                                                 @error('price_yearly')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                                 @enderror
@@ -73,7 +73,7 @@
                                                 <label for="start_date">{{__('app.saas.packages.table.start_date')}} *</label>
                                                 <input required type="date" min="{{date('Y-m-d')}}" name="start_date" class="form-control mindate" id="start_date" placeholder="{{__('app.saas.packages.table.start_date')}}" value="{{ old('start_date') }}">
                                                 @error('start_date')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                                 @enderror
@@ -82,7 +82,7 @@
                                                 <label for="end_date">{{__('app.saas.packages.table.end_date')}} *</label>
                                                 <input required type="date" min="{{date('Y-m-d')}}" name="end_date" class="form-control mindate" id="end_date" placeholder="{{__('app.saas.packages.table.end_date')}}" value="{{ old('end_date') }}">
                                                 @error('end_date')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                                 @enderror
@@ -93,7 +93,7 @@
                                                 <label for="desc">{{__('app.saas.packages.table.desc')}}</label>
                                                 <textarea rows="3"  name="desc" class="form-control" id="desc" placeholder="{{__('app.saas.packages.table.desc')}}">{{ old('desc') }}</textarea>
                                                 @error('desc')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                                 @enderror

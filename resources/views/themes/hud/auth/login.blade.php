@@ -18,7 +18,7 @@
                 <div class="md-form mt-3">
                     <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{__('app.auth.email')}}"  name="email" value="{{ old('email') }}">
                     @error('email')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback d-block" role="alert">
                                   <strong>{{ $message }}</strong>
                                </span>
                     @enderror
@@ -28,7 +28,7 @@
                     <a href="{{Url('/password/reset')}}" class="float-right">{{__('app.auth.Forgot')}}</a>
                     <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" placeholder="{{__('app.auth.password')}}"  name="password" value="{{ old('password') }}">
                     @error('password')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback d-block" role="alert">
                                      <strong>{{ $message }}</strong>
                                </span>
                     @enderror
@@ -43,7 +43,7 @@
             {{--                        @endforeach--}}
             {{--                    </select>--}}
             {{--                    @error('branch_id')--}}
-            {{--                    <span class="invalid-feedback my-2" role="alert">--}}
+            {{--                    <span class="invalid-feedback d-block my-2" role="alert">--}}
             {{--                                         <strong>{{ $message }}</strong>--}}
             {{--                                    </span>--}}
             {{--                    @enderror--}}

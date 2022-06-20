@@ -16,13 +16,13 @@
                     <div class="form-group">
                         <label>{{__('app.roles.table.name')}} *</label>
                         <input required type="text" name="name" class="form-control name" aria-describedby="emailHelp" placeholder="{{__('app.roles.table.name')}}">
-                        <div class="invalid-feedback name-feedback"></div>
+                        <div class="invalid-feedback d-block name-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label>{{__('app.roles.table.display_name')}} *</label>
                         <input required ype="text" name="display_name" class="form-control display_name" aria-describedby="emailHelp" placeholder="{{__('app.roles.table.display_name')}}">
                         <input type="text" name="id" class="form-control id" hidden>
-                        <div class="invalid-feedback display_name-feedback"></div>
+                        <div class="invalid-feedback d-block display_name-feedback"></div>
                     </div>
                     <hr>
                     @php

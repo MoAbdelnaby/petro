@@ -8,7 +8,7 @@
             </option>
         @endforeach
     </select>
-    <div class="invalid-feedback">
+    <div class="invalid-feedback d-block">
         Please select region.
     </div>
 </div>

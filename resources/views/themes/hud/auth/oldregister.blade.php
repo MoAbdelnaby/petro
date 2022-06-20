@@ -26,7 +26,7 @@
                             <label for="name">{{__('app.auth.name')}}</label>
                             <input required type="text"  class="form-control mb-0  @error('name') is-invalid @enderror" id="name" placeholder="{{__('app.auth.name')}}"  name="name" value="{{ old('name') }}">
                             @error('name')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -35,7 +35,7 @@
                             <label for="phone">{{__('app.auth.phone')}}</label>
                             <input type="text"  class="form-control mb-0   @error('phone') is-invalid @enderror" id="phone" placeholder="{{__('app.auth.phone')}}"  name="phone" value="{{ old('phone') }}">
                             @error('phone')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -44,7 +44,7 @@
                             <label for="email">{{__('app.auth.email')}}</label>
                             <input required type="email"  class="form-control mb-0  @error('email') is-invalid @enderror" id="email" placeholder="{{__('app.auth.email')}}"  name="email" value="{{ old('email') }}">
                             @error('email')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -53,7 +53,7 @@
                             <label for="password">{{__('app.auth.password')}}</label>
                             <input required type="password" class="form-control mb-0  @error('password') is-invalid @enderror" id="password" placeholder="{{__('app.auth.password')}}"  name="password" value="{{ old('password') }}">
                             @error('password')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -63,7 +63,7 @@
                             <label for="password_confirmation">{{__('app.auth.password_confirmation')}}</label>
                             <input required type="password" class="form-control mb-0  @error('password_confirmation') is-invalid @enderror" id="password_confirmation" placeholder="{{__('app.auth.password_confirmation')}}"  name="password_confirmation" value="{{ old('password_confirmation') }}">
                             @error('password_confirmation')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror

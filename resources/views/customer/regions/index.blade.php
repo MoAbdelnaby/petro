@@ -133,7 +133,7 @@
                                                     <thead>
                                                     <th>{{ __('app.Image') }}</th>
                                                     <th>{{ __('app.Name') }}</th>
-                                                    <th>{{ __('app.users.table.Parent') }}</th>
+{{--                                                    <th>{{ __('app.users.table.Parent') }}</th>--}}
                                                     <th>{{ __('app.Status') }}</th>
                                                     <th>{{ __('app.Settings') }}</th>
                                                     </thead>
@@ -152,7 +152,7 @@
                                                                 />
                                                             </td>
                                                             <td>{{$item->name}}</td>
-                                                            <td>{{optional($item->parent)->name??'----'}}</td>
+{{--                                                            <td>{{optional($item->parent)->name??'----'}}</td>--}}
                                                             <td>
                                                                 <a href="{{ url(route('regions.change_active',[$item->id])) }}">
                                                                     @if($item->active==1)

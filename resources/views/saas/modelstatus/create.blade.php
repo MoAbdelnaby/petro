@@ -30,7 +30,7 @@
                                             <label for="name">{{__('app.saas.modelstatus.table.name')}} *</label>
                                             <input required type="text" name="name" class="form-control  @error('name') is-invalid @enderror" id="name" placeholder="{{__('app.saas.modelstatus.table.name')}}" value="{{ old('name') }}">
                                             @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -39,7 +39,7 @@
                                             <label for="desc">{{__('app.saas.modelstatus.table.desc')}}</label>
                                             <textarea rows="2"  name="desc" class="form-control @error('desc') is-invalid @enderror" id="desc" placeholder="{{__('app.saas.modelstatus.table.desc')}}">{{ old('desc') }}</textarea>
                                             @error('desc')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                             @enderror

@@ -36,7 +36,7 @@
                                 <label for="exampleInputEmail1">{{__('app.auth.email')}}</label>
                                 <input  type="email"  class="form-control mb-0  @error('email') is-invalid @enderror" id="email" placeholder="{{__('app.auth.email')}}"  name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
                                 @error('email')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                                 @enderror
@@ -45,7 +45,7 @@
                                 <label for="exampleInputPassword1">{{__('app.auth.password')}}</label>
                                 <input required type="password" class="form-control mb-0  @error('password') is-invalid @enderror" id="password" placeholder="{{__('app.auth.password')}}"  name="password" value="{{ old('password') }}">
                                 @error('password')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                                 @enderror
@@ -55,7 +55,7 @@
                                 <label for="password_confirmation">{{__('app.auth.password_confirmation')}}</label>
                                 <input required type="password" class="form-control mb-0  @error('password_confirmation') is-invalid @enderror" id="password_confirmation" placeholder="{{__('app.auth.password_confirmation')}}"  name="password_confirmation" value="{{ old('password_confirmation') }}">
                                 @error('password_confirmation')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                                 @enderror

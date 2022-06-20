@@ -18,7 +18,7 @@
                             <div class="md-form mt-3">
                                 <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{__('app.auth.name')}}"  name="name" value="{{ old('name') }}">
                                 @error('name')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback d-block" role="alert">
                                   <strong>{{ $message }}</strong>
                                </span>
                                 @enderror
@@ -27,7 +27,7 @@
                                 <div class="md-form mt-3">
                                     <input type="text" id="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="{{__('app.auth.phone')}}"  name="phone" value="{{ old('phone') }}">
                                     @error('phone')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                       <strong>{{ $message }}</strong>
                                    </span>
                                     @enderror
@@ -37,7 +37,7 @@
                                 <div class="md-form mt-3">
                                     <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{__('app.auth.email')}}"  name="email" value="{{ old('email') }}">
                                     @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                   <strong>{{ $message }}</strong>
                                </span>
                                     @enderror
@@ -46,7 +46,7 @@
                             <div class="md-form">
                                 <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" placeholder="{{__('app.auth.password')}}"  name="password" value="{{ old('password') }}">
                                  @error('password')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback d-block" role="alert">
                                      <strong>{{ $message }}</strong>
                                </span>
                                 @enderror
@@ -55,7 +55,7 @@
                                 <div class="md-form">
                                     <input id="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" type="password" placeholder="{{__('app.auth.password_confirmation')}}"  name="password_confirmation" value="{{ old('password_confirmation') }}">
                                     @error('password_confirmation')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                      <strong>{{ $message }}</strong>
                                </span>
                                     @enderror

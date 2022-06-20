@@ -11,13 +11,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="days">{{ __('app.Days') }}</label>
-                        <input type="number" class="form-control"
+                        <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"   class="form-control"
                                id="days"
                                min="1" max="365" name="day"
                                value="{{$reminder ? $reminder->day : ''}}"
                                aria-describedby="number of days"
                                placeholder="(1  - 365)">
-                        <div class="invalid-feedback day">
+                        <div class="invalid-feedback d-block day">
                             {{ __('app.enter_a_valid_number_of_days') }}
                         </div>
                     </div>

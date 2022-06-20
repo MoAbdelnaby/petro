@@ -76,7 +76,7 @@
                                             </label>
                                         </td>
                                         <th>{{__('app.users.table.name')}}</th>
-                                        <th>{{__('app.users.table.position')}}</th>
+{{--                                        <th>{{__('app.users.table.position')}}</th>--}}
                                         <th>{{__('app.users.table.email')}}</th>
                                         <th>{{ __('app.Settings') }}</th>
 
@@ -93,7 +93,7 @@
                                                 </td>
 
                                                 <td>{{$trash->name}}</td>
-                                                <td>{{$trash->position??'--'}}</td>
+{{--                                                <td>{{$trash->position??'--'}}</td>--}}
                                                 <td>{{$trash->email}}</td>
 
                                                 <td style='white-space: nowrap'>
@@ -110,13 +110,13 @@
                                         @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="col-md-6">
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination justify-content-end mb-0">
-                                                {!! $users->appends(request()->query())->links() !!}
-                                            </ul>
-                                        </nav>
-                                    </div>
+{{--                                    <div class="col-md-6">--}}
+{{--                                        <nav aria-label="Page navigation example">--}}
+{{--                                            <ul class="pagination justify-content-end mb-0">--}}
+{{--                                                {!! $users->appends(request()->query())->links() !!}--}}
+{{--                                            </ul>--}}
+{{--                                        </nav>--}}
+{{--                                    </div>--}}
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -202,8 +202,10 @@
                                                                 <small><i
                                                                         class="far fa-sitemap"></i> {{__('app.saas.packages.items.active_branches')}}
                                                                 </small>
+                                                                @if(count($user->branches))
                                                                 <span class="float-right showbranchesAll"><i
                                                                         class="fas fa-info"></i></span>
+                                                                @endif
                                                                 {{--                                                                                @if(!empty($item->itembranches) and count($item->itembranches) > 5 )--}}
                                                                 <div class="branchesAll">
 

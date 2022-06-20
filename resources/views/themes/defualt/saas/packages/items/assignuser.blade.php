@@ -84,7 +84,7 @@
                                             <label for="start_date">{{__('app.saas.packages.table.start_date')}} *</label>
                                             <input required type="date" min="{{date('Y-m-d')}}" name="start_date" class="form-control mindate" id="start_date" placeholder="{{__('app.saas.packages.table.start_date')}}" value="{{ old('start_date') }}">
                                             @error('start_date')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
@@ -94,7 +94,7 @@
                                             <label for="end_date">{{__('app.saas.packages.table.end_date')}} *</label>
                                             <input required type="date" min="{{date('Y-m-d')}}" name="end_date" class="form-control mindate" id="end_date" placeholder="{{__('app.saas.packages.table.end_date')}}" value="{{ old('end_date') }}">
                                             @error('end_date')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror

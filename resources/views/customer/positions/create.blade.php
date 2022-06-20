@@ -24,7 +24,7 @@
                                             <input type="text" name="name" class="form-control" id="name"
                                                    placeholder="{{__('app.Name')}}" value="{{ old('name') }}">
                                             @error('name')
-                                                <span style="display: block" class="invalid-feedback" role="alert">
+                                                <span style="display: block" class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -39,7 +39,7 @@
                                                 @endforeach
                                             </select>
                                             @error('parent_id')
-                                                <span  style="display: block" class="invalid-feedback" role="alert">
+                                                <span  style="display: block" class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror

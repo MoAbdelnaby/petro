@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <label>{{__('app.customers.packages.SelectBranch')}} *</label>
                         <input required type="text" name="name" class="form-control name" aria-describedby="emailHelp" placeholder="{{__('app.roles.table.name')}}">
-                        <div class="invalid-feedback name-feedback"></div>
+                        <div class="invalid-feedback d-block name-feedback"></div>
                     </div>
 
                     <hr>

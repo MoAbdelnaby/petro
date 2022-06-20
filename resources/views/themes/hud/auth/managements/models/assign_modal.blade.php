@@ -19,7 +19,7 @@
                         <select name="name" id='user_search' class="form-control name">
                             <option value='0'>{{__('app.models.searchForUser')}}</option>
                             </select>
-                        <div class="invalid-feedback name-feedback"></div>
+                        <div class="invalid-feedback d-block name-feedback"></div>
                        </div>
 
                        <div class="form-group">
@@ -27,7 +27,7 @@
                         <select name="branch" id='branch_search' class="form-control branch">
                             <option value='0'>{{__('app.models.searchForBranch')}}</option>
                             </select>
-                        <div class="invalid-feedback branch-feedback"></div>
+                        <div class="invalid-feedback d-block branch-feedback"></div>
                         </div>
                        <input type="hidden" name="userid" value="0" id="userid">
                        <input type="hidden" name="branchid" value="0" id="branchid">

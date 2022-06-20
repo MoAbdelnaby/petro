@@ -41,7 +41,7 @@
                                                 </span>
                                             </div>
                                             @error('image')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -55,26 +55,26 @@
                                                    placeholder="{{__('app.customers.branches.table.name')}}"
                                                    value="{{ old('name') }}">
                                             @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                                            <label for="code">{{__('app.customers.branches.table.region')}} *</label>
-                                            <select class="form-control region_select" required name='parent_id'>
-                                                <option value="">Select Parent</option>
-                                                @foreach ($regions as $reg)
-                                                    <option data-img="{{ $reg->photo ?? '' }}"
-                                                            value="{{ $reg->id }}" {{ old('parent_id') == $reg->id ? 'selected' : '' }}>{{ $reg->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('parent_id')
-                                            <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
+{{--                                        <div class="form-group col-sm-12 col-md-6 col-lg-6">--}}
+{{--                                            <label for="code">{{__('app.customers.branches.table.region')}} *</label>--}}
+{{--                                            <select class="form-control region_select" required name='parent_id'>--}}
+{{--                                                <option value="">Select Parent</option>--}}
+{{--                                                @foreach ($regions as $reg)--}}
+{{--                                                    <option data-img="{{ $reg->photo ?? '' }}"--}}
+{{--                                                            value="{{ $reg->id }}" {{ old('parent_id') == $reg->id ? 'selected' : '' }}>{{ $reg->name}}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                            @error('parent_id')--}}
+{{--                                            <span class="invalid-feedback d-block" role="alert">--}}
+{{--                                                    <strong>{{ $message }}</strong>--}}
+{{--                                                </span>--}}
+{{--                                            @enderror--}}
+{{--                                        </div>--}}
                                     </div>
                                     <div class="border-bottom col-12 mb-2 mt-2 clearfix"></div>
                                     <button type="submit"

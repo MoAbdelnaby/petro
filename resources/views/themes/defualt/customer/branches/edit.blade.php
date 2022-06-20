@@ -54,7 +54,7 @@
                                                 </span>
                                                 </div>
                                                 @error('image')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                                 @enderror
@@ -66,7 +66,7 @@
                                                        placeholder="{{__('app.customers.branches.table.name')}}"
                                                        value="{{ old('name')? old('name') :$item->name }}">
                                                 @error('name')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                                 @enderror
@@ -74,11 +74,11 @@
 
                                             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                                                 <label for="code">{{__('app.customers.branches.table.code')}} *</label>
-                                                <input type="number" name="code" class="form-control" id="code"
+                                                <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"   name="code" class="form-control" id="code"
                                                        placeholder="{{__('app.customers.branches.table.code')}}"
                                                        value="{{ old('code')? old('code') : $item->code }}">
                                                 @error('code')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                                 @enderror
@@ -88,7 +88,7 @@
                                                 <label for="lat">{{__('app.customers.branches.table.lat')}} </label>
                                                 <input type="text" name="lat" class="form-control" id="lat" placeholder="{{__('app.customers.branches.table.lat')}}" value="{{ old('lat')? old('lat') : $item->lat }}">
                                                 @if($errors->has('lat'))
-                                                    <span class="invalid-feedback" role="alert">
+                                                    <span class="invalid-feedback d-block" role="alert">
                                                         <strong>{{ $errors->first('lat') }}</strong>
                                                     </span>
                                                     @enderror
@@ -97,7 +97,7 @@
                                                 <label for="lng">{{__('app.customers.branches.table.lng')}} </label>
                                                 <input type="text" name="lng" class="form-control" id="lng" placeholder="{{__('app.customers.branches.table.lng')}}" value="{{ old('lng')? old('lng') : $item->lng }}">
                                                 @if($errors->has('lng'))
-                                                    <span class="invalid-feedback" role="alert">
+                                                    <span class="invalid-feedback d-block" role="alert">
                                                         <strong>{{ $errors->first('lng') }}</strong>
                                                     </span>
                                                     @enderror
@@ -108,14 +108,14 @@
                                                 <label
                                                     for="area_count">{{__('app.customers.branches.table.area_count')}}
                                                     *</label>
-                                                <input type="number"
+                                                <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"
                                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                        maxlength="1" name="area_count" class="form-control"
                                                        id="area_count"
                                                        placeholder="{{__('app.customers.branches.table.area_count')}}"
                                                        value="{{ old('area_count')? old('area_count') : $item->area_count }}">
                                                 @error('area_count')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                                 @enderror
@@ -125,7 +125,7 @@
                                                     <label for="top">{{__('app.customers.branches.table.top')}}
                                                         *</label>
                                                     <div class="input-group">
-                                                        <input type="number" name="top" class="top form-control"
+                                                        <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"   name="top" class="top form-control"
                                                                disabled="disabled" id="top" step=".1" min="0" max="100"
                                                                value="{{ $item->top }}">
                                                         <div class="input-group-append">
@@ -134,7 +134,7 @@
                                                     </div>
 
                                                     @error('top')
-                                                    <span class="invalid-feedback" role="alert">
+                                                    <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                                     @enderror
@@ -143,7 +143,7 @@
                                                     <label for="left">{{__('app.customers.branches.table.left')}}
                                                         *</label>
                                                     <div class="input-group">
-                                                        <input type="number" name="left" class="top form-control"
+                                                        <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"   name="left" class="top form-control"
                                                                disabled="disabled" id="left" step=".1" min="0" max="100"
                                                                value="{{ $item->left }}">
                                                         <div class="input-group-append">
@@ -151,7 +151,7 @@
                                                         </div>
                                                     </div>
                                                     @error('left')
-                                                    <span class="invalid-feedback" role="alert">
+                                                    <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                                     @enderror
@@ -170,7 +170,7 @@
                                                     @endforeach
                                                 </select>
                                                 @error('region')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                                 @enderror
@@ -184,7 +184,7 @@
                                                     <option value="4" selected>{{ __('app.CarPlates') }}</option>
                                                 </select>
                                                 @error('models')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback d-block" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror

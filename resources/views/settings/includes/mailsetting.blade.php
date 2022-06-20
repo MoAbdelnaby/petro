@@ -188,7 +188,7 @@
                         <label for="recipient-name" class="col-form-label">{{ __('app.email') }}:</label>
                         <input type="email" required class="form-control" id="recipient-email"
                                placeholder="{{ __('app.add_recipientEmail') }}">
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             {{ __('app.provide_valid_email') }}
                         </div>
                     </div>

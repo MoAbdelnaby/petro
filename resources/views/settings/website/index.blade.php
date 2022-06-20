@@ -179,7 +179,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>{{__('app.settings.form.contact')}}</label>
-                                            <input type="number" class="form-control" name="contact_phone"
+                                            <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"   class="form-control" name="contact_phone"
                                                    placeholder="{{__('app.settings.form.contact_desc')}}"
                                                    value="{{ old('contact_phone', setting()->contact_phone  ) }}">
                                             <span class="form-text text-muted">{{__('app.settings.form.contact_desc')}}</span>
