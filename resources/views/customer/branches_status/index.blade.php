@@ -24,7 +24,7 @@
             animation: spin 2s linear infinite;
             position: absolute;
             top: 9px;
-            left: -15%;
+            left: -14%;
         }
 
         /* Safari */
@@ -105,7 +105,7 @@
                                     </div>
 
                                     <div class="col-lg-4 col-md-4">
-                                        <a href="javascript:;" id="not_linked_branch">
+                                        <a style="cursor: pointer" id="not_linked_branch" data-toggle="modal"  data-target="notLinkedModel">
                                             <div class="card text-center col-12">
                                                 <div class="card-header row offline"
                                                      style=" border-bottom: 5px solid #fed329 !important;">
@@ -245,12 +245,12 @@
                                                         </td>
                                                         <td style="position: relative"
                                                             id="stability_{{$branch->branch_code}}">
+                                                            <span class="loader"></span>
                                                             {{--                                                            @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)--}}
                                                             {{--                                                                {{$last_stability[$branch->branch_code]['stability']??"0 ". __('app.minute')}}--}}
                                                             {{--                                                            @else--}}
                                                             {{--                                                                {{"0 ". __('app.minute')}}--}}
                                                             {{--                                                            @endif--}}
-                                                            <span class="loader"></span>
                                                         </td>
                                                         <td>
                                                             @php($diff = \Carbon\Carbon::now()->diff($branch->created_at))
@@ -314,6 +314,32 @@
             </div>
         </div>
     </div>
+
+    <div class="modal show" id="notLinkedModel" tabindex="-1"
+         aria-labelledby="notLinkedModel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{__('app.not_link_branches')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @foreach ($not_linked_branches as $id=>$branch)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{{route('customerBranches.show',[$id])}}">{{ $branch }}</a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('app.save')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('js')
@@ -333,16 +359,22 @@
                 dataType: "JSON",
                 type: "GET",
                 success: function (data) {
-                    console.log(data.stabiliteis)
-                    data.forEach((el) => {
-                        console.log('sadfs')
-                    });
+                    let rows = $('#BranchStatusTable tr');
+                    for (let i = 0; i < rows.length; i++) {
+                        let stabilityId = $($(rows)[i]).find('td:nth-child(4)').attr('id');
+                        let branch_code = stabilityId?.replace('stability_', '');
+                        if (branch_code != undefined) {
+                            $(`#stability_${branch_code}`).html(data.stabiliteis[branch_code]?.stability ?? "0 Minute");
+                        }
+                    }
                 },
                 error: function (data) {
-
+                    let rows = $('#BranchStatusTable tr');
+                    for (let i = 0; i < rows.length; i++) {
+                        $($(rows)[i]).find('td:nth-child(4)').html("0 Minute");
+                    }
                 }
             });
-
 
             $(document).on('change', '.installed_switch', function () {
                 let item = $(this);

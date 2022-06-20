@@ -92,8 +92,9 @@ class BranchStatusController extends Controller
             ->count();
 
         $installed = Branch::primary()->where('installed', 1)->count();
+        $not_linked_branches = Branch::primary()->where('installed', 0)->pluck('name','id');
 
-        return view("customer.branches_status.index", compact('branches', 'off', 'on', 'installed'));
+        return view("customer.branches_status.index", compact('branches', 'off', 'on', 'installed','not_linked_branches'));
     }
 
     /**

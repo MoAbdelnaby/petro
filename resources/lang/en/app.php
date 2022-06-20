@@ -1690,6 +1690,6 @@ return [
     'min' => 'Minute',
     'hour_half' => 'Hour and half',
     'hours' => 'Hours',
-
-    'show_bracnh' => 'Show Branch'
+    'show_bracnh' => 'Show Branch',
+    'not_link_branches' => 'Not Linked Branches',
 ];
