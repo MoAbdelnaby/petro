@@ -171,7 +171,7 @@ class PlatesRepo extends AbstractRepo implements PlatesRepoInterface
             $result['areas_count'][$area] = $count_areas[$area] ?? 0;
         }
 
-        $query = Carprofile::with(['failMessage','invoiceStatus'])->selectRaw('carprofiles.*')
+        $query = Carprofile::with(['welcomeStatus','invoiceStatus'])->selectRaw('carprofiles.*')
             ->whereIn('status', ['completed','pending'])
             ->where('plate_status', '!=','error')
             ->where('branch_id', $branch_id);

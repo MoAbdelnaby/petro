@@ -28,6 +28,11 @@ class Carprofile extends Model
     public function failMessage() {
         return $this->hasOne(FailedMessage::class);
     }
+    public function welcomeStatus() {
+
+        return $this->hasOne(MessageLog::class)->where('type','welcome');
+    }
+
     public function invoiceStatus() {
         return $this->hasOne(MessageLog::class)->where('type','invoice');
     }

@@ -81,8 +81,8 @@
                            href="{{route('branchmodelpreview.index',[$branch->b_id])}}" aria-controls="pills-home"
                            aria-selected="true">
                             <img
-                                src="{{$branch->b_id==$branch_id ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
-                                alt="">
+                                    src="{{$branch->b_id==$branch_id ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
+                                    alt="">
                             <span class="ml-1"> {{$branch->bname}}</span></a>
                     </li>
                 @endforeach
@@ -379,7 +379,7 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                              <br>
+                                                <br>
                                                 <div class="d-flex justify-content-center btn-cont">
                                                     <button type="button" value="1" id="searchRecord"
                                                             class="btn close-setting">{{__('app.gym.search')}}
@@ -403,7 +403,7 @@
                                                 <div class="card model-card">
                                                     <div class="card-body p-0 ">
                                                         <span
-                                                            class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">{{__('app.all')}}</span>
+                                                                class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">{{__('app.all')}}</span>
                                                         <div class="setting-card-cont dropleft ">
                                                             <a href="#" type="button" data-toggle="dropdown"
                                                                id="dropdownMenuCardSetting" data-bs-toggle="dropdown"
@@ -411,8 +411,8 @@
                                                                 <i class="fas fa-cog"></i>
                                                             </a>
                                                             <div
-                                                                class="dropdown-menu dropdown-menu-right custom-dropdown"
-                                                                aria-labelledby="dropdownMenuCardSetting">
+                                                                    class="dropdown-menu dropdown-menu-right custom-dropdown"
+                                                                    aria-labelledby="dropdownMenuCardSetting">
                                                                 <button type="button" class="close close-1"
                                                                         data-dismiss="dropdown" aria-label="Close">
                                                                     <span class='close-1'
@@ -424,10 +424,10 @@
                                                                             class="filter_date custom-select">
                                                                         <option value="all">{{__('app.all')}}</option>
                                                                         <option
-                                                                            value="today">{{__('app.today')}}</option>
+                                                                                value="today">{{__('app.today')}}</option>
                                                                         <option value="week">{{__('app.week')}}</option>
                                                                         <option
-                                                                            value="month">{{__('app.month')}}</option>
+                                                                                value="month">{{__('app.month')}}</option>
                                                                     </select>
                                                                 </div>
 
@@ -440,14 +440,14 @@
                                                             <img src="{{resolveDark()}}/img/Icon-car.svg"
                                                                  alt="Area-{{$val}}">
                                                             <div
-                                                                class="area-title mt-1">{{__('app.gym.Area')}} {{$key}}</div>
+                                                                    class="area-title mt-1">{{__('app.gym.Area')}} {{$key}}</div>
 
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
                                                             <div class="spinner-cont d-none spinner-cont-{{$key}}">
                                                                 <div class="spinner-border text-primary" role="status">
                                                                     <span class="sr-only">Loading...</span>
-                                                                  </div>
+                                                                </div>
                                                             </div>
                                                             <div class=" text-center p-2 w-100">
                                                                 <h2>{{__('app.gym.car_plates')}}</h2>
@@ -478,7 +478,7 @@
                                         <div class="iq-card-body">
                                             <div class="related-heading">
                                                 <div
-                                                    class="d-flex justify-content-between align-items-center border-bottom">
+                                                        class="d-flex justify-content-between align-items-center border-bottom">
                                                     <h2 class="border-bottom-0">{{ __('app.Tables') }}</h2>
                                                     <div class="dropdown">
                                                         <a href="#" class="dropdown-toggle" type="button"
@@ -491,9 +491,9 @@
                                                                   {{ $userSettings ? ($userSettings->table_type == "1" ? 'selected' : '') :'selected' }}"
                                                                    href="#">
                                                                     <img
-                                                                        src="{{ asset('assets/images/tables-type/table-1.png')}}"
-                                                                        alt="{{ __('app.Pie_Chart') }}"
-                                                                        title="{{ __('app.Pie_Chart') }}">
+                                                                            src="{{ asset('assets/images/tables-type/table-1.png')}}"
+                                                                            alt="{{ __('app.Pie_Chart') }}"
+                                                                            title="{{ __('app.Pie_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -501,9 +501,9 @@
                                                                    class="dropdown-item table-2 {{ $userSettings ? ($userSettings->table_type == "2" ? 'selected' : '') :'' }}"
                                                                    href="#">
                                                                     <img
-                                                                        src="{{ asset('assets/images/tables-type/table-2.png')}}"
-                                                                        alt="{{ __('app.Bar_Chart') }}"
-                                                                        title="{{ __('app.Bar_Chart') }}">
+                                                                            src="{{ asset('assets/images/tables-type/table-2.png')}}"
+                                                                            alt="{{ __('app.Bar_Chart') }}"
+                                                                            title="{{ __('app.Bar_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -511,9 +511,9 @@
                                                                    class="dropdown-item table-3 {{ $userSettings ? ($userSettings->table_type == "3" ? 'selected' : '') :'' }}"
                                                                    href="#">
                                                                     <img
-                                                                        src="{{ asset('assets/images/tables-type/table-3.png')}}"
-                                                                        alt="{{ __('app.Line_Chart') }}"
-                                                                        title="{{ __('app.Line_Chart') }}">
+                                                                            src="{{ asset('assets/images/tables-type/table-3.png')}}"
+                                                                            alt="{{ __('app.Line_Chart') }}"
+                                                                            title="{{ __('app.Line_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -521,9 +521,9 @@
                                                                    class="dropdown-item table-4 {{ $userSettings ? ($userSettings->table_type == "4" ? 'selected' : '') :'' }}"
                                                                    href="#">
                                                                     <img
-                                                                        src="{{ asset('assets/images/tables-type/table-4.png')}}"
-                                                                        alt="{{ __('app.Pyramid_Chart') }}"
-                                                                        title="{{ __('app.Pyramid_Chart') }}">
+                                                                            src="{{ asset('assets/images/tables-type/table-4.png')}}"
+                                                                            alt="{{ __('app.Pyramid_Chart') }}"
+                                                                            title="{{ __('app.Pyramid_Chart') }}">
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -601,26 +601,26 @@
                                                                 <td>
                                                                     @if($item->status == 'completed')
                                                                         <span
-                                                                            class="badge badge-pill badge-success">{{ __('Completed') }}</span>
+                                                                                class="badge badge-pill badge-success">{{ __('Completed') }}</span>
                                                                     @else
                                                                         <span
-                                                                            class="badge badge-pill badge-info">{{ __('Pending') }}</span>
+                                                                                class="badge badge-pill badge-info">{{ __('Pending') }}</span>
                                                                     @endif
                                                                 </td>
                                                                 <td class="open status" id="status{{$item->id}}"
                                                                     style="position:relative;">
                                                                     @if($item->plate_status == 'error')
                                                                         <span
-                                                                            class="badge badge-pill badge-danger">{{ __('app.Error') }}</span>
+                                                                                class="badge badge-pill badge-danger">{{ __('app.Error') }}</span>
                                                                     @elseif($item->plate_status == 'success')
                                                                         <span
-                                                                            class="badge badge-pill badge-success">{{ __('app.success') }}</span>
+                                                                                class="badge badge-pill badge-success">{{ __('app.success') }}</span>
                                                                     @elseif($item->plate_status == 'modified')
                                                                         <span
-                                                                            class="badge badge-pill badge-info">{{ __('app.Modified') }}</span>
+                                                                                class="badge badge-pill badge-info">{{ __('app.Modified') }}</span>
                                                                     @elseif($item->plate_status == 'reported')
                                                                         <span
-                                                                            class="badge badge-pill badge-warning">{{ __('app.Reported') }}</span>
+                                                                                class="badge badge-pill badge-warning">{{ __('app.Reported') }}</span>
                                                                     @endif
                                                                 </td>
 
@@ -640,14 +640,13 @@
                                                                 <td>
                                                                     @if (!is_null($item->invoiceStatus))
                                                                         @if($item->invoiceStatus->status == 'sent')
-                                                                        <a id="download-{{$item->id}}" download
-                                                                           class="download_invoice"
-                                                                           onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"
-                                                                           data-toggle="popover" data-trigger="hover"
-                                                                           data-content="Preview Invoice">
-                                                                            <i class="fas fa-file-pdf text-success"
-                                                                               style="font-size: 19px"></i>
-                                                                        </a>
+                                                                            <a id="download-{{$item->id}}" download
+                                                                               href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceStatus->fileUrl}}"
+                                                                               data-toggle="popover" data-trigger="hover"
+                                                                               data-content="Preview Invoice">
+                                                                                <i class="fas fa-file-pdf text-success"
+                                                                                   style="font-size: 19px"></i>
+                                                                            </a>
 
                                                                         @elseif( $item->invoiceStatus->status == 'failed')
                                                                             <a data-toggle="popover" data-trigger="hover" data-content="{{$item->invoiceStatus->error_reason}}">
@@ -684,25 +683,25 @@
                                                                         <div class="filter-content"
                                                                              aria-labelledby="dropdownMenuButton">
 
-{{--                                                                            <a href="#" class="text-info fw-normal"--}}
-{{--                                                                               onclick="openMessage('{{$item->plate_en}}','Welcome',event,'{{$item->id}}')">--}}
-{{--                                                                                {{ __('app.Welcome_Message') }}--}}
-{{--                                                                                <i class="fas fa-hand-holding-heart"></i>--}}
-                                                                                {{--                                                                                <i style="fill: #EFAF94;width:15px">--}}
-                                                                                {{--                                                                                    <svg data-name="Layer 1" width="18"--}}
-                                                                                {{--                                                                                         xmlns="http://www.w3.org/2000/svg"--}}
-                                                                                {{--                                                                                         viewBox="0 0 109.22 122.88">--}}
-                                                                                {{--                                                                                        <defs>--}}
-                                                                                {{--                                                                                            <style>.cls-1 {--}}
-                                                                                {{--                                                                                                    fill-rule: evenodd;--}}
-                                                                                {{--                                                                                                }</style>--}}
-                                                                                {{--                                                                                        </defs>--}}
-                                                                                {{--                                                                                        <title>{{ __('app.hand_wave') }}</title>--}}
-                                                                                {{--                                                                                        <path class="cls-1"--}}
-                                                                                {{--                                                                                              d="M41.83,97.57c0-.13,0-.26,0-.38a17,17,0,0,1,4.31-11.57L32.39,71.88a5.76,5.76,0,0,0-8.13,0h0a5.76,5.76,0,0,0,0,8.12L41.83,97.57Zm-8.13,11.5a4.08,4.08,0,1,1-2.27,7.84,47.87,47.87,0,0,1-19.92-11A44.75,44.75,0,0,1,.23,88.11a4.09,4.09,0,0,1,7.71-2.72A36.71,36.71,0,0,0,17.14,100a39.73,39.73,0,0,0,16.56,9.12ZM63.88,22.38A4.08,4.08,0,1,1,67.36,15a44.74,44.74,0,0,1,10.19,6.55,41.61,41.61,0,0,1,7.63,8.63,4.09,4.09,0,1,1-6.82,4.51,33.56,33.56,0,0,0-6.12-6.93,36.66,36.66,0,0,0-8.36-5.37ZM68.05,8A4.08,4.08,0,1,1,70.32.16a48,48,0,0,1,19.93,11A44.84,44.84,0,0,1,101.52,29a4.09,4.09,0,0,1-7.71,2.72,36.71,36.71,0,0,0-9.2-14.56A39.73,39.73,0,0,0,68.05,8ZM92.51,71.35A29.16,29.16,0,0,0,84,76.83a14.41,14.41,0,0,0-4.16,6.78,11,11,0,0,0,.56,7A16.51,16.51,0,0,0,84,95.8L82,97.65C71.69,86.59,77.13,76,90.11,69.4l-3.85-3.66a12.25,12.25,0,0,0-1-.9,1.85,1.85,0,0,1-.56-.32,11.5,11.5,0,0,0-7.35-1.74,11.34,11.34,0,0,0-7,3.28l-.75.75-.06,0,0,0L48.89,87.56a1.83,1.83,0,0,1-.54.38l-.37.38a11.37,11.37,0,0,0-3.28,6.89,12,12,0,0,0,.21,3.73,11.77,11.77,0,0,0,3,5.12l12.42,12.42a21.7,21.7,0,0,0,15.24,6.4,21.06,21.06,0,0,0,15.1-6.21l9.42-9.42a21.85,21.85,0,0,0,7.12-16.71v-.11h0v0l-.14-29.23a1.5,1.5,0,0,1,0-.3l2.13.13-2.12-.13c.28-4.55-1.33-7.49-3.47-8.8a5.16,5.16,0,0,0-2.47-.78,4.64,4.64,0,0,0-2.4.52c-1.89,1-3.32,3.33-3.32,7.16,0,.88,0,3.21-.06,5.42a27,27,0,0,1-.53,5.27,2.13,2.13,0,0,1-.58,1.08,2.1,2.1,0,0,1-1.76.62ZM47.89,83.61,56,75.48l-22-22A5.78,5.78,0,0,0,30,51.84a5.72,5.72,0,0,0-4.07,1.67h0a5.79,5.79,0,0,0,0,8.14l22,22Zm10.3-10.3,8.13-8.13-29-29a5.79,5.79,0,0,0-8.14,0h0a5.79,5.79,0,0,0,0,8.14l29,29Zm10.74-9.49a17.55,17.55,0,0,1,11.63-4.34h.28L55.14,33.77a5.77,5.77,0,0,0-8.13,0h0a5.77,5.77,0,0,0,0,8.13L68.92,63.83Z"/>--}}
-                                                                                {{--                                                                                    </svg>--}}
-                                                                                {{--                                                                                </i>--}}
-{{--                                                                            </a>--}}
+                                                                            {{--                                                                            <a href="#" class="text-info fw-normal"--}}
+                                                                            {{--                                                                               onclick="openMessage('{{$item->plate_en}}','Welcome',event,'{{$item->id}}')">--}}
+                                                                            {{--                                                                                {{ __('app.Welcome_Message') }}--}}
+                                                                            {{--                                                                                <i class="fas fa-hand-holding-heart"></i>--}}
+                                                                            {{--                                                                                <i style="fill: #EFAF94;width:15px">--}}
+                                                                            {{--                                                                                    <svg data-name="Layer 1" width="18"--}}
+                                                                            {{--                                                                                         xmlns="http://www.w3.org/2000/svg"--}}
+                                                                            {{--                                                                                         viewBox="0 0 109.22 122.88">--}}
+                                                                            {{--                                                                                        <defs>--}}
+                                                                            {{--                                                                                            <style>.cls-1 {--}}
+                                                                            {{--                                                                                                    fill-rule: evenodd;--}}
+                                                                            {{--                                                                                                }</style>--}}
+                                                                            {{--                                                                                        </defs>--}}
+                                                                            {{--                                                                                        <title>{{ __('app.hand_wave') }}</title>--}}
+                                                                            {{--                                                                                        <path class="cls-1"--}}
+                                                                            {{--                                                                                              d="M41.83,97.57c0-.13,0-.26,0-.38a17,17,0,0,1,4.31-11.57L32.39,71.88a5.76,5.76,0,0,0-8.13,0h0a5.76,5.76,0,0,0,0,8.12L41.83,97.57Zm-8.13,11.5a4.08,4.08,0,1,1-2.27,7.84,47.87,47.87,0,0,1-19.92-11A44.75,44.75,0,0,1,.23,88.11a4.09,4.09,0,0,1,7.71-2.72A36.71,36.71,0,0,0,17.14,100a39.73,39.73,0,0,0,16.56,9.12ZM63.88,22.38A4.08,4.08,0,1,1,67.36,15a44.74,44.74,0,0,1,10.19,6.55,41.61,41.61,0,0,1,7.63,8.63,4.09,4.09,0,1,1-6.82,4.51,33.56,33.56,0,0,0-6.12-6.93,36.66,36.66,0,0,0-8.36-5.37ZM68.05,8A4.08,4.08,0,1,1,70.32.16a48,48,0,0,1,19.93,11A44.84,44.84,0,0,1,101.52,29a4.09,4.09,0,0,1-7.71,2.72,36.71,36.71,0,0,0-9.2-14.56A39.73,39.73,0,0,0,68.05,8ZM92.51,71.35A29.16,29.16,0,0,0,84,76.83a14.41,14.41,0,0,0-4.16,6.78,11,11,0,0,0,.56,7A16.51,16.51,0,0,0,84,95.8L82,97.65C71.69,86.59,77.13,76,90.11,69.4l-3.85-3.66a12.25,12.25,0,0,0-1-.9,1.85,1.85,0,0,1-.56-.32,11.5,11.5,0,0,0-7.35-1.74,11.34,11.34,0,0,0-7,3.28l-.75.75-.06,0,0,0L48.89,87.56a1.83,1.83,0,0,1-.54.38l-.37.38a11.37,11.37,0,0,0-3.28,6.89,12,12,0,0,0,.21,3.73,11.77,11.77,0,0,0,3,5.12l12.42,12.42a21.7,21.7,0,0,0,15.24,6.4,21.06,21.06,0,0,0,15.1-6.21l9.42-9.42a21.85,21.85,0,0,0,7.12-16.71v-.11h0v0l-.14-29.23a1.5,1.5,0,0,1,0-.3l2.13.13-2.12-.13c.28-4.55-1.33-7.49-3.47-8.8a5.16,5.16,0,0,0-2.47-.78,4.64,4.64,0,0,0-2.4.52c-1.89,1-3.32,3.33-3.32,7.16,0,.88,0,3.21-.06,5.42a27,27,0,0,1-.53,5.27,2.13,2.13,0,0,1-.58,1.08,2.1,2.1,0,0,1-1.76.62ZM47.89,83.61,56,75.48l-22-22A5.78,5.78,0,0,0,30,51.84a5.72,5.72,0,0,0-4.07,1.67h0a5.79,5.79,0,0,0,0,8.14l22,22Zm10.3-10.3,8.13-8.13-29-29a5.79,5.79,0,0,0-8.14,0h0a5.79,5.79,0,0,0,0,8.14l29,29Zm10.74-9.49a17.55,17.55,0,0,1,11.63-4.34h.28L55.14,33.77a5.77,5.77,0,0,0-8.13,0h0a5.77,5.77,0,0,0,0,8.13L68.92,63.83Z"/>--}}
+                                                                            {{--                                                                                    </svg>--}}
+                                                                            {{--                                                                                </i>--}}
+                                                                            {{--                                                                            </a>--}}
                                                                             <a href="#" class="text-warning fw-normal"
                                                                                onclick="openMessage('{{$item->plate_en}}','Reminder',event)">
                                                                                 {{ __('app.Reminder') }}
@@ -726,7 +725,7 @@
                                                                 </td>
                                                             </tr>
                                                         @endforeach
-{{--                                                        @dd('fd')--}}
+                                                        {{--                                                        @dd('fd')--}}
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -750,7 +749,7 @@
                                         <div class="iq-card-body">
                                             <div class="related-heading mb-5">
                                                 <div
-                                                    class="d-flex justify-content-between align-items-center border-bottom">
+                                                        class="d-flex justify-content-between align-items-center border-bottom">
                                                     <h2 class="border-bottom-0">{{ __('app.car_count_per_each_area_chart') }}</h2>
                                                     <div class="dropdown">
                                                         <a href="#" class="dropdown-toggle" type="button"
@@ -763,9 +762,9 @@
                                                                {{ $userSettings ? ($userSettings->chart_type == "bar" ? 'selected' : '') :'selected' }}"
                                                                    href="#">
                                                                     <img
-                                                                        src="{{ asset('assets/images/chart-type/Bar-Chart.svg')}}"
-                                                                        alt="{{ __('app.Bar_Chart') }}"
-                                                                        title="{{ __('app.Bar_Chart') }}">
+                                                                            src="{{ asset('assets/images/chart-type/Bar-Chart.svg')}}"
+                                                                            alt="{{ __('app.Bar_Chart') }}"
+                                                                            title="{{ __('app.Bar_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -773,9 +772,9 @@
                                                                    class="dropdown-item chart-2 {{ $userSettings ? ($userSettings->chart_type == "circle" ? 'selected' : '') :'' }}"
                                                                    href="#">
                                                                     <img
-                                                                        src="{{ asset('assets/images/chart-type/Pie-Chart.png')}}"
-                                                                        alt="{{ __('app.Pie_Chart') }}"
-                                                                        title="{{ __('app.Pie_Chart') }}">
+                                                                            src="{{ asset('assets/images/chart-type/Pie-Chart.png')}}"
+                                                                            alt="{{ __('app.Pie_Chart') }}"
+                                                                            title="{{ __('app.Pie_Chart') }}">
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -799,7 +798,7 @@
                                         <div class="iq-card-body">
                                             <div class="related-heading mb-5">
                                                 <div
-                                                    class="d-flex justify-content-between align-items-center border-bottom">
+                                                        class="d-flex justify-content-between align-items-center border-bottom">
                                                     <h2 class="border-bottom-0">{{ __('app.invoice_chart') }}</h2>
                                                 </div>
                                             </div>
@@ -857,10 +856,10 @@
                                                                                  data-toggle="modal"
                                                                                  data-target="#basicExampleModal">
 
-{{--                                                                            <img src="{{$item->path__area_screenshot}}"--}}
-{{--                                                                                 height="251" alt=""--}}
-{{--                                                                                 data-toggle="modal"--}}
-{{--                                                                                 data-target="#basicExampleModal">--}}
+                                                                            {{--                                                                            <img src="{{$item->path__area_screenshot}}"--}}
+                                                                            {{--                                                                                 height="251" alt=""--}}
+                                                                            {{--                                                                                 data-toggle="modal"--}}
+                                                                            {{--                                                                                 data-target="#basicExampleModal">--}}
                                                                             <div class="img-overlay">
                                                                                 <span class="mr-1">{{$item->checkInDate}}</span>
                                                                             </div>
@@ -935,6 +934,8 @@
         </div>
         <!-- end welcome modal -->
     </div>
+
+    @include("customer.errorsManagement.editModal")
 @endsection
 
 @section('scripts')
@@ -942,7 +943,32 @@
     <script src="{{asset('js/config.js')}}"></script>
     <script>
         branchInvoiceBar('invoiceChart',@json($invoice_chart));
+        function openEditModal(data) {
+            var data = JSON.parse(data);
+            console.log(data)
+            $(`#errorMangamentModal input[name=plate_ar]`).val(data.char_ar);
+            $(`#errorMangamentModal input[name=plate_en]`).val(data.char_en);
+            $(`#errorMangamentModal input[name=number_ar]`).val(data.number_ar);
+            $(`#errorMangamentModal input[name=number_en]`).val(data.number_en);
+            $(`#errorMangamentModal input[name=item_id]`).val(data.id);
+            $(`#errorMangamentModal #ErrorForm`).attr('action', `${app_url}/customer/error-mangment/${data.id}/updatePlate`);
+            document.getElementById('screenshot_modal').src = data.path_screenshot ?? app_url + '/images/blank.png';
+            $('#errorMangamentModal').modal('show');
 
+            console.log(data.char_ar.length, data.char_ar)
+            var tempCharAR = data.char_ar.replace(/ /g,'');
+            var tempCharEN = data.char_en.replace(/ /g,'');
+            var tempNumAR = data.number_ar.replace(/ /g,'');
+            var tempNumEn = data.number_en.replace(/ /g,'');
+
+            console.log(tempCharAR, tempCharEN, tempNumAR, tempNumEn)
+            for (var i=0; i<5; i++){
+                $($('.digits[data-info="number_ar"] .input-group input')[i]).val(tempNumAR[i]);
+                $($('.digits[data-info="plate_ar"] .input-group input')[i]).val(tempCharAR[i]);
+                $($('.digits[data-info="number_en"] .input-group input')[i]).val(tempNumEn[i]);
+                $($('.digits[data-info="plate_en"] .input-group input')[i]).val(tempCharEN[i]);
+            }
+        }
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1234,7 +1260,177 @@
             $('.area-section.slider').on('breakpoint', function(event, slick){
                 slickCarouselCardEvents(filterDataFn);
                 cr = false;
-            })
+            });
+
+            $(".update-plate-btn").on("click", function (e) {
+                var plate_ar = $(`#errorMangamentModal input[name=plate_ar]`).val();
+                var plate_en = $(`#errorMangamentModal input[name=plate_en]`).val();
+                var number_ar = $(`#errorMangamentModal input[name=number_ar]`).val();
+                var number_en = $(`#errorMangamentModal input[name=number_en]`).val();
+                var item_id = $(`#errorMangamentModal input[name=item_id]`).val();
+
+                var errorTextMessage    = "Sorry, looks like there are some errors detected, please try again.";
+                var ConfirmButtonText   = "Ok, got it!";
+                var successTextMessage  = "You have updated plate successfully.";
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    data: $("#ErrorForm").serialize(),
+                    url: `${app_url}/customer/error-mangment/${item_id}/updatePlate`,
+                    dataType: "JSON",
+                    type: "POST",
+                    success: function (data) {
+                        Swal.fire({
+                            text: successTextMessage,
+                            icon: "success",
+                            buttonsStyling: !1,
+                            confirmButtonText: ConfirmButtonText,
+                            customClass: {confirmButton: "btn fw-bold btn-primary"}
+                        }).then((function () {
+                            $("#errorMangamentModal").hide();
+                            location.reload();
+                        }))
+                    },
+                    error: function (data) {
+                        // console.log(data)
+                        Swal.fire({
+                            text: data.responseJSON?data.responseJSON.message:errorTextMessage,
+                            icon: "error",
+                            buttonsStyling: !1,
+                            confirmButtonText: ConfirmButtonText,
+                            customClass: {confirmButton: "btn btn-primary"}
+                        })
+                    }
+                })
+            });
+
+            function openEditModal(data) {
+                var data = JSON.parse(data);
+                console.log(data)
+                $(`#errorMangamentModal input[name=plate_ar]`).val(data.char_ar);
+                $(`#errorMangamentModal input[name=plate_en]`).val(data.char_en);
+                $(`#errorMangamentModal input[name=number_ar]`).val(data.number_ar);
+                $(`#errorMangamentModal input[name=number_en]`).val(data.number_en);
+                $(`#errorMangamentModal input[name=item_id]`).val(data.id);
+                $(`#errorMangamentModal #ErrorForm`).attr('action', `${app_url}/customer/error-mangment/${data.id}/updatePlate`);
+                document.getElementById('screenshot_modal').src = data.path_screenshot ?? app_url + '/images/blank.png';
+                $('#errorMangamentModal').modal('show');
+
+                console.log(data.char_ar.length, data.char_ar)
+                var tempCharAR = data.char_ar.replace(/ /g,'');
+                var tempCharEN = data.char_en.replace(/ /g,'');
+                var tempNumAR = data.number_ar.replace(/ /g,'');
+                var tempNumEn = data.number_en.replace(/ /g,'');
+
+                console.log(tempCharAR, tempCharEN, tempNumAR, tempNumEn)
+                for (var i=0; i<5; i++){
+                    $($('.digits[data-info="number_ar"] .input-group input')[i]).val(tempNumAR[i]);
+                    $($('.digits[data-info="plate_ar"] .input-group input')[i]).val(tempCharAR[i]);
+                    $($('.digits[data-info="number_en"] .input-group input')[i]).val(tempNumEn[i]);
+                    $($('.digits[data-info="plate_en"] .input-group input')[i]).val(tempCharEN[i]);
+                }
+            }
+
+            function replaceFarsiNumber(input) {
+                const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                const farsi = ['۰', '۱', '۲', '۳', '٤', '۵', '٦', '۷', '۸', '۹'];
+
+                for (var i = 0; i < english.length; i++) {
+                    input = input.replaceAll(english[i], farsi[i]);
+                }
+
+                return input;
+            }
+            $('.digit').on('keyup',function (){
+
+                var ennumbers = "0123456789";
+                var arnumbers = "۰۱۲۳٤۵٦۷۸۹";
+                // $(this).next().focus();
+                var val = $(this).val();
+                var parent = $(this).closest('.form-group').attr('data-info');
+
+                if(parent == "number_ar"){
+                    if (arnumbers.search(val) > -1){
+                        $(this).next().focus();
+                        // $('#number_ar').val += val;
+                        setInputValue($(this), '#number_ar');
+
+                    }
+                    else if(ennumbers.search(val) > -1) {
+                        $(this).val(replaceFarsiNumber(val));
+                        $(this).next().focus();
+                        setInputValue($(this), '#number_ar');
+                    }
+                    else {
+                        $('span.info-patter').fadeOut();
+                        $(this).closest('.digits').find('span.info-patter').fadeIn();
+                        $(this).val('');
+                    }
+                }
+                else if(parent == "plate_ar"){
+
+                    var isArabic = /[\u0600-\u06FF\u0750-\u077F]/;
+                    if (isArabic.test(val)){
+                        $(this).next().focus();
+                        setInputValue($(this), '#plate_ar');
+
+                    }
+                    else {
+                        $('span.info-patter').fadeOut();
+                        $(this).closest('div.digits').find('span.info-patter').fadeIn();
+                        $(this).val('');
+                    }
+
+                }
+                else if(parent == "plate_en"){
+                    const regex = /[A-Za-z]/;
+                    if(regex.test(val)){
+                        $(this).next().focus();
+                        setInputValue($(this), '#plate_en');
+
+                    }
+                    else{
+                        $('span.info-patter').fadeOut();
+                        $(this).closest('div.digits').find('span.info-patter').fadeIn();
+                        $(this).val('');
+                    }
+                }
+                else if(parent == "number_en"){
+                    if (ennumbers.search(val) > -1){
+                        $(this).next().focus();
+                        setInputValue($(this), '#number_en');
+
+                    }
+                    else {
+                        $('span.info-patter').fadeOut();
+                        $(this).closest('.digits').find('span.info-patter').fadeIn();
+                        $(this).val('');
+                    }
+
+                }
+            });
+            info();
+            function info (){
+                $('.digits label i.fa-info-circle').on('click', function (){
+                    $('span.info-patter').fadeOut();
+                    $(this).closest('.digits').find('span.info-patter').fadeIn();
+                    setTimeout(function(){
+                        $('span.info-patter').fadeOut()
+                    }, 3000)
+                })
+            }
+            function setInputValue(ele, input){
+                var text="";
+                inputs = ele.closest('.digits').find('input.digit');
+                for(var i=0; i < inputs.length; i++){
+                    text = text + $(inputs[i]).val();
+                }
+                $(input).val(text);
+            }
         });
     </script>
 @endsection
