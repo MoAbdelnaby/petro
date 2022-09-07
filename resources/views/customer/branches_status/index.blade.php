@@ -212,12 +212,13 @@
                                                 </div>
                                             </div>
                                         </form>
-                                        <div class="product_table table-responsive row p-0 m-0 col-12">
-                                            <table class="table dataTable ui celled table-borde#f14336 text-center"
+                                        <div class="product_table table-responsive row p-0 m-0 col-12 mt-3">
+                                            <table class="table  ui celled table-borde#f14336 text-center"
                                                    id="BranchStatusTable">
                                                 <thead class="">
                                                 <th>#</th>
                                                 <th>{{__('app.branch_name')}}</th>
+                                                <th>{{__('app.region')}}</th>
                                                 <th>{{ __('app.branch_status') }}</th>
                                                 <th>{{ __('app.last_stability') }}</th>
                                                 <th>{{ __('app.last_connected') }}</th>
@@ -235,13 +236,19 @@
                                                             {{  $branch->name ?? ''}}
                                                         </td>
                                                         <td>
+                                                            {{  $branch->region ?? ''}}
+                                                        </td>
+                                                        <td>
                                                             @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
-                                                                <i class="fas fa-circle"
-                                                                   style="color: green"></i>
-                                                                {{ __('app.branch_online')  }}
+                                                                <span class="branch_status" data-value="1">
+                                                                    <i class="fas fa-circle" style="color: green"></i>
+                                                                    {{ __('app.branch_online')  }}
+                                                                </span>
                                                             @else
-                                                                <i class="fas fa-circle" style="color: #f14336"></i>
-                                                                {{ __('app.branch_offline') }}
+                                                                <span class="branch_status" data-value="0">
+                                                                    <i class="fas fa-circle" style="color: #f14336"></i>
+                                                                    {{ __('app.branch_offline') }}
+                                                                </span>
                                                             @endif
                                                         </td>
                                                         <td style="position: relative"
@@ -290,13 +297,13 @@
                                                         @endif
 
                                                         <td>
-                                                            <a class="btn btn-primary"
+                                                            <a class="btn btn-dark skew-dark mr-18"
                                                                href="branches-log/{{$branch->branch_code}}"
                                                                target="_blank">{{ __('app.Show') }}</a>
-                                                            <a class="btn btn-success"
+                                                            <a class="btn btn-primary mr-18"
                                                                href="{{ route('customerBranches.show', [$branch->id]) }}"
                                                                target="_blank">{{ __('app.show_bracnh') }}</a>
-                                                            <a class="btn btn-info"
+                                                            <a class="btn btn-info skew-warning  mr-18"
                                                                href="branches-stability/{{$branch->branch_code}}"
                                                                target="_blank">{{ __('app.stability') }}</a>
                                                         </td>
@@ -326,17 +333,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    @foreach ($not_linked_branches as $id=>$branch)
-                        <div class="row">
-                            <div class="col-md-12">
-                                <a href="{{route('customerBranches.show',[$id])}}">{{ $branch }}</a>
-                            </div>
-                        </div>
-                    @endforeach
+                <div class="modal-body" id="not_linked_data">
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('app.save')}}</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">{{__('app.close')}}</button>
                 </div>
             </div>
         </div>
@@ -362,26 +363,71 @@
                 success: function (data) {
                     let rows = $('#BranchStatusTable tr');
                     for (let i = 0; i < rows.length; i++) {
-                        let stabilityId = $($(rows)[i]).find('td:nth-child(4)').attr('id');
+                        let stabilityId = $($(rows)[i]).find('td:nth-child(5)').attr('id');
                         let branch_code = stabilityId?.replace('stability_', '');
                         if (branch_code != undefined) {
                             $(`#stability_${branch_code}`).html(data.stabiliteis[branch_code]?.stability ?? "0 Minute");
                         }
                     }
+                    let table = $('#BranchStatusTable').dataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4]
+                                },
+                                text: '<i class="fa fa-file-excel-o"></i> Excel',
+                                className: 'btn btn-dark skew-dark mr-18 waves-effect waves-light border-0'
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4]
+                                },
+                                text: '<i class="fa fa-file-pdf-o"></i> PDF',
+                                className: 'btn btn-primaryskew-dark mr-18 waves-effect waves-light'
+                            },
+                            'colvis'
+                        ]
+                    });
+
                 },
                 error: function (data) {
                     let rows = $('#BranchStatusTable tr');
                     for (let i = 0; i < rows.length; i++) {
-                        $($(rows)[i]).find('td:nth-child(4)').html("0 Minute");
+                        $($(rows)[i]).find('td:nth-child(5)').html("0 Minute");
                     }
                 }
             });
 
+            //get Not Linked Branch
             $("#not_linked_branch").on('click', function () {
-                $("#notLinkedModel").modal('show');
+
+                let item = $(this);
+                $.ajax({
+                    url: $(this).data('url'),
+                    dataType: "JSON",
+                    type: "GET",
+                    success: function (data) {
+                        $("#not_linked_data").html('');
+
+                        data.not_linked_branches.forEach(function (el) {
+                            $("#not_linked_data").append(`<div class="row">
+                                <div class="col-md-12">
+                                    <a href="${APP_URL}/{$LANG}/customerBranches/${el.id}">${el.name}</a>
+                                </div>
+                            </div>`);
+                        });
+
+                        $("#notLinkedModel").modal('show');
+                    },
+                    error: function (data) {
+                        $("#notLinkedModel").modal('hide')
+                    }
+                });
             });
 
-            console.log()
             $(document).on('change', '.installed_switch', function () {
                 let item = $(this);
                 $.ajax({

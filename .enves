@@ -149,3 +149,4 @@ AZURE_STORAGE_URL=
 
 WHATSAPP_PETROMIN_CORDINATES="https://whatsapp-wakeb.azurewebsites.net/api/sendPetrominCordinates"
 
+select branch_net_works.*,branches.name,branches.installed,branches.id,regions.name as region from `branch_net_works` inner join `branches` on `branches`.`code` = `branch_net_works`.`branch_code` inner join `regions` on `regions`.`id` = `branches`.`region_id` where `branches`.`deleted_at` is null and `branch_net_works`.`id` in (select max(`branch_net_works`.`id`) from `branch_net_works` group by `branch_net_works`.`branch_code`)

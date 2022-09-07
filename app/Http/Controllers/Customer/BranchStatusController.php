@@ -41,58 +41,48 @@ class BranchStatusController extends Controller
      * @return Application|Factory|View
      * @throws Exception
      */
-   public function branchesStatus(Request $request)
+    public function branchesStatus(Request $request)
     {
-        if ($request->online_status == 'online') {
+        if ($request->online_status === 'online') {
             $branches = DB::table('last_error_branch_views')
-                ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
+                ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id,regions.name as region')
                 ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
+                ->join('regions', 'regions.id', '=', 'branches.region_id')
                 ->whereNull('branches.deleted_at')
                 ->where('last_error_branch_views.created_at', '>=', Carbon::now()->subMinutes(15))
                 ->where('last_error_branch_views.created_at', '<=', Carbon::now())
+                ->take(10)
                 ->get();
-        } else if ($request->online_status == 'offline') {
+        } else if ($request->online_status === 'offline') {
             $branches = DB::table('last_error_branch_views')
-                ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
+                ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id,regions.name as region')
                 ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
+                ->join('regions', 'regions.id', '=', 'branches.region_id')
                 ->whereNull('branches.deleted_at')
                 ->where('last_error_branch_views.created_at', '<=', Carbon::now()->subMinutes(15))
                 ->get();
 
         } else {
             $branches = DB::table('last_error_branch_views')
-                ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id')
+                ->selectRaw('last_error_branch_views.*,branches.name,branches.installed,branches.id,regions.name as region')
                 ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
+                ->join('regions', 'regions.id', '=', 'branches.region_id')
                 ->whereNull('branches.deleted_at')
                 ->get();
-
-//            Branch::active()->primary()
-//                ->get()
-//                ->map(function ($item) use ($branches) {
-//                    $branches->push((object)[
-//                        'id' => $item->id,
-//                        'installed' => $item->installed,
-//                        'name' => $item->name,
-//                        'branch_code' => $item->code,
-//                        'user_id' => $item->user_id,
-//                        'error' => '',
-//                        'created_at' => Carbon::now()->subYear(),
-//                        'updated_at' => Carbon::now()->subYear(),
-//                    ]);
-//                });
         }
 
-        $on = DB::table('last_error_branch_views')
-            ->where('created_at', '>=', Carbon::now()->subMinutes(15))
-            ->where('created_at', '<=', Carbon::now())
-            ->count();
+        $on = 0;
+        $off = 0;
+        $installed = Branch::primary()->where('installed', 1)->count();
 
-        $off = DB::table('last_error_branch_views')
-            ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
-            ->where('last_error_branch_views.created_at', '<=', Carbon::now()->subMinutes(15))
-            ->whereNull('branches.deleted_at')
-            ->count();
+        return view("customer.branches_status.index", compact('branches', 'off', 'on', 'installed'));
+    }
 
+    /**
+     * @return Application|Factory|View
+     */
+    public function getNotLinked()
+    {
         $installed_branch = DB::table('last_error_branch_views')
             ->join('branches', 'branches.code', '=', 'last_error_branch_views.branch_code')
             ->where('branches.installed', true)
@@ -100,11 +90,9 @@ class BranchStatusController extends Controller
             ->pluck('code')
             ->toArray();
 
-        $installed = Branch::primary()->where('installed', 1)->count();
+        $not_linked_branches = Branch::whereNotIn('code', $installed_branch)->where('installed', true)->pluck('name', 'id');
 
-        $not_linked_branches = Branch::whereNotIn('code', $installed_branch)->where('installed',true)->pluck('name', 'id');
-
-        return view("customer.branches_status.index", compact('branches', 'off', 'on', 'installed', 'not_linked_branches'));
+        return view("customer.branches_status.logs", compact('not_linked_branches'));
     }
 
     /**
