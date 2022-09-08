@@ -17,9 +17,9 @@
                     <label>{{ __('app.show_by') }}:</label>
                     <select name="show_by" id="show_by" class="form-control nice-select">
                         <option value="">{{ __('app.select_type') }}</option>
-                        <option value="city" @if(request('show_by') == 'city') selected @endif >
-                            {{ __('app.city') }}
-                        </option>
+{{--                        <option value="city" @if(request('show_by') == 'city') selected @endif >--}}
+{{--                            {{ __('app.city') }}--}}
+{{--                        </option>--}}
                         <option value="region" @if(request('show_by') == 'region') selected @endif>
                             {{ __('app.region') }}
                         </option>

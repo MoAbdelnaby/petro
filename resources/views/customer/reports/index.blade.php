@@ -249,7 +249,8 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active">
                                         <div class="row" id="statistic">
-                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                            @if(auth()->user()->type !== 'subcustomer')
+                                                <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                     <a href="{{route('customerRegions.index')}}" class="iq-card-body"
                                                        style="padding: 25px 20px !important;">
@@ -271,6 +272,8 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                            @endif
+
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                     <a href="{{route('customerBranches.index')}}" class="iq-card-body"
@@ -294,7 +297,9 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-md-6 col-lg-3">
+
+                                             @if(auth()->user()->type !== 'subcustomer')
+                                                <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                     <a href="{{url('customer/customerPackages')}}" class="iq-card-body"
                                                        style="padding: 25px 20px !important;">
@@ -316,7 +321,7 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                     <a href="{{route('customerUsers.index')}}" class="iq-card-body"
                                                        style="padding: 25px 20px !important;">
@@ -336,6 +341,7 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                             @endif
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                     <a href="{{route('reports.show','place')}}"
