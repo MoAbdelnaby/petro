@@ -66,19 +66,34 @@ class ReportController extends Controller
      */
     public function show($type, Request $request)
     {
-        if (!in_array($type, $this->reportType)) {
+        if (!in_array($type, $this->reportType, true)) {
             abort(404);
         }
 
         try {
-            $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
-            $regions = Region::active()->primary()->child()->select('id', 'name')->get();
-            $cities = Region::active()->primary()->parent()->select('id', 'name')->get();
+            if (auth()->user()->type === 'subcustomer') {
+                $branches = Branch::active()->primary()->select('id', 'name')
+                    ->with('areas')
+                    ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                    ->get();
+
+                $regions = Region::active()->primary()->child()->select('id', 'name')
+                    ->whereHas('branches', fn($q) => $q->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id())))
+                    ->get();
+
+                $cities = Region::active()->primary()->parent()->select('id', 'name')
+                    ->whereHas('branches', fn($q) => $q->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id())))
+                    ->get();
+            } else {
+                $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
+                $regions = Region::active()->primary()->child()->select('id', 'name')->get();
+                $cities = Region::active()->primary()->parent()->select('id', 'name')->get();
+            }
 
             if (empty($request->except('_token')) || is_null($request->show_by)) {
                 if (auth()->user()->type === 'subcustomer') {
-                    $branches = array_slice($branches, 0, 9);
-                    $filter = $this->handleFilterFormat($branches, $request->all());
+                    $branches_id = $branches->pluck('id')->toArray();
+                    $filter = $this->handleFilterFormat( array_slice($branches_id, 0, 9), $request->all());
                 } else {
                     $filter = $this->getTopBranch($type, $request->all());
                 }
@@ -139,8 +154,22 @@ class ReportController extends Controller
     public function download($type, Request $request)
     {
         try {
-            $filter = (empty($request->except('_token')) || is_null($request->show_by))
-                ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
+            if (empty($request->except('_token')) || is_null($request->show_by)) {
+                if (auth()->user()->type === 'subcustomer') {
+                    $branches_id = Branch::active()->primary()->select('id', 'name')
+                        ->with('areas')
+                        ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                        ->pluck('id')->toArray();
+
+                    $branches = array_slice($branches_id, 0, 9);
+                    $filter = $this->handleFilterFormat($branches, $request->all());
+                } else {
+                    $filter = $this->getTopBranch($type, $request->all());
+                }
+
+            } else {
+                $filter = $request->except('_token');
+            }
 
             $filter['download'] = true;
             $data = ReportService::handle($type, $filter) ?? [];
@@ -176,7 +205,18 @@ class ReportController extends Controller
      */
     public function downloadStatistics(Request $request)
     {
-        $data = ReportService::downloadStatistics($request->start, $request->end, $request->lists);
+        if (auth()->user()->type === 'subcustomer') {
+            $branches = Branch::active()->primary()->select('id', 'name')
+                ->with('areas')
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->get();
+
+            $lists = $request->lists ?? $branches->pluck('id')->toArray();
+            $data = ReportService::downloadStatistics($request->start, $request->end, $lists);
+        } else {
+            $data = ReportService::downloadStatistics($request->start, $request->end, $request->lists);
+        }
+
         $type = "statistics";
         $start = $request->start ? Carbon::parse($request->start)->format('Y-m-d') : now()->startOfYear()->toDateString();
         $end = $request->end ? Carbon::parse($request->end)->format('Y-m-d') : now()->toDateString();
@@ -206,8 +246,23 @@ class ReportController extends Controller
     public function export($type, Request $request)
     {
         try {
-            $filter = (empty($request->except('_token')) || is_null($request->show_by))
-                ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
+            if (empty($request->except('_token')) || is_null($request->show_by)) {
+                if (auth()->user()->type === 'subcustomer') {
+                    $branches = Branch::active()->primary()->select('id', 'name')
+                        ->with('areas')
+                        ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                        ->get();
+
+                    $branches_id = $branches->pluck('id')->toArray();
+                    $branches = array_slice($branches_id, 0, 9);
+                    $filter = $this->handleFilterFormat($branches, $request->all());
+                } else {
+                    $filter = $this->getTopBranch($type, $request->all());
+                }
+
+            } else {
+                $filter = $request->except('_token');
+            }
 
             $result = ReportService::handle($type, $filter);
             $list = \Arr::flatten($result, 2);
@@ -240,7 +295,18 @@ class ReportController extends Controller
      */
     public function getBranchByRegion($region)
     {
-        $branches = Branch::active()->primary()->where('region_id', $region)->select('id', 'name')->get();
+        if (auth()->user()->type === 'subcustomer') {
+            $branches = Branch::active()->primary()
+                ->where('region_id', $region)
+                ->select('id', 'name')
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->get();
+        } else {
+            $branches = Branch::active()->primary()
+                ->where('region_id', $region)
+                ->select('id', 'name')
+                ->get();
+        }
 
         return view('customer.reports.extra._branch_by_region', ['branches' => $branches]);
     }
@@ -251,7 +317,13 @@ class ReportController extends Controller
      */
     public function getRegionByCity($city)
     {
-        $regions = Region::active()->primary()->where('parent_id', $city)->select('id', 'name')->get();
+        if (auth()->user()->type === 'subcustomer') {
+            $regions = Region::active()->primary()->where('parent_id', $city)->select('id', 'name')
+                ->whereHas('branches', fn($q) => $q->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id())))
+                ->get();
+        } else {
+            $regions = Region::active()->primary()->where('parent_id', $city)->select('id', 'name')->get();
+        }
 
         return view('customer.reports.extra._region_by_city', ['regions' => $regions]);
     }

@@ -214,6 +214,10 @@ class WelcomeReport extends BaseReport
                 ->whereNull('branches.deleted_at')
                 ->distinct();
 
+            if (auth()->user()->type === 'subcustomer') {
+                $query[$status] = $query[$status]->whereIn('branches.id', $list);
+            }
+
             if ($data['type'] == 'branch' && ($filter['default'] ?? false) == false) {
                 $query[$status] = $query[$status]->whereIn('branches.id', $list);
             }

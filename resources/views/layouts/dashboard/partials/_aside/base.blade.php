@@ -368,21 +368,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="border-bottom clearfix"></div>
-                        <div class="row justify-content-center p-0 m-0 py-3 item-menu">
-                            <div class="col-12 justify-content-center">
+{{--                        <div class="border-bottom clearfix"></div>--}}
+{{--                        <div class="row justify-content-center p-0 m-0 py-3 item-menu">--}}
+{{--                            <div class="col-12 justify-content-center">--}}
 
-                                <div class="iq-product-cover d-flex justify-content-center">
-                                    <a href="{{ route('subcustomer.settings') }}" class="iq-waves-effect"><img
-                                            src="{{ resolveDark() }}/img/icon_menu/settings.svg" alt="Settings"
-                                            class="img-fluid"></a>
-                                </div>
-                                <div class="iq-product-cover d-flex justify-content-center"><a
-                                        href="{{ route('subcustomer.settings') }}"
-                                        class="iq-waves-effect menutext">{{ __('app.Settings') }}</a>
-                                </div>
-                            </div>
-                        </div>
+{{--                                <div class="iq-product-cover d-flex justify-content-center">--}}
+{{--                                    <a href="{{ route('subcustomer.settings') }}" class="iq-waves-effect"><img--}}
+{{--                                            src="{{ resolveDark() }}/img/icon_menu/settings.svg" alt="Settings"--}}
+{{--                                            class="img-fluid"></a>--}}
+{{--                                </div>--}}
+{{--                                <div class="iq-product-cover d-flex justify-content-center"><a--}}
+{{--                                        href="{{ route('subcustomer.settings') }}"--}}
+{{--                                        class="iq-waves-effect menutext">{{ __('app.Settings') }}</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="border-bottom clearfix"></div>
 
                         <div class="item-menu p-0 m-0 py-3

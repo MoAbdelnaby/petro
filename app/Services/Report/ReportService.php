@@ -23,10 +23,24 @@ class ReportService
     public static function statistics($start = null, $end = null, $lists = null): array
     {
         $users = User::primary()->count();
-        $branches = Branch::primary()->count();
-        $active_branches = Branch::active()->primary()->count();
-        $installed_branches = Branch::active()->primary()->installed()->count();
         $regions = Region::active()->primary()->count();
+
+        if (auth()->user()->type === 'subcustomer') {
+            $active_branches = Branch::active()->primary()
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->count();
+            $installed_branches = Branch::active()->primary()->installed()
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->count();
+            $branches = Branch::primary()
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->count();
+        } else {
+            $active_branches = Branch::active()->primary()->count();
+            $installed_branches = Branch::active()->primary()->installed()->count();
+            $branches = Branch::primary()->count();
+        }
+
         $filter = [
             'start' => $start,
             'default' => true,
@@ -123,7 +137,7 @@ class ReportService
 
         if (empty($branches)) {
             $branches = Branch::active()->primary()->get();
-        }else{
+        } else {
             $branches = Branch::find($branches);
         }
 

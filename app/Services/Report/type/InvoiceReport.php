@@ -218,10 +218,12 @@ class InvoiceReport extends BaseReport
                 ->whereNull('branches.deleted_at')
                 ->distinct();
 
-            if (($filter['default'] ?? false) == false) {
-                if ($data['type'] ?? '' == 'branch') {
-                    $query[$status] = $query[$status]->whereIn('branches.id', $list);
-                }
+            if (auth()->user()->type === 'subcustomer') {
+                $query[$status] = $query[$status]->whereIn('branches.id', $list);
+            }
+
+            if ($data['type'] == 'branch' && ($filter['default'] ?? false) == false) {
+                $query[$status] = $query[$status]->whereIn('branches.id', $list);
             }
 
             $filter['column'] = "$this->mainTable.checkInDate";
@@ -239,25 +241,25 @@ class InvoiceReport extends BaseReport
         $no_invoices = array_column($result['no_invoice'], 'id');
         $no_invoices = array_values(array_diff($no_invoices, $invoices));
 
-        if ($type == 'count') {
+        if ($type === 'count') {
             $result['invoice'] = count($invoices);
             $result['no_invoice'] = count($no_invoices);
 
             return $result;
-        } else {
-            $ids = $type == 'invoice' ? $invoices : $no_invoices;
-
-            if ($type_column == 'id') {
-                return $ids;
-            }
-
-            return [
-                'branch_check' => [
-                    'table' => Branch::select('id', 'name', 'code', 'area_count', 'created_at')
-                        ->whereIn('id', $ids)->get()->toArray()
-                ]
-            ];
         }
+
+        $ids = $type === 'invoice' ? $invoices : $no_invoices;
+
+        if ($type_column === 'id') {
+            return $ids;
+        }
+
+        return [
+            'branch_check' => [
+                'table' => Branch::select('id', 'name', 'code', 'area_count', 'created_at')
+                    ->whereIn('id', $ids)->get()->toArray()
+            ]
+        ];
     }
 
     /**
