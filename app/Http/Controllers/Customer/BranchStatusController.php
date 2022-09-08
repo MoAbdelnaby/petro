@@ -59,10 +59,9 @@ class BranchStatusController extends Controller
             $branches = Branch::primary()->with('region')->get();
         }
 
-        $on = 0;
-        $off = 0;
-
-        $installed = Branch::primary()->where('installed', 1)->count();
+        $on = $branches->where('status',1)->count();
+        $off = $branches->where('status',0)->count();
+        $installed = $branches->where('installed',1)->count();
 
         return view("customer.branches_status.index", compact('branches', 'off', 'on', 'installed'));
     }
