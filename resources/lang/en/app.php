@@ -1692,4 +1692,5 @@ return [
     'hours' => 'Hours',
     'show_bracnh' => 'Show Branch',
     'not_link_branches' => 'Not Linked Branches',
+    'all_regions' => 'All Regions',
 ];

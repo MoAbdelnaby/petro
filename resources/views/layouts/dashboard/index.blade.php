@@ -87,7 +87,9 @@
 <!-- Chart Custom JavaScript -->
 <script src="{{resolveLang()}}/js/chart-custom.js"></script>
 <!-- Custom JavaScript -->
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+{{-- <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script> --}}
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+
 
 <script src="{{resolveLang()}}/js/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

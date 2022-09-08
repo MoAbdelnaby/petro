@@ -1748,4 +1748,5 @@ return array (
   'work_duration' => 'مدة العمل',
   'year' => 'عام',
   'yes' => 'نعم',
+  'all_regions' => 'كل المناطق',
 );
