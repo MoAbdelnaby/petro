@@ -84,16 +84,6 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::get('config/{type}/get', 'ConfigController@index')->name('config.index');
             Route::post('config/update', 'ConfigController@update')->name('config.update');
 
-            Route::get('reports', 'ReportController@index')->name('reports.index');
-            Route::match(['get', 'post'], 'reports', 'ReportController@index')->name('reports.index');
-            Route::get('reports/filter', 'ReportController@filter')->name('reports.filter');
-            Route::get('report/region/{region}/show-branches', 'ReportController@getBranchByRegion');
-            Route::get('report/city/{region}/show-regions', 'ReportController@getRegionByCity');
-            Route::match(['get', 'post'],'reports/{type}/show', 'ReportController@show')->name('reports.show');
-            Route::get('reports/{type}/download', 'ReportController@download')->name('report.download');
-            Route::get('reports/download-statistics', 'ReportController@downloadStatistics')->name('report.downloadStatistics');
-            Route::get('reports/{type}/export-files', 'ReportController@export')->name('reports.export');
-
            Route::get('error-mangment/{id}', 'ErrorManagementController@index')->name('error_mangment.index');
             Route::get('error-mangment/{id}/filter', 'ErrorManagementController@filter')->name('error_mangment.filter');
             Route::post('error-mangment/{id}/updatePlate', 'ErrorManagementController@updatePlate')->name('error_mangment.updatePlate');
@@ -119,6 +109,7 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::get('branches-status', 'BranchStatusController@branchesStatus')->name('branches_status');
             Route::get('branches-log/{id}', 'BranchStatusController@getLogs');
             Route::get('branches-stability/{id}', 'BranchStatusController@getStability');
+            Route::get('branches/not_linked/list', 'BranchStatusController@getNotLinked')->name('branches.not_linked');
 
             //Position Routes
             Route::resource('positions', 'PositionController');
@@ -194,6 +185,7 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::post('/{type}/sendMessage', 'PlatesController@sendMessage')->name('plates.sendMessage');
         Route::post('{usermodelbranchid}/platesshiftSettingSave', 'PlatesController@platesshiftSettingSave')->name('plates.platesshiftsetting');
     });
+
     Route::group(['prefix' => 'customer', 'namespace' => 'Customer'], function () {
         Route::resource('customerBranches', 'CustomerBranchesController');
         Route::get('customerBranches/services/{id}', 'CustomerBranchesController@services')->name('customerBranches.services');
@@ -207,7 +199,19 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
 
         //New
         Route::post('customerBranches/change-installed/{id}', 'CustomerBranchesController@changeInstalled')->name('branches.change_installed');
+
+        //reports
+        Route::get('reports', 'ReportController@index')->name('reports.index');
+        Route::match(['get', 'post'], 'reports', 'ReportController@index')->name('reports.index');
+        Route::get('reports/filter', 'ReportController@filter')->name('reports.filter');
+        Route::get('report/region/{region}/show-branches', 'ReportController@getBranchByRegion');
+        Route::get('report/city/{region}/show-regions', 'ReportController@getRegionByCity');
+        Route::match(['get', 'post'],'reports/{type}/show', 'ReportController@show')->name('reports.show');
+        Route::get('reports/{type}/download', 'ReportController@download')->name('report.download');
+        Route::get('reports/download-statistics', 'ReportController@downloadStatistics')->name('report.downloadStatistics');
+        Route::get('reports/{type}/export-files', 'ReportController@export')->name('reports.export');
     });
+
     Route::get('testmailsetting/{mail?}','HomeController@testMail');
 });
 

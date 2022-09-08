@@ -29,8 +29,19 @@ class ReportController extends Controller
 
     public function index(Request $request)
     {
-        $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
-        $statics = ReportService::statistics($request->start , $request->end, $request->lists);
+        if (auth()->user()->type === 'subcustomer') {
+            $branches = Branch::active()->primary()->select('id', 'name')
+                ->with('areas')
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->get();
+
+            $lists = $request->lists ?? $branches->pluck('id')->toArray();
+            $statics = ReportService::statistics($request->start, $request->end, $lists);
+
+        } else {
+            $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
+            $statics = ReportService::statistics($request->start, $request->end, $request->lists);
+        }
 
         if (!empty(request('lists'))) {
             $lists = request('lists');
@@ -64,9 +75,17 @@ class ReportController extends Controller
             $regions = Region::active()->primary()->child()->select('id', 'name')->get();
             $cities = Region::active()->primary()->parent()->select('id', 'name')->get();
 
+            if (empty($request->except('_token')) || is_null($request->show_by)) {
+                if (auth()->user()->type === 'subcustomer') {
+                    $branches = array_slice($branches, 0, 9);
+                    $filter = $this->handleFilterFormat($branches, $request->all());
+                } else {
+                    $filter = $this->getTopBranch($type, $request->all());
+                }
 
-            $filter = (empty($request->except('_token')) || is_null($request->show_by))
-                ? $this->getTopBranch($type, $request->all()) : $request->except('_token');
+            } else {
+                $filter = $request->except('_token');
+            }
 
             $result = ReportService::handle($type, $filter);
 
@@ -93,9 +112,15 @@ class ReportController extends Controller
 
     public function getTopBranch($type, $filter): array
     {
-        $type = !in_array($type, ['place', 'plate']) ? 'place' : $type;
+        $type = !in_array($type, $this->reportType, true) ? 'place' : $type;
+
         $branches = DB::table("view_top_branch_$type")->pluck('branch_id')->toArray();
 
+        return $this->handleFilterFormat($branches, $filter);
+    }
+
+    public function handleFilterFormat($branches, $filter): array
+    {
         return [
             'start' => $filter['start'] ?? now()->startOfYear()->toDateString(),
             'end' => $filter['end'] ?? null,
@@ -143,28 +168,6 @@ class ReportController extends Controller
         } catch (\Exception $e) {
             return unKnownError($e->getMessage());
         }
-    }
-
-    /**
-     * @param $region
-     * @return Application|Factory|View
-     */
-    public function getBranchByRegion($region)
-    {
-        $branches = Branch::active()->primary()->where('region_id', $region)->select('id', 'name')->get();
-
-        return view('customer.reports.extra._branch_by_region', ['branches' => $branches]);
-    }
-
-    /**
-     * @param $city
-     * @return Application|Factory|View
-     */
-    public function getRegionByCity($city)
-    {
-        $regions = Region::active()->primary()->where('parent_id', $city)->select('id', 'name')->get();
-
-        return view('customer.reports.extra._region_by_city', ['regions' => $regions]);
     }
 
     /**
@@ -229,5 +232,27 @@ class ReportController extends Controller
         } catch (\Exception $e) {
             return unKnownError($e->getMessage());
         }
+    }
+
+    /**
+     * @param $region
+     * @return Application|Factory|View
+     */
+    public function getBranchByRegion($region)
+    {
+        $branches = Branch::active()->primary()->where('region_id', $region)->select('id', 'name')->get();
+
+        return view('customer.reports.extra._branch_by_region', ['branches' => $branches]);
+    }
+
+    /**
+     * @param $city
+     * @return Application|Factory|View
+     */
+    public function getRegionByCity($city)
+    {
+        $regions = Region::active()->primary()->where('parent_id', $city)->select('id', 'name')->get();
+
+        return view('customer.reports.extra._region_by_city', ['regions' => $regions]);
     }
 }

@@ -43,18 +43,18 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Support\Renderable|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
 
     public function index()
     {
-        if (Auth::user()->type == "customer" || Auth::user()->type == "subadmin") {
+        if (Auth::user()->type === "customer" || Auth::user()->type === "subadmin") {
 
             return \redirect()->route('CustomerHome');
 
-        } elseif (Auth::user()->type == "subcustomer") {
+        } elseif (Auth::user()->type === "subcustomer") {
 
-            return \redirect()->route('myBranches');
+            return \redirect(url('customer/reports'));
 
         } else {
             return view('index');

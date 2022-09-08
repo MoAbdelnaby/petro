@@ -383,6 +383,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="border-bottom clearfix"></div>
+
+                        <div class="item-menu p-0 m-0 py-3
+                                {{ $_SERVER['REQUEST_URI'] == '/customer/reports' ? 'active' : '' }}">
+                            <div class="iq-product-cover d-flex justify-content-center">
+                                <a href="{{ route('reports.index') }}" class="iq-waves-effect"><img
+                                        src="{{ resolveDark() }}/img/icon_menu/report.svg" alt="Reports"
+                                        class="img-fluid"></a>
+                            </div>
+                            <div class="iq-product-cover d-flex justify-content-center"><a
+                                    href="{{ route('reports.index') }}"
+                                    class="iq-waves-effect menutext">{{ __('app.Reports') }}</a></div>
+                        </div>
                     @endif
                 @endif
 

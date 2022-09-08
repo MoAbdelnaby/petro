@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.index')
 
 @section('page_title')
-    {{__('app.customers.branches.page_title.create')}}
+    {{__('app.branch_status')}}
 @endsection
 
 @section('meta')
@@ -105,8 +105,8 @@
                                     </div>
 
                                     <div class="col-lg-4 col-md-4">
-                                        <a style="cursor: pointer" id="not_linked_branch" data-toggle="modal"
-                                           data-target="notLinkedModel">
+                                        <a style="cursor: pointer" id="not_linked_branch"
+                                           data-url="{{route('branches.not_linked')}}">
                                             <div class="card text-center col-12">
                                                 <div class="card-header row offline"
                                                      style=" border-bottom: 5px solid #fed329 !important;">
@@ -236,10 +236,10 @@
                                                             {{  $branch->name ?? ''}}
                                                         </td>
                                                         <td>
-                                                            {{  $branch->region ?? ''}}
+                                                            {{  $branch->region->name ?? ''}}
                                                         </td>
                                                         <td>
-                                                            @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)
+                                                            @if (\Carbon\Carbon::now()->diffInMinutes($branch->last_connected) <= 15)
                                                                 <span class="branch_status" data-value="1">
                                                                     <i class="fas fa-circle" style="color: green"></i>
                                                                     {{ __('app.branch_online')  }}
@@ -252,16 +252,12 @@
                                                             @endif
                                                         </td>
                                                         <td style="position: relative"
-                                                            id="stability_{{$branch->branch_code}}">
+                                                            id="stability_{{$branch->code}}">
                                                             <span class="loader"></span>
-                                                            {{--                                                            @if (\Carbon\Carbon::now()->diffInMinutes($branch->created_at) <= 15)--}}
-                                                            {{--                                                                {{$last_stability[$branch->branch_code]['stability']??"0 ". __('app.minute')}}--}}
-                                                            {{--                                                            @else--}}
-                                                            {{--                                                                {{"0 ". __('app.minute')}}--}}
-                                                            {{--                                                            @endif--}}
                                                         </td>
                                                         <td>
-                                                            @php($diff = \Carbon\Carbon::now()->diff($branch->created_at))
+
+                                                            @php($diff = \Carbon\Carbon::now()->diff($branch->last_connected))
                                                             @if($diff->y)
                                                                 {{ __('app.not_connected_yet') }}
                                                             @else
@@ -298,13 +294,13 @@
 
                                                         <td>
                                                             <a class="btn btn-dark skew-dark mr-18"
-                                                               href="branches-log/{{$branch->branch_code}}"
+                                                               href="branches-log/{{$branch->code}}"
                                                                target="_blank">{{ __('app.Show') }}</a>
                                                             <a class="btn btn-primary mr-18"
                                                                href="{{ route('customerBranches.show', [$branch->id]) }}"
                                                                target="_blank">{{ __('app.show_bracnh') }}</a>
                                                             <a class="btn btn-info skew-warning  mr-18"
-                                                               href="branches-stability/{{$branch->branch_code}}"
+                                                               href="branches-stability/{{$branch->code}}"
                                                                target="_blank">{{ __('app.stability') }}</a>
                                                         </td>
                                                     </tr>
@@ -355,6 +351,7 @@
         });
 
         $(document).ready(function () {
+
             //Get last stability for each branch
             $.ajax({
                 url: "{{route('branch.last_stability')}}",
@@ -364,9 +361,9 @@
                     let rows = $('#BranchStatusTable tr');
                     for (let i = 0; i < rows.length; i++) {
                         let stabilityId = $($(rows)[i]).find('td:nth-child(5)').attr('id');
-                        let branch_code = stabilityId?.replace('stability_', '');
-                        if (branch_code != undefined) {
-                            $(`#stability_${branch_code}`).html(data.stabiliteis[branch_code]?.stability ?? "0 Minute");
+                        let code = stabilityId?.replace('stability_', '');
+                        if (code != undefined) {
+                            $(`#stability_${code}`).html(data.stabiliteis[code]?.stability ?? "0 Minute");
                         }
                     }
                     let table = $('#BranchStatusTable').dataTable({
@@ -391,7 +388,6 @@
                             'colvis'
                         ]
                     });
-
                 },
                 error: function (data) {
                     let rows = $('#BranchStatusTable tr');
@@ -412,10 +408,10 @@
                     success: function (data) {
                         $("#not_linked_data").html('');
 
-                        data.not_linked_branches.forEach(function (el) {
+                        data.not_linked.forEach(function (el) {
                             $("#not_linked_data").append(`<div class="row">
                                 <div class="col-md-12">
-                                    <a href="${APP_URL}/{$LANG}/customerBranches/${el.id}">${el.name}</a>
+                                    <a href="{{url('/')}}/{{app()->getLocale()}}/customer/customerBranches/${el.id}">${el.name}</a>
                                 </div>
                             </div>`);
                         });

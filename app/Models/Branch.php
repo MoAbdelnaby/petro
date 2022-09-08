@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Services\SeederCheck;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Branch extends Model
@@ -15,9 +16,16 @@ class Branch extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['status'];
+
     public function scopePrimary($query)
     {
         return $query->where('user_id', parentID());
+    }
+
+    public function getStatusAttribute(): bool
+    {
+        return $this->last_connected >= now()->subMinutes(15);
     }
 
     public function scopeActive($query)
@@ -29,9 +37,10 @@ class Branch extends Model
     {
         return $query->where('installed', true);
     }
+
     public function scopeLast30($query)
     {
-        return $query->where('created_at', '>=',now()->subDays(30)->toDateString());
+        return $query->where('created_at', '>=', now()->subDays(30)->toDateString());
     }
 
     public function users()
@@ -107,4 +116,10 @@ class Branch extends Model
     {
         return $this->belongsToMany('App\Service', 'branch_services', 'branch_id', 'service_id');
     }
+
+    public function branch_users(): HasMany
+    {
+        return $this->hasMany(BranchUser::class, 'branch_id', 'id');
+    }
+
 }
