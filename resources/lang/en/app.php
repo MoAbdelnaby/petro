@@ -64,6 +64,7 @@ return [
     'active' => 'Active',
     'deactivate' => 'Deactivate',
     'back' => 'Back',
+    'branch_status' => 'Branches Status',
     'success' => 'Success',
     'fail' => 'Fail',
     'Confirmation' => 'Confirmation!',

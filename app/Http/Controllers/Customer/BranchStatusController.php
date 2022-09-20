@@ -9,6 +9,7 @@ use App\Models\Branch;
 use App\Models\UserModel;
 use App\Models\UserModelBranch;
 use App\Models\UserPackages;
+use App\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -43,6 +44,12 @@ class BranchStatusController extends Controller
      */
     public function branchesStatus(Request $request)
     {
+
+        $branches = Branch::primary()->with('region')->get();
+        $on = $branches->where('status',1)->count();
+        $off = $branches->where('status',0)->count();
+        $installed = $branches->where('installed',1)->count();
+
         if ($request->online_status === 'online') {
 
             $branches = Branch::primary()->with('region')
@@ -55,14 +62,7 @@ class BranchStatusController extends Controller
                 ->where('last_connected', '<=', Carbon::now()->subMinutes(15))
                 ->get();
 
-        } else {
-            $branches = Branch::primary()->with('region')->get();
         }
-
-        $on = $branches->where('status',1)->count();
-        $off = $branches->where('status',0)->count();
-        $installed = $branches->where('installed',1)->count();
-
         return view("customer.branches_status.index", compact('branches', 'off', 'on', 'installed'));
     }
 
@@ -260,5 +260,38 @@ class BranchStatusController extends Controller
         $to_total = ($to_day + $to_hour + $to_minute);
 
         return [$from_total, $to_total];
+    }
+
+    public function UserbranchesStatus(Request $request)
+    {
+            $user =  User::with('branches')
+                ->where('id',auth()->id())
+                ->first();
+            $ids = $user->branches->pluck('id')->toArray();
+
+        $branches = Branch::primary()->with('region')
+            ->whereIn('id',$ids)
+            ->get();
+        $on = $branches->where('status',1)->whereIn('id',$ids)->count();
+        $off = $branches->where('status',0)->whereIn('id',$ids)->count();
+        $installed = $branches->where('installed',1)->whereIn('id',$ids)->count();
+
+        if ($request->online_status === 'online') {
+
+            $branches = Branch::primary()->with('region')
+                ->where('last_connected', '>=', Carbon::now()->subMinutes(15))
+                ->whereIn('id',$ids)
+                ->get();
+
+        } else if ($request->online_status === 'offline') {
+
+            $branches = Branch::primary()->with('region')
+                ->where('last_connected', '<=', Carbon::now()->subMinutes(15))
+                ->whereIn('id',$ids)
+                ->get();
+
+        }
+
+        return view("subcustomer.branch-status.index", compact('branches', 'off', 'on', 'installed'));
     }
 }

@@ -105,7 +105,6 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::post('customerPackages/requestPackage', 'CustomerPackagesController@requestPackage')->name('customerPackages.requestPackage');
 
             //Branch Status Routes
-            Route::get('branch/last-stability','BranchStatusController@lastStability')->name('branch.last_stability');
             Route::get('branches-status', 'BranchStatusController@branchesStatus')->name('branches_status');
             Route::get('branches-log/{id}', 'BranchStatusController@getLogs');
             Route::get('branches-stability/{id}', 'BranchStatusController@getStability');
@@ -153,6 +152,9 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
     });
 
     ///////////////////Sub-Customer Routes//////////
+    Route::get('customer/branch/last-stability','Customer\BranchStatusController@lastStability')->name('branch.last_stability');
+
+    Route::get('my-branches/status', 'Customer\BranchStatusController@UserbranchesStatus')->name('my_branches_status');
     Route::get('branch/filter/area', 'Models\PlacesController@get_branch_data')->name('branch.filter.area');
     Route::get('branch/plates/times', 'Models\PlatesController@get_branch_plate_times')->name('branch.plates.times');
     Route::get('/home', 'HomeController@index')->name('home');

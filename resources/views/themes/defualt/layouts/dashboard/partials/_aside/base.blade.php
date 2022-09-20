@@ -424,11 +424,8 @@
                             {{-- <li><a href="{{route('modelstatus.index')}}"><i class="ri-profile-line"></i>{{__('app.side_bar.saas_control.modelstatus')}}</a></li> --}}
                             {{-- @endcan --}}
 
-
                         </ul>
                     </li>
-
-
 
                     @endhasrole
 
