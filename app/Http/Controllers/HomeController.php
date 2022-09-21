@@ -53,7 +53,8 @@ class HomeController extends Controller
             return \redirect()->route('CustomerHome');
 
         } elseif (Auth::user()->type === "subcustomer") {
-
+            return \redirect()->route('CustomerHome');
+//            return \redirect(url('customer/reports'));
             return \redirect(url('customer/reports'));
 
         } else {

@@ -11,7 +11,7 @@ APP_DEBUG=false
 SESSION_LIFETIME=525600
 
 
-#APP_URL=http://104.211.179.36
+#APP_URL=https://petromin-api.wakeb.tech
 
 APP_URL=https://petromin.wakeb.tech
 

@@ -58,20 +58,24 @@
                 <img src="{{resolveDark()}}/img/list.png" alt="">
             </span>
         </div>
-
+        @if(Auth::user()->type != "subcustomer")
         <ul class="branch nav nav-pills scroll-horizontal main" id="pills-tab" role="tablist">
-            <div class="scroll-horizontal--elm-cont" >
-                @foreach ($activeRegions as $reg)
-                    <li class="nav-item">
-                        <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}" id="pills-home-tab"
-                           href="{{route('regionmodelpreview.index',[$reg->id])}}" aria-controls="pills-home"
-                           aria-selected="true">
-                            <span class="ml-1"> {{$reg->name}}</span>
-                        </a>
-                    </li>
-                @endforeach
+            <div class="scroll-horizontal--elm-cont">
+
+                    @foreach ($activeRegions as $reg)
+                        <li class="nav-item">
+                            <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}"
+                               id="pills-home-tab"
+                               href="{{route('regionmodelpreview.index',[$reg->id])}}" aria-controls="pills-home"
+                               aria-selected="true">
+                                <span class="ml-1"> {{$reg->name}}</span>
+                            </a>
+                        </li>
+                    @endforeach
+
             </div>
         </ul>
+        @endif
         <!-- //////////// -->
         <ul class="branch branch-2nd nav nav-pills scroll-horizontal search_branch-ul" id="pills-tab" role="tablist">
             <div class="scroll-horizontal--elm-cont" id='li-branches'>
@@ -81,8 +85,8 @@
                            href="{{route('branchmodelpreview.index',[$branch->b_id])}}" aria-controls="pills-home"
                            aria-selected="true">
                             <img
-                                    src="{{$branch->b_id==$branch_id ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
-                                    alt="">
+                                src="{{$branch->b_id==$branch_id ? url('/gym_dark'):(session()->has('darkMode') ?url('/gym_dark'):url('/gym'))}}/img/icon-location.svg"
+                                alt="">
                             <span class="ml-1"> {{$branch->bname}}</span></a>
                     </li>
                 @endforeach
@@ -336,7 +340,7 @@
                                                 </div>
 
 
-                                                <div class="text-center" >
+                                                <div class="text-center">
                                                     <button type="submit"
                                                             class="btn close-setting">{{__('app.gym.Save')}}</button>
                                                 </div>
@@ -403,7 +407,7 @@
                                                 <div class="card model-card">
                                                     <div class="card-body p-0 ">
                                                         <span
-                                                                class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">{{__('app.all')}}</span>
+                                                            class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">{{__('app.all')}}</span>
                                                         <div class="setting-card-cont dropleft ">
                                                             <a href="#" type="button" data-toggle="dropdown"
                                                                id="dropdownMenuCardSetting" data-bs-toggle="dropdown"
@@ -411,8 +415,8 @@
                                                                 <i class="fas fa-cog"></i>
                                                             </a>
                                                             <div
-                                                                    class="dropdown-menu dropdown-menu-right custom-dropdown"
-                                                                    aria-labelledby="dropdownMenuCardSetting">
+                                                                class="dropdown-menu dropdown-menu-right custom-dropdown"
+                                                                aria-labelledby="dropdownMenuCardSetting">
                                                                 <button type="button" class="close close-1"
                                                                         data-dismiss="dropdown" aria-label="Close">
                                                                     <span class='close-1'
@@ -424,10 +428,10 @@
                                                                             class="filter_date custom-select">
                                                                         <option value="all">{{__('app.all')}}</option>
                                                                         <option
-                                                                                value="today">{{__('app.today')}}</option>
+                                                                            value="today">{{__('app.today')}}</option>
                                                                         <option value="week">{{__('app.week')}}</option>
                                                                         <option
-                                                                                value="month">{{__('app.month')}}</option>
+                                                                            value="month">{{__('app.month')}}</option>
                                                                     </select>
                                                                 </div>
 
@@ -440,7 +444,7 @@
                                                             <img src="{{resolveDark()}}/img/Icon-car.svg"
                                                                  alt="Area-{{$val}}">
                                                             <div
-                                                                    class="area-title mt-1">{{__('app.gym.Area')}} {{$key}}</div>
+                                                                class="area-title mt-1">{{__('app.gym.Area')}} {{$key}}</div>
 
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
@@ -478,7 +482,7 @@
                                         <div class="iq-card-body">
                                             <div class="related-heading">
                                                 <div
-                                                        class="d-flex justify-content-between align-items-center border-bottom">
+                                                    class="d-flex justify-content-between align-items-center border-bottom">
                                                     <h2 class="border-bottom-0">{{ __('app.Tables') }}</h2>
                                                     <div class="dropdown">
                                                         <a href="#" class="dropdown-toggle" type="button"
@@ -491,9 +495,9 @@
                                                                   {{ $userSettings ? ($userSettings->table_type == "1" ? 'selected' : '') :'selected' }}"
                                                                    href="#">
                                                                     <img
-                                                                            src="{{ asset('assets/images/tables-type/table-1.png')}}"
-                                                                            alt="{{ __('app.Pie_Chart') }}"
-                                                                            title="{{ __('app.Pie_Chart') }}">
+                                                                        src="{{ asset('assets/images/tables-type/table-1.png')}}"
+                                                                        alt="{{ __('app.Pie_Chart') }}"
+                                                                        title="{{ __('app.Pie_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -501,9 +505,9 @@
                                                                    class="dropdown-item table-2 {{ $userSettings ? ($userSettings->table_type == "2" ? 'selected' : '') :'' }}"
                                                                    href="#">
                                                                     <img
-                                                                            src="{{ asset('assets/images/tables-type/table-2.png')}}"
-                                                                            alt="{{ __('app.Bar_Chart') }}"
-                                                                            title="{{ __('app.Bar_Chart') }}">
+                                                                        src="{{ asset('assets/images/tables-type/table-2.png')}}"
+                                                                        alt="{{ __('app.Bar_Chart') }}"
+                                                                        title="{{ __('app.Bar_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -511,9 +515,9 @@
                                                                    class="dropdown-item table-3 {{ $userSettings ? ($userSettings->table_type == "3" ? 'selected' : '') :'' }}"
                                                                    href="#">
                                                                     <img
-                                                                            src="{{ asset('assets/images/tables-type/table-3.png')}}"
-                                                                            alt="{{ __('app.Line_Chart') }}"
-                                                                            title="{{ __('app.Line_Chart') }}">
+                                                                        src="{{ asset('assets/images/tables-type/table-3.png')}}"
+                                                                        alt="{{ __('app.Line_Chart') }}"
+                                                                        title="{{ __('app.Line_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -521,9 +525,9 @@
                                                                    class="dropdown-item table-4 {{ $userSettings ? ($userSettings->table_type == "4" ? 'selected' : '') :'' }}"
                                                                    href="#">
                                                                     <img
-                                                                            src="{{ asset('assets/images/tables-type/table-4.png')}}"
-                                                                            alt="{{ __('app.Pyramid_Chart') }}"
-                                                                            title="{{ __('app.Pyramid_Chart') }}">
+                                                                        src="{{ asset('assets/images/tables-type/table-4.png')}}"
+                                                                        alt="{{ __('app.Pyramid_Chart') }}"
+                                                                        title="{{ __('app.Pyramid_Chart') }}">
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -601,26 +605,26 @@
                                                                 <td>
                                                                     @if($item->status == 'completed')
                                                                         <span
-                                                                                class="badge badge-pill badge-success">{{ __('Completed') }}</span>
+                                                                            class="badge badge-pill badge-success">{{ __('Completed') }}</span>
                                                                     @else
                                                                         <span
-                                                                                class="badge badge-pill badge-info">{{ __('Pending') }}</span>
+                                                                            class="badge badge-pill badge-info">{{ __('Pending') }}</span>
                                                                     @endif
                                                                 </td>
                                                                 <td class="open status" id="status{{$item->id}}"
                                                                     style="position:relative;">
                                                                     @if($item->plate_status == 'error')
                                                                         <span
-                                                                                class="badge badge-pill badge-danger">{{ __('app.Error') }}</span>
+                                                                            class="badge badge-pill badge-danger">{{ __('app.Error') }}</span>
                                                                     @elseif($item->plate_status == 'success')
                                                                         <span
-                                                                                class="badge badge-pill badge-success">{{ __('app.success') }}</span>
+                                                                            class="badge badge-pill badge-success">{{ __('app.success') }}</span>
                                                                     @elseif($item->plate_status == 'modified')
                                                                         <span
-                                                                                class="badge badge-pill badge-info">{{ __('app.Modified') }}</span>
+                                                                            class="badge badge-pill badge-info">{{ __('app.Modified') }}</span>
                                                                     @elseif($item->plate_status == 'reported')
                                                                         <span
-                                                                                class="badge badge-pill badge-warning">{{ __('app.Reported') }}</span>
+                                                                            class="badge badge-pill badge-warning">{{ __('app.Reported') }}</span>
                                                                     @endif
                                                                 </td>
 
@@ -642,25 +646,32 @@
                                                                         @if($item->invoiceStatus->status == 'sent')
                                                                             <a id="download-{{$item->id}}" download
                                                                                href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceStatus->fileUrl}}"
-                                                                               data-toggle="popover" data-trigger="hover"
+                                                                               data-toggle="popover"
+                                                                               data-trigger="hover"
                                                                                data-content="Preview Invoice">
                                                                                 <i class="fas fa-file-pdf text-success"
                                                                                    style="font-size: 19px"></i>
                                                                             </a>
 
                                                                         @elseif( $item->invoiceStatus->status == 'failed')
-                                                                            <a data-toggle="popover" data-trigger="hover" data-content="{{$item->invoiceStatus->error_reason}}">
+                                                                            <a data-toggle="popover"
+                                                                               data-trigger="hover"
+                                                                               data-content="{{$item->invoiceStatus->error_reason}}">
                                                                                 <i class="fas fa-file-prescription text-warning"
                                                                                    style="font-size: 19px"></i>
                                                                             </a>
                                                                         @elseif($item->invoiceStatus->status == 'received')
-                                                                            <a data-toggle="popover" data-trigger="hover" data-content=" {{ __('Invoiced Received') }}">
-                                                                                <i class="fas fa-file-import text-info" style="font-size: 19px"></i>
+                                                                            <a data-toggle="popover"
+                                                                               data-trigger="hover"
+                                                                               data-content=" {{ __('Invoiced Received') }}">
+                                                                                <i class="fas fa-file-import text-info"
+                                                                                   style="font-size: 19px"></i>
                                                                             </a>
                                                                         @endif
 
                                                                     @else
-                                                                        <a data-toggle="popover" data-trigger="hover" data-content="No invoice Sent">
+                                                                        <a data-toggle="popover" data-trigger="hover"
+                                                                           data-content="No invoice Sent">
                                                                             <i class="fas fa-file-excel text-danger"
                                                                                style="font-size: 19px"></i>
 
@@ -749,7 +760,7 @@
                                         <div class="iq-card-body">
                                             <div class="related-heading mb-5">
                                                 <div
-                                                        class="d-flex justify-content-between align-items-center border-bottom">
+                                                    class="d-flex justify-content-between align-items-center border-bottom">
                                                     <h2 class="border-bottom-0">{{ __('app.car_count_per_each_area_chart') }}</h2>
                                                     <div class="dropdown">
                                                         <a href="#" class="dropdown-toggle" type="button"
@@ -762,9 +773,9 @@
                                                                {{ $userSettings ? ($userSettings->chart_type == "bar" ? 'selected' : '') :'selected' }}"
                                                                    href="#">
                                                                     <img
-                                                                            src="{{ asset('assets/images/chart-type/Bar-Chart.svg')}}"
-                                                                            alt="{{ __('app.Bar_Chart') }}"
-                                                                            title="{{ __('app.Bar_Chart') }}">
+                                                                        src="{{ asset('assets/images/chart-type/Bar-Chart.svg')}}"
+                                                                        alt="{{ __('app.Bar_Chart') }}"
+                                                                        title="{{ __('app.Bar_Chart') }}">
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -772,9 +783,9 @@
                                                                    class="dropdown-item chart-2 {{ $userSettings ? ($userSettings->chart_type == "circle" ? 'selected' : '') :'' }}"
                                                                    href="#">
                                                                     <img
-                                                                            src="{{ asset('assets/images/chart-type/Pie-Chart.png')}}"
-                                                                            alt="{{ __('app.Pie_Chart') }}"
-                                                                            title="{{ __('app.Pie_Chart') }}">
+                                                                        src="{{ asset('assets/images/chart-type/Pie-Chart.png')}}"
+                                                                        alt="{{ __('app.Pie_Chart') }}"
+                                                                        title="{{ __('app.Pie_Chart') }}">
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -798,7 +809,7 @@
                                         <div class="iq-card-body">
                                             <div class="related-heading mb-5">
                                                 <div
-                                                        class="d-flex justify-content-between align-items-center border-bottom">
+                                                    class="d-flex justify-content-between align-items-center border-bottom">
                                                     <h2 class="border-bottom-0">{{ __('app.invoice_chart') }}</h2>
                                                 </div>
                                             </div>
@@ -861,7 +872,8 @@
                                                                             {{--                                                                                 data-toggle="modal"--}}
                                                                             {{--                                                                                 data-target="#basicExampleModal">--}}
                                                                             <div class="img-overlay">
-                                                                                <span class="mr-1">{{$item->checkInDate}}</span>
+                                                                                <span
+                                                                                    class="mr-1">{{$item->checkInDate}}</span>
                                                                             </div>
                                                                         </div>
                                                                     @endif
@@ -869,7 +881,8 @@
                                                             @endforeach
 
                                                             @if($noImage == false)
-                                                                <img src="/assets/images/no_image.svg" class="mt-5 no_image" alt=""/>
+                                                                <img src="/assets/images/no_image.svg"
+                                                                     class="mt-5 no_image" alt=""/>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -903,7 +916,9 @@
                                 <div class="row">
                                     <div class="form-group col-12 col-md-12 mb-4">
                                         <label for="kilometer">{{ __('app.Kilometer') }} ({{ __('app.Km') }})</label>
-                                        <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"   class="form-control" id="kilometer" min="1"
+                                        <input type="number"
+                                               onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"
+                                               class="form-control" id="kilometer" min="1"
                                                aria-describedby="number of kilometers" placeholder="{{ __('app.KM') }}">
                                         <div class="invalid-feedback d-block km">
                                             {{ __('app.enter_a_valid_number_of_kilometer') }}.
@@ -911,7 +926,9 @@
                                     </div>
                                     <div class="form-group col-12 col-md-12">
                                         <label for="days">{{ __('app.Days') }}</label>
-                                        <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"   class="form-control" id="days" min="1" max="365"
+                                        <input type="number"
+                                               onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"
+                                               class="form-control" id="days" min="1" max="365"
                                                aria-describedby="number of days" placeholder="(1  - 365)">
                                         <div class="invalid-feedback d-block day">
                                             {{ __('app.enter_a_valid_number_of_days') }}.
@@ -943,6 +960,7 @@
     <script src="{{asset('js/config.js')}}"></script>
     <script>
         branchInvoiceBar('invoiceChart',@json($invoice_chart));
+
         function openEditModal(data) {
             var data = JSON.parse(data);
             console.log(data)
@@ -956,19 +974,20 @@
             $('#errorMangamentModal').modal('show');
 
             console.log(data.char_ar.length, data.char_ar)
-            var tempCharAR = data.char_ar.replace(/ /g,'');
-            var tempCharEN = data.char_en.replace(/ /g,'');
-            var tempNumAR = data.number_ar.replace(/ /g,'');
-            var tempNumEn = data.number_en.replace(/ /g,'');
+            var tempCharAR = data.char_ar.replace(/ /g, '');
+            var tempCharEN = data.char_en.replace(/ /g, '');
+            var tempNumAR = data.number_ar.replace(/ /g, '');
+            var tempNumEn = data.number_en.replace(/ /g, '');
 
             console.log(tempCharAR, tempCharEN, tempNumAR, tempNumEn)
-            for (var i=0; i<5; i++){
+            for (var i = 0; i < 5; i++) {
                 $($('.digits[data-info="number_ar"] .input-group input')[i]).val(tempNumAR[i]);
                 $($('.digits[data-info="plate_ar"] .input-group input')[i]).val(tempCharAR[i]);
                 $($('.digits[data-info="number_en"] .input-group input')[i]).val(tempNumEn[i]);
                 $($('.digits[data-info="plate_en"] .input-group input')[i]).val(tempCharEN[i]);
             }
         }
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1246,7 +1265,7 @@
                             title: error || 'Failed To Load Data'
                         });
                     },
-                    complete: function(xhr, status){
+                    complete: function (xhr, status) {
                         spinnerCont.addClass('d-none');
                     }
 
@@ -1257,7 +1276,7 @@
             $('.area-section.slider').on('afterChange', function (event, slick) {
                 cr && (slickCarouselCardEvents(filterDataFn), cr = false);
             })
-            $('.area-section.slider').on('breakpoint', function(event, slick){
+            $('.area-section.slider').on('breakpoint', function (event, slick) {
                 slickCarouselCardEvents(filterDataFn);
                 cr = false;
             });
@@ -1269,9 +1288,9 @@
                 var number_en = $(`#errorMangamentModal input[name=number_en]`).val();
                 var item_id = $(`#errorMangamentModal input[name=item_id]`).val();
 
-                var errorTextMessage    = "Sorry, looks like there are some errors detected, please try again.";
-                var ConfirmButtonText   = "Ok, got it!";
-                var successTextMessage  = "You have updated plate successfully.";
+                var errorTextMessage = "Sorry, looks like there are some errors detected, please try again.";
+                var ConfirmButtonText = "Ok, got it!";
+                var successTextMessage = "You have updated plate successfully.";
 
                 $.ajaxSetup({
                     headers: {
@@ -1298,7 +1317,7 @@
                     error: function (data) {
                         // console.log(data)
                         Swal.fire({
-                            text: data.responseJSON?data.responseJSON.message:errorTextMessage,
+                            text: data.responseJSON ? data.responseJSON.message : errorTextMessage,
                             icon: "error",
                             buttonsStyling: !1,
                             confirmButtonText: ConfirmButtonText,
@@ -1321,13 +1340,13 @@
                 $('#errorMangamentModal').modal('show');
 
                 console.log(data.char_ar.length, data.char_ar)
-                var tempCharAR = data.char_ar.replace(/ /g,'');
-                var tempCharEN = data.char_en.replace(/ /g,'');
-                var tempNumAR = data.number_ar.replace(/ /g,'');
-                var tempNumEn = data.number_en.replace(/ /g,'');
+                var tempCharAR = data.char_ar.replace(/ /g, '');
+                var tempCharEN = data.char_en.replace(/ /g, '');
+                var tempNumAR = data.number_ar.replace(/ /g, '');
+                var tempNumEn = data.number_en.replace(/ /g, '');
 
                 console.log(tempCharAR, tempCharEN, tempNumAR, tempNumEn)
-                for (var i=0; i<5; i++){
+                for (var i = 0; i < 5; i++) {
                     $($('.digits[data-info="number_ar"] .input-group input')[i]).val(tempNumAR[i]);
                     $($('.digits[data-info="plate_ar"] .input-group input')[i]).val(tempCharAR[i]);
                     $($('.digits[data-info="number_en"] .input-group input')[i]).val(tempNumEn[i]);
@@ -1345,7 +1364,8 @@
 
                 return input;
             }
-            $('.digit').on('keyup',function (){
+
+            $('.digit').on('keyup', function () {
 
                 var ennumbers = "0123456789";
                 var arnumbers = "۰۱۲۳٤۵٦۷۸۹";
@@ -1353,59 +1373,51 @@
                 var val = $(this).val();
                 var parent = $(this).closest('.form-group').attr('data-info');
 
-                if(parent == "number_ar"){
-                    if (arnumbers.search(val) > -1){
+                if (parent == "number_ar") {
+                    if (arnumbers.search(val) > -1) {
                         $(this).next().focus();
                         // $('#number_ar').val += val;
                         setInputValue($(this), '#number_ar');
 
-                    }
-                    else if(ennumbers.search(val) > -1) {
+                    } else if (ennumbers.search(val) > -1) {
                         $(this).val(replaceFarsiNumber(val));
                         $(this).next().focus();
                         setInputValue($(this), '#number_ar');
-                    }
-                    else {
+                    } else {
                         $('span.info-patter').fadeOut();
                         $(this).closest('.digits').find('span.info-patter').fadeIn();
                         $(this).val('');
                     }
-                }
-                else if(parent == "plate_ar"){
+                } else if (parent == "plate_ar") {
 
                     var isArabic = /[\u0600-\u06FF\u0750-\u077F]/;
-                    if (isArabic.test(val)){
+                    if (isArabic.test(val)) {
                         $(this).next().focus();
                         setInputValue($(this), '#plate_ar');
 
-                    }
-                    else {
+                    } else {
                         $('span.info-patter').fadeOut();
                         $(this).closest('div.digits').find('span.info-patter').fadeIn();
                         $(this).val('');
                     }
 
-                }
-                else if(parent == "plate_en"){
+                } else if (parent == "plate_en") {
                     const regex = /[A-Za-z]/;
-                    if(regex.test(val)){
+                    if (regex.test(val)) {
                         $(this).next().focus();
                         setInputValue($(this), '#plate_en');
 
-                    }
-                    else{
+                    } else {
                         $('span.info-patter').fadeOut();
                         $(this).closest('div.digits').find('span.info-patter').fadeIn();
                         $(this).val('');
                     }
-                }
-                else if(parent == "number_en"){
-                    if (ennumbers.search(val) > -1){
+                } else if (parent == "number_en") {
+                    if (ennumbers.search(val) > -1) {
                         $(this).next().focus();
                         setInputValue($(this), '#number_en');
 
-                    }
-                    else {
+                    } else {
                         $('span.info-patter').fadeOut();
                         $(this).closest('.digits').find('span.info-patter').fadeIn();
                         $(this).val('');
@@ -1414,19 +1426,21 @@
                 }
             });
             info();
-            function info (){
-                $('.digits label i.fa-info-circle').on('click', function (){
+
+            function info() {
+                $('.digits label i.fa-info-circle').on('click', function () {
                     $('span.info-patter').fadeOut();
                     $(this).closest('.digits').find('span.info-patter').fadeIn();
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $('span.info-patter').fadeOut()
                     }, 3000)
                 })
             }
-            function setInputValue(ele, input){
-                var text="";
+
+            function setInputValue(ele, input) {
+                var text = "";
                 inputs = ele.closest('.digits').find('input.digit');
-                for(var i=0; i < inputs.length; i++){
+                for (var i = 0; i < inputs.length; i++) {
                     text = text + $(inputs[i]).val();
                 }
                 $(input).val(text);

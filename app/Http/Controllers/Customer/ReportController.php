@@ -36,11 +36,16 @@ class ReportController extends Controller
                 ->get();
 
             $lists = $request->lists ?? $branches->pluck('id')->toArray();
-            $statics = ReportService::statistics($request->start, $request->end, $lists);
+            $start = $request->start??Carbon::now()->subDays(30)->toDateString();
+            $end = $request->end??Carbon::now()->toDateString();
+
+            $statics = ReportService::statistics($start, $end, $lists);
 
         } else {
             $branches = Branch::active()->primary()->select('id', 'name')->with('areas')->get();
-            $statics = ReportService::statistics($request->start, $request->end, $request->lists);
+            $start = $request->start??Carbon::now()->subDays(30)->toDateString();
+            $end = $request->end??Carbon::now()->toDateString();
+            $statics = ReportService::statistics($start, $end, $request->lists);
         }
 
         if (!empty(request('lists'))) {
@@ -137,8 +142,8 @@ class ReportController extends Controller
     public function handleFilterFormat($branches, $filter): array
     {
         return [
-            'start' => $filter['start'] ?? now()->startOfYear()->toDateString(),
-            'end' => $filter['end'] ?? null,
+            'start' => $filter['start'] ?? Carbon::now()->subDays(30)->toDateString(),
+            'end' => $filter['end'] ?? Carbon::now()->toDateString(),
             'show_by' => 'branch',
             'default' => true,
             'branch_type' => 'comparison',

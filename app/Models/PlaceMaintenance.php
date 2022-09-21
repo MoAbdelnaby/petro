@@ -37,7 +37,7 @@ class PlaceMaintenance extends Model
             return config('app.azure_storage').config('app.azure_container')."/storage".$this->screenshot;
 
         } else {
-//            return 'http://104.211.179.36'.'/storage'. $this->screenshot;
+//            return 'https://petromin-api.wakeb.tech'.'/storage'. $this->screenshot;
             return config('app.local_media_url').'/storage'. $this->screenshot;
         }
     }

@@ -12,7 +12,7 @@ return [
     |
     */
     'name' => env('APP_NAME', 'Laravel'),
-    'api_url' => env('API_URL', 'http://104.211.179.36'),
+    'api_url' => env('API_URL', 'https://petromin-api.wakeb.tech'),
     'report' => [
         'type' => [
             'place' => [

@@ -25,7 +25,6 @@ Route::post('user/password/reset', 'Auth\UserController@resetPassword')->name('u
 
 Route::group(['middleware' => ['auth', 'speed']], function () {
     Route::group(['middleware' => 'subCustomerCheck'], function () {
-        Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
         Route::get('userNotify', 'HomeController@getNotify')->name('notfication');
         Route::group(['prefix' => 'api/map'], function () {
             Route::match(['get', 'post'], 'filter', 'Customer\MapController@filter')->name('map.filter');
@@ -150,6 +149,8 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::post('branches/backout-reasons/export', 'Customer\BackoutReasonController@export')->name('branch.backout_reason_export');
         Route::get('branches/backout-reasons/exported', 'Customer\BackoutReasonController@exportedFile')->name('branch.backout_reason_exported');
     });
+
+    Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
 
     ///////////////////Sub-Customer Routes//////////
     Route::get('customer/branch/last-stability','Customer\BranchStatusController@lastStability')->name('branch.last_stability');

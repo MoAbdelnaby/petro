@@ -11,7 +11,6 @@
 @endpush
 
 
-
 @section('content')
     <div id="content-page" class="content-page home_page" style="margin-top: -30px">
         <div class="container-fluid">
@@ -66,13 +65,14 @@
                                                   class="filter-form">
                                                 @csrf
                                                 <div class="row">
-                                                    <div  class="col-md-12 branch_container">
+                                                    <div class="col-md-12 branch_container">
                                                         <div class="row">
-                                                            <div class=" col-md-10 branch_selection" >
+                                                            <div class=" col-md-10 branch_selection">
                                                                 <lebel>{{ __('app.Select_branches') }}:</lebel>
 
-                                                                <select class="form-control select_2 required select_branch"
-                                                                        multiple id="mosta_stat_select" name="lists[]">
+                                                                <select
+                                                                    class="form-control select_2 required select_branch"
+                                                                    multiple id="mosta_stat_select" name="lists[]">
                                                                     @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}"
                                                                                 @if(in_array($branch->id,request('lists')??[])) selected @endif>{{$branch->name}}</option>
@@ -180,93 +180,190 @@
                                 @endif
                                 @if(in_array('home' ,array_values($config['place']['statistics'][1])))
                                     <div class="row px-3" id="statistic">
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                <a href="{{route('customerRegions.index')}}" class="iq-card-body"
-                                                   style="padding: 25px 20px !important;">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class='iq-card-title'>{{ __('app.Regions') }}</h6>
-                                                    </div>
-                                                    <div
-                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                                        <div class="d-flex align-items-center">
-                                                            <div
-                                                                class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
-                                                                <i class="fa-solid fa-location-dot"></i></div>
-                                                            <h3>{{$statistics['regions']}}</h3>
+                                        @if(Auth::user()->type === "subcustomer")
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="#" class="iq-card-body"
+                                                       style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.branch_online') }}</h6>
                                                         </div>
                                                         <div
-                                                            class="iq-map text-primary font-size-32">
-                                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                <a href="{{route('customerBranches.index')}}" class="iq-card-body"
-                                                   style="padding: 25px 20px !important;">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class='iq-card-title'>{{ __('app.Branches') }}</h6>
-                                                    </div>
-                                                    <div
-                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="rounded-circle iq-card-icon iq-bg-danger mr-2">
-                                                                <i class="fa-solid fa-code-branch"></i>
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
+                                                                    <i class="fa-solid fa-plug text-success"></i>
+                                                                </div>
+                                                                <h3>{{$statistics['on']}}</h3>
                                                             </div>
-                                                            <h3>{{$statistics['installed_branches']}}</h3>
-                                                            <h4>&nbsp;({{$statistics['branches']??0}})</h4>
+                                                            <div
+                                                                class="iq-map text-primary font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="#" class="iq-card-body"
+                                                       style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.branch_offline') }}</h6>
                                                         </div>
                                                         <div
-                                                            class="iq-map text-danger font-size-32">
-                                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                <a href="{{url('customer/customerPackages')}}" class="iq-card-body"
-                                                   style="padding: 25px 20px !important;">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class='iq-card-title'>{{ __('app.Models') }}</h6>
-                                                    </div>
-                                                    <div
-                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                                        <div class="d-flex align-items-center">
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                    <i class="fa-solid fa-plug-circle-minus"></i>
+                                                                </div>
+                                                                <h3>{{$statistics['off']}}</h3>
+
+                                                            </div>
                                                             <div
-                                                                class="rounded-circle iq-card-icon iq-bg-warning mr-2">
-                                                                <i class="fa-solid fa-server"></i></div>
-                                                            <h3>2</h3>
+                                                                class="iq-map text-danger font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="#" class="iq-card-body"
+                                                       style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.no_linked') }}</h6>
                                                         </div>
                                                         <div
-                                                            class="iq-map text-warning font-size-32">
-                                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                <a href="{{route('customerUsers.index')}}" class="iq-card-body"
-                                                   style="padding: 25px 20px !important;">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class='iq-card-title'>{{ __('app.Users') }}</h6>
-                                                    </div>
-                                                    <div
-                                                        class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                                        <div class="d-flex align-items-center">
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-warning mr-2">
+                                                                    <i class="fa-solid fa-plug-circle-xmark"></i>
+                                                                </div>
+                                                                <h3>{{ max((int)$statistics['installed'] - ((int)$statistics['on']+(int)$statistics['off']),0) }}</h3>
+                                                            </div>
                                                             <div
-                                                                class="rounded-circle iq-card-icon iq-bg-info mr-2">
-                                                                <i class="fa fa-users"></i></div>
-                                                            <h3>{{$statistics['users']}}</h3></div>
-                                                        <div class="iq-map text-info font-size-32">
-                                                            <i class="ri-bar-chart-grouped-line"></i></div>
-                                                    </div>
-                                                </a>
+                                                                class="iq-map text-warning font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="#" class="iq-card-body"
+                                                       style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.installed') }}</h6>
+                                                        </div>
+                                                        <div
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-info mr-2">
+                                                                    <i class="fa-solid fa-plug-circle-check"></i>
+                                                                </div>
+                                                                <h3>{{$statistics['installed']}}</h3></div>
+                                                            <div class="iq-map text-info font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{route('customerRegions.index')}}" class="iq-card-body"
+                                                       style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.Regions') }}</h6>
+                                                        </div>
+                                                        <div
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-primary  mr-2">
+                                                                    <i class="fa-solid fa-location-dot"></i></div>
+                                                                <h3>{{$statistics['regions']}}</h3>
+                                                            </div>
+                                                            <div
+                                                                class="iq-map text-primary font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{route('customerBranches.index')}}" class="iq-card-body"
+                                                       style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.Branches') }}</h6>
+                                                        </div>
+                                                        <div
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-danger mr-2">
+                                                                    <i class="fa-solid fa-code-branch"></i>
+                                                                </div>
+                                                                <h3>{{$statistics['installed_branches']}}</h3>
+                                                                <h4>&nbsp;({{$statistics['branches']??0}})</h4>
+                                                            </div>
+                                                            <div
+                                                                class="iq-map text-danger font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{url('customer/customerPackages')}}" class="iq-card-body"
+                                                       style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.Models') }}</h6>
+                                                        </div>
+                                                        <div
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-warning mr-2">
+                                                                    <i class="fa-solid fa-server"></i></div>
+                                                                <h3>2</h3>
+                                                            </div>
+                                                            <div
+                                                                class="iq-map text-warning font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{route('customerUsers.index')}}" class="iq-card-body"
+                                                       style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.Users') }}</h6>
+                                                        </div>
+                                                        <div
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-info mr-2">
+                                                                    <i class="fa fa-users"></i></div>
+                                                                <h3>{{$statistics['users']}}</h3></div>
+                                                            <div class="iq-map text-info font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        @endif
                                         <div class="col-sm-6 col-md-6 col-lg-3">
                                             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                 <a href="{{route('reports.show','stayingAverage')}}"
@@ -438,14 +535,15 @@
                                                 <div class="row">
                                                     <div id="" class="col-md-12 branch_container">
                                                         <div class="row">
-                                                            <div class="branch_selection col-md-12" >
+                                                            <div class="branch_selection col-md-12">
                                                                 <lebel>{{ __('app.Select_branches') }}:</lebel>
                                                                 <input type="hidden" name="show_by" value="branch">
                                                                 <input type="hidden" name="branch_type"
                                                                        value="comparison">
-                                                                <select class="form-control select_2 required select_branch"
-                                                                        multiple id="car_plate_select"
-                                                                        name="branch_comparison[]">
+                                                                <select
+                                                                    class="form-control select_2 required select_branch"
+                                                                    multiple id="car_plate_select"
+                                                                    name="branch_comparison[]">
                                                                     @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}"
                                                                                 @if(in_array($branch->id,request('branch_comparison')??[])) selected @endif>{{$branch->name}}</option>
@@ -588,9 +686,10 @@
                                                                 <input type="hidden" name="show_by" value="branch">
                                                                 <input type="hidden" name="branch_type"
                                                                        value="comparison">
-                                                                <select class="form-control select_2 required select_branch"
-                                                                        multiple id="bay_area_select"
-                                                                        name="branch_comparison[]">
+                                                                <select
+                                                                    class="form-control select_2 required select_branch"
+                                                                    multiple id="bay_area_select"
+                                                                    name="branch_comparison[]">
                                                                     @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}"
                                                                                 @if(in_array($branch->id,request('branch_comparison')??[])) selected @endif>{{$branch->name}}</option>
@@ -724,16 +823,17 @@
                                                   class="filter-form">
                                                 @csrf
                                                 <div class="row">
-                                                    <div  class="col-md-12 branch_container">
+                                                    <div class="col-md-12 branch_container">
                                                         <div class="row">
                                                             <div class=" col-md-12 branch_selection" id="">
                                                                 <lebel>{{ __('app.Select_branches') }}:</lebel>
                                                                 <input type="hidden" name="show_by" value="branch">
                                                                 <input type="hidden" name="branch_type"
                                                                        value="comparison">
-                                                                <select class="form-control select_2 required select_branch"
-                                                                        multiple id="car_serving_select"
-                                                                        name="branch_comparison[]">
+                                                                <select
+                                                                    class="form-control select_2 required select_branch"
+                                                                    multiple id="car_serving_select"
+                                                                    name="branch_comparison[]">
                                                                     @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}"
                                                                                 @if(in_array($branch->id,request('branch_comparison')??[])) selected @endif>{{$branch->name}}</option>
@@ -862,7 +962,7 @@
                                               class="filter-form">
                                             @csrf
                                             <div class="row">
-                                                <div  class="col-md-12 branch_container">
+                                                <div class="col-md-12 branch_container">
                                                     <div class="row">
                                                         <div class=" col-md-12 branch_selection" id="">
                                                             <lebel>{{ __('app.Select_branches') }}:</lebel>

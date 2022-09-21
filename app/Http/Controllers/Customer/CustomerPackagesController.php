@@ -49,23 +49,38 @@ class CustomerPackagesController extends Controller
      * @return View
      * @throws Exception
      */
-    public function statistics()
+    public function statistics(Request $request)
     {
         $config = ConfigService::get();
 
         $report = [];
         foreach (['place', 'plate', 'stayingAverage', 'invoice'] as $type) {
-            $filter = $this->getTopBranch($type, request()->all());
-//            $filter['start'] = $date['start'] ?? Carbon::now()->startOfMonth()->subMonth()->toDateString();
-            $filter['start'] = Carbon::now()->subDays(30)->toDateString();
-            $filter['end'] = now()->toDateString();
+
+            if (auth()->user()->type === 'subcustomer') {
+                $branches = Branch::active()->primary()
+                    ->with('areas')
+                    ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                    ->get();
+
+
+                $branches_id = $branches->pluck('id')->toArray();
+                $filter = $this->handleFilterFormat(array_slice($branches_id, 0, 9), $request->all());
+                $statistics = ReportService::statistics($filter['start'], $filter['end'], $request->lists ?? $branches_id);
+                $statistics['on'] = $branches->where('status', 1)->count();
+                $statistics['off'] = $branches->where('status', 0)->count();
+                $statistics['installed'] = $branches->where('installed', 1)->count();
+            } else {
+                $filter = $this->getTopBranch($type, $request->all());
+                $statistics = ReportService::statistics($filter['start'], $filter['end'], $request->lists);
+            }
+
             $report[$type] = ReportService::handle($type, $filter);
         }
 
         $branches = Branch::active()->primary()->select('id', 'name')->get();
 
         return view('customerhome', [
-            'statistics' => ReportService::statistics($filter['start'], $filter['end']),
+            'statistics' => $statistics,
             'report' => $report,
             'branches' => $branches,
             'config' => $config,
@@ -332,17 +347,23 @@ class CustomerPackagesController extends Controller
 
     }
 
+    public function handleFilterFormat($branches, $filter): array
+    {
+        return [
+            'start' => $filter['start'] ?? Carbon::now()->subDays(30)->toDateString(),
+            'end' => $filter['end'] ?? Carbon::now()->toDateString(),
+            'show_by' => 'branch',
+            'default' => true,
+            'branch_type' => 'comparison',
+            'branch_comparison' => $branches,
+        ];
+    }
+
     public function getTopBranch($type, $filter): array
     {
         $type = !in_array($type, ['place', 'plate']) ? 'place' : $type;
         $branches = DB::table("view_top_branch_$type")->pluck('branch_id')->toArray();
 
-        return [
-            'start' => $filter['start'] ?? Carbon::now()->subDays(30)->toDateString(),
-            'end' => $filter['end'] ?? null,
-            'show_by' => 'branch',
-            'branch_type' => 'comparison',
-            'branch_comparison' => $branches,
-        ];
+        return $this->handleFilterFormat($branches, $filter);
     }
 }

@@ -355,6 +355,24 @@
                 @else
 
                     @if (auth()->user()->type == 'subcustomer')
+
+                        <div
+                            class="row justify-content-center p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/customerhome' ? 'active' : '' }}">
+                            <div class="col-12 justify-content-center">
+                                <div class="iq-product-cover d-flex justify-content-center">
+                                    <a href="{{ route('CustomerHome') }}" class="iq-waves-effect">
+                                        <img alt="Logo" src="{{ resolveDark() }}/img/icon_menu/homemenu.svg"
+                                             class="img-fluid"/>
+                                    </a>
+                                </div>
+                                <div class="iq-product-cover d-flex justify-content-center">
+                                    <a href="{{ route('CustomerHome') }}"
+                                       class="iq-waves-effect menutext">{{ __('app.dashboard') }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-bottom clearfix"></div>
+
                         <div class="row justify-content-center p-0 m-0 py-3 item-menu">
                             <div class="col-12 justify-content-center">
                                 <div class="iq-product-cover d-flex justify-content-center">
