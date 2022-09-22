@@ -33,15 +33,18 @@ class UserController extends Controller
 
     public function __construct(UsersRepo $usersRepo)
     {
+
         $this->middleware('permission:list-users|edit-users|delete-users|create-users', ['only' => ['index', 'store']]);
         $this->middleware('permission:create-users', ['only' => ['create', 'store']]);
         $this->middleware('permission:edit-users', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete-users', ['only' => ['destroy', 'delete_all']]);
         $this->usersRepo = $usersRepo;
+
     }
 
     public function roles($id)
     {
+
         return User::find($id)->roles ?? null;
     }
 
@@ -52,6 +55,7 @@ class UserController extends Controller
      */
     public function index()
     {
+
         $roles = Role::all();
         $users = $this->usersRepo->getAll();
 
@@ -178,6 +182,7 @@ class UserController extends Controller
 
     public function show()
     {
+
         $user = User::where('id', auth()->user()->id)->first();
         return view('auth.managements.users.profile', compact('user'));
 
@@ -215,7 +220,6 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator->errors());
         }
         User::where('email', $request->email)->update(['password' => bcrypt($request->password)]);
-
         return redirect()->route('login')->with('success', __('app.change_success_message'));
 
     }
@@ -332,6 +336,7 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
+
         return User::with('user')->where('email', 'like', '%' . $request->search . '%')
             ->orWhere('phone', 'like', '%' . $request->search . '%')
             ->orWhere('name', 'like', '%' . $request->search . '%')->orderBy('id', 'DESC')->paginate(10);

@@ -42,17 +42,14 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
             Route::resource('users', 'Auth\UserController');
             Route::resource('roles', 'Auth\RoleController');
             Route::resource('permissions', 'Auth\PermissionController');
-            Route::post('/users/updateprofile', 'Auth\UserController@updateprofile')->name('users.updateprofile');
             Route::post('/users/search', 'Auth\UserController@search')->name('users.search');
             Route::post('/roles/search', 'Auth\RoleController@search')->name('roles.search');
             Route::post('/packages/search', 'Saas\PackageController@search')->name('packages.search');
             Route::post('/models/search', 'Saas\ModelsController@search')->name('models.search');
             Route::post('/features/search', 'Saas\FeatureController@search')->name('features.search');
             Route::post('/permissions/search', 'Auth\PermissionController@search')->name('permissions.search');
-            Route::get('/users/profile', 'Auth\UserController@profile')->name('users.profile');
-            Route::get('/users/changepassword/{id}', 'Auth\UserController@changepassword')->name('users.changepassword');
-            Route::post('/users/editchangepassword', 'Auth\UserController@editchangepassword')->name('users.editchangepassword');
-        });
+
+            });
 
         Route::get('/website', function () {
             return view('settings.website.index');
@@ -149,9 +146,11 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::post('branches/backout-reasons/export', 'Customer\BackoutReasonController@export')->name('branch.backout_reason_export');
         Route::get('branches/backout-reasons/exported', 'Customer\BackoutReasonController@exportedFile')->name('branch.backout_reason_exported');
     });
-
+    Route::get('/users/profile', 'Auth\UserController@show')->name('users.profile');
+    Route::get('/users/changepassword/{id}', 'Auth\UserController@changepassword')->name('users.changepassword');
+    Route::post('/users/editchangepassword', 'Auth\UserController@editchangepassword')->name('users.editchangepassword');
     Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
-
+    Route::post('/users/updateprofile', 'Auth\UserController@updateprofile')->name('users.updateprofile');
     ///////////////////Sub-Customer Routes//////////
     Route::get('customer/branch/last-stability','Customer\BranchStatusController@lastStability')->name('branch.last_stability');
 
