@@ -23,6 +23,6 @@ class UsersRepo extends AbstractRepo implements UsersRepoInterface
             ->whereIn('type', ['subcustomer', 'subadmin'])
             ->where('wakeb_user',0)
             ->latest()
-            ->get();
+            ->paginate(10);
     }
 }
