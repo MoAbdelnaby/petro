@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -26,7 +27,16 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|max:70|email|regex:/^\S+@\S+\.\S+$/|unique:users,email,' . $this->customerUser ?? '',
+//            'email' => 'required|max:70|email|regex:/^\S+@\S+\.\S+$/|unique:users,email,' . $this->customerUser ?? '',
+            'email' => [
+                'required',
+                'max:70',
+                'email',
+                'regex:/^\S+@\S+\.\S+$/',
+                Rule::unique('users')->where(function ($query) {
+                    return $query->where('id', '!=', $this->customerUser??'')->whereNull('deleted_at');
+                })
+            ],
             'name' => 'required|string|min:2|max:60',
             'phone' => 'nullable|min:6|max:13|regex:/^[0-9\-\(\)\/\+\s]*$/|unique:users,phone,' . $this->customerUser ?? '',
             'password' => $this->customerUser ? 'nullable' : 'required|min:8|confirmed',

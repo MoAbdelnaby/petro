@@ -277,12 +277,10 @@ class BranchStatusController extends Controller
         $installed = $branches->where('installed',1)->whereIn('id',$ids)->count();
 
         if ($request->online_status === 'online') {
-
             $branches = Branch::primary()->with('region')
                 ->where('last_connected', '>=', Carbon::now()->subMinutes(15))
                 ->whereIn('id',$ids)
                 ->get();
-
         } else if ($request->online_status === 'offline') {
 
             $branches = Branch::primary()->with('region')

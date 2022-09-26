@@ -384,15 +384,15 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="row justify-content-between mt-3">
-                                <div class="col-md-12">
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-end mb-0">
-                                            {!! $users->appends(request()->query())->links() !!}
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
+{{--                            <div class="row justify-content-between mt-3">--}}
+{{--                                <div class="col-md-12">--}}
+{{--                                    <nav aria-label="Page navigation example">--}}
+{{--                                        <ul class="pagination justify-content-end mb-0">--}}
+{{--                                            {!! $users->appends(request()->query())->links() !!}--}}
+{{--                                        </ul>--}}
+{{--                                    </nav>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>
