@@ -59,30 +59,33 @@ class UserController extends Controller
             $trashs = User::onlyTrashed()->where('parent_id', parentID())->where('type', 'subcustomer')->get();
             $userWatchModels = UserWatchModels::with('usermodelbranch')->get();
             $regions = Region::with('branches')->where('user_id', parentID())->where('active', true)->get();
-            $package = $this->packageRepo->getactivePackage();
+//            $package = $this->packageRepo->getactivePackage();
 
-            if (Auth::check()) {
+//            if (Auth::check()) {
                 $userSettings = UserSetting::where('user_id', Auth::user()->id)->first();
-            }
+//            }
 
-            if ($package) {
-                $items = $this->packageRepo->getPackagesItems($package->id);
-                $result = [];
-                foreach ($items as $item) {
-                    $assignedbranches = UserModelBranch::with('usermodel')->with('branch')->where('active', 1)->where('user_model_id', $item->id)->get();
-                    foreach ($assignedbranches as $assignedbranch) {
-                        $result[] = $assignedbranch;
-                    }
-                }
+            $userModelBranches = [];
+            $branches = Branch::primary()->get();
 
-                $userModelBranches = $result;
-                $branches = Branch::where('user_id', parentID())->get();
-            } else {
-                $userModelBranches = [];
-                $branches = [];
-            }
+//            if ($package) {
+//                $items = $this->packageRepo->getPackagesItems($package->id);
+//                $result = [];
+//                foreach ($items as $item) {
+//                    $assignedbranches = UserModelBranch::with('usermodel')->with('branch')->where('active', 1)->where('user_model_id', $item->id)->get();
+//                    foreach ($assignedbranches as $assignedbranch) {
+//                        $result[] = $assignedbranch;
+//                    }
+//                }
+//
+//                $userModelBranches = $result;
+//                $branches = Branch::where('user_id', parentID())->get();
+//            } else {
+//                $userModelBranches = [];
+//                $branches = [];
+//            }
 
-            return view('customer.users.index', compact('trashs', 'regions', 'users', 'userModelBranches', 'userWatchModels', 'branches', 'userSettings'));
+            return view('customer.users.index', compact('trashs', 'regions', 'users', 'userModelBranches', 'branches', 'userSettings'));
 
         } catch (\Exception $e) {
             return unKnownError($e->getMessage());
