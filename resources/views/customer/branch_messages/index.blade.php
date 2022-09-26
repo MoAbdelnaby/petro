@@ -311,12 +311,12 @@
                                         <tr>
                                             <th class="th-sm">#</th>
                                             <th class="th-sm">{{__('app.type')}}</th>
-                                            <th class="th-sm">{{__('app.status')}}</th>
+                                            <th class="th-sm">{{__('app.car_status')}}</th>
                                             <th class="th-sm">{{__('app.branch')}}</th>
                                             {{--                                            <th class="th-sm">{{__('app.message')}}</th>--}}
                                             <th class="th-sm">{{__('app.gym.plate_no')}}</th>
                                             <th class="th-sm">{{__('app.auth.phone')}}</th>
-                                            <th class="th-sm">{{__('app.carprofile')}}</th>
+{{--                                            <th class="th-sm">{{__('app.carprofile')}}</th>--}}
                                             <th class="th-sm">{{__('app.Invoice')}}</th>
                                             <th class="th-sm">{{__('app.createdIn')}}</th>
                                         </tr>
@@ -327,27 +327,52 @@
                                                 <tr>
                                                     <td>{{++$index}}</td>
                                                     <td>{{$item->type}}</td>
-                                                    <td>{{$item->status}}</td>
-                                                    <td>{{$item->branch ? $item->branch->name :''}}</td>
-                                                    {{--                                                <td>{{$item->message}}</td>--}}
-                                                    <td>{{$item->plateNumber}}</td>
-                                                    <td>{{str_replace('whatsapp:+','',$item->phone)}}</td>
+
                                                     <td>
-                                                        @if(!is_null($item->carprofile_id))
+
+                                                        @if($item->status == 'sent')
                                                             <a class="" data-toggle="popover"
                                                                data-trigger="hover"
                                                                data-content="{{ __('app.Available')  }}">
                                                                 <i class="fas fa-circle text-success "></i>
                                                             </a>
 
-                                                        @else
+                                                        @elseif($item->status == 'failed')
                                                             <a class="" data-toggle="popover"
                                                                data-trigger="hover"
                                                                data-content="{{ __('app.Unavailable')  }}">
                                                                 <i class="fas fa-circle text-danger"></i>
                                                             </a>
+
+                                                            @else
+                                                            <a class="" data-toggle="popover"
+                                                               data-trigger="hover"
+                                                               data-content="{{ __('app.received')  }}">
+                                                                <i class="fas fa-circle text-info"></i>
+                                                            </a>
                                                         @endif
+
                                                     </td>
+                                                    <td>{{$item->branch ? $item->branch->name :''}}</td>
+                                                    {{--                                                <td>{{$item->message}}</td>--}}
+                                                    <td>{{$item->plateNumber}}</td>
+                                                    <td>{{str_replace('whatsapp:+','',$item->phone)}}</td>
+{{--                                                    <td>--}}
+{{--                                                        @if(!is_null($item->carprofile_id))--}}
+{{--                                                            <a class="" data-toggle="popover"--}}
+{{--                                                               data-trigger="hover"--}}
+{{--                                                               data-content="{{ __('app.Available')  }}">--}}
+{{--                                                                <i class="fas fa-circle text-success "></i>--}}
+{{--                                                            </a>--}}
+
+{{--                                                        @else--}}
+{{--                                                            <a class="" data-toggle="popover"--}}
+{{--                                                               data-trigger="hover"--}}
+{{--                                                               data-content="{{ __('app.Unavailable')  }}">--}}
+{{--                                                                <i class="fas fa-circle text-danger"></i>--}}
+{{--                                                            </a>--}}
+{{--                                                        @endif--}}
+{{--                                                    </td>--}}
                                                     <td>
                                                         @if($item->fileUrl)
                                                             <a target="_blank" style="padding: 0 5px 0 5px"

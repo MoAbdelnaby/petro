@@ -317,6 +317,7 @@ return [
     'CSV' => 'CSV',
     'PDF' => 'PDF',
     'Hi' => 'Hi',
+    'received'=>'Recived from Mac',
     'User_Notifications' => 'User Notifications',
     'new_notifications' => 'new notifications',
     'New_order_has_been_received' => 'New order has been received',
