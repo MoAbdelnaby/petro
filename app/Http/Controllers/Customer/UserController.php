@@ -57,7 +57,7 @@ class UserController extends Controller
         try {
             $users = $this->usersRepo->getRelative(parentID());
             $trashs = User::onlyTrashed()->where('parent_id', parentID())->where('type', 'subcustomer')->get();
-            $userWatchModels = UserWatchModels::with('usermodelbranch')->get();
+//            $userWatchModels = UserWatchModels::with('usermodelbranch')->get();
             $regions = Region::with('branches')->where('user_id', parentID())->where('active', true)->get();
 //            $package = $this->packageRepo->getactivePackage();
 
@@ -112,8 +112,17 @@ class UserController extends Controller
             $data = $request->validated();
             $data['parent_id'] = parentID();
             $data['speedtest'] = ($request->speedtest == 'on');
+            
+            $user = User::withTrashed()->firstOrCreate(
+                Arr::only($data,['email']),
+                Arr::except($data,['email'])
+            );
+            if($user->trashed()){
+                 $user->restore();
+            }
+            $user->save();
+            $user->refresh();
 
-            $user = $this->usersRepo->create($data);
             $user->syncRoles('customer');
 
             /*Notification to admins*/

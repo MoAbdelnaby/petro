@@ -18,11 +18,11 @@ class UsersRepo extends AbstractRepo implements UsersRepoInterface
      */
     public function getRelative($user_id)
     {
-        return $this->model->with('branches', 'position')
+        return $this->model->with('position')
             ->where('parent_id', $user_id)
             ->whereIn('type', ['subcustomer', 'subadmin'])
             ->where('wakeb_user',0)
             ->latest()
-            ->paginate(10);
+            ->get();
     }
 }

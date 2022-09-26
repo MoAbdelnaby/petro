@@ -235,19 +235,19 @@
                                                     </td>
                                                     <td style="width: max-content;display: inline-block">
                                                         @if(in_array(auth()->user()->type,['customer','subadmin']))
-                                                            @php
-                                                                $user_branches = [];
-                                                                    foreach ($user->branches as $brn)
-                                                                    $user_branches[] = $brn->id;
-                                                                    $user_brs = json_encode(implode(",",$user_branches));
-                                                            @endphp
-                                                            @if($user->type != 'subadmin')
-                                                                <a class="btn btn-sm btn-info" data-toggle="tooltip"
-                                                                   data-placement="top" title=""
-                                                                   data-original-title="Assign to Branch"
-                                                                   onclick="assign_user_to_branch_model_alert({{ $user->id }},{{ $user_brs }},{{ $branches }},{{ $regions }});"
-                                                                   style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>
-                                                            @endif
+{{--                                                            @php--}}
+{{--                                                                $user_branches = [];--}}
+{{--                                                                    foreach ($user->branches as $brn)--}}
+{{--                                                                    $user_branches[] = $brn->id;--}}
+{{--                                                                    $user_brs = json_encode(implode(",",$user_branches));--}}
+{{--                                                            @endphp--}}
+{{--                                                            @if($user->type != 'subadmin')--}}
+{{--                                                                <a class="btn btn-sm btn-info" data-toggle="tooltip"--}}
+{{--                                                                   data-placement="top" title=""--}}
+{{--                                                                   data-original-title="Assign to Branch"--}}
+{{--                                                                   onclick="assign_user_to_branch_model_alert({{ $user->id }},{{ $user_brs }},{{ $branches }},{{ $regions }});"--}}
+{{--                                                                   style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>--}}
+{{--                                                            @endif--}}
                                                             <a class="btn btn-sm btn-primary"
                                                                href="{{ route('customerUsers.edit',$user->id) }}"
                                                                style="color: white;">{{__('app.customers.branches.edit')}}</a>
@@ -354,20 +354,20 @@
                                                     <div class="col-12">
                                                         <div class="text-center px-0 pb-2">
                                                             @if(in_array(auth()->user()->type,['customer','subadmin']))
-                                                                @php
-                                                                    $user_branches = [];
-                                                                        foreach ($user->branches as $brn)
-                                                                        $user_branches[] = $brn->id;
-                                                                        $user_brs = json_encode(implode(",",$user_branches));
+{{--                                                                @php--}}
+{{--                                                                    $user_branches = [];--}}
+{{--                                                                        foreach ($user->branches as $brn)--}}
+{{--                                                                        $user_branches[] = $brn->id;--}}
+{{--                                                                        $user_brs = json_encode(implode(",",$user_branches));--}}
 
-                                                                @endphp
-                                                                @if($user->type != 'subadmin')
-                                                                    <a class="btn btn-info" data-toggle="tooltip"
-                                                                       data-placement="top" title=""
-                                                                       data-original-title="{{ __('app.Assign_to_Branch') }}"
-                                                                       onclick="assign_user_to_branch_model_alert({{ $user->id }},{{$user_brs}},{{$branches}},{{$regions}});"
-                                                                       style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>
-                                                                @endif
+{{--                                                                @endphp--}}
+{{--                                                                @if($user->type != 'subadmin')--}}
+{{--                                                                    <a class="btn btn-info" data-toggle="tooltip"--}}
+{{--                                                                       data-placement="top" title=""--}}
+{{--                                                                       data-original-title="{{ __('app.Assign_to_Branch') }}"--}}
+{{--                                                                       onclick="assign_user_to_branch_model_alert({{ $user->id }},{{$user_brs}},{{$branches}},{{$regions}});"--}}
+{{--                                                                       style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>--}}
+{{--                                                                @endif--}}
                                                                 <a class="btn btn-primary"
                                                                    href="{{ route('customerUsers.edit',$user->id) }}"
                                                                    style="color: white;">{{__('app.customers.branches.edit')}}</a>
@@ -384,15 +384,15 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="row justify-content-between mt-3">
-                                <div class="col-md-12">
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-end mb-0">
-                                            {!! $users->appends(request()->query())->links() !!}
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
+{{--                            <div class="row justify-content-between mt-3">--}}
+{{--                                <div class="col-md-12">--}}
+{{--                                    <nav aria-label="Page navigation example">--}}
+{{--                                        <ul class="pagination justify-content-end mb-0">--}}
+{{--                                            {!! $users->appends(request()->query())->links() !!}--}}
+{{--                                        </ul>--}}
+{{--                                    </nav>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>
