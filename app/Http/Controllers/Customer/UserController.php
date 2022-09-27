@@ -112,7 +112,7 @@ class UserController extends Controller
             $data = $request->validated();
             $data['parent_id'] = parentID();
             $data['speedtest'] = ($request->speedtest == 'on');
-            
+
             $user = User::withTrashed()->firstOrCreate(
                 Arr::only($data,['email']),
                 Arr::except($data,['email'])

@@ -142,15 +142,17 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
         Route::post('branches/export', 'Customer\BranchMessageController@export')->name('branch.export');
         Route::get('branches/message-exported', 'Customer\BranchMessageController@exportedFile')->name('branch.exported_file');
 
-        Route::get('branches/backout-reasons', 'Customer\BackoutReasonController@index')->name('branch.backout_reasons');
-        Route::post('branches/backout-reasons/export', 'Customer\BackoutReasonController@export')->name('branch.backout_reason_export');
-        Route::get('branches/backout-reasons/exported', 'Customer\BackoutReasonController@exportedFile')->name('branch.backout_reason_exported');
-    });
+        });
     Route::get('/users/profile', 'Auth\UserController@show')->name('users.profile');
     Route::get('/users/changepassword/{id}', 'Auth\UserController@changepassword')->name('users.changepassword');
     Route::post('/users/editchangepassword', 'Auth\UserController@editchangepassword')->name('users.editchangepassword');
     Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
     Route::post('/users/updateprofile', 'Auth\UserController@updateprofile')->name('users.updateprofile');
+    Route::get('branches/backout-reasons', 'Customer\BackoutReasonController@index')->name('branch.backout_reasons');
+    Route::post('branches/backout-reasons/export', 'Customer\BackoutReasonController@export')->name('branch.backout_reason_export');
+    Route::get('branches/backout-reasons/exported', 'Customer\BackoutReasonController@exportedFile')->name('branch.backout_reason_exported');
+
+
     ///////////////////Sub-Customer Routes//////////
     Route::get('customer/branch/last-stability','Customer\BranchStatusController@lastStability')->name('branch.last_stability');
 

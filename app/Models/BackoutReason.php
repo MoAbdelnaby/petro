@@ -26,4 +26,9 @@ class BackoutReason extends Model
         'car_profile_id',
     ];
 
+    public function carprofile()
+    {
+        return $this->belongsTo(Carprofile::class,'car_profile_id');
+    }
+
 }

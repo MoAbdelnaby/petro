@@ -400,6 +400,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="border-bottom clearfix"></div>
+                        <div
+                            class="row justify-content-center  p-0 m-0 py-3 item-menu {{ $_SERVER['REQUEST_URI'] == '/backout-reasons' ? 'active' : '' }} ">
+                            <div class="col-12 justify-content-center">
+                                <div class="iq-product-cover d-flex justify-content-center">
+                                    <a href="{{ route('branch.backout_reasons') }}" class="iq-waves-effect">
+                                        {{--                                    <i class="fa fa-envelope-open fa-2x"></i>--}}
+                                        <img
+                                            src="{{ resolveDark() }}/img/icon_menu/backout.svg" alt="backout reasons"
+                                            class="img-fluid" style="width: 32px">
+                                    </a>
+                                </div>
+                                <div class="iq-product-cover d-flex justify-content-center">
+                                    <a href="{{ route('branch.backout_reasons') }}"
+                                       class="iq-waves-effect menutext">{{ __('app.backout_reasons') }}</a>
+                                </div>
+                            </div>
+                        </div>
 
 
 {{--                        <div class="border-bottom clearfix"></div>--}}

@@ -15,11 +15,13 @@
         .select2-container {
             width: 100% !important;
         }
+
         .iq-card-body {
             overflow: initial !important;
         }
+
         .filter-content {
-           line-height: normal;
+            line-height: normal;
         }
 
         .select2-selection.select2-selection--multiple {
@@ -109,7 +111,9 @@
                                                                                 selected>{{ __('app.Select_branch') }}</option>
                                                                         @foreach($branches as $branch)
                                                                             <option value="{{$branch->code}}"
-                                                                            @if(request('branch_code') != null) {{request('branch_code') == $branch->code ? 'selected' : ''}} @endif>{{$branch->name}}</option>
+                                                                            @if(request('branch_code') != null)
+                                                                                {{request('branch_code') == $branch->code ? 'selected' : ''}}
+                                                                                @endif>{{$branch->name}}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -206,17 +210,20 @@
 
                                     <table id="paginationSimpleNumbers" class="table dataTable mt-4 table-striped">
                                         <thead>
-                                            <tr>
-                                                <th class="th-sm">#</th>
-                                                <th class="th-sm">{{__('app.customer_name')}}</th>
-                                                <th class="th-sm">{{__('app.auth.phone')}}</th>
-                                                <th class="th-sm">{{__('app.gym.plate_no')}}</th>
-                                                <th class="th-sm">{{__('app.branch')}}</th>
-                                                <th class="th-sm">{{__('app.reason')}}</th>
-                                                <th class="th-sm">{{__('app.carprofile')}}</th>
-                                                <th class="th-sm">{{__('app.createdIn')}}</th>
-{{--                                                <th class="th-sm">{{__('app.manage')}}</th>--}}
-                                            </tr>
+                                        <tr>
+                                            <th class="th-sm">#</th>
+                                            <th class="th-sm">{{__('app.customer_name')}}</th>
+                                            <th class="th-sm">{{__('app.auth.phone')}}</th>
+                                            <th class="th-sm">{{__('app.gym.plate_no')}}</th>
+                                            <th class="th-sm">{{__('app.branch')}}</th>
+                                            <th class="th-sm">{{__('app.reason')}}</th>
+                                            <th class="th-sm">{{__('app.reason2')}}</th>
+                                            <th class="th-sm">{{__('app.createdIn')}}</th>
+                                            <th class="th-sm">{{__('app.gym.period')}}</th>
+{{--                                            <th class="th-sm">{{__('app.carprofile')}}</th>--}}
+                                            <th class="th-sm">{{__('app.mac_createdIn')}}</th>
+                                            {{--                                                <th class="th-sm">{{__('app.manage')}}</th>--}}
+                                        </tr>
                                         </thead>
                                         <tbody>
                                         @if(count($data) > 0)
@@ -227,25 +234,35 @@
                                                     <td>{{$item->CustomerPhone}}</td>
                                                     <td>{{$item->LatestPlateNumber}}</td>
                                                     <td>{{$item->name}}</td>
-                                                    <td>{{$item->reason??'---'}}</td>
-                                                    <td>
-                                                        @if(!is_null($item->carprofile_id))
-                                                            <a class="" data-toggle="popover"
-                                                               data-trigger="hover"
-                                                               data-content="{{ __('app.Available')  }}">
-                                                                <i class="fas fa-circle text-success "></i>
-                                                            </a>
+                                                    <td>{{$item->reason1 ?? '---'}}</td>
+                                                    <td>{{$item->reason2 ?? '---'}}</td>
+                                                    @if(!is_null($item->carprofile))
+                                                        <td class="checkin-date">{{$item->carprofile->checkInDate}}</td>
+                                                        <td class="period">{{str_replace('before','',\Carbon\Carbon::parse($item->carprofile->checkInDate)->diffForHumans($item->carprofile->checkOutDate))}}</td>
 
-                                                        @else
-                                                            <a class="" data-toggle="popover"
-                                                               data-trigger="hover"
-                                                               data-content="{{ __('app.Unavailable')  }}">
-                                                                <i class="fas fa-circle text-danger"></i>
-                                                            </a>
-                                                        @endif
-                                                    </td>
-                                                    <td>{{optional($item->created_at)->format('d-M-Y')}}</td>
-{{--                                                    <td></td>--}}
+                                                    @else
+                                                        <td class="checkin-date"></td>
+                                                        <td class="period"></td>
+                                                    @endif
+{{--                                                    <td>--}}
+{{--                                                        @if(!is_null($item->carprofile_id))--}}
+{{--                                                            <a class="" data-toggle="popover"--}}
+{{--                                                               data-trigger="hover"--}}
+{{--                                                               data-content="{{ __('app.Available')  }}">--}}
+{{--                                                                <i class="fas fa-circle text-success "></i>--}}
+{{--                                                            </a>--}}
+
+{{--                                                        @else--}}
+{{--                                                            <a class="" data-toggle="popover"--}}
+{{--                                                               data-trigger="hover"--}}
+{{--                                                               data-content="{{ __('app.Unavailable')  }}">--}}
+{{--                                                                <i class="fas fa-circle text-danger"></i>--}}
+{{--                                                            </a>--}}
+{{--                                                        @endif--}}
+{{--                                                    </td>--}}
+                                                    <td>{{$item->created_at}}</td>
+{{--                                                    <td>{{optional($item->created_at)->format('d-M-Y')}}</td>--}}
+                                                    {{--                                                    <td></td>--}}
                                                 </tr>
                                             @endforeach
                                         @endif

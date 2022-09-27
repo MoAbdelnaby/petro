@@ -18,23 +18,40 @@ class BackoutReasonController extends Controller
 {
     public function index(BranchMessageRequest $request)
     {
+
         if (in_array($request->type, ['pdf', 'xls'])) {
             return $this->export($request->all());
         }
 
-        $branches = DB::table('branches')
-            ->select('branches.*')
-            ->whereNull('branches.deleted_at')
-            ->where('branches.active', true)
-            ->where('branches.user_id', parentID())
-            ->get();
+        if (auth()->user()->type == 'subcustomer') {
+            $branches = Branch::active()->primary()
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->get();
+        }else {
+
+            $branches = DB::table('branches')
+                ->select('branches.*')
+                ->whereNull('branches.deleted_at')
+                ->where('branches.active', true)
+                ->where('branches.user_id', parentID())
+                ->get();
+        }
 
         $userSettings = UserSetting::where('user_id', auth()->id())->first();
 
-        $query = BackoutReason::query()->join('branches', 'branches.code', '=', 'backout_reasons.station_code')
+        $query = BackoutReason::query()
+            ->with(['carprofile'])
+            ->select(['backout_reasons.*', 'branches.name'])
+            ->join('branches', 'branches.code', '=', 'backout_reasons.station_code')
             ->when(($request->branch_code != null), function ($q) {
                 return $q->where('station_code', \request('branch_code'));
-            })->orderBy('backout_reasons.created_at', 'DESC');
+            });
+        if (auth()->user()->type == 'subcustomer' && $request->branch_code == null) {
+            $codes = Branch::active()->primary()->select('code')
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->pluck('code')->toArray();
+            $query->whereIn('branches.code', $codes);
+        }
 
         if ($request->start_date) {
             $query->whereDate('backout_reasons.created_at', '>=', $request->start_date);
@@ -44,7 +61,7 @@ class BackoutReasonController extends Controller
             $query->whereDate('backout_reasons.created_at', '<=', $request->end_date);
         }
 
-        $data = $query->paginate(10);
+        $data = $query->orderBy('backout_reasons.created_at', 'DESC')->paginate(10);
 
         return view("customer.backout_reasons.index", compact('branches', 'data', 'userSettings'));
     }
@@ -56,7 +73,7 @@ class BackoutReasonController extends Controller
     public function export($request)
     {
         $request = (object)$request;
-        $current_branch = Branch::where('code',$request->branch_code)->first();
+        $current_branch = Branch::where('code', $request->branch_code)->first();
         $type = $request->type;
 
         $start_name = $request->start_date ?? 'first';
