@@ -2617,6 +2617,18 @@ g[aria-labelledby$="title"] {
     top: 48px;
     left: 60px;
 }
+
+#basicExampleModal #images-cont{
+    min-height: 65vh;
+    background: #dcdcdc;
+}
+#basicExampleModal .prev-arrow, #basicExampleModal .next-arrow{
+    display: none;
+}
+#basicExampleModal.show-arrows .prev-arrow, #basicExampleModal.show-arrows .next-arrow{
+    display: inline-block;
+}
+
 #image_to_show {
     width: 60vw !important;
     display: inline-block;

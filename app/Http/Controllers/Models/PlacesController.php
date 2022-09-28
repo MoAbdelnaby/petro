@@ -118,6 +118,7 @@ class PlacesController extends Controller
         $lastsetting = $this->repo->getUserShiftSettingByUserModel($usermodelbranchid);
         $modelrecords = $this->repo->getNewData($usermodelbranchid, null, null, $starttime, $endtime);
         $data = $modelrecords['data'] ?? [];
+        $data_count = $modelrecords['count'] ?? 0;
         $active_areas = $modelrecords['active_areas'] ?? [];
         $areas = $modelrecords['areas'] ?? [];
 
@@ -152,7 +153,7 @@ class PlacesController extends Controller
             }
         }
 
-        return view('customer.preview.places.places', compact('charts', 'starttime', 'endtime', 'areas', 'active_areas', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
+        return view('customer.preview.places.places', compact('charts','data_count', 'starttime', 'endtime', 'areas', 'active_areas', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
     }
 
     public function placesfilter(Request $request, $usermodelbranchid)

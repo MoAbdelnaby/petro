@@ -47,7 +47,9 @@ class CustomerBranchesController extends Controller
     {
         $user = Auth::user();
         if ($user->type == "subcustomer") {
-            $branches = $user->branches->pluck('id')->toArray();
+            $branches = Branch::active()->primary()
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->pluck('id')->toArray();
             if (!in_array($id, $branches)) {
                 return redirect()->back()->with('danger', __('app.gym.empty_branch'));
             }
@@ -71,8 +73,6 @@ class CustomerBranchesController extends Controller
             ->where('branches.id', $id);
 
         $count = $query->count();
-        $items = $query->get();
-
         if ($count < 1) {
             return redirect()->back()->with('danger', __('app.customers.branchmodels.modelnotfound'));
         } else {

@@ -187,6 +187,7 @@ class PlatesRepo extends AbstractRepo implements PlatesRepoInterface
         $query = $query->orderBy('checkInDate', 'desc');
 
         $list = $query;
+        $result['data_count'] = $query->count();
         $result['data'] = $list->paginate(10);
 
         return $result;

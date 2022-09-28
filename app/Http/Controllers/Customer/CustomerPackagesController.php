@@ -68,7 +68,7 @@ class CustomerPackagesController extends Controller
                 $statistics = ReportService::statistics($filter['start'], $filter['end'], $request->lists ?? $branches_id);
                 $statistics['on'] = $branches->where('status', 1)->count();
                 $statistics['off'] = $branches->where('status', 0)->count();
-                $statistics['installed'] = $branches->where('installed', 1)->count();
+                $statistics['total'] = (int)$statistics['on'] + (int)$statistics['off'];
             } else {
                 $filter = $this->getTopBranch($type, $request->all());
                 $statistics = ReportService::statistics($filter['start'], $filter['end'], $request->lists);

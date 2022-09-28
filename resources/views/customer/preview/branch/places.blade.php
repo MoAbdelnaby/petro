@@ -7,7 +7,10 @@
     @if(Session::has('branch_file'))
         <meta http-equiv="refresh" content="5;url={{ Session::get('branch_file') }}">
     @endif
+
 @endsection
+
+
 @section('content')
     <!-- Start Header -->
     <div class="header">
@@ -20,25 +23,21 @@
                 <img src="{{resolveDark()}}/img/list.png" alt="">
             </span>
         </div>
-        @if(Auth::user()->type != "subcustomer")
+
         <ul class="branch nav nav-pills scroll-horizontal main mb-1" id="pills-tab" role="tablist">
             <div class="scroll-horizontal--elm-cont">
-
-                    @foreach ($activeRegions as $reg)
-                        <li class="nav-item">
-                            <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}"
-                               id="pills-home-tab"
-                               href="{{route('regionmodelpreview.index',[$reg->id])}}" aria-controls="pills-home"
-                               aria-selected="true">
-                                <span class="ml-1"> {{$reg->name}}</span>
-                            </a>
-                        </li>
-                    @endforeach
-
+                @foreach ($activeRegions as $reg)
+                    <li class="nav-item">
+                        <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}" id="pills-home-tab"
+                           href="{{route('regionmodelpreview.index',[$reg->id])}}" aria-controls="pills-home"
+                           aria-selected="true">
+                            <span class="ml-1"> {{$reg->name}}</span>
+                        </a>
+                    </li>
+                @endforeach
             </div>
 
         </ul>
-        @endif
         <!-- //////////// -->
 
         {{--            here start --}}
@@ -514,62 +513,65 @@
                                     </div>
                                 </div>
                                 @if(count($data))
-                                    <div class="iq-card mt-4 mb-4">
-                                        <div class="iq-card-body">
-                                            <div class="related-heading">
-                                                <div
-                                                    class="d-flex justify-content-between align-items-center border-bottom">
-                                                    <h2 class="border-bottom-0">{{ __('app.Tables') }}</h2>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="dropdown-toggle" type="button"
-                                                           data-toggle="dropdown">
-                                                            <i class="fas fa-bars" style=""></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu main-dropdown chart-type   tables-type">
-                                                            <li>
-                                                                <a tabindex="-1" class="dropdown-item table-1
+                                    <div class="col-12 mt-3">
+                                        <div class="related-heading">
+                                            <div
+                                                class="d-flex justify-content-between align-items-center">
+                                                <h2 class="border-bottom-0">{{ __('app.Tables') }}</h2>
+                                                <div class="dropdown">
+                                                    <a href="#" class="dropdown-toggle" type="button"
+                                                       data-toggle="dropdown">
+                                                        <i class="fas fa-bars" style=""></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu main-dropdown chart-type   tables-type">
+                                                        <li>
+                                                            <a tabindex="-1" class="dropdown-item table-1
                                                                   {{ $userSettings ? ($userSettings->table_type == "1" ? 'selected' : '') :'selected' }}"
-                                                                   href="#">
-                                                                    <img
-                                                                        src="{{ asset('assets/images/tables-type/table-1.png')}}"
-                                                                        alt="{{ __('app.Pie_Chart') }}"
-                                                                        title="{{ __('app.Pie_Chart') }}">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a tabindex="-1"
-                                                                   class="dropdown-item table-2 {{ $userSettings ? ($userSettings->table_type == "2" ? 'selected' : '') :'' }}"
-                                                                   href="#">
-                                                                    <img
-                                                                        src="{{ asset('assets/images/tables-type/table-2.png')}}"
-                                                                        alt="{{ __('app.Bar_Chart') }}"
-                                                                        title="{{ __('app.Bar_Chart') }}">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a tabindex="-1"
-                                                                   class="dropdown-item table-3 {{ $userSettings ? ($userSettings->table_type == "3" ? 'selected' : '') :'' }}"
-                                                                   href="#">
-                                                                    <img
-                                                                        src="{{ asset('assets/images/tables-type/table-3.png')}}"
-                                                                        alt="{{ __('app.Line_Chart') }}"
-                                                                        title="{{ __('app.Line_Chart') }}">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a tabindex="-1"
-                                                                   class="dropdown-item table-4 {{ $userSettings ? ($userSettings->table_type == "4" ? 'selected' : '') :'' }}"
-                                                                   href="#">
-                                                                    <img
-                                                                        src="{{ asset('assets/images/tables-type/table-4.png')}}"
-                                                                        alt="{{ __('app.Pyramid_Chart') }}"
-                                                                        title="{{ __('app.Pyramid_Chart') }}">
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                               href="#">
+                                                                <img
+                                                                    src="{{ asset('assets/images/tables-type/table-1.png')}}"
+                                                                    alt="{{ __('app.Pie_Chart') }}"
+                                                                    title="{{ __('app.Pie_Chart') }}">
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a tabindex="-1"
+                                                               class="dropdown-item table-2 {{ $userSettings ? ($userSettings->table_type == "2" ? 'selected' : '') :'' }}"
+                                                               href="#">
+                                                                <img
+                                                                    src="{{ asset('assets/images/tables-type/table-2.png')}}"
+                                                                    alt="{{ __('app.Bar_Chart') }}"
+                                                                    title="{{ __('app.Bar_Chart') }}">
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a tabindex="-1"
+                                                               class="dropdown-item table-3 {{ $userSettings ? ($userSettings->table_type == "3" ? 'selected' : '') :'' }}"
+                                                               href="#">
+                                                                <img
+                                                                    src="{{ asset('assets/images/tables-type/table-3.png')}}"
+                                                                    alt="{{ __('app.Line_Chart') }}"
+                                                                    title="{{ __('app.Line_Chart') }}">
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a tabindex="-1"
+                                                               class="dropdown-item table-4 {{ $userSettings ? ($userSettings->table_type == "4" ? 'selected' : '') :'' }}"
+                                                               href="#">
+                                                                <img
+                                                                    src="{{ asset('assets/images/tables-type/table-4.png')}}"
+                                                                    alt="{{ __('app.Pyramid_Chart') }}"
+                                                                    title="{{ __('app.Pyramid_Chart') }}">
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="iq-card mb-4">
+                                        <div class="iq-card-body">
                                             <div class="tables text-center">
                                                 {{--                                    <img src="{{resolveDark()}}/img/Group 23115.png" class="one">--}}
                                                 {{--                                    <img src="{{session()->has('darkMode') ?url('/gym_dark'):url('/gym')}}/img/Group 23116.png" class="three">--}}
@@ -594,7 +596,7 @@
                                                         <tbody>
                                                         @foreach($data as $item)
                                                             <tr style="cursor: pointer;" id="{{$item->path_screenshot}}"
-                                                                class="record" data-toggle="modal"
+                                                                class="record place-tr" data-toggle="modal"
                                                                 data-target="#basicExampleModal">
                                                                 <td>{{$item->date}}</td>
                                                                 <td>{{$item->time}}</td>
@@ -716,9 +718,10 @@
                                                 </ul>
                                                 <div class="tab-content  pt-3" id="myTabContentJust">
                                                     @foreach($active_areas as $key=>$val)
-                                                        <div class="tab-pane fade {{ $key == 0 ? 'show active': '' }}"
-                                                             id="home-just-{{$key}}"
-                                                             role="tabpanel" aria-labelledby="home-tab-just-{{$key}}">
+
+                                                        <div class="tab-pane fade {{ $val == 1 ? 'show active': '' }}"
+                                                             id="home-just-{{$val}}"
+                                                             role="tabpanel" aria-labelledby="home-tab-just-{{$val}}">
                                                             <div class="screenshoot-content">
                                                                 @php
 
@@ -802,7 +805,7 @@
     <script src="{{asset('js/config.js')}}"></script>
     <script>
         $(document).ready(function () {
-
+            document.querySelector('.branch-2nd .nav-link.active').scrollIntoView();
 
             let scrollMenuItemLeft = $('.header .nav-pills .nav-link.active').position().left;
 
@@ -952,3 +955,146 @@
         @endif
     </script>
 @endsection
+
+@push('js')
+
+    <script>
+        let branch_id = "{{$branch_id}}";
+        let lang = "{{ app()->getLocale() }}";
+        let totalRecords = +"{{$data_count}}";
+
+        window.Echo.channel(`place.${branch_id}`).listen('.PlaceEvent', (data) => {
+            console.log(data);
+            let branchId = data.branch_id;
+            if(!data.data|| !branchId) return ;
+            let {status, area, user_model_branch_id} = data.data;
+            let toastrTitle = '';
+            let toastrMessage = '';
+            // console.log(`place_data => `, data);
+            notificationToastrOptions(toastr);
+            if(+status === 0){
+                toastrMessage = `${trans('area')} ${area} ${trans('is_avilable_now')}`
+            }else{
+                toastrMessage = `${trans('area')} ${area} ${trans('is_busy_now')}`
+            }
+            toastr.options.onclick = function(e){
+                $(e.target.closest('.toast')).find('.notif_link')[0]?.click();
+            }
+            toastr["warning"](`<a class='notif_link' href='/models/branch/places/${branchId}/${user_model_branch_id}'>${toastrMessage}</a>`)
+
+
+            // add new row if status == 1 -> busy , 0 -> available
+            let rowsNumber = $('#paginationSimpleNumbers tbody tr').length;
+
+
+            // check if the current active page in pagination is 1
+            if(+$('.pagination .page-item.active').text() === 1 || +$('.pagination .page-item.active').text() === 0){
+                if(rowsNumber >= 10){
+                    $('#paginationSimpleNumbers tbody tr:last-child').remove();
+
+                }
+                $('#paginationSimpleNumbers tbody').prepend(getNewRowTemp(data.data));
+
+            }
+            paginationCheck(`/models/branch/places/${branchId}/${user_model_branch_id}`, rowsNumber, totalRecords)
+            totalRecords++
+
+
+            //  add new screenshot
+            // check if the area tab not exists then create new tab
+            if($(`#home-tab-just-${area}`).length === 0){
+                createNewScrenshotTab(area)
+            }
+
+            // remove no data image if exists
+            $(`#home-just-${area} .no_image`).remove();
+
+            // add the new image
+            $(`#home-just-${area} .screenshoot-content`).prepend(getNewImageTemp(data.data));
+        });
+
+        function createNewScrenshotTab(areaNumber){
+            $('#myTabJust').append(`<li class="nav-item">
+                                            <a class="nav-link" href="#home-just-${areaNumber}"
+                                                id="home-tab-just-${areaNumber}" data-toggle="tab" role="tab"
+                                                aria-controls="home-just-${areaNumber}"
+                                                aria-selected="false">${trans('area')} ${areaNumber}</a>
+                                        </li>`);
+
+            $(`#myTabContentJust`).append(`<div class="tab-pane fade " id="home-just-${areaNumber}"
+                                                             role="tabpanel" aria-labelledby="home-tab-just-${areaNumber}">
+                                                            <div class="screenshoot-content"></div>
+                                                </div>`);
+        }
+        function getNewImageTemp(data){
+            let {path_screenshot:screenshotPath, date, time} = data;
+            return `<div class="screenshot-img">
+                        <img src="${screenshotPath}"
+                                height="251" alt=""
+                                data-toggle="modal"
+                                data-target="#basicExampleModal">
+                        <div class="img-overlay">
+                            <span class="mr-1">${date}</span>
+                            <span>${time}</span>
+                        </div>
+                    </div>`
+        }
+
+        function getNewRowTemp(data){
+            let {path_screenshot:pathScreenshot, date, time, area:areaNumber, status, camera_id:camId} = data ;
+
+            return `<tr style="cursor: pointer;" id="${pathScreenshot}"
+                        class="record place-tr" data-toggle="modal"
+                        data-target="#basicExampleModal">
+                        <td>${date}</td>
+                        <td>${time}</td>
+                        <td class="open">${trans('area')} ${areaNumber}</td>
+                        <td class="open ${+status === 0 ? 'warning':'danger'} ">${+status===0 ? trans('available') :trans('busy')}</td>
+                        <td>${camId}</td>
+                    </tr>`
+        }
+
+        function paginationCheck(url, rowsNumber, totalRecords) {
+            if(rowsNumber < 10)return;
+            // check if the pagination is shown
+            if($('.pagination > nav').length > 0){
+                // check the current tr number
+
+
+                // if it's greater or equal than 10
+                // create new page-item and make the href to ?page=last page item before the next elm+1
+                // append the new page item before the next element
+
+                let currentPageNum = +$('.pagination .pagination .page-item:last-child').prev().text();
+                console.log(totalRecords);
+                console.log((totalRecords % 10) > 0);
+                if((totalRecords % 10) > 0 ) {
+
+                    return
+                };
+                let nextPageNum = currentPageNum + 1
+
+                let pageItemElm = `<li class="page-item"><a class="page-link waves-effect" href="${url}?page=${nextPageNum}">${nextPageNum}</a></li>`
+                $('.pagination .pagination .page-item:last-child').before(pageItemElm);
+            }else{
+
+                // create the pagination
+                let paginationTemp = `<nav>
+                        <ul class='pagination'>
+                            <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
+                                <span class="page-link waves-effect" aria-hidden="true">‹</span>
+                            </li>
+                            <li class="page-item active" aria-current="page"><span class="page-link waves-effect">1</span></li>
+                            <li class="page-item"><a class="page-link waves-effect" href="${url}?page=2">2</a></li>
+
+                            <li class="page-item">
+                                <a class="page-link waves-effect" href="${url}?page=2" rel="next" aria-label="Next »">›</a>
+                            </li>
+                        </ul>
+                    </nav>`;
+                $('.Page.navigation > .pagination').append(paginationTemp);
+            }
+        }
+
+    </script>
+@endpush

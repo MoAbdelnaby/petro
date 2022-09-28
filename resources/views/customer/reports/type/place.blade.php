@@ -79,7 +79,7 @@
                                            </i>
                                            <p>
                                                <b>{{ __('app.from') }} : </b>
-                                               {{request('start')??now()->startOfYear()->toDateString()}}
+                                               {{request('start')??now()->subDays(30)->toDateString()}}
                                            </p>
                                            <i>
                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -102,6 +102,7 @@
                                     <div class="col-12 branches-cont pb-4">
                                         <h3>{{ __("app.".\Str::plural($report['type'])) }} : </h3>
                                         <ul>
+
                                             @foreach($list_report as $index => $elemnt)
                                                 <li>{{$elemnt}}</li>
                                                 @if($index == 4)

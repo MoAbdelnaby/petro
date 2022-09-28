@@ -42,6 +42,79 @@
                 transform: rotate(360deg);
             }
         }
+        #errorMangamentModal .modal-xl {
+            max-width: 90%;
+            margin: auto;
+        }
+        @media (min-width:576px) {
+            #errorMangamentModal .modal-dialog {
+                max-width: 500px;
+                margin: 1.75rem auto
+            }
+            #errorMangamentModal .modal-dialog-centered {
+                min-height: calc(100% - 3.5rem)
+            }
+            #errorMangamentModal .modal-dialog-centered::before {
+                height: calc(100vh - 3.5rem)
+            }
+
+        }
+
+        @media (min-width:992px) {
+            #errorMangamentModal .modal-lg
+            {
+                max-width: 800px
+            }
+        }
+        #errorMangamentModal .modal-title{
+            text-transform: capitalize;
+            color: #000;
+        }
+        #errorMangamentModal button.close{
+            position: static;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+
+        }
+
+        #errorMangamentModal .modal-dialog .modal-content{
+            min-height: auto;
+            background: #fff;
+        }
+        .info-patter {
+            position: absolute;
+            z-index: 1;
+            top: -25px;
+            background: #b1180d;
+            padding: 0 6px;
+            font-size: 12px;
+            color: #fff;
+            border-radius: 5px;
+            width: max-content;
+            right: 0;
+            display: none;
+        }
+        #errorMangamentModal .digits label {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #errorMangamentModal .digits .digit {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #666;
+            display: inline-block;
+            text-align: center;
+        }
+        #errorMangamentModal .digits .form-control {
+            opacity: 0;
+            z-index: 0;
+            position: absolute;
+        }
     </style>
 @endpush
 @section('content')
@@ -58,24 +131,20 @@
                 <img src="{{resolveDark()}}/img/list.png" alt="">
             </span>
         </div>
-        @if(Auth::user()->type != "subcustomer")
+
         <ul class="branch nav nav-pills scroll-horizontal main" id="pills-tab" role="tablist">
-            <div class="scroll-horizontal--elm-cont">
-
-                    @foreach ($activeRegions as $reg)
-                        <li class="nav-item">
-                            <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}"
-                               id="pills-home-tab"
-                               href="{{route('regionmodelpreview.index',[$reg->id])}}" aria-controls="pills-home"
-                               aria-selected="true">
-                                <span class="ml-1"> {{$reg->name}}</span>
-                            </a>
-                        </li>
-                    @endforeach
-
+            <div class="scroll-horizontal--elm-cont" >
+                @foreach ($activeRegions as $reg)
+                    <li class="nav-item">
+                        <a class="nav-link {{$current_branch->region_id==$reg->id ? 'active':''}}" id="pills-home-tab"
+                           href="{{route('regionmodelpreview.index',[$reg->id])}}" aria-controls="pills-home"
+                           aria-selected="true">
+                            <span class="ml-1"> {{$reg->name}}</span>
+                        </a>
+                    </li>
+                @endforeach
             </div>
         </ul>
-        @endif
         <!-- //////////// -->
         <ul class="branch branch-2nd nav nav-pills scroll-horizontal search_branch-ul" id="pills-tab" role="tablist">
             <div class="scroll-horizontal--elm-cont" id='li-branches'>
@@ -177,7 +246,7 @@
                     @if($model->lt_id==8)
                         <li class="nav-item-one">
                             <a class="nav-link" id="pills-home-tab"
-                               href="@if(request()->is('*/placesfilter*'))
+                               href="@if(request()->is('*/platesfilter*'))
                                {{route('branchmodelpreview.placesfilter',array_merge([ 'branchid' => $branch_id, 'usermodelbranchid'=>$model->id],request()->toArray()))}}
                                @else
                                {{route('branchmodelpreview.places',[$branch_id,$model->id])}}
@@ -191,7 +260,7 @@
                     @if($model->lt_id==9)
                         <li class="nav-item-one">
                             <a class="nav-link active" id="pills-home-tab"
-                               href="@if(request()->is('*/placesfilter*'))
+                               href="@if(request()->is('*/platesfilter*'))
                                {{route('branchmodelpreview.platesfilter',array_merge([ 'branchid'=>$branch_id, 'usermodelbranchid'=>$model->id],request()->toArray()))}}
                                @else
                                {{route('branchmodelpreview.plates',[$branch_id,$model->id])}}
@@ -340,7 +409,7 @@
                                                 </div>
 
 
-                                                <div class="text-center">
+                                                <div class="text-center" >
                                                     <button type="submit"
                                                             class="btn close-setting">{{__('app.gym.Save')}}</button>
                                                 </div>
@@ -348,7 +417,7 @@
                                             <div class="bor"></div>
                                             <small>{{__('app.gym.Export_Settings')}}</small>
                                             <form method="GET" class="text-center onemaincolor" id="doorform"
-                                                  action="{{ route('plates.platesfilter',[$usermodelbranchid]) }}">
+                                                  action="{{ route('branchmodelpreview.platesfilter',[$usermodelbranch->branch_id,$usermodelbranchid]) }}">
                                                 @csrf
 
                                                 <div class="form-group input-group input-daterange">
@@ -568,7 +637,7 @@
                                                         @foreach($data as $item)
 
                                                             @php
-                                                                if( \Illuminate\Support\Str::startsWith($item->path_area_screenshot,'/storage') ) {
+                                                                if( \Illuminate\Support\Str::contains($item->path_area_screenshot,'storage/screenshot') ) {
                                                                      $area_image =  url('/gym').'/img/img-upload.png' ;
                                                                      $image2Status = 'loading';
                                                                 }else {
@@ -586,12 +655,12 @@
                                                                 }
                                                             @endphp
 
-                                                            <tr style="cursor: pointer; position: relative"
+                                                            <tr style=" position: relative"
                                                                 data-img2status="{{$image2Status}}"
                                                                 data-img1status="{{$image1Status}}"
                                                                 data-screen2="{{$area_image}}"
                                                                 id="{{$plate_image}}" class="record"
-                                                                data-toggle="modal" data-target="#basicExampleModal0">
+                                                            >
                                                                 <td class="checkin-date">{{$item->checkInDate}}</td>
                                                                 <td class="checkout-date">{{$item->checkOutDate}}</td>
                                                                 <td class="period">{{str_replace('before','',\Carbon\Carbon::parse($item->checkInDate)->diffForHumans($item->checkOutDate))}}</td>
@@ -629,13 +698,28 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    @if(is_null($item->failMessage))
-                                                                        <i class="fas fa-comment text-success"></i>
+                                                                    @if(!is_null($item->welcomeStatus))
+                                                                        @if($item->welcomeStatus->status == 'sent')
+                                                                            <a data-toggle="popover" data-trigger="hover" data-content="Welcome Sent">
+                                                                                <i class="fa fa-comment text-success"
+                                                                                ></i>
+                                                                            </a>
+
+                                                                        @elseif( $item->welcomeStatus->status == 'failed')
+                                                                            <a data-toggle="popover" data-trigger="hover" data-content="{{$item->welcomeStatus->error_reason}}">
+                                                                                <i class="fa fa-comment-medical text-warning"
+                                                                                ></i>
+                                                                            </a>
+                                                                        @elseif($item->welcomeStatus->status == 'received')
+                                                                            <a data-toggle="popover" data-trigger="hover" data-content=" {{ __('Welcome Received') }}">
+                                                                                <i class="fa fa-comment-dots fa-2x text-info" ></i>
+                                                                            </a>
+                                                                        @endif
 
                                                                     @else
                                                                         <a class="" data-toggle="popover"
                                                                            data-trigger="hover"
-                                                                           data-content="{{$item->failMessage->status}}">
+                                                                           data-content="Not Sent">
                                                                             <i class="fas fa-comment-slash text-danger"></i>
                                                                         </a>
                                                                     @endif
@@ -644,34 +728,30 @@
                                                                 <td>
                                                                     @if (!is_null($item->invoiceStatus))
                                                                         @if($item->invoiceStatus->status == 'sent')
-                                                                            <a id="download-{{$item->id}}" download
+                                                                            <a id="download-{{$item->id}}"
+                                                                               {{--                                                                           download--}}
+                                                                               {{--                                                                           class="download_invoice"--}}
+                                                                               onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"
                                                                                href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceStatus->fileUrl}}"
-                                                                               data-toggle="popover"
-                                                                               data-trigger="hover"
+                                                                               data-toggle="popover" data-trigger="hover"
                                                                                data-content="Preview Invoice">
                                                                                 <i class="fas fa-file-pdf text-success"
                                                                                    style="font-size: 19px"></i>
                                                                             </a>
 
                                                                         @elseif( $item->invoiceStatus->status == 'failed')
-                                                                            <a data-toggle="popover"
-                                                                               data-trigger="hover"
-                                                                               data-content="{{$item->invoiceStatus->error_reason}}">
+                                                                            <a data-toggle="popover" data-trigger="hover" data-content="{{$item->invoiceStatus->error_reason}}">
                                                                                 <i class="fas fa-file-prescription text-warning"
                                                                                    style="font-size: 19px"></i>
                                                                             </a>
                                                                         @elseif($item->invoiceStatus->status == 'received')
-                                                                            <a data-toggle="popover"
-                                                                               data-trigger="hover"
-                                                                               data-content=" {{ __('Invoiced Received') }}">
-                                                                                <i class="fas fa-file-import text-info"
-                                                                                   style="font-size: 19px"></i>
+                                                                            <a data-toggle="popover" data-trigger="hover" data-content=" {{ __('Invoiced Received') }}">
+                                                                                <i class="fas fa-file-import text-info" style="font-size: 19px"></i>
                                                                             </a>
                                                                         @endif
 
                                                                     @else
-                                                                        <a data-toggle="popover" data-trigger="hover"
-                                                                           data-content="No invoice Sent">
+                                                                        <a data-toggle="popover" data-trigger="hover" data-content="No invoice Sent">
                                                                             <i class="fas fa-file-excel text-danger"
                                                                                style="font-size: 19px"></i>
 
@@ -682,55 +762,78 @@
 
                                                                 </td>
 
-                                                                <td class="open action-col position-relative action_drop">
-                                                                    <div class="loader" id="status_loading{{$item->id}}"
-                                                                         style="display: none"></div>
+                                                                <td class="open action-col position-relative action_drop ">
 
-                                                                    <div class="filter-dropdown">
-                                                                        <a class="btn-filter btn btn-sm btn-primary waves-effect waves-light"
-                                                                           data-toggle="dropdown" href="#">
-                                                                            <i class="fas fa-edit mr-0"></i>
+                                                                    <div class="d-flex justify-content-center align-items-center mt-1">
+                                                                        <a href="#" type="button" id="show_modal-btn" class=" btn btn-sm btn-primary waves-effect waves-light mr-2"
+                                                                           data-toggle="modal" data-target="#basicExampleModal0" >
+                                                                            <i class="fas fa-eye mr-0"></i>
                                                                         </a>
-                                                                        <div class="filter-content"
-                                                                             aria-labelledby="dropdownMenuButton">
+                                                                        <div class="loader" id="status_loading{{$item->id}}"
+                                                                             style="display: none"></div>
+                                                                        <div class="filter-dropdown d-flex">
+                                                                            <a class="btn-filter btn btn-sm btn-primary waves-effect waves-light"
+                                                                               data-toggle="dropdown" href="#">
+                                                                                <i class="fas fa-edit mr-0"></i>
+                                                                            </a>
+                                                                            <div class="filter-content"
+                                                                                 aria-labelledby="dropdownMenuButton">
 
-                                                                            {{--                                                                            <a href="#" class="text-info fw-normal"--}}
-                                                                            {{--                                                                               onclick="openMessage('{{$item->plate_en}}','Welcome',event,'{{$item->id}}')">--}}
-                                                                            {{--                                                                                {{ __('app.Welcome_Message') }}--}}
-                                                                            {{--                                                                                <i class="fas fa-hand-holding-heart"></i>--}}
-                                                                            {{--                                                                                <i style="fill: #EFAF94;width:15px">--}}
-                                                                            {{--                                                                                    <svg data-name="Layer 1" width="18"--}}
-                                                                            {{--                                                                                         xmlns="http://www.w3.org/2000/svg"--}}
-                                                                            {{--                                                                                         viewBox="0 0 109.22 122.88">--}}
-                                                                            {{--                                                                                        <defs>--}}
-                                                                            {{--                                                                                            <style>.cls-1 {--}}
-                                                                            {{--                                                                                                    fill-rule: evenodd;--}}
-                                                                            {{--                                                                                                }</style>--}}
-                                                                            {{--                                                                                        </defs>--}}
-                                                                            {{--                                                                                        <title>{{ __('app.hand_wave') }}</title>--}}
-                                                                            {{--                                                                                        <path class="cls-1"--}}
-                                                                            {{--                                                                                              d="M41.83,97.57c0-.13,0-.26,0-.38a17,17,0,0,1,4.31-11.57L32.39,71.88a5.76,5.76,0,0,0-8.13,0h0a5.76,5.76,0,0,0,0,8.12L41.83,97.57Zm-8.13,11.5a4.08,4.08,0,1,1-2.27,7.84,47.87,47.87,0,0,1-19.92-11A44.75,44.75,0,0,1,.23,88.11a4.09,4.09,0,0,1,7.71-2.72A36.71,36.71,0,0,0,17.14,100a39.73,39.73,0,0,0,16.56,9.12ZM63.88,22.38A4.08,4.08,0,1,1,67.36,15a44.74,44.74,0,0,1,10.19,6.55,41.61,41.61,0,0,1,7.63,8.63,4.09,4.09,0,1,1-6.82,4.51,33.56,33.56,0,0,0-6.12-6.93,36.66,36.66,0,0,0-8.36-5.37ZM68.05,8A4.08,4.08,0,1,1,70.32.16a48,48,0,0,1,19.93,11A44.84,44.84,0,0,1,101.52,29a4.09,4.09,0,0,1-7.71,2.72,36.71,36.71,0,0,0-9.2-14.56A39.73,39.73,0,0,0,68.05,8ZM92.51,71.35A29.16,29.16,0,0,0,84,76.83a14.41,14.41,0,0,0-4.16,6.78,11,11,0,0,0,.56,7A16.51,16.51,0,0,0,84,95.8L82,97.65C71.69,86.59,77.13,76,90.11,69.4l-3.85-3.66a12.25,12.25,0,0,0-1-.9,1.85,1.85,0,0,1-.56-.32,11.5,11.5,0,0,0-7.35-1.74,11.34,11.34,0,0,0-7,3.28l-.75.75-.06,0,0,0L48.89,87.56a1.83,1.83,0,0,1-.54.38l-.37.38a11.37,11.37,0,0,0-3.28,6.89,12,12,0,0,0,.21,3.73,11.77,11.77,0,0,0,3,5.12l12.42,12.42a21.7,21.7,0,0,0,15.24,6.4,21.06,21.06,0,0,0,15.1-6.21l9.42-9.42a21.85,21.85,0,0,0,7.12-16.71v-.11h0v0l-.14-29.23a1.5,1.5,0,0,1,0-.3l2.13.13-2.12-.13c.28-4.55-1.33-7.49-3.47-8.8a5.16,5.16,0,0,0-2.47-.78,4.64,4.64,0,0,0-2.4.52c-1.89,1-3.32,3.33-3.32,7.16,0,.88,0,3.21-.06,5.42a27,27,0,0,1-.53,5.27,2.13,2.13,0,0,1-.58,1.08,2.1,2.1,0,0,1-1.76.62ZM47.89,83.61,56,75.48l-22-22A5.78,5.78,0,0,0,30,51.84a5.72,5.72,0,0,0-4.07,1.67h0a5.79,5.79,0,0,0,0,8.14l22,22Zm10.3-10.3,8.13-8.13-29-29a5.79,5.79,0,0,0-8.14,0h0a5.79,5.79,0,0,0,0,8.14l29,29Zm10.74-9.49a17.55,17.55,0,0,1,11.63-4.34h.28L55.14,33.77a5.77,5.77,0,0,0-8.13,0h0a5.77,5.77,0,0,0,0,8.13L68.92,63.83Z"/>--}}
-                                                                            {{--                                                                                    </svg>--}}
-                                                                            {{--                                                                                </i>--}}
-                                                                            {{--                                                                            </a>--}}
-                                                                            <a href="#" class="text-warning fw-normal"
-                                                                               onclick="openMessage('{{$item->plate_en}}','Reminder',event)">
-                                                                                {{ __('app.Reminder') }}
-                                                                                <i class="fas fa-bell"></i>
-                                                                            </a>
-                                                                            <a href="#"
-                                                                               class="text-danger fw-normal put-error"
-                                                                               data-item_id="{{$item->id}}"
-                                                                               data-item_status="{{$item->plate_status}}">
-                                                                                {{ __('app.Report_Error') }}
-                                                                                <i class="fas fa-exclamation-triangle"></i>
-                                                                            </a>
+                                                                                {{--                                                                            <a href="#" class="text-info fw-normal"--}}
+                                                                                {{--                                                                               onclick="openMessage('{{$item->plate_en}}','Welcome',event,'{{$item->id}}')">--}}
+                                                                                {{--                                                                                {{ __('app.Welcome_Message') }}--}}
+                                                                                {{--                                                                                <i class="fas fa-hand-holding-heart"></i>--}}
+                                                                                {{--                                                                                <i style="fill: #EFAF94;width:15px">--}}
+                                                                                {{--                                                                                    <svg data-name="Layer 1" width="18"--}}
+                                                                                {{--                                                                                         xmlns="http://www.w3.org/2000/svg"--}}
+                                                                                {{--                                                                                         viewBox="0 0 109.22 122.88">--}}
+                                                                                {{--                                                                                        <defs>--}}
+                                                                                {{--                                                                                            <style>.cls-1 {--}}
+                                                                                {{--                                                                                                    fill-rule: evenodd;--}}
+                                                                                {{--                                                                                                }</style>--}}
+                                                                                {{--                                                                                        </defs>--}}
+                                                                                {{--                                                                                        <title>{{ __('app.hand_wave') }}</title>--}}
+                                                                                {{--                                                                                        <path class="cls-1"--}}
+                                                                                {{--                                                                                              d="M41.83,97.57c0-.13,0-.26,0-.38a17,17,0,0,1,4.31-11.57L32.39,71.88a5.76,5.76,0,0,0-8.13,0h0a5.76,5.76,0,0,0,0,8.12L41.83,97.57Zm-8.13,11.5a4.08,4.08,0,1,1-2.27,7.84,47.87,47.87,0,0,1-19.92-11A44.75,44.75,0,0,1,.23,88.11a4.09,4.09,0,0,1,7.71-2.72A36.71,36.71,0,0,0,17.14,100a39.73,39.73,0,0,0,16.56,9.12ZM63.88,22.38A4.08,4.08,0,1,1,67.36,15a44.74,44.74,0,0,1,10.19,6.55,41.61,41.61,0,0,1,7.63,8.63,4.09,4.09,0,1,1-6.82,4.51,33.56,33.56,0,0,0-6.12-6.93,36.66,36.66,0,0,0-8.36-5.37ZM68.05,8A4.08,4.08,0,1,1,70.32.16a48,48,0,0,1,19.93,11A44.84,44.84,0,0,1,101.52,29a4.09,4.09,0,0,1-7.71,2.72,36.71,36.71,0,0,0-9.2-14.56A39.73,39.73,0,0,0,68.05,8ZM92.51,71.35A29.16,29.16,0,0,0,84,76.83a14.41,14.41,0,0,0-4.16,6.78,11,11,0,0,0,.56,7A16.51,16.51,0,0,0,84,95.8L82,97.65C71.69,86.59,77.13,76,90.11,69.4l-3.85-3.66a12.25,12.25,0,0,0-1-.9,1.85,1.85,0,0,1-.56-.32,11.5,11.5,0,0,0-7.35-1.74,11.34,11.34,0,0,0-7,3.28l-.75.75-.06,0,0,0L48.89,87.56a1.83,1.83,0,0,1-.54.38l-.37.38a11.37,11.37,0,0,0-3.28,6.89,12,12,0,0,0,.21,3.73,11.77,11.77,0,0,0,3,5.12l12.42,12.42a21.7,21.7,0,0,0,15.24,6.4,21.06,21.06,0,0,0,15.1-6.21l9.42-9.42a21.85,21.85,0,0,0,7.12-16.71v-.11h0v0l-.14-29.23a1.5,1.5,0,0,1,0-.3l2.13.13-2.12-.13c.28-4.55-1.33-7.49-3.47-8.8a5.16,5.16,0,0,0-2.47-.78,4.64,4.64,0,0,0-2.4.52c-1.89,1-3.32,3.33-3.32,7.16,0,.88,0,3.21-.06,5.42a27,27,0,0,1-.53,5.27,2.13,2.13,0,0,1-.58,1.08,2.1,2.1,0,0,1-1.76.62ZM47.89,83.61,56,75.48l-22-22A5.78,5.78,0,0,0,30,51.84a5.72,5.72,0,0,0-4.07,1.67h0a5.79,5.79,0,0,0,0,8.14l22,22Zm10.3-10.3,8.13-8.13-29-29a5.79,5.79,0,0,0-8.14,0h0a5.79,5.79,0,0,0,0,8.14l29,29Zm10.74-9.49a17.55,17.55,0,0,1,11.63-4.34h.28L55.14,33.77a5.77,5.77,0,0,0-8.13,0h0a5.77,5.77,0,0,0,0,8.13L68.92,63.83Z"/>--}}
+                                                                                {{--                                                                                    </svg>--}}
+                                                                                {{--                                                                                </i>--}}
+                                                                                {{--                                                                            </a>--}}
+                                                                                <a href="#" class="text-warning fw-normal"
+                                                                                   onclick="openMessage('{{$item->plate_en}}','Reminder',event)">
+                                                                                    {{ __('app.Reminder') }}
+                                                                                    <i class="fas fa-bell"></i>
+                                                                                </a>
+                                                                                <a href="#"
+                                                                                   class="text-danger fw-normal put-error"
+                                                                                   data-item_id="{{$item->id}}"
+                                                                                   data-item_status="{{$item->plate_status}}">
+                                                                                    {{ __('app.Report_Error') }}
+                                                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                                                </a>
 
-                                                                            <a href="#" class="text-info fw-normal"
-                                                                               id="download-{{$item->id}}" download
-                                                                               onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)">
-                                                                                {{ __('app.invoice_review') }}
-                                                                            </a>
+                                                                                <a href="#" class="text-info fw-normal"
+                                                                                   id="download-{{$item->id}}" download
+                                                                                   onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)">
+                                                                                    {{ __('app.invoice_review') }}
+                                                                                    <i>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="16px" viewBox="0 0 16 16" version="1.1" fill="currentColor">
+                                                                                            <g id="surface1">
+                                                                                                <path style=" stroke:none;fill-opacity:1;" d="M 2.839844 6.410156 L 9.496094 6.410156 L 9.496094 7.40625 L 2.839844 7.40625 Z M 2.839844 6.410156 "/>
+                                                                                                <path style=" stroke:none;fill-opacity:1;" d="M 14.617188 16 L 15.324219 15.292969 L 12.949219 12.917969 C 13.367188 12.355469 13.613281 11.660156 13.613281 10.910156 C 13.613281 9.554688 12.8125 8.382812 11.660156 7.84375 L 11.660156 3.621094 L 8.039062 0 L 0.675781 0 L 0.675781 14.816406 L 11.660156 14.816406 L 11.660156 13.972656 C 11.867188 13.875 12.0625 13.757812 12.242188 13.625 Z M 8.332031 1.703125 L 9.957031 3.328125 L 8.332031 3.328125 Z M 1.675781 1 L 7.332031 1 L 7.332031 4.328125 L 10.664062 4.328125 L 10.664062 7.554688 C 10.523438 7.539062 10.378906 7.527344 10.234375 7.527344 C 9.195312 7.527344 8.265625 8 7.644531 8.738281 L 2.839844 8.738281 L 2.839844 9.738281 L 7.0625 9.738281 C 6.925781 10.101562 6.851562 10.496094 6.851562 10.910156 C 6.851562 10.960938 6.855469 11.015625 6.855469 11.070312 L 2.839844 11.070312 L 2.839844 12.066406 L 7.058594 12.066406 C 7.328125 12.804688 7.847656 13.421875 8.511719 13.816406 L 1.675781 13.816406 Z M 10.234375 13.289062 C 8.921875 13.289062 7.851562 12.222656 7.851562 10.910156 C 7.851562 9.59375 8.921875 8.527344 10.234375 8.527344 C 11.546875 8.527344 12.613281 9.59375 12.613281 10.910156 C 12.613281 12.222656 11.546875 13.289062 10.234375 13.289062 Z M 10.234375 13.289062 "/>
+                                                                                            </g>
+                                                                                        </svg>
+                                                                                    </i>
+                                                                                </a>
+                                                                                @php
+                                                                                    $modalData = collect(\Arr::except($item->toArray(),['invoice_status']));
+                                                                                @endphp
+                                                                                <a  href="#" class="text-info fw-normal"
+                                                                                    title="Edit Plate"
+                                                                                    onclick="openEditModal('{{json_encode($modalData)}}')">
+                                                                                    {{ __('app.edit_plate') }}
+                                                                                    <i class="fas fa-edit mr-0"></i>
+                                                                                </a>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -872,8 +975,7 @@
                                                                             {{--                                                                                 data-toggle="modal"--}}
                                                                             {{--                                                                                 data-target="#basicExampleModal">--}}
                                                                             <div class="img-overlay">
-                                                                                <span
-                                                                                    class="mr-1">{{$item->checkInDate}}</span>
+                                                                                <span class="mr-1">{{$item->checkInDate}}</span>
                                                                             </div>
                                                                         </div>
                                                                     @endif
@@ -881,8 +983,7 @@
                                                             @endforeach
 
                                                             @if($noImage == false)
-                                                                <img src="/assets/images/no_image.svg"
-                                                                     class="mt-5 no_image" alt=""/>
+                                                                <img src="/assets/images/no_image.svg" class="mt-5 no_image" alt=""/>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -905,9 +1006,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="reminderModalLabel">{{ __('app.Set_new_reminder') }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </span>
                     </div>
                     <div class="modal-body">
                         <form novalidate id="reminder-form">
@@ -916,9 +1017,7 @@
                                 <div class="row">
                                     <div class="form-group col-12 col-md-12 mb-4">
                                         <label for="kilometer">{{ __('app.Kilometer') }} ({{ __('app.Km') }})</label>
-                                        <input type="number"
-                                               onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"
-                                               class="form-control" id="kilometer" min="1"
+                                        <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"   class="form-control" id="kilometer" min="1"
                                                aria-describedby="number of kilometers" placeholder="{{ __('app.KM') }}">
                                         <div class="invalid-feedback d-block km">
                                             {{ __('app.enter_a_valid_number_of_kilometer') }}.
@@ -926,9 +1025,7 @@
                                     </div>
                                     <div class="form-group col-12 col-md-12">
                                         <label for="days">{{ __('app.Days') }}</label>
-                                        <input type="number"
-                                               onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"
-                                               class="form-control" id="days" min="1" max="365"
+                                        <input type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"   class="form-control" id="days" min="1" max="365"
                                                aria-describedby="number of days" placeholder="(1  - 365)">
                                         <div class="invalid-feedback d-block day">
                                             {{ __('app.enter_a_valid_number_of_days') }}.
@@ -960,10 +1057,10 @@
     <script src="{{asset('js/config.js')}}"></script>
     <script>
         branchInvoiceBar('invoiceChart',@json($invoice_chart));
-
         function openEditModal(data) {
+
             var data = JSON.parse(data);
-            console.log(data)
+
             $(`#errorMangamentModal input[name=plate_ar]`).val(data.char_ar);
             $(`#errorMangamentModal input[name=plate_en]`).val(data.char_en);
             $(`#errorMangamentModal input[name=number_ar]`).val(data.number_ar);
@@ -973,21 +1070,20 @@
             document.getElementById('screenshot_modal').src = data.path_screenshot ?? app_url + '/images/blank.png';
             $('#errorMangamentModal').modal('show');
 
-            console.log(data.char_ar.length, data.char_ar)
-            var tempCharAR = data.char_ar.replace(/ /g, '');
-            var tempCharEN = data.char_en.replace(/ /g, '');
-            var tempNumAR = data.number_ar.replace(/ /g, '');
-            var tempNumEn = data.number_en.replace(/ /g, '');
+
+            var tempCharAR = data.char_ar.replace(/ /g,'');
+            var tempCharEN = data.char_en.replace(/ /g,'');
+            var tempNumAR = data.number_ar.replace(/ /g,'');
+            var tempNumEn = data.number_en.replace(/ /g,'');
 
             console.log(tempCharAR, tempCharEN, tempNumAR, tempNumEn)
-            for (var i = 0; i < 5; i++) {
+            for (var i=0; i<5; i++){
                 $($('.digits[data-info="number_ar"] .input-group input')[i]).val(tempNumAR[i]);
                 $($('.digits[data-info="plate_ar"] .input-group input')[i]).val(tempCharAR[i]);
                 $($('.digits[data-info="number_en"] .input-group input')[i]).val(tempNumEn[i]);
                 $($('.digits[data-info="plate_en"] .input-group input')[i]).val(tempCharEN[i]);
             }
         }
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1076,13 +1172,14 @@
         }
 
         $(document).ready(function () {
+            document.querySelector('.branch-2nd .nav-link.active').scrollIntoView();
             $(function () {
                 $('[data-toggle="popover"]').popover()
             })
 
             var item_update = false;
 
-            $('.put-error').on('click', function (e) {
+            $('#paginationSimpleNumbers tbody').on('click','tr .put-error', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -1123,14 +1220,16 @@
                 });
             });
 
-            $(".action_drop").on("click", e => e.stopPropagation())
+            // $(".action_drop").on("click", e => e.stopPropagation())
 
             $(".download_invoice").on('click', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
             });
 
-            $('.btn-filter').on('click', function (e) {
+
+            // $('.btn-filter').on('click', function (e)
+            $('#paginationSimpleNumbers tbody').on('click','tr .btn-filter', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
                 let openD = $(".filter-content.open")
@@ -1265,7 +1364,7 @@
                             title: error || 'Failed To Load Data'
                         });
                     },
-                    complete: function (xhr, status) {
+                    complete: function(xhr, status){
                         spinnerCont.addClass('d-none');
                     }
 
@@ -1276,7 +1375,7 @@
             $('.area-section.slider').on('afterChange', function (event, slick) {
                 cr && (slickCarouselCardEvents(filterDataFn), cr = false);
             })
-            $('.area-section.slider').on('breakpoint', function (event, slick) {
+            $('.area-section.slider').on('breakpoint', function(event, slick){
                 slickCarouselCardEvents(filterDataFn);
                 cr = false;
             });
@@ -1288,9 +1387,9 @@
                 var number_en = $(`#errorMangamentModal input[name=number_en]`).val();
                 var item_id = $(`#errorMangamentModal input[name=item_id]`).val();
 
-                var errorTextMessage = "Sorry, looks like there are some errors detected, please try again.";
-                var ConfirmButtonText = "Ok, got it!";
-                var successTextMessage = "You have updated plate successfully.";
+                var errorTextMessage    = "Sorry, looks like there are some errors detected, please try again.";
+                var ConfirmButtonText   = "Ok, got it!";
+                var successTextMessage  = "You have updated plate successfully.";
 
                 $.ajaxSetup({
                     headers: {
@@ -1317,7 +1416,7 @@
                     error: function (data) {
                         // console.log(data)
                         Swal.fire({
-                            text: data.responseJSON ? data.responseJSON.message : errorTextMessage,
+                            text: data.responseJSON?data.responseJSON.message:errorTextMessage,
                             icon: "error",
                             buttonsStyling: !1,
                             confirmButtonText: ConfirmButtonText,
@@ -1327,32 +1426,32 @@
                 })
             });
 
-            function openEditModal(data) {
-                var data = JSON.parse(data);
-                console.log(data)
-                $(`#errorMangamentModal input[name=plate_ar]`).val(data.char_ar);
-                $(`#errorMangamentModal input[name=plate_en]`).val(data.char_en);
-                $(`#errorMangamentModal input[name=number_ar]`).val(data.number_ar);
-                $(`#errorMangamentModal input[name=number_en]`).val(data.number_en);
-                $(`#errorMangamentModal input[name=item_id]`).val(data.id);
-                $(`#errorMangamentModal #ErrorForm`).attr('action', `${app_url}/customer/error-mangment/${data.id}/updatePlate`);
-                document.getElementById('screenshot_modal').src = data.path_screenshot ?? app_url + '/images/blank.png';
-                $('#errorMangamentModal').modal('show');
-
-                console.log(data.char_ar.length, data.char_ar)
-                var tempCharAR = data.char_ar.replace(/ /g, '');
-                var tempCharEN = data.char_en.replace(/ /g, '');
-                var tempNumAR = data.number_ar.replace(/ /g, '');
-                var tempNumEn = data.number_en.replace(/ /g, '');
-
-                console.log(tempCharAR, tempCharEN, tempNumAR, tempNumEn)
-                for (var i = 0; i < 5; i++) {
-                    $($('.digits[data-info="number_ar"] .input-group input')[i]).val(tempNumAR[i]);
-                    $($('.digits[data-info="plate_ar"] .input-group input')[i]).val(tempCharAR[i]);
-                    $($('.digits[data-info="number_en"] .input-group input')[i]).val(tempNumEn[i]);
-                    $($('.digits[data-info="plate_en"] .input-group input')[i]).val(tempCharEN[i]);
-                }
-            }
+            // function openEditModal(data) {
+            //     var data = JSON.parse(data);
+            //     console.log(data)
+            //     $(`#errorMangamentModal input[name=plate_ar]`).val(data.char_ar);
+            //     $(`#errorMangamentModal input[name=plate_en]`).val(data.char_en);
+            //     $(`#errorMangamentModal input[name=number_ar]`).val(data.number_ar);
+            //     $(`#errorMangamentModal input[name=number_en]`).val(data.number_en);
+            //     $(`#errorMangamentModal input[name=item_id]`).val(data.id);
+            //     $(`#errorMangamentModal #ErrorForm`).attr('action', `${app_url}/customer/error-mangment/${data.id}/updatePlate`);
+            //     document.getElementById('screenshot_modal').src = data.path_screenshot ?? app_url + '/images/blank.png';
+            //     $('#errorMangamentModal').modal('show');
+            //
+            //     console.log(data.char_ar.length, data.char_ar)
+            //     var tempCharAR = data.char_ar.replace(/ /g,'');
+            //     var tempCharEN = data.char_en.replace(/ /g,'');
+            //     var tempNumAR = data.number_ar.replace(/ /g,'');
+            //     var tempNumEn = data.number_en.replace(/ /g,'');
+            //
+            //     console.log(tempCharAR, tempCharEN, tempNumAR, tempNumEn)
+            //     for (var i=0; i<5; i++){
+            //         $($('.digits[data-info="number_ar"] .input-group input')[i]).val(tempNumAR[i]);
+            //         $($('.digits[data-info="plate_ar"] .input-group input')[i]).val(tempCharAR[i]);
+            //         $($('.digits[data-info="number_en"] .input-group input')[i]).val(tempNumEn[i]);
+            //         $($('.digits[data-info="plate_en"] .input-group input')[i]).val(tempCharEN[i]);
+            //     }
+            // }
 
             function replaceFarsiNumber(input) {
                 const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -1364,8 +1463,7 @@
 
                 return input;
             }
-
-            $('.digit').on('keyup', function () {
+            $('.digit').on('keyup',function (){
 
                 var ennumbers = "0123456789";
                 var arnumbers = "۰۱۲۳٤۵٦۷۸۹";
@@ -1373,51 +1471,59 @@
                 var val = $(this).val();
                 var parent = $(this).closest('.form-group').attr('data-info');
 
-                if (parent == "number_ar") {
-                    if (arnumbers.search(val) > -1) {
+                if(parent == "number_ar"){
+                    if (arnumbers.search(val) > -1){
                         $(this).next().focus();
                         // $('#number_ar').val += val;
                         setInputValue($(this), '#number_ar');
 
-                    } else if (ennumbers.search(val) > -1) {
+                    }
+                    else if(ennumbers.search(val) > -1) {
                         $(this).val(replaceFarsiNumber(val));
                         $(this).next().focus();
                         setInputValue($(this), '#number_ar');
-                    } else {
+                    }
+                    else {
                         $('span.info-patter').fadeOut();
                         $(this).closest('.digits').find('span.info-patter').fadeIn();
                         $(this).val('');
                     }
-                } else if (parent == "plate_ar") {
+                }
+                else if(parent == "plate_ar"){
 
                     var isArabic = /[\u0600-\u06FF\u0750-\u077F]/;
-                    if (isArabic.test(val)) {
+                    if (isArabic.test(val)){
                         $(this).next().focus();
                         setInputValue($(this), '#plate_ar');
 
-                    } else {
+                    }
+                    else {
                         $('span.info-patter').fadeOut();
                         $(this).closest('div.digits').find('span.info-patter').fadeIn();
                         $(this).val('');
                     }
 
-                } else if (parent == "plate_en") {
+                }
+                else if(parent == "plate_en"){
                     const regex = /[A-Za-z]/;
-                    if (regex.test(val)) {
+                    if(regex.test(val)){
                         $(this).next().focus();
                         setInputValue($(this), '#plate_en');
 
-                    } else {
+                    }
+                    else{
                         $('span.info-patter').fadeOut();
                         $(this).closest('div.digits').find('span.info-patter').fadeIn();
                         $(this).val('');
                     }
-                } else if (parent == "number_en") {
-                    if (ennumbers.search(val) > -1) {
+                }
+                else if(parent == "number_en"){
+                    if (ennumbers.search(val) > -1){
                         $(this).next().focus();
                         setInputValue($(this), '#number_en');
 
-                    } else {
+                    }
+                    else {
                         $('span.info-patter').fadeOut();
                         $(this).closest('.digits').find('span.info-patter').fadeIn();
                         $(this).val('');
@@ -1426,21 +1532,19 @@
                 }
             });
             info();
-
-            function info() {
-                $('.digits label i.fa-info-circle').on('click', function () {
+            function info (){
+                $('.digits label i.fa-info-circle').on('click', function (){
                     $('span.info-patter').fadeOut();
                     $(this).closest('.digits').find('span.info-patter').fadeIn();
-                    setTimeout(function () {
+                    setTimeout(function(){
                         $('span.info-patter').fadeOut()
                     }, 3000)
                 })
             }
-
-            function setInputValue(ele, input) {
-                var text = "";
+            function setInputValue(ele, input){
+                var text="";
                 inputs = ele.closest('.digits').find('input.digit');
-                for (var i = 0; i < inputs.length; i++) {
+                for(var i=0; i < inputs.length; i++){
                     text = text + $(inputs[i]).val();
                 }
                 $(input).val(text);
@@ -1448,3 +1552,268 @@
         });
     </script>
 @endsection
+
+@push('js')
+    <script>
+        let totalRecords = +"{{$data_count}}";
+        let branch_id = "{{$current_branch->id}}";
+        let user_model_branch_id = "{{$usermodelbranch->id}}";
+
+
+        let lang = "{{ app()->getLocale() }}";
+
+        window.Echo.channel(`plate.${branch_id}`).listen('.PlateEvent', (data) => {
+
+            console.log(`plate_data => `, data);
+
+            //TODO write your push plate element here
+            let branchId = data.branch_id;
+            if(!data.data|| !branchId) return ;
+            let { BayCode} = data.data;
+            let toastrTitle = '';
+            let toastrMessage = '';
+            notificationToastrOptions(toastr);
+            toastrMessage = `${trans('new_car_detected')}  ${BayCode}`;
+            toastr.options.onclick = function(e){
+                $(e.target.closest('.toast')).find('.notif_link')[0]?.click();
+            }
+            toastr["warning"](`<a class='notif_link' href='/models/branch/plates/${branchId}/${user_model_branch_id}'>${toastrMessage}</a>`)
+
+
+            // add new row if status == 1 -> busy , 0 -> available
+            let rowsNumber = $('#paginationSimpleNumbers tbody tr').length;
+
+
+            // check if the current active page in pagination is 1
+            if(+$('.pagination .page-item.active').text() === 1 || +$('.pagination .page-item.active').text() === 0){
+                if(rowsNumber >= 10){
+                    $('#paginationSimpleNumbers tbody tr:last-child').remove();
+
+                }
+
+                $('#paginationSimpleNumbers tbody').prepend(getNewRowTemp(data.data));
+
+                $('#paginationSimpleNumbers tbody tr .edit_plate_btn').off();
+                $('#paginationSimpleNumbers tbody tr .edit_plate_btn').on('click', function (e){
+                    e.stopPropagation();
+                    openEditModal(JSON.stringify(data.data));
+                })
+            }
+
+            paginationCheck(`/models/branch/plates/${branchId}/${user_model_branch_id}`, rowsNumber, totalRecords)
+            totalRecords++;
+
+
+            //  add new screenshot
+            // check if the area tab not exists then create new tab
+            if($(`#home-tab-just-${BayCode}`).length === 0){
+                createNewScrenshotTab(BayCode)
+            }
+
+            // remove no data image if exists
+            $(`#home-just-${BayCode} .no_image`).remove();
+
+            // add the new image
+            $(`#home-just-${BayCode} .screenshoot-content`).prepend(getNewImageTemp(data.data));
+        });
+        function createNewScrenshotTab(areaNumber){
+            $('#myTabJust').append(`<li class="nav-item">
+                                            <a class="nav-link" href="#home-just-${areaNumber}"
+                                                id="home-tab-just-${areaNumber}" data-toggle="tab" role="tab"
+                                                aria-controls="home-just-${areaNumber}"
+                                                aria-selected="false">${trans('area')} ${areaNumber}</a>
+                                        </li>`);
+
+            $(`#myTabContentJust`).append(`<div class="tab-pane fade " id="home-just-${areaNumber}"
+                                                             role="tabpanel" aria-labelledby="home-tab-just-${areaNumber}">
+                                                            <div class="screenshoot-content"></div>
+                                                </div>`);
+        }
+        function getNewImageTemp(data){
+            let {path_screenshot:screenshotPath, checkInDate} = data;
+            return `<div class="screenshot-img">
+                        <img src="${screenshotPath}"
+                                height="251" alt=""
+                                data-toggle="modal"
+                                data-target="#basicExampleModal">
+                        <div class="img-overlay">
+                            <span >${checkInDate}</span>
+
+                        </div>
+                    </div>`
+        }
+
+        function getNewRowTemp(data){
+            let {id, plate_status, path_screenshot:pathScreenshot,area_screenshot, checkInDate,checkOutDate,BayCode, plate_ar, plate_en, status, camera_id:camId} = data ;
+
+
+            let currentPeriod = '';
+            if(checkOutDate === null){
+                let x = new moment(checkInDate, 'YYYY-MM-DD HH:mm:SS');
+                let y = new moment().tz("Asia/Riyadh");
+                // currentPeriod = moment(checkInDate, 'YYYY-MM-DD HH:mm:SS').fromNow();
+                currentPeriod = x.from(y);
+
+            }else{
+                let x = new moment(checkInDate, 'YYYY-MM-DD HH:mm:SS');
+                let y = new moment(checkOutDate, 'YYYY-MM-DD HH:mm:SS');
+                currentPeriod = x.from(y);
+            }
+            return `<tr style=" position: relative"
+                data-img2status="loading"
+                data-img1status="loading"
+                data-screen2="${area_screenshot}"
+                id="${pathScreenshot}" class="record" >
+                <td class="checkin-date">${checkInDate ? checkInDate : ''}</td>
+                <td class="checkout-date">${checkOutDate !== null ? checkOutDate : ''}</td>
+                <td class="period">${currentPeriod}</td>
+                <td class="open area">${trans('area')} ${BayCode}</td>
+                <td class="open ar-plate">
+                    ${plate_ar}
+                </td>
+                <td class="open en-plate">
+                    ${plate_en}
+                </td>
+                <td>
+                    ${getStatusTd(status)}
+                </td>
+                <td class="open status" id="status${id}"
+                    style="position:relative;">
+                    ${getPlateDetectionTd(plate_status)}
+                </td>
+
+                <td>
+                    <a class="" data-toggle="popover"
+                            data-trigger="hover"
+                            data-content="Not Sent">
+                            <i class="fas fa-comment-slash text-danger"></i>
+                        </a>
+                </td>
+
+                <td>
+                    <a data-toggle="popover" data-trigger="hover" data-content="No invoice Sent">
+                            <i class="fas fa-file-excel text-danger"
+                                style="font-size: 19px"></i>
+                    </a>
+                </td>
+
+                <td class="open action-col position-relative action_drop ">
+
+                    <div class="d-flex justify-content-center align-items-center mt-1">
+                        <a href="#" type="button" id="show_modal-btn" class=" btn btn-sm btn-primary waves-effect waves-light mr-2"
+                                data-toggle="modal" data-target="#basicExampleModal0" >
+                            <i class="fas fa-eye mr-0"></i>
+                        </a>
+                        <div class="loader" id="status_loading${id}"
+                            style="display: none"></div>
+                        <div class="filter-dropdown d-flex">
+                            <a class="btn-filter btn btn-sm btn-primary waves-effect waves-light"
+                                data-toggle="dropdown" href="#">
+                                <i class="fas fa-edit mr-0"></i>
+                            </a>
+                            <div class="filter-content"
+                                aria-labelledby="dropdownMenuButton">
+
+                                <a href="#" class="text-warning fw-normal"
+                                    onclick="openMessage('${plate_en}','Reminder',event)">
+                                    {{ __('app.Reminder') }}
+            <i class="fas fa-bell"></i>
+        </a>
+        <a href="#"
+            class="text-danger fw-normal put-error"
+            data-item_id="${id}"
+                                    data-item_status="${plate_status}">
+                                    {{ __('app.Report_Error') }}
+            <i class="fas fa-exclamation-triangle"></i>
+        </a>
+
+        <a href="#" class="text-info fw-normal"
+            id="download-${id}" download
+                                    onclick="reviewPdf('${plate_en}','${id}',event)">
+                                    {{ __('app.invoice_review') }}
+            <i>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="16px" viewBox="0 0 16 16" version="1.1" fill="currentColor">
+                    <g id="surface1">
+                        <path style=" stroke:none;fill-opacity:1;" d="M 2.839844 6.410156 L 9.496094 6.410156 L 9.496094 7.40625 L 2.839844 7.40625 Z M 2.839844 6.410156 "/>
+                        <path style=" stroke:none;fill-opacity:1;" d="M 14.617188 16 L 15.324219 15.292969 L 12.949219 12.917969 C 13.367188 12.355469 13.613281 11.660156 13.613281 10.910156 C 13.613281 9.554688 12.8125 8.382812 11.660156 7.84375 L 11.660156 3.621094 L 8.039062 0 L 0.675781 0 L 0.675781 14.816406 L 11.660156 14.816406 L 11.660156 13.972656 C 11.867188 13.875 12.0625 13.757812 12.242188 13.625 Z M 8.332031 1.703125 L 9.957031 3.328125 L 8.332031 3.328125 Z M 1.675781 1 L 7.332031 1 L 7.332031 4.328125 L 10.664062 4.328125 L 10.664062 7.554688 C 10.523438 7.539062 10.378906 7.527344 10.234375 7.527344 C 9.195312 7.527344 8.265625 8 7.644531 8.738281 L 2.839844 8.738281 L 2.839844 9.738281 L 7.0625 9.738281 C 6.925781 10.101562 6.851562 10.496094 6.851562 10.910156 C 6.851562 10.960938 6.855469 11.015625 6.855469 11.070312 L 2.839844 11.070312 L 2.839844 12.066406 L 7.058594 12.066406 C 7.328125 12.804688 7.847656 13.421875 8.511719 13.816406 L 1.675781 13.816406 Z M 10.234375 13.289062 C 8.921875 13.289062 7.851562 12.222656 7.851562 10.910156 C 7.851562 9.59375 8.921875 8.527344 10.234375 8.527344 C 11.546875 8.527344 12.613281 9.59375 12.613281 10.910156 C 12.613281 12.222656 11.546875 13.289062 10.234375 13.289062 Z M 10.234375 13.289062 "/>
+                    </g>
+                </svg>
+            </i>
+        </a>
+        <a  href="#" class="text-info fw-normal edit_plate_btn"
+            title="Edit Plate"
+            >
+{{ __('app.edit_plate') }}
+            <i class="fas fa-edit mr-0"></i>
+        </a>
+
+    </div>
+</div>
+</div>
+</td>
+</tr>`
+        }
+
+        function getStatusTd(status){
+            if(status === 'completed'){
+                return `<span class="badge badge-pill badge-success">{{ __('Completed') }}</span>`
+            }else{
+                return `<span class="badge badge-pill badge-info">{{ __('Pending') }}</span>`
+            }
+        }
+        function getPlateDetectionTd(plateStatus){
+            if(plateStatus === 'error'){
+                return ` <span class="badge badge-pill badge-danger">{{ __('app.Error') }}</span>`
+            }else if(plateStatus === 'success'){
+                return `<span class="badge badge-pill badge-success">{{ __('app.success') }}</span>`
+            }else if(plateStatus === 'modified'){
+                return `<span class="badge badge-pill badge-info">{{ __('app.Modified') }}</span>`
+            }else{
+                return `<span class="badge badge-pill badge-warning">{{ __('app.Reported') }}</span>`
+            }
+
+
+        }
+
+        function paginationCheck(url, rowsNumber, totalRecords) {
+            if(rowsNumber < 10)return;
+            // check if the pagination is shown
+            if($('.pagination > nav').length > 0){
+                // check the current tr number
+
+
+                // if it's greater or equal than 10
+                // create new page-item and make the href to ?page=last page item before the next elm+1
+                // append the new page item before the next element
+
+                let currentPageNum = +$('.pagination .pagination .page-item:last-child').prev().text();
+
+                if((totalRecords % 10) > 0 ) {
+
+                    return
+                };
+                let nextPageNum = currentPageNum + 1
+
+                let pageItemElm = `<li class="page-item"><a class="page-link waves-effect" href="${url}?page=${nextPageNum}">${nextPageNum}</a></li>`
+                $('.pagination .pagination .page-item:last-child').before(pageItemElm);
+            }else{
+
+                // create the pagination
+                let paginationTemp = `<nav>
+                        <ul class='pagination'>
+                            <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
+                                <span class="page-link waves-effect" aria-hidden="true">‹</span>
+                            </li>
+                            <li class="page-item active" aria-current="page"><span class="page-link waves-effect">1</span></li>
+                            <li class="page-item"><a class="page-link waves-effect" href="${url}?page=2">2</a></li>
+
+                            <li class="page-item">
+                                <a class="page-link waves-effect" href="${url}?page=2" rel="next" aria-label="Next »">›</a>
+                            </li>
+                        </ul>
+                    </nav>`;
+                $('nav > .pagination').append(paginationTemp);
+            }
+        }
+    </script>
+@endpush

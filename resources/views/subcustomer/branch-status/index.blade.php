@@ -316,9 +316,9 @@
                                                         @endif
 
                                                         <td>
-                                                            <a class="btn btn-dark skew-dark mr-18"
-                                                               href="branches-log/{{$branch->code}}"
-                                                               target="_blank">{{ __('app.Show') }}</a>
+{{--                                                            <a class="btn btn-dark skew-dark mr-18"--}}
+{{--                                                               href="branches-log/{{$branch->code}}"--}}
+{{--                                                               target="_blank">{{ __('app.Show') }}</a>--}}
                                                             <a class="btn btn-primary mr-18"
                                                                href="{{ route('customerBranches.show', [$branch->id]) }}"
                                                                target="_blank">{{ __('app.show_bracnh') }}</a>

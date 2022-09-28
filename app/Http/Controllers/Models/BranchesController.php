@@ -46,11 +46,8 @@ class BranchesController extends Controller
 
     public function index($branch_id = null)
     {
-
         $activepackage = UserPackages::where('user_id', parentID())->where('active', '1')->first();
-
         if ($branch_id) {
-
             $query = DB::table('user_model_branches')
                 ->select(['user_model_branches.*', 'branches.name as bname', 'models.name as mname', 'lt_models.id as lt_id'])
                 ->join('users_models', 'users_models.id', '=', 'user_model_branches.user_model_id')
@@ -168,8 +165,14 @@ class BranchesController extends Controller
         $activebranches = [];
         $current_branch = Branch::findOrFail($branch_id);
         if ($user->type == "subcustomer") {
-            $data = $user->branches;
+//            $data = $user->branches;
+//            $branches = $data->pluck('id')->toArray();
+
+            $data = Branch::active()->primary()
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->get();
             $branches = $data->pluck('id')->toArray();
+
             if (!in_array($branch_id, $branches)) {
                 return redirect()->route('myBranches')->with('danger', __('app.gym.empty_branch'));
             }
@@ -252,6 +255,7 @@ class BranchesController extends Controller
         $data = $modelrecords['data'] ?? [];
         $active_areas = $modelrecords['active_areas'] ?? [];
         $areas = $modelrecords['areas'] ?? [];
+        $data_count = $modelrecords['count'] ?? 0;
 
         $modelrecords['allsetting'] = PlaceMaintenanceSetting::where('user_model_branch_id', $usermodelbranchid)->orderBy('id', 'DESC')->get();
 
@@ -284,8 +288,7 @@ class BranchesController extends Controller
                 $j++;
             }
         }
-
-        return view('customer.preview.branch.places', compact('charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areas', 'active_areas', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
+        return view('customer.preview.branch.places', compact('charts','data_count', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areas', 'active_areas', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
     }
 
     public function placesshiftSettingSave(Request $request, $branch_id, $usermodelbranchid)
@@ -573,6 +576,7 @@ class BranchesController extends Controller
         $areatimes = $records['areas_count'] ?? [];
 
         $data = $records['data'] ?? [];
+        $data_count = $records['data_count'] ?? 0;
 
         $modelrecords['allsetting'] = CarPLatesSetting::where('user_model_branch_id', $usermodelbranchid)->orderBy('id', 'DESC')->get();
 
@@ -596,8 +600,8 @@ class BranchesController extends Controller
         } else {
             $duration_ratio = round(array_sum(\Arr::pluck($duration_ratio['charts']['bar'], 'value')) / 3);
         }
+        return view('customer.preview.branch.plates', compact('invoice_chart','data_count', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
 
-        return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
     }
 
     public function platesshiftSettingSave(Request $request, $branch_id, $usermodelbranchid)
@@ -810,5 +814,15 @@ class BranchesController extends Controller
         }
 
         return view('customer.preview.branch.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'current_branch', 'activeRegions', 'starttime', 'endtime', 'areatimes', 'branch_id', 'modelswithbranches', 'activebranches', 'screen', 'notify', 'usermodelbranchid', 'usermodelbranch', 'lastsetting', 'modelrecords', 'data', 'start', 'end'));
+    }
+
+    public function subCustomerBranches(Request $request)
+    {
+       $items = Branch::active()->primary()
+            ->with('areas')
+            ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+            ->get();
+        return view('subcustomer.branches', compact('items'));
+
     }
 }

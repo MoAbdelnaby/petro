@@ -371,21 +371,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="border-bottom clearfix"></div>
+{{--                        <div class="border-bottom clearfix"></div>--}}
 
-                        <div class="row justify-content-center p-0 m-0 py-3 item-menu">
-                            <div class="col-12 justify-content-center">
-                                <div class="iq-product-cover d-flex justify-content-center">
-                                    <a href="{{ route('myBranches') }}" class="iq-waves-effect"><img
-                                            src="{{ resolveDark() }}/img/icon_menu/package.svg" alt="product-image"
-                                            class="img-fluid"></a>
-                                </div>
-                                <div class="iq-product-cover d-flex justify-content-center"><a
-                                        href="{{ route('myBranches') }}"
-                                        class="iq-waves-effect menutext">{{ __('app.saas.packages.items.active_branches') }}</a>
-                                </div>
-                            </div>
-                        </div>
+{{--                        <div class="row justify-content-center p-0 m-0 py-3 item-menu">--}}
+{{--                            <div class="col-12 justify-content-center">--}}
+{{--                                <div class="iq-product-cover d-flex justify-content-center">--}}
+{{--                                    <a href="{{ route('myBranches') }}" class="iq-waves-effect"><img--}}
+{{--                                            src="{{ resolveDark() }}/img/icon_menu/package.svg" alt="product-image"--}}
+{{--                                            class="img-fluid"></a>--}}
+{{--                                </div>--}}
+{{--                                <div class="iq-product-cover d-flex justify-content-center"><a--}}
+{{--                                        href="{{ route('myBranches') }}"--}}
+{{--                                        class="iq-waves-effect menutext">{{ __('app.saas.packages.items.active_branches') }}</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="border-bottom clearfix"></div>
                         <div class="row justify-content-center p-0 m-0 py-3 item-menu">
                             <div class="col-12 justify-content-center">

@@ -111,7 +111,7 @@ class PlatesController extends Controller
         $records = $this->repo->getNewData($usermodelbranch->branch_id, $start, $end);
         $areatimes = $records['areas_count'] ?? [];
         $data = $records['data'] ?? [];
-
+        $data_count = $records['data_count'] ?? 0;
         $modelrecords['allsetting'] = CarPLatesSetting::where('user_model_branch_id', $usermodelbranchid)->orderBy('id', 'DESC')->get();
 
         $charts = [];
@@ -135,7 +135,7 @@ class PlatesController extends Controller
             $duration_ratio = round(array_sum(\Arr::pluck($duration_ratio['charts']['bar'], 'value')) / 3);
         }
 
-        return view('customer.preview.plates.plates', compact('invoice_chart', 'duration_ratio', 'charts', 'starttime', 'branch', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
+        return view('customer.preview.plates.plates', compact('invoice_chart','data_count', 'duration_ratio', 'charts', 'starttime', 'branch', 'endtime', 'areatimes', 'screen', 'notify', 'lastsetting', 'usermodelbranchid', 'usermodelbranch', 'modelrecords', 'data', 'start', 'end', 'final_branches'));
     }
 
     public function platesfilter(Request $request, $usermodelbranchid)

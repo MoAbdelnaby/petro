@@ -41,11 +41,11 @@
                             <span class="ml-1"> {{$branch->name}}</span></a>
                     </li>
                 @endforeach
-                    <li class="nav-item no_data hide">
-                            <a href="javascript:void(0);" class="nav-link">
-                                 {{__('app.no_data')}}
-                            </a>
-                    </li>
+                <li class="nav-item no_data hide">
+                    <a href="javascript:void(0);" class="nav-link">
+                        {{__('app.no_data')}}
+                    </a>
+                </li>
 
             </div>
         </ul>
@@ -67,12 +67,12 @@
             <button class='btn btn-icon ' data-toggle="dropdown" aria-expanded="false"><i class="fas fa-search"></i></button>
             <div class="dropdown-menu">
                 <input autofocus type="text" class="form-control " aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
+                       aria-describedby="inputGroup-sizing-sm" placeholder="{{__('app.branch_search')}}" id="branch_search">
             </div>
         </div>
-{{--        <div class="duration-ration-cont top">--}}
-{{--            <p><b>@lang('app.staying_car_average') : </b> 15 minute</p>--}}
-{{--        </div>--}}
+        {{--        <div class="duration-ration-cont top">--}}
+        {{--            <p><b>@lang('app.staying_car_average') : </b> 15 minute</p>--}}
+        {{--        </div>--}}
         <div id="logout" class="top">
             <span class="close-setting" style="cursor: pointer;">
                 <i class="fas fa-sign-out-alt"></i>
@@ -237,13 +237,13 @@
                                                 </div>
                                                 <br>
                                                 <div class="d-flex justify-content-center btn-cont">
-                                                        <button type="button" value="1" id="searchRecord"
-                                                                class="btn close-setting">{{__('app.gym.search')}}
-                                                        </button>
-                                                        <button type="button" class="btn export" id="export">
-                                                            {{__('app.gym.Export_Data')}}
-                                                        </button>
-                                                    </div>
+                                                    <button type="button" value="1" id="searchRecord"
+                                                            class="btn close-setting">{{__('app.gym.search')}}
+                                                    </button>
+                                                    <button type="button" class="btn export" id="export">
+                                                        {{__('app.gym.Export_Data')}}
+                                                    </button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -258,7 +258,7 @@
                                                 <div class="card model-card">
                                                     <div class="card-body p-0">
                                                         <span class="filter-badge filter-badge-{{$key}} badge badge-pill badge-light">{{__('app.all')}}</span>
-                                                    <div class="setting-card-cont dropleft ">
+                                                        <div class="setting-card-cont dropleft ">
                                                             <a href="#"  type="button" data-toggle="dropdown" id="dropdownMenuCardSetting" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fas fa-cog"></i>
                                                             </a>
@@ -266,7 +266,7 @@
                                                                 <button type="button" class="close close-1" data-dismiss="dropdown" aria-label="Close">
                                                                     <span class='close-1' aria-hidden="true">&times;</span>
                                                                 </button>
-                                                               <div class="">
+                                                                <div class="">
                                                                     <h6>{{__('app.duration')}}</h6>
                                                                     <select name="filter_date" data-key="{{$key}}"
                                                                             class="filter_date custom-select">
@@ -279,20 +279,20 @@
                                                                 <div class="time-unit mt-4">
 
                                                                     <h6>{{__('app.duration_time_unit')}}</h4>
-                                                                    <form action="">
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" data-key={{$key}} value='hours' type="radio" name="duration_unit" id="duration_hours-{{$key}}" checked>
-                                                                            <label class="form-check-label"  for="duration_hours-{{$key}}">
-                                                                                {{__('app.Hours')}}
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input  class="form-check-input" data-key={{$key}} value='minutes' type="radio" name="duration_unit" id="duration_minutes-{{$key}}" >
-                                                                            <label class="form-check-label" for="duration_minutes-{{$key}}">
-                                                                                {{__('app.Minutes')}}
-                                                                            </label>
-                                                                        </div>
-                                                                    </form>
+                                                                        <form action="">
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" data-key={{$key}} value='hours' type="radio" name="duration_unit" id="duration_hours-{{$key}}" checked>
+                                                                                <label class="form-check-label"  for="duration_hours-{{$key}}">
+                                                                                    {{__('app.Hours')}}
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input  class="form-check-input" data-key={{$key}} value='minutes' type="radio" name="duration_unit" id="duration_minutes-{{$key}}" >
+                                                                                <label class="form-check-label" for="duration_minutes-{{$key}}">
+                                                                                    {{__('app.Minutes')}}
+                                                                                </label>
+                                                                            </div>
+                                                                        </form>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -326,17 +326,17 @@
 
                                                             @endif
 
-                                                                {{-- <div>
-                                                                    <input type="button"
-                                                                           class="btn btn-primary btn-sm change-btn"
-                                                                           id="btn-{{$key}}" value="Change to Minutes">
-                                                                </div> --}}
+                                                            {{-- <div>
+                                                                <input type="button"
+                                                                       class="btn btn-primary btn-sm change-btn"
+                                                                       id="btn-{{$key}}" value="Change to Minutes">
+                                                            </div> --}}
                                                         </div>
                                                         <div class="d-flex aligh-items-center  area-desc">
                                                             <div class="spinner-cont d-none spinner-cont-{{$key}}">
                                                                 <div class="spinner-border text-primary" role="status">
                                                                     <span class="sr-only">Loading...</span>
-                                                                  </div>
+                                                                </div>
                                                             </div>
 
                                                             <div
@@ -459,7 +459,7 @@
                                                         <tbody>
                                                         @foreach($data as $item)
                                                             <tr style="cursor: pointer;" id="{{$item->path_screenshot}}"
-                                                                class="record"
+                                                                class="record place-tr"
                                                                 data-toggle="modal" data-target="#basicExampleModal">
                                                                 <td>{{$item->date}}</td>
                                                                 <td>{{$item->time}}</td>
@@ -587,41 +587,41 @@
                                             </ul>
                                             <div class="tab-content  pt-3" id="myTabContentJust">
                                                 @foreach($active_areas as $key=>$val)
-                                                        <div class="tab-pane fade {{ $key == 0 ? 'show active': '' }}" id="home-just-{{$val}}"
-                                                             role="tabpanel" aria-labelledby="home-tab-just-{{$val}}">
-                                                            <div class="screenshoot-content">
-                                                                @php
-                                                                    $noImage=false;
-                                                                 @endphp
-                                                                @foreach($data as $item)
-                                                                        @if((int)$item->area === (int)$val)
-                                                                        @php
-                                                                            $noImage=true;
-                                                                        @endphp
-                                                                            @if($item->screenshot != null)
-                                                                                <div class="screenshot-img">
-                                                                                    <img src="{{$item->path_screenshot}}"
-                                                                                         height="251" alt=""
-                                                                                         data-toggle="modal"
-                                                                                         data-target="#basicExampleModal">
-                                                                                    <div class="img-overlay">
+                                                    <div class="tab-pane fade {{ $key == 0 ? 'show active': '' }}" id="home-just-{{$val}}"
+                                                         role="tabpanel" aria-labelledby="home-tab-just-{{$val}}">
+                                                        <div class="screenshoot-content">
+                                                            @php
+                                                                $noImage=false;
+                                                            @endphp
+                                                            @foreach($data as $item)
+                                                                @if((int)$item->area === (int)$val)
+                                                                    @php
+                                                                        $noImage=true;
+                                                                    @endphp
+                                                                    @if($item->screenshot != null)
+                                                                        <div class="screenshot-img">
+                                                                            <img src="{{$item->path_screenshot}}"
+                                                                                 height="251" alt=""
+                                                                                 data-toggle="modal"
+                                                                                 data-target="#basicExampleModal">
+                                                                            <div class="img-overlay">
                                                                                         <span
                                                                                             class="mr-1">{{$item->date}}</span>
-                                                                                        <span>{{$item->time}}</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            @endif
+                                                                                <span>{{$item->time}}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
 
-                                                                        @endif
-
-                                                                    @endforeach
-
-                                                                @if($noImage == false)
-                                                                    <img src="/assets/images/no_image.svg" class="mt-5 no_image" alt="" />
                                                                 @endif
 
-                                                            </div>
+                                                            @endforeach
+
+                                                            @if($noImage == false)
+                                                                <img src="/assets/images/no_image.svg" class="mt-5 no_image" alt="" />
+                                                            @endif
+
                                                         </div>
+                                                    </div>
                                                 @endforeach
 
                                             </div>
@@ -644,6 +644,7 @@
     <script src="{{asset('js/config.js')}}"></script>
     <script>
         $(document).ready(function () {
+            document.querySelector('.branch-2nd .nav-link.active').scrollIntoView();
             $('.dropdown-submenu a.test').on("click", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -677,49 +678,50 @@
                 }
             });
 
-            var index;
-            var images;
-            $('.screenshot-img').click(function (){
-                // index image in slider
-                index = $(this).index();
-                // images in content div
-                images = $(this).closest('.screenshoot-content').find('img');
-                // check count images grater than 1 imag to controle in the arrow
-                if(images.length <= 1){
-                    $('.next-arrow, .prev-arrow').hide();
-                }
-                else {
-                    $('.next-arrow, .prev-arrow').show();
-                }
-                $('#indexImage').html(index+1);
-                console.log(images[index].src);
-            });
-            var q = 0;
-            // arrow click change image src
-            $('.next-arrow').click(function (){
-                if(index < images.length-1){
-                    index +=1;
-                }else {
-                    index = 0;
-                }
-                var src = images[index].src;
-                // $('#image_to_show').attr('src', src).toggleClass('animationPlay');
-                $('#image_to_show').remove();
-                $('.show-image-models .position-relative').append('<img src="'+src+'" id="image_to_show" alt="">');
-                $('#indexImage').html(index+1);
-            });
-            $('.prev-arrow').click(function (){
-                if(index > 1){
-                    index -=1;
-                }else {
-                    index = 6;
-                }
-                var src = images[index].src;
-                // $('#image_to_show').attr('src', src).toggleClass('animationPlay');
-                $('#image_to_show').remove();
-                $('.show-image-models .position-relative').append('<img src="'+src+'" id="image_to_show" alt="">');
-                $('#indexImage').html(index+1);
-            });
+            // var index;
+            // var images;
+            // $('.screenshot-img').click(function (){
+            //     // index image in slider
+            //     index = $(this).index();
+            //     // images in content div
+            //     images = $(this).closest('.screenshoot-content').find('img');
+            //     // check count images grater than 1 imag to controle in the arrow
+            //     if(images.length <= 1){
+            //         $('.next-arrow, .prev-arrow').hide();
+            //     }
+            //     else {
+            //         $('.next-arrow, .prev-arrow').show();
+            //     }
+            //     $('#indexImage').html(index+1);
+            //     // console.log(images[index].src);
+
+            // });
+            // var q = 0;
+            // // arrow click change image src
+            // $('.next-arrow').click(function (){
+            //     if(index < images.length-1){
+            //         index +=1;
+            //     }else {
+            //         index = 0;
+            //     }
+            //     var src = images[index].src;
+            //     // $('#image_to_show').attr('src', src).toggleClass('animationPlay');
+            //     $('#image_to_show').remove();
+            //     $('.show-image-models .position-relative').append('<img src="'+src+'" id="image_to_show" alt="">');
+            //     $('#indexImage').html(index+1);
+            // });
+            // $('.prev-arrow').click(function (){
+            //     if(index > 1){
+            //         index -=1;
+            //     }else {
+            //         index = 6;
+            //     }
+            //     var src = images[index].src;
+            //     // $('#image_to_show').attr('src', src).toggleClass('animationPlay');
+            //     $('#image_to_show').remove();
+            //     $('.show-image-models .position-relative').append('<img src="'+src+'" id="image_to_show" alt="">');
+            //     $('#indexImage').html(index+1);
+            // });
 
             $('.show-image-models').on('shown.bs.modal', function (e) {
                 $('body').toggleClass('over-flow-hidden');
@@ -787,25 +789,25 @@
 
                     },
                     error: function (xhr, status, error) {
-                    let customToast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-                    customToast.fire({
-                        icon: 'error',
-                        title: error || 'Failed To Load Data'
-                    });
-                },
-                complete: function(xhr, status){
-                    spinnerCont.addClass('d-none');
-                }
+                        let customToast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 4000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+                        customToast.fire({
+                            icon: 'error',
+                            title: error || 'Failed To Load Data'
+                        });
+                    },
+                    complete: function(xhr, status){
+                        spinnerCont.addClass('d-none');
+                    }
                 })
             }
 
@@ -820,23 +822,171 @@
         });
 
         @if(count($charts))
-            @if($userSettings)
-                @if($userSettings->chart_type == 'bar')
-                    $('.pie-charts').hide();
-                    $('#chart1').show();
-                    branchPlaceBar('chart1',@json($charts['bar']));
-                @else
-                    $('#chart1').hide();
-                    $('.pie-charts').show();
-                    branchPlaceCircleWork('chart2',@json($charts['circle']['work']));
-                    branchPlaceCircleEmpty('chart3',@json($charts['circle']['empty']));
-                @endif
-            @else
-                $('.pie-charts').hide();
-                $('#chart1').show();
-                branchPlaceBar('chart1',@json($charts['bar']));
-            @endif
+        @if($userSettings)
+        @if($userSettings->chart_type == 'bar')
+        $('.pie-charts').hide();
+        $('#chart1').show();
+        branchPlaceBar('chart1',@json($charts['bar']));
+        @else
+        $('#chart1').hide();
+        $('.pie-charts').show();
+        branchPlaceCircleWork('chart2',@json($charts['circle']['work']));
+        branchPlaceCircleEmpty('chart3',@json($charts['circle']['empty']));
+        @endif
+        @else
+        $('.pie-charts').hide();
+        $('#chart1').show();
+        branchPlaceBar('chart1',@json($charts['bar']));
+        @endif
         @endif
     </script>
 @endsection
 
+@push('js')
+    <script>
+        let branch_id = "{{$usermodelbranch->branch_id}}";
+        let userModel_branch_id = "{{$usermodelbranch->id}}";
+        let totalRecords = +"{{$data_count}}";
+        let lang = "{{ app()->getLocale() }}";
+
+        // console.log('branch id',userModel_branch_id);
+
+
+        window.Echo.channel(`place.${branch_id}`).listen('.PlaceEvent', (data) => {
+            console.log(`place_data => `, data);
+
+            //TODO write your push place element here
+            let branchId = data.branch_id;
+            if(!data.data|| !branchId) return ;
+            let {status, area, user_model_branch_id} = data.data;
+            let toastrTitle = '';
+            let toastrMessage = '';
+
+            notificationToastrOptions(toastr);
+            if(+status === 0){
+                toastrMessage = `${trans('area')} ${area} ${trans('is_avilable_now')}`
+            }else{
+                toastrMessage = `${trans('area')} ${area} ${trans('is_busy_now')}`
+            }
+            toastr.options.onclick = function(e){
+                $(e.target.closest('.toast')).find('.notif_link')[0]?.click();
+            }
+            toastr["warning"](`<a class='notif_link' href='/models/places/home/${userModel_branch_id}'>${toastrMessage}</a>`)
+
+
+            // add new row if status == 1 -> busy , 0 -> available
+            let rowsNumber = $('#paginationSimpleNumbers tbody tr').length;
+
+
+            // check if the current active page in pagination is 1
+            if(+$('.pagination .page-item.active').text() === 1 || +$('.pagination .page-item.active').text() === 0){
+                if(rowsNumber >= 10){
+                    $('#paginationSimpleNumbers tbody tr:last-child').remove();
+
+                }
+                $('#paginationSimpleNumbers tbody').prepend(getNewRowTemp(data.data));
+
+            }
+            paginationCheck(`/models/places/home/${userModel_branch_id}`, rowsNumber, totalRecords)
+            totalRecords++
+
+
+            //  add new screenshot
+            // check if the area tab not exists then create new tab
+            if($(`#home-tab-just-${area}`).length === 0){
+                createNewScrenshotTab(area)
+            }
+
+            // remove no data image if exists
+            $(`#home-just-${area} .no_image`).remove();
+
+            // add the new image
+            $(`#home-just-${area} .screenshoot-content`).prepend(getNewImageTemp(data.data));
+
+        });
+
+        function createNewScrenshotTab(areaNumber){
+            $('#myTabJust').append(`<li class="nav-item">
+                                            <a class="nav-link" href="#home-just-${areaNumber}"
+                                                id="home-tab-just-${areaNumber}" data-toggle="tab" role="tab"
+                                                aria-controls="home-just-${areaNumber}"
+                                                aria-selected="false">${trans('area')} ${areaNumber}</a>
+                                        </li>`);
+
+            $(`#myTabContentJust`).append(`<div class="tab-pane fade " id="home-just-${areaNumber}"
+                                                             role="tabpanel" aria-labelledby="home-tab-just-${areaNumber}">
+                                                            <div class="screenshoot-content"></div>
+                                                </div>`);
+        }
+        function getNewImageTemp(data){
+            let {path_screenshot:screenshotPath, date, time} = data;
+            return `<div class="screenshot-img">
+                        <img src="${screenshotPath}"
+                                height="251" alt=""
+                                data-toggle="modal"
+                                data-target="#basicExampleModal">
+                        <div class="img-overlay">
+                            <span class="mr-1">${date}</span>
+                            <span>${time}</span>
+                        </div>
+                    </div>`
+        }
+
+        function getNewRowTemp(data){
+            let {path_screenshot:pathScreenshot, date, time, area:areaNumber, status, camera_id:camId} = data ;
+
+            return `<tr style="cursor: pointer;" id="${pathScreenshot}"
+                        class="record place-tr" data-toggle="modal"
+                        data-target="#basicExampleModal">
+                        <td>${date}</td>
+                        <td>${time}</td>
+                        <td class="open">${trans('area')} ${areaNumber}</td>
+                        <td class="open ${+status === 0 ? 'warning':'danger'} ">${+status===0 ? trans('available') :trans('busy')}</td>
+                        <td>${camId}</td>
+                    </tr>`
+        }
+
+        function paginationCheck(url, rowsNumber, totalRecords) {
+            if(rowsNumber < 10)return;
+            // check if the pagination is shown
+            if($('.pagination > nav').length > 0){
+                // check the current tr number
+
+
+                // if it's greater or equal than 10
+                // create new page-item and make the href to ?page=last page item before the next elm+1
+                // append the new page item before the next element
+
+                let currentPageNum = +$('.pagination .pagination .page-item:last-child').prev().text();
+                console.log(totalRecords);
+                console.log((totalRecords % 10) > 0);
+                if((totalRecords % 10) > 0 ) {
+
+                    return
+                };
+                let nextPageNum = currentPageNum + 1
+
+                let pageItemElm = `<li class="page-item"><a class="page-link waves-effect" href="${url}?page=${nextPageNum}">${nextPageNum}</a></li>`
+                $('.pagination .pagination .page-item:last-child').before(pageItemElm);
+            }else{
+
+                // create the pagination
+                let paginationTemp = `<nav>
+                        <ul class='pagination'>
+                            <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
+                                <span class="page-link waves-effect" aria-hidden="true">‹</span>
+                            </li>
+                            <li class="page-item active" aria-current="page"><span class="page-link waves-effect">1</span></li>
+                            <li class="page-item"><a class="page-link waves-effect" href="${url}?page=2">2</a></li>
+
+                            <li class="page-item">
+                                <a class="page-link waves-effect" href="${url}?page=2" rel="next" aria-label="Next »">›</a>
+                            </li>
+                        </ul>
+                    </nav>`;
+                $('.Page.navigation > .pagination').append(paginationTemp);
+            }
+        }
+
+    </script>
+@endpush

@@ -285,10 +285,10 @@ return array (
   'action_message' => 'تم بنجاح',
   'action_took_success' => 'تم اتخاذ الإجراء بنجاح',
   'active' => 'مفعل',
-  'activities' => 
+  'activities' =>
   array (
     'activities' => 'أنشطة',
-    'table' => 
+    'table' =>
     array (
       'Parent' => 'الاب',
       'Phone' => 'الهاتف',
@@ -334,7 +334,7 @@ return array (
   'area_count' => 'عدد المناطق',
   'areas' => 'المناطق',
   'assign_notification_message' => ' تم تخصيص هذا الحساب للفروع',
-  'auth' => 
+  'auth' =>
   array (
     'BacktoHome' => 'الرجوع للرئيسية',
     'Forgot' => 'نسيت كلمة السر؟',
@@ -380,13 +380,14 @@ return array (
   'branch_type' => 'نوع الفرع',
   'brancheErrorTemplate' => 'قالب خطأ الفرع',
   'branches' => 'الفروع',
+  'mybranches' => 'فروعي',
   'cannotdelete' => 'حدث خطأ اثناء حذف البيانات',
   'cannotrestore' => 'حدث خطا أثناء استعادة البيانات',
   'car_count_per_each_area_chart' => 'عدد السيارات لكل مخطط منطقة',
   'car_duration_area' => 'مدة السيارة في كل منطقة',
   'car_status' => 'الحالة',
   'carprofile' => 'بروفايل السياره',
-  'categories' => 
+  'categories' =>
   array (
     'activate' => 'تفعيل',
     'activate_msg' => 'هل أنت متأكد أنك تريد تنشيط هذه الفئة؟',
@@ -415,7 +416,7 @@ return array (
     'select' => 'تحديد',
     'storing' => 'التخزين ...',
     'success_message' => 'تم إنشاء الفئة بنجاح',
-    'table' => 
+    'table' =>
     array (
       'actions' => 'أجراءات',
       'created_at' => 'أنشئت في',
@@ -437,12 +438,12 @@ return array (
   'change_success_message' => 'تم التعديل بنجاح',
   'charArExample' => 'يجب إدخال الحروف باللغة العربية على سبيل المثال [ ا ب ت ... ]',
   'charEnExample' => 'يجب إدخال الحروف باللغة الإنجليزية على سبيل المثال [ abc... ] ',
-  'chats' => 
+  'chats' =>
   array (
     'activate' => 'تفعيل',
     'activate_msg' => 'هل أنت متأكد أنك تريد تنشيط هذه الدردشة؟',
     'activate_title' => 'تفعيل  شات بوت',
-    'build' => 
+    'build' =>
     array (
       'allow_typing' => 'السماح للمستخدم بالكتابة',
       'ask-question' => 'اسأل سؤالا',
@@ -478,7 +479,7 @@ return array (
     'delete_message' => 'تم حذف  شات بوت بنجاح',
     'delete_title' => 'حذف',
     'edit' => 'تعديل',
-    'groups' => 
+    'groups' =>
     array (
       'delete_message' => 'هل أنت متأكد أنك تريد حذف هذه المجموعة؟',
       'group_deleted' => 'تم حذف المجموعة بنجاح',
@@ -511,9 +512,9 @@ return array (
   'copyrights' => '',
   'createdIn' => 'انشاء في',
   'created_by' => 'بواسطة',
-  'customers' => 
+  'customers' =>
   array (
-    'branches' => 
+    'branches' =>
     array (
       'back' => 'الرجوع',
       'branch_title' => 'كل الفروع',
@@ -526,7 +527,7 @@ return array (
       'edit' => 'تعديل',
       'files' => 'ملفات الفروع',
       'new' => 'جديد',
-      'page_title' => 
+      'page_title' =>
       array (
         'create' => 'اضافة فرع',
         'index' => 'الفروع',
@@ -537,7 +538,7 @@ return array (
       'show' => 'عرض',
       'storing' => 'تخزين ...',
       'success_message' => 'تم الانشاء بنجاح',
-      'table' => 
+      'table' =>
       array (
         'actions' => 'الاجرائات',
         'active' => 'مفعل',
@@ -559,7 +560,7 @@ return array (
       ),
       'update_item' => 'تعديل',
     ),
-    'branchmodels' => 
+    'branchmodels' =>
     array (
       'back' => 'الرجوع',
       'branch_title' => 'كل العناصر',
@@ -571,7 +572,7 @@ return array (
       'duplicate_message' => 'هذا النموذج بالفعل مرتبط مع الفرع',
       'modelnotexist' => 'النموذج الرئيسي غير موجود',
       'modelnotfound' => 'لا توجد نماذج',
-      'page_title' => 
+      'page_title' =>
       array (
         'create' => 'اضافة ',
         'index' => 'نماذج الفروع',
@@ -582,7 +583,7 @@ return array (
       'search' => 'بحث...',
       'storing' => 'تخزين ...',
       'success_message' => 'تم الانشاء بنجاح',
-      'table' => 
+      'table' =>
       array (
         'actions' => 'الاجرائات',
         'active' => 'مفعل',
@@ -597,7 +598,7 @@ return array (
       ),
       'update_item' => 'تعديل',
     ),
-    'packages' => 
+    'packages' =>
     array (
       'AssignBranch' => 'اضافة النموذج الى الفرع',
       'SelectBranch' => 'اختر الفرع',
@@ -616,7 +617,7 @@ return array (
       'monthly' => 'الشهرى',
       'name' => 'الاسم',
       'new' => 'جديد',
-      'page_title' => 
+      'page_title' =>
       array (
         'index' => 'الباقات',
       ),
@@ -631,7 +632,7 @@ return array (
       'search' => 'بحث',
       'storing' => 'تخزين',
       'success_message' => 'تمت العملية بنجاح',
-      'table' => 
+      'table' =>
       array (
         'No' => 'لا',
         'ShowModels' => 'عرض النماذج',
@@ -665,7 +666,7 @@ return array (
       'type' => 'النوع',
       'yearly' => 'السنوى',
     ),
-    'regions' => 
+    'regions' =>
     array (
       'back' => 'الرجوع',
       'branch_title' => 'كل المناطق',
@@ -676,7 +677,7 @@ return array (
       'delete_title' => 'حذف',
       'edit' => 'تعديل',
       'new' => 'جديد',
-      'page_title' => 
+      'page_title' =>
       array (
         'create' => 'اضافة منطقه',
         'index' => 'المناطق الجغرافية',
@@ -687,7 +688,7 @@ return array (
       'show' => 'عرض',
       'storing' => 'تخزين ...',
       'success_message' => 'تم الانشاء بنجاح',
-      'table' => 
+      'table' =>
       array (
         'actions' => 'الاجرائات',
         'active' => 'مفعل',
@@ -703,9 +704,9 @@ return array (
       'update_item' => 'تعديل',
     ),
     'second' => 'ثانية',
-    'speed' => 
+    'speed' =>
     array (
-      'index' => 
+      'index' =>
       array (
         'action' => 'إعدادات',
         'branchName' => 'أسم الفرع',
@@ -716,12 +717,12 @@ return array (
         'uploadSpeed' => 'سرعة التحميل',
         'uploadTime' => 'وقت التحميل',
       ),
-      'registerBranch' => 
+      'registerBranch' =>
       array (
         'page_title' => 'تسجيل الفرع',
         'title' => 'أختر فرعك الحالي',
       ),
-      'show' => 
+      'show' =>
       array (
         'action' => 'سجل الفرع',
         'title' => 'سجل سرعات الأنترنت لفرع :branch',
@@ -750,7 +751,7 @@ return array (
   'enter_a_valid_number_of_days' => 'أدخل عددًا صالحًا من الأيام',
   'enter_a_valid_number_of_kilometer' => 'أدخل عددًا صالحًا من الكيلومترات',
   'entries' => 'إدخالات',
-  'errors' => 
+  'errors' =>
   array (
     'message' => 'كانت هناك بعض المشاكل في المدخلات الخاصة بك.',
     'woops' => 'عذرًا!',
@@ -763,7 +764,7 @@ return array (
   'fail' => 'فشل في اتمام العملية',
   'failed' => 'غير مرسل',
   'from' => 'من',
-  'gym' => 
+  'gym' =>
   array (
     'Area' => 'الفتحة',
     'Available' => 'متاح',
@@ -826,7 +827,7 @@ return array (
     'neutral' => 'طبيعى',
     'nomask' => 'بدون قناع',
     'open_door' => 'نموذج الباب',
-    'page_title' => 
+    'page_title' =>
     array (
       'dashboard' => 'لوحة التحكم',
       'index' => 'الرئيسية',
@@ -873,11 +874,11 @@ return array (
   'invoice_review' => 'مراجعة الفاتوره',
   'jul' => 'يول',
   'jun' => 'يون',
-  'languages' => 
+  'languages' =>
   array (
     'back' => 'رجوع',
     'close' => 'غلق',
-    'create' => 
+    'create' =>
     array (
       'create' => 'إنشاء',
       'display_name' => 'اسم العرض',
@@ -892,7 +893,7 @@ return array (
     'delete' => 'حذف',
     'delete_message' => 'هل أنت متأكد أنك بحاجة إلى حذف هذه اللغة',
     'delete_title' => 'حذف اللغة',
-    'edit' => 
+    'edit' =>
     array (
       'display_name' => 'اسم العرض',
       'display_name ' => 'Display Name ',
@@ -903,7 +904,7 @@ return array (
       'submit' => 'يقدم',
       'title' => 'تحرير الإذن الحالي',
     ),
-    'page_title' => 
+    'page_title' =>
     array (
       'create' => 'إنشاء اللغات',
       'index' => 'اللغات',
@@ -914,7 +915,7 @@ return array (
     'search' => 'بحث...',
     'storing' => 'التخزين...',
     'success_message' => 'تم إنشاء اللغة بنجاح',
-    'table' => 
+    'table' =>
     array (
       'actions' => 'أجراءات',
       'code' => 'كود',
@@ -968,11 +969,11 @@ return array (
   'overall' => 'الكل',
   'parent' => 'الأصل',
   'per_month' => 'كل شهر',
-  'permissions' => 
+  'permissions' =>
   array (
     'back' => 'العودة',
     'close' => 'اغلاق',
-    'create' => 
+    'create' =>
     array (
       'create' => 'اضافة',
       'display_name' => 'اسم العرض',
@@ -987,7 +988,7 @@ return array (
     'delete' => 'حذف',
     'delete_message' => 'هل انت متاكد من حذف العنصر',
     'delete_title' => 'حذف الصلاحية',
-    'edit' => 
+    'edit' =>
     array (
       'display_name' => 'اسم العرض',
       'display_name ' => 'الاسم فى العرض ',
@@ -998,7 +999,7 @@ return array (
       'submit' => 'ارسال',
       'title' => 'تعديل صلاحية',
     ),
-    'page_title' => 
+    'page_title' =>
     array (
       'create' => 'اضافة صلاحية',
       'index' => 'الصلاحيات',
@@ -1009,7 +1010,7 @@ return array (
     'search' => 'بحث',
     'storing' => 'تخزين',
     'success_message' => 'تمت الاضافة بنجاح',
-    'table' => 
+    'table' =>
     array (
       'actions' => 'الاجرائات',
       'code' => 'الشفرة',
@@ -1025,7 +1026,7 @@ return array (
     ),
     'update_item' => 'تعديل الصلاحية',
   ),
-  'places' => 
+  'places' =>
   array (
     'file_not_found' => 'الملف غير متوفر الآن',
     'file_will_prepare_soon' => 'سيتم توجيهك قريبا',
@@ -1033,7 +1034,7 @@ return array (
     'files_prepared_successfully' => 'سيبدأ تنزيل الملف الآن',
   ),
   'plate_modal_title' => 'تفاصيل السيارة',
-  'plates' => 
+  'plates' =>
   array (
     'plate_put_in_error' => 'تم نقل اللوحة إلى الخطأ بنجاح',
   ),
@@ -1045,7 +1046,7 @@ return array (
   'positions' => 'المناصب',
   'prepared_files' => 'الملفات المعدة',
   'product_powered_by' => 'المنتج مدعوم من',
-  'products' => 
+  'products' =>
   array (
     'activate' => 'متميز',
     'activate_msg' => 'هل أنت متأكد أنك تريد تمييز هذا المنتج؟',
@@ -1077,7 +1078,7 @@ return array (
     'select' => 'اختار',
     'storing' => 'التخزين ...',
     'success_message' => 'تم إنشاء المنتج بنجاح',
-    'table' => 
+    'table' =>
     array (
       'actions' => 'أجراءات',
       'created_at' => 'أنشئت في',
@@ -1106,11 +1107,11 @@ return array (
   'region_type' => 'نوع المنطقة',
   'regions' => 'المناطق',
   'restore_all' => 'استعادة الجميع',
-  'roles' => 
+  'roles' =>
   array (
     'back' => 'العودة',
     'close' => 'اغلاق',
-    'create' => 
+    'create' =>
     array (
       'create' => 'اضافة',
       'display_name' => 'اسم العرض',
@@ -1125,7 +1126,7 @@ return array (
     'delete' => 'حذف',
     'delete_message' => 'هل انت متاكد من حذف العنصر',
     'delete_title' => 'حذف دور',
-    'edit' => 
+    'edit' =>
     array (
       'display_name' => 'اسم العرض',
       'display_name ' => 'الاسم فى العرض ',
@@ -1136,7 +1137,7 @@ return array (
       'submit' => 'ارسال',
       'title' => 'تعديل دور',
     ),
-    'page_title' => 
+    'page_title' =>
     array (
       'create' => 'اضافة دور',
       'index' => 'الادوار',
@@ -1147,7 +1148,7 @@ return array (
     'search' => 'بحث',
     'storing' => 'تخزين',
     'success_message' => 'تم الحذف بنجاح',
-    'table' => 
+    'table' =>
     array (
       'actions' => 'الاجرائات',
       'created_at' => 'تاريخ الانشاء',
@@ -1162,9 +1163,9 @@ return array (
     ),
     'update_item' => 'تعديل دور',
   ),
-  'saas' => 
+  'saas' =>
   array (
-    'features' => 
+    'features' =>
     array (
       'back' => 'الرجوع',
       'cannotdeletenotfound' => 'هذه الصفة غير موجودة',
@@ -1179,7 +1180,7 @@ return array (
       'index' => 'الحزم',
       'monthly' => 'الشهرى',
       'name' => 'الاسم',
-      'page_title' => 
+      'page_title' =>
       array (
         'create' => 'انشاء صفة',
         'index' => 'الصفات',
@@ -1196,7 +1197,7 @@ return array (
       'search' => 'بحث',
       'storing' => 'تخزين',
       'success_message' => 'تمت العملية بنجاح',
-      'table' => 
+      'table' =>
       array (
         'No' => 'لا',
         'Yes' => 'نعم',
@@ -1226,7 +1227,7 @@ return array (
       'type' => 'النوع',
       'yearly' => 'السنوى',
     ),
-    'modelfeatures' => 
+    'modelfeatures' =>
     array (
       'back' => 'الرجوع',
       'cannotdeletenotfound' => 'هذا الحالة غير موجود',
@@ -1241,7 +1242,7 @@ return array (
       'index' => 'صفة النماذج',
       'monthly' => 'الشهرى',
       'name' => 'الاسم',
-      'page_title' => 
+      'page_title' =>
       array (
         'create' => 'انشاء صفة نموذج',
         'index' => 'صفة النماذج ',
@@ -1258,7 +1259,7 @@ return array (
       'search' => 'بحث',
       'storing' => 'تخزين',
       'success_message' => 'تمت العملية بنجاح',
-      'table' => 
+      'table' =>
       array (
         'No' => 'لا',
         'Yes' => 'نعم',
@@ -1292,7 +1293,7 @@ return array (
       'url' => 'اللينك',
       'yearly' => 'السنوى',
     ),
-    'models' => 
+    'models' =>
     array (
       'back' => 'الرجوع',
       'cannotdeletenotfound' => 'هذا النموذج غير موجود',
@@ -1307,7 +1308,7 @@ return array (
       'index' => 'النماذج',
       'monthly' => 'الشهرى',
       'name' => 'الاسم',
-      'page_title' => 
+      'page_title' =>
       array (
         'create' => 'انشاء نموذج',
         'index' => 'النماذج',
@@ -1324,7 +1325,7 @@ return array (
       'search' => 'بحث',
       'storing' => 'تخزين',
       'success_message' => 'تمت العملية بنجاح',
-      'table' => 
+      'table' =>
       array (
         'No' => 'لا',
         'Yes' => 'نعم',
@@ -1357,7 +1358,7 @@ return array (
       'url' => 'اللينك',
       'yearly' => 'السنوى',
     ),
-    'modelstatus' => 
+    'modelstatus' =>
     array (
       'back' => 'الرجوع',
       'cannotdeletenotfound' => 'هذا الحالة غير موجود',
@@ -1372,7 +1373,7 @@ return array (
       'index' => 'حالة النماذج',
       'monthly' => 'الشهرى',
       'name' => 'الاسم',
-      'page_title' => 
+      'page_title' =>
       array (
         'create' => 'انشاء حالة نموذج',
         'index' => 'حالة النماذج ',
@@ -1389,7 +1390,7 @@ return array (
       'search' => 'بحث',
       'storing' => 'تخزين',
       'success_message' => 'تمت العملية بنجاح',
-      'table' => 
+      'table' =>
       array (
         'No' => 'لا',
         'Yes' => 'نعم',
@@ -1422,7 +1423,7 @@ return array (
       'url' => 'اللينك',
       'yearly' => 'السنوى',
     ),
-    'packages' => 
+    'packages' =>
     array (
       'back' => 'الرجوع',
       'cannotdeletenotfound' => 'هذه الباقة غير موجودة',
@@ -1435,7 +1436,7 @@ return array (
       'desc_type' => 'من فضلك اختر النوع',
       'edit' => 'تعديل',
       'index' => 'الباقات',
-      'items' => 
+      'items' =>
       array (
         'Assign_Branch' => 'أضافة الى فرع',
         'Assign_model' => 'أضافة',
@@ -1453,7 +1454,7 @@ return array (
       'monthly' => 'الشهرى',
       'name' => 'الاسم',
       'package_name' => 'اسم الباقة',
-      'page_title' => 
+      'page_title' =>
       array (
         'create' => 'انشاء باقة',
         'index' => 'الباقات',
@@ -1470,7 +1471,7 @@ return array (
       'search' => 'بحث',
       'storing' => 'تخزين',
       'success_message' => 'تمت العملية بنجاح',
-      'table' => 
+      'table' =>
       array (
         'No' => 'لا',
         'Yes' => 'نعم',
@@ -1517,7 +1518,7 @@ return array (
   'select_type' => 'حدد النوع',
   'send_mail' => 'إرسال الاميل',
   'sent' => 'مرسل',
-  'service' => 
+  'service' =>
   array (
     'action' => 'اجراء',
     'arabic_description' => 'الوصف باللغه العربيه',
@@ -1530,7 +1531,7 @@ return array (
     'service' => 'خدمات',
     'update' => 'تعديل خدمه',
   ),
-  'settings' => 
+  'settings' =>
   array (
     'change_icon' => 'تغيير الايقونة',
     'change_icon_desc' => 'يرجى تحميل أيقونة موقع الويب الخاص بك',
@@ -1544,7 +1545,7 @@ return array (
     'changeregion_desc' => 'صورة المنطقة',
     'current_icon' => 'الأيقونة الحالية',
     'current_logo' => 'الشعار الحالي',
-    'form' => 
+    'form' =>
     array (
       'address' => 'عنوان:',
       'address_desc' => 'أدخل عنوانك',
@@ -1574,7 +1575,7 @@ return array (
     ),
     'mail_addres' => 'العنوان البريدي',
     'next_page' => 'الخطوة التالية',
-    'page_title' => 
+    'page_title' =>
     array (
       'index' => 'إعدادات',
     ),
@@ -1590,9 +1591,9 @@ return array (
     'website_social_info' => 'الرجاء إدخال اتصالاتك',
   ),
   'show_by' => 'إظهار بواسطة',
-  'side_bar' => 
+  'side_bar' =>
   array (
-    'auth_control' => 
+    'auth_control' =>
     array (
       'activities' => 'النشاطات',
       'models' => 'النماذج',
@@ -1606,7 +1607,7 @@ return array (
     'categories' => 'فئات',
     'chatboot_controller' => 'التحكم في شات بوت',
     'chats' => 'دردشاتي',
-    'customers' => 
+    'customers' =>
     array (
       'branches' => 'الفروع',
       'branchmodels' => 'أضافة نماذج الى فروع',
@@ -1618,7 +1619,7 @@ return array (
     'ecomerce_controller' => 'التحكم في التجارة الإلكترونية',
     'home' => 'الرئيسية',
     'products' => 'منتجات',
-    'saas_control' => 
+    'saas_control' =>
     array (
       'features' => 'الصفات',
       'modelfeatures' => 'خصائص النماذج',
@@ -1628,7 +1629,7 @@ return array (
       'packages' => 'الباقات',
     ),
     'saas_controller' => 'ادارة الانظمة',
-    'settings_control' => 
+    'settings_control' =>
     array (
       'languages' => 'اللغات',
       'settings' => 'موقع الكتروني',
@@ -1660,12 +1661,12 @@ return array (
   'update_position' => 'تحديث الوضع',
   'uploadSpeed' => 'سرعة تحميل',
   'user_name' => 'اسم المستخدم',
-  'users' => 
+  'users' =>
   array (
     'back' => 'الرجوع',
     'cannotdelete' => 'لا تسطيع حذف الادمن او المستخدم المسجل به',
     'close' => 'اغلاق',
-    'create' => 
+    'create' =>
     array (
       'create' => 'اضافة',
       'display_name' => 'اسم العرض',
@@ -1680,7 +1681,7 @@ return array (
     'delete' => 'حذف',
     'delete_message' => 'هل انت متاكد من عملية الحذف',
     'delete_title' => 'حذف المستخدم',
-    'edit' => 
+    'edit' =>
     array (
       'display_name' => 'اسم العرض',
       'display_name ' => 'Display Name ',
@@ -1692,7 +1693,7 @@ return array (
       'title' => 'تحرير مستخدم موجود',
     ),
     'error_message' => 'يرجى التحقق من خطأ التحقق من الصحة',
-    'page_title' => 
+    'page_title' =>
     array (
       'create' => 'اضافة مستخدم',
       'index' => 'المستخدمين',
@@ -1707,7 +1708,7 @@ return array (
     'success_message' => 'تمت الاضافة بنجاح',
     'success_update_message' => 'تم تحديث المستخدمين بنجاح',
     'sucess_delete_message' => 'تم حذف المستخدم بنجاح',
-    'table' => 
+    'table' =>
     array (
       'Parent' => 'الاب',
       'Phone' => 'الهاتف',

@@ -183,7 +183,31 @@
                                         @if(Auth::user()->type === "subcustomer")
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="#" class="iq-card-body"
+                                                    <a href="{{ route('myBranches')}}" class="iq-card-body"
+                                                       style="padding: 25px 20px !important;">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <h6 class='iq-card-title'>{{ __('app.mybranches') }}</h6>
+                                                        </div>
+                                                        <div
+                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
+                                                            <div class="d-flex align-items-center">
+                                                                <div
+                                                                    class="rounded-circle iq-card-icon iq-bg-warning mr-2">
+                                                                    {{--                                                                    <i class="fa-solid fa-plug-circle-xmark"></i>--}}
+                                                                    <i class="fa-solid fa-code-branch"></i>
+                                                                </div>
+                                                                <h3>{{$statistics['total']}}</h3>
+                                                            </div>
+                                                            <div
+                                                                class="iq-map text-warning font-size-32">
+                                                                <i class="ri-bar-chart-grouped-line"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                    <a href="{{route('my_branches_status',['online_status' => 'online'])}}" class="iq-card-body"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.branch_online') }}</h6>
@@ -206,7 +230,7 @@
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="#" class="iq-card-body"
+                                                    <a href="{{route('my_branches_status',['online_status' => 'offline'])}}" class="iq-card-body"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.branch_offline') }}</h6>
@@ -228,44 +252,23 @@
                                                     </a>
                                                 </div>
                                             </div>
+
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                                                     <a href="#" class="iq-card-body"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
-                                                            <h6 class='iq-card-title'>{{ __('app.no_linked') }}</h6>
-                                                        </div>
-                                                        <div
-                                                            class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
-                                                            <div class="d-flex align-items-center">
-                                                                <div
-                                                                    class="rounded-circle iq-card-icon iq-bg-warning mr-2">
-                                                                    <i class="fa-solid fa-plug-circle-xmark"></i>
-                                                                </div>
-                                                                <h3>{{ max((int)$statistics['installed'] - ((int)$statistics['on']+(int)$statistics['off']),0) }}</h3>
-                                                            </div>
-                                                            <div
-                                                                class="iq-map text-warning font-size-32">
-                                                                <i class="ri-bar-chart-grouped-line"></i></div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="#" class="iq-card-body"
-                                                       style="padding: 25px 20px !important;">
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <h6 class='iq-card-title'>{{ __('app.installed') }}</h6>
+                                                            <h6 class='iq-card-title'>{{ __('app.Total') }}</h6>
                                                         </div>
                                                         <div
                                                             class="iq-customer-box d-flex align-items-center justify-content-between mt-3 position-relative">
                                                             <div class="d-flex align-items-center">
                                                                 <div
                                                                     class="rounded-circle iq-card-icon iq-bg-info mr-2">
-                                                                    <i class="fa-solid fa-plug-circle-check"></i>
+{{--                                                                    <i class="fa-solid fa-plug-circle-check"></i>--}}
+                                                                    <i class="fa-solid fa-layer-group"></i>
                                                                 </div>
-                                                                <h3>{{$statistics['installed']}}</h3></div>
+                                                                <h3>{{$statistics['total']}}</h3></div>
                                                             <div class="iq-map text-info font-size-32">
                                                                 <i class="ri-bar-chart-grouped-line"></i></div>
                                                         </div>

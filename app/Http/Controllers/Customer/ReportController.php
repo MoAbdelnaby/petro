@@ -132,11 +132,10 @@ class ReportController extends Controller
 
     public function getTopBranch($type, $filter): array
     {
-        $type = !in_array($type, $this->reportType, true) ? 'place' : $type;
-
+        $type = !in_array($type, ['place', 'plate']) ? 'place' : $type;
         $branches = DB::table("view_top_branch_$type")->pluck('branch_id')->toArray();
-
         return $this->handleFilterFormat($branches, $filter);
+
     }
 
     public function handleFilterFormat($branches, $filter): array

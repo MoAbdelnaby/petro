@@ -154,8 +154,10 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
 
 
     ///////////////////Sub-Customer Routes//////////
-    Route::get('customer/branch/last-stability','Customer\BranchStatusController@lastStability')->name('branch.last_stability');
 
+
+    Route::get('mybranches', 'Models\BranchesController@subCustomerBranches');
+    Route::get('customer/branch/last-stability','Customer\BranchStatusController@lastStability')->name('branch.last_stability');
     Route::get('my-branches/status', 'Customer\BranchStatusController@UserbranchesStatus')->name('my_branches_status');
     Route::get('branch/filter/area', 'Models\PlacesController@get_branch_data')->name('branch.filter.area');
     Route::get('branch/plates/times', 'Models\PlatesController@get_branch_plate_times')->name('branch.plates.times');
