@@ -183,7 +183,7 @@
                                         @if(Auth::user()->type === "subcustomer")
                                             <div class="col-sm-6 col-md-6 col-lg-3">
                                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                                                    <a href="{{ route('myBranches')}}" class="iq-card-body"
+                                                    <a href="{{ route('UserBranches')}}" class="iq-card-body"
                                                        style="padding: 25px 20px !important;">
                                                         <div class="d-flex align-items-center justify-content-between">
                                                             <h6 class='iq-card-title'>{{ __('app.mybranches') }}</h6>

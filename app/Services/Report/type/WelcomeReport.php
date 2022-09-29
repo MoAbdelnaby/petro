@@ -215,11 +215,21 @@ class WelcomeReport extends BaseReport
                 ->distinct();
 
             if (auth()->user()->type === 'subcustomer') {
-                $query[$status] = $query[$status]->whereIn('branches.id', $list);
-            }
+                $branches = Branch::active()->primary()
+                    ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                    ->pluck('id')
+                    ->toArray();
 
-            if ($data['type'] == 'branch' && ($filter['default'] ?? false) == false) {
-                $query[$status] = $query[$status]->whereIn('branches.id', $list);
+                if ($filter['default']) {
+                    $query[$status] = $query[$status]->whereIn('branches.id', $branches);
+                }else{
+                    $query[$status] = $query[$status]->whereIn('branches.id', $list);
+                }
+
+            }else{
+                if ($data['type'] == 'branch' && !($filter['default'] ?? false)) {
+                    $query[$status] = $query[$status]->whereIn('branches.id', $list);
+                }
             }
 
             $filter['column'] = "$this->mainTable.checkInDate";

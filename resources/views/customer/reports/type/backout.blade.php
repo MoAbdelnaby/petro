@@ -64,6 +64,11 @@
                                 <div class="related-heading mb-3 m-0 row col-12 related-heading--custom" >
                                     <h2 class="p-0 col ml-2">{{ __('app.Backout_report') }}</h2>
                                     <div class="duration-cont col py-0">
+                                        <a href="{{auth()->user()->type == 'subcustomer' ?  route('UserBranches') : route('customerBranches.index') }}"
+                                           id="export_excel" data-type="xls" style="position: absolute; left: -70%;"
+                                           class="btn btn-sm btn-primary submit_form waves-effect waves-light">
+                                            <i class="fa fa-code-branch"></i> {{ __('app.branches') }}
+                                        </a>
                                         <div class="duration">
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

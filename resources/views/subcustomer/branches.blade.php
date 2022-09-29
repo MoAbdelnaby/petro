@@ -61,6 +61,7 @@
                                                     <th>{{ __('app.customers.branches.table.code') }}</th>
                                                     <th>{{ __('app.customers.branches.table.area_count') }}</th>
                                                     <th>{{ __('app.region') }}</th>
+                                                    <th>{{ __('app.Settings') }}</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -76,6 +77,10 @@
                                                         <td>{{ $item->code }}</td>
                                                         <td>{{ $item->area_count }}</td>
                                                         <td>{{ $item->region->name ?? '' }}</td>
+                                                        <td>
+                                                            <a class="btn  btn-info"
+                                                               href="{{ route('customerBranches.show', [$item->id]) }}">{{ __('app.customers.branches.show') }}</a>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
