@@ -128,6 +128,14 @@
                                                role="tab" aria-controls="v-pills-branchErrorMailtemplate"
                                                aria-selected="true">{{ __('app.brancheErrorTemplate') }}</a>
                                         </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $errors->has('value') ? 'active':'' }} " id="v-pills-template-tab" data-toggle="pill"
+                                               href="#v-pills-branchOnlineMailtemplate"
+                                               role="tab" aria-controls="v-pills-branchOnlineMailtemplate"
+                                               aria-selected="true">{{ __('app.brancheonlineTemplate') }}</a>
+                                        </li>
+
                                     </ul>
 
                                 </div>
@@ -139,6 +147,7 @@
                                                 @include('settings.includes.mailsetting')
                                                 @include('settings.includes.mail_status')
                                                 @include('settings.includes.branchErrorTempleat')
+                                                @include('settings.includes.branchOnlineTemplate')
                                             </div>
 
                                         </div>
@@ -188,6 +197,14 @@ var quill = new Quill('#editor', {
   },
   theme: 'snow'
 });
+
+var quill = new Quill('#online-editor', {
+  modules: {
+    toolbar: toolbarOptions
+  },
+  theme: 'snow'
+});
+
 </script>
     <script>
 
@@ -222,7 +239,11 @@ var quill = new Quill('#editor', {
 
         })
         $(document).ready(function () {
+
+
             var mailtemplateData = '{!!$mailtemplate !!}';
+            var OnlinemailtemplateData = '{!!$onlinemailtemplate !!}';
+            $('#online-editor .ql-editor').html(OnlinemailtemplateData)
             $('#editor .ql-editor').html(mailtemplateData)
 
             $('.branch-errror-template-btn').on('click',function(e){
@@ -230,6 +251,13 @@ var quill = new Quill('#editor', {
                 let html = $('#editor .ql-editor').html();
                 $('input#htmlEle').val(html);
                 $("#branchErrorMailTemplate").submit();
+            });
+
+            $('.branch-online-template-btn').on('click',function(e){
+                e.preventDefault();
+                let html = $('#online-editor .ql-editor').html();
+                $('input#htmlEle').val(html);
+                $("#branchOnlineMailTemplate").submit();
             });
 
             $("#days").on("focus", function () {

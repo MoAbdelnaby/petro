@@ -80,6 +80,7 @@ class SettingController extends Controller
         $reminder = Reminder::latest()->first();
         $branch_setting = BranchSetting::latest()->first();
         $mailtemplate =  MailTemplate::where('key', 'branchError')->value('value');
+        $onlinemailtemplate =  MailTemplate::where('key', 'branchOnline')->value('value');
         $mail = [
             'driver'=> config('mail.default'),
             'host'=> config('mail.mailers.smtp.host'),
@@ -88,7 +89,7 @@ class SettingController extends Controller
             'username'=> config('mail.mailers.smtp.username'),
             'password'=> config('mail.mailers.smtp.password'),
         ];
-        return view('settings.reminder',['reminder' => $reminder,'mail'=>$mail,'mailtemplate'=>$mailtemplate,'branch_setting'=>$branch_setting]);
+        return view('settings.reminder',['reminder' => $reminder,'mail'=>$mail,'mailtemplate'=>$mailtemplate,'onlinemailtemplate'=>$onlinemailtemplate,'branch_setting'=>$branch_setting]);
     }
 
     public function saveReminder(Request $request)
