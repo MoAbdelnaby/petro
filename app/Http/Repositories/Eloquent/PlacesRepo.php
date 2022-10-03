@@ -160,24 +160,24 @@ class PlacesRepo extends AbstractRepo implements PlacesRepoInterface
         $result['all_areas'] = $areas_all;
         $result['active_areas'] = $areas_all->pluck('area')->sort()->toArray();
 
-        $area_duration = AreaDuration::where('branch_id', $usermodelbranh->branch->id)->select('*');
+//        $area_duration = AreaDuration::where('branch_id', $usermodelbranh->branch->id)->select('*');
 
-        if ($start != null || $end != null) {
+//        if ($start != null || $end != null) {
 
             $query = AreaDurationDay::where('branch_id', $usermodelbranh->branch->id);
 
             if ($start) {
-                $query = $query->whereDate('date', '>=', $start);
+                $query = $query->whereDate('date', '>=', now()->toDateString());
             }
             if ($end) {
-                $query = $query->whereDate('date', '<=', $end);
+                $query = $query->whereDate('date', '<=',  now()->toDateString());
             }
 
             $area_duration = $query->select('area',
                 DB::raw('SUM(work_by_minute) as work_by_minute'),
                 DB::raw('SUM(empty_by_minute) as empty_by_minute')
             );
-        }
+//        }
 
 
         $area_duration = $area_duration

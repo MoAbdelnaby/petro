@@ -54,6 +54,11 @@ class AreaDurationDaily
                     if ($branch_work) {
                         $start = Carbon::parse($branch_work->start_time);
                         $end = Carbon::parse($branch_work->end_time);
+
+                        if (Carbon::now() < $end) {
+                            $end = Carbon::now();
+                        }
+
                         if ($end > $start) {
                             $branch_work_time_in_minutes = $end->diffInMinutes($start);
                             $result = 0;
@@ -63,7 +68,7 @@ class AreaDurationDaily
                             $areaavildura = $result;
                         }
 
-                        if ((int)$areaavildura == 0 && (int)$areabusydura == 0) {
+                        if ($areaavildura === 0 && $areabusydura === 0) {
                             continue;
                         }
 
