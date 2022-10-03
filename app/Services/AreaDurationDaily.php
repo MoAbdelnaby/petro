@@ -160,6 +160,7 @@ class AreaDurationDaily
         } catch (\Exception $e) {
 //            Log::error($e->getMessage() . $e->getLine());
         }
+        return  true;
     }
 
 }
