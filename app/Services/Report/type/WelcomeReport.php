@@ -220,7 +220,7 @@ class WelcomeReport extends BaseReport
                     ->pluck('id')
                     ->toArray();
 
-                if ($filter['default']) {
+                if ($filter['default']??false) {
                     $query[$status] = $query[$status]->whereIn('branches.id', $branches);
                 }else{
                     $query[$status] = $query[$status]->whereIn('branches.id', $list);
