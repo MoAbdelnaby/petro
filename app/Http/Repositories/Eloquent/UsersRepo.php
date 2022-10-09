@@ -18,7 +18,7 @@ class UsersRepo extends AbstractRepo implements UsersRepoInterface
      */
     public function getRelative($user_id)
     {
-        return $this->model->with('position')
+        return $this->model->with('position','branches')
             ->where('parent_id', $user_id)
             ->whereIn('type', ['subcustomer', 'subadmin'])
             ->where('wakeb_user',0)

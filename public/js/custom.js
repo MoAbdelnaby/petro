@@ -654,6 +654,7 @@ function assign_alert(val, branches) {
 // }
 
 function assign_user_to_branch_model_alert(val, u_brs, branches, regions) {
+    console.log(regions)
     var direction= $('html').attr('dir');
     var trans_Check_All;
     if(direction == "rtl"){

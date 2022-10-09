@@ -22,9 +22,9 @@
             display: none;
         }
 
-        div.dataTables_wrapper div.dataTables_paginate, div.dataTables_wrapper div.dataTables_info {
-            display: none !important;
-        }
+        /*div.dataTables_wrapper div.dataTables_paginate, div.dataTables_wrapper div.dataTables_info {*/
+        /*    display: none !important;*/
+        /*}*/
 
     </style>
 @endpush
@@ -44,7 +44,7 @@
                     @endif
                 @endcan
 
-            <!-- Modal -->
+                <!-- Modal -->
                 <div class="modal fade" id="RecycleBin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
@@ -76,7 +76,7 @@
                                             </label>
                                         </td>
                                         <th>{{__('app.users.table.name')}}</th>
-{{--                                        <th>{{__('app.users.table.position')}}</th>--}}
+                                        {{--                                        <th>{{__('app.users.table.position')}}</th>--}}
                                         <th>{{__('app.users.table.email')}}</th>
                                         <th>{{ __('app.Settings') }}</th>
 
@@ -93,7 +93,7 @@
                                                 </td>
 
                                                 <td>{{$trash->name}}</td>
-{{--                                                <td>{{$trash->position??'--'}}</td>--}}
+                                                {{--                                                <td>{{$trash->position??'--'}}</td>--}}
                                                 <td>{{$trash->email}}</td>
 
                                                 <td style='white-space: nowrap'>
@@ -110,13 +110,13 @@
                                         @endforeach
                                         </tbody>
                                     </table>
-{{--                                    <div class="col-md-6">--}}
-{{--                                        <nav aria-label="Page navigation example">--}}
-{{--                                            <ul class="pagination justify-content-end mb-0">--}}
-{{--                                                {!! $users->appends(request()->query())->links() !!}--}}
-{{--                                            </ul>--}}
-{{--                                        </nav>--}}
-{{--                                    </div>--}}
+                                    {{--                                    <div class="col-md-6">--}}
+                                    {{--                                        <nav aria-label="Page navigation example">--}}
+                                    {{--                                            <ul class="pagination justify-content-end mb-0">--}}
+                                    {{--                                                {!! $users->appends(request()->query())->links() !!}--}}
+                                    {{--                                            </ul>--}}
+                                    {{--                                        </nav>--}}
+                                    {{--                                    </div>--}}
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -180,7 +180,7 @@
                                             <th>{{__('app.position')}}</th>
                                             <th>{{__('app.users.table.email')}}</th>
                                             <th>{{__('app.users.table.Phone')}}</th>
-                                            <th>{{__('app.saas.packages.items.active_branches')}}</th>
+                                            {{--                                            <th>{{__('app.saas.packages.items.active_branches')}}</th>--}}
                                             <th>{{ __('app.Settings') }}</th>
                                             </thead>
                                             <tbody>
@@ -196,58 +196,58 @@
                                                     <td>{{$user->position?$user->position->name:'---'}}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>{{ $user->phone??'---' }}</td>
-                                                    <td >
-                                                        <div class="product-description">
-                                                            <h5 class="d-block position-relative">
-                                                                <small><i
-                                                                        class="far fa-sitemap"></i> {{__('app.saas.packages.items.active_branches')}}
-                                                                </small>
-                                                                @if(count($user->branches))
-                                                                <span class="float-right showbranchesAll"><i
-                                                                        class="fas fa-info"></i></span>
-                                                                @endif
-                                                                {{--                                                                                @if(!empty($item->itembranches) and count($item->itembranches) > 5 )--}}
-                                                                <div class="branchesAll">
-
-                                                                    <div class="content-branches" style="    width: max-content;text-align: left;">
-                                                                        @foreach($user->branches as $brn)
-                                                                            <h6>
-                                                                                <i class="far fa-sitemap"></i> {{$brn->name}}
-                                                                            </h6>
-                                                                        @endforeach
-                                                                    </div>
-
-                                                                </div>
-                                                                {{--                                                                                @endif--}}
-
-                                                            </h5>
-                                                        </div>
-
-
-{{--                                                        @if($user->branches->count())--}}
-{{--                                                            @foreach($user->branches as $brn)--}}
-{{--                                                                <span class="nav-item li-btn-sm btn-info"><i--}}
-{{--                                                                        class="far fa-sitemap"></i> {{$brn->name}}</span>--}}
-{{--                                                            @endforeach--}}
-{{--                                                        @else--}}
-{{--                                                            <span class="nav-item li-btn-sm "> {{ __('----') }}</span>--}}
-{{--                                                        @endif--}}
-                                                    </td>
+                                                    {{--                                                    <td>--}}
+                                                    {{--                                                        <div class="product-description">--}}
+                                                    {{--                                                            <h5 class="d-block position-relative">--}}
+                                                    {{--                                                                <small>--}}
+                                                    {{--                                                                    <i class="far fa-sitemap"></i> --}}
+                                                    {{--                                                                    {{__('app.saas.packages.items.active_branches')}}--}}
+                                                    {{--                                                                </small>--}}
+                                                    {{--                                                                @if(count($user->branches))--}}
+                                                    {{--                                                                    <span class="float-right showbranchesAll">--}}
+                                                    {{--                                                                        <i class="fas fa-info"></i>--}}
+                                                    {{--                                                                    </span>--}}
+                                                    {{--                                                                @endif--}}
+                                                    {{--                                                                @if(!empty($item->itembranches) and count($item->itembranches) > 5 )--}}
+                                                    {{--                                                                    <div class="branchesAll">--}}
+                                                    {{--                                                                        <div class="content-branches"--}}
+                                                    {{--                                                                             style="    width: max-content;text-align: left;">--}}
+                                                    {{--                                                                            @foreach($user->branches as $brn)--}}
+                                                    {{--                                                                                <h6>--}}
+                                                    {{--                                                                                    <i class="far fa-sitemap"></i> {{$brn->name}}--}}
+                                                    {{--                                                                                </h6>--}}
+                                                    {{--                                                                            @endforeach--}}
+                                                    {{--                                                                        </div>--}}
+                                                    {{--                                                                    </div>--}}
+                                                    {{--                                                                @endif--}}
+                                                    {{--                                                            </h5>--}}
+                                                    {{--                                                        </div>--}}
+                                                    {{--                                                        @if($user->branches->count())--}}
+                                                    {{--                                                            @foreach($user->branches as $brn)--}}
+                                                    {{--                                                                <span class="nav-item li-btn-sm btn-info"><i--}}
+                                                    {{--                                                                        class="far fa-sitemap"></i> {{$brn->name}}</span>--}}
+                                                    {{--                                                            @endforeach--}}
+                                                    {{--                                                        @else--}}
+                                                    {{--                                                            <span class="nav-item li-btn-sm "> {{ __('----') }}</span>--}}
+                                                    {{--                                                        @endif--}}
+                                                    {{--                                                    </td>--}}
                                                     <td style="width: max-content;display: inline-block">
                                                         @if(in_array(auth()->user()->type,['customer','subadmin']))
-{{--                                                            @php--}}
-{{--                                                                $user_branches = [];--}}
-{{--                                                                    foreach ($user->branches as $brn)--}}
-{{--                                                                    $user_branches[] = $brn->id;--}}
-{{--                                                                    $user_brs = json_encode(implode(",",$user_branches));--}}
-{{--                                                            @endphp--}}
-{{--                                                            @if($user->type != 'subadmin')--}}
-{{--                                                                <a class="btn btn-sm btn-info" data-toggle="tooltip"--}}
-{{--                                                                   data-placement="top" title=""--}}
-{{--                                                                   data-original-title="Assign to Branch"--}}
-{{--                                                                   onclick="assign_user_to_branch_model_alert({{ $user->id }},{{ $user_brs }},{{ $branches }},{{ $regions }});"--}}
-{{--                                                                   style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>--}}
-{{--                                                            @endif--}}
+                                                            {{--                                                            @php--}}
+                                                            {{--                                                                $user_branches = [];--}}
+                                                            {{--                                                                foreach ($user->branches as $brn) {--}}
+                                                            {{--                                                                    $user_branches[] = $brn->id;--}}
+                                                            {{--                                                                }--}}
+
+                                                            {{--                                                                $user_brs = json_encode(implode(",",$user_branches));--}}
+                                                            {{--                                                            @endphp--}}
+                                                            @if($user->type != 'subadmin')
+                                                                <a class="btn btn-sm btn-info" data-toggle="tooltip"
+                                                                   data-placement="top" title=""
+                                                                   data-original-title="Assign to Branch"
+                                                                   onclick="showAssignModal({{ $user}})"
+                                                                   style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>
+                                                            @endif
                                                             <a class="btn btn-sm btn-primary"
                                                                href="{{ route('customerUsers.edit',$user->id) }}"
                                                                style="color: white;">{{__('app.customers.branches.edit')}}</a>
@@ -281,32 +281,33 @@
                                                         <div class="product-description">
                                                             <h5>
                                                                 <small>
-                                                                    <span>
-                                                                        <i class="fas fa-user"></i>
-                                                                        {{__('app.users.table.name')}}
-                                                                    </span>: {{$user->name}}
+                                                                                                        <span>
+                                                                                                            <i class="fas fa-user"></i>
+                                                                                                            {{__('app.users.table.name')}}
+                                                                                                        </span>: {{$user->name}}
                                                                 </small>
                                                             </h5>
                                                             <h5>
                                                                 <small>
-                                                                    <span>
-                                                                        <i class="fas fa-paper-plane"></i>
-                                                                        {{__('app.users.table.email')}}
-                                                                    </span>: {{$user->email}}</small>
-                                                            </h5>
-                                                            <h5>
-                                                                <small>
-                                                                    <span>
-                                                                        {{__('app.position')}}
-                                                                    </span>: {{$user->position?$user->position->name:'---'}}
+                                                                                                        <span>
+                                                                                                            <i class="fas fa-paper-plane"></i>
+                                                                                                            {{__('app.users.table.email')}}
+                                                                                                        </span>: {{$user->email}}
                                                                 </small>
                                                             </h5>
                                                             <h5>
                                                                 <small>
-                                                                    <span>
-                                                                        <i class="fas fa-phone-alt"></i>
-                                                                        {{__('app.users.table.Phone')}}
-                                                                    </span>: {{$user->phone??'---'}}
+                                                                                                        <span>
+                                                                                                            {{__('app.position')}}
+                                                                                                        </span>: {{$user->position?$user->position->name:'---'}}
+                                                                </small>
+                                                            </h5>
+                                                            <h5>
+                                                                <small>
+                                                                                                        <span>
+                                                                                                            <i class="fas fa-phone-alt"></i>
+                                                                                                            {{__('app.users.table.Phone')}}
+                                                                                                        </span>: {{$user->phone??'---'}}
                                                                 </small>
                                                             </h5>
 
@@ -317,20 +318,19 @@
                                                                 </small>
                                                                 <span class="float-right showbranchesAll"><i
                                                                         class="fas fa-info"></i></span>
-                                                                {{--                                                                                @if(!empty($item->itembranches) and count($item->itembranches) > 5 )--}}
-                                                                <div class="branchesAll">
+                                                                @if(!empty($item->itembranches) and count($item->itembranches) > 5 )
+                                                                    <div class="branchesAll">
 
-                                                                    <div class="content-branches">
-                                                                        @foreach($user->branches as $brn)
-                                                                            <h6>
-                                                                                <i class="far fa-sitemap"></i> {{$brn->name}}
-                                                                            </h6>
-                                                                        @endforeach
+                                                                        <div class="content-branches">
+                                                                            @foreach($user->branches as $brn)
+                                                                                <h6>
+                                                                                    <i class="far fa-sitemap"></i> {{$brn->name}}
+                                                                                </h6>
+                                                                            @endforeach
+                                                                        </div>
+
                                                                     </div>
-
-                                                                </div>
-                                                                {{--                                                                                @endif--}}
-
+                                                                @endif
                                                             </h5>
                                                             <div class="position-relative">
                                                                 <ul class="ratting-item scroll-vertical-custom d-flex p-0 m-0">
@@ -354,20 +354,20 @@
                                                     <div class="col-12">
                                                         <div class="text-center px-0 pb-2">
                                                             @if(in_array(auth()->user()->type,['customer','subadmin']))
-{{--                                                                @php--}}
-{{--                                                                    $user_branches = [];--}}
-{{--                                                                        foreach ($user->branches as $brn)--}}
-{{--                                                                        $user_branches[] = $brn->id;--}}
-{{--                                                                        $user_brs = json_encode(implode(",",$user_branches));--}}
+                                                                @php
+                                                                    $user_branches = [];
+                                                                        foreach ($user->branches as $brn)
+                                                                        $user_branches[] = $brn->id;
+                                                                        $user_brs = json_encode(implode(",",$user_branches));
 
-{{--                                                                @endphp--}}
-{{--                                                                @if($user->type != 'subadmin')--}}
-{{--                                                                    <a class="btn btn-info" data-toggle="tooltip"--}}
-{{--                                                                       data-placement="top" title=""--}}
-{{--                                                                       data-original-title="{{ __('app.Assign_to_Branch') }}"--}}
-{{--                                                                       onclick="assign_user_to_branch_model_alert({{ $user->id }},{{$user_brs}},{{$branches}},{{$regions}});"--}}
-{{--                                                                       style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>--}}
-{{--                                                                @endif--}}
+                                                                @endphp
+                                                                @if($user->type != 'subadmin')
+                                                                    <a class="btn btn-info" data-toggle="tooltip"
+                                                                       data-placement="top" title=""
+                                                                       data-original-title="{{ __('app.Assign_to_Branch') }}"
+                                                                       onclick="assign_user_to_branch_model_alert({{ $user->id }},{{$user_brs}},{{$branches}},{{$regions}});"
+                                                                       style="color: white;">{{__('app.saas.packages.items.Assign_model')}}</a>
+                                                                @endif
                                                                 <a class="btn btn-primary"
                                                                    href="{{ route('customerUsers.edit',$user->id) }}"
                                                                    style="color: white;">{{__('app.customers.branches.edit')}}</a>
@@ -381,18 +381,18 @@
                                                 </div>
                                             </div>
                                         @endforeach
-                                    </div>
+                                                                        </div>
                                 @endif
                             </div>
-{{--                            <div class="row justify-content-between mt-3">--}}
-{{--                                <div class="col-md-12">--}}
-{{--                                    <nav aria-label="Page navigation example">--}}
-{{--                                        <ul class="pagination justify-content-end mb-0">--}}
-{{--                                            {!! $users->appends(request()->query())->links() !!}--}}
-{{--                                        </ul>--}}
-{{--                                    </nav>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="row justify-content-between mt-3">--}}
+                            {{--                                <div class="col-md-12">--}}
+                            {{--                                    <nav aria-label="Page navigation example">--}}
+                            {{--                                        <ul class="pagination justify-content-end mb-0">--}}
+                            {{--                                            {!! $users->appends(request()->query())->links() !!}--}}
+                            {{--                                        </ul>--}}
+                            {{--                                    </nav>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -487,7 +487,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
 
@@ -525,7 +524,7 @@
 
             let regions = <?= json_encode($Branches ?? []) ?>;
             // searchBranch function
-            $('#searchBranch').on('keyup',function () {
+            $('#searchBranch').on('keyup', function () {
                 var text = $(this).val().toLowerCase();
                 if (text.length > 0) {
                     var search_result = 0;
@@ -553,8 +552,6 @@
             });
 
 
-
-
             $('.assignusertobranch').select2({
                 placeholder: 'assign branches',
                 tags: false,
@@ -567,8 +564,6 @@
             $('.assign_body').delegate(".checkall", "click", function () {
                 $(this).closest('.tab-pane').find('.branchselect').prop('checked', $(this).prop('checked'));
             });
-
-
 
 
             $('#myModalAssign .search-model input:checkbox').click(function () {
@@ -609,6 +604,7 @@
             $('.remove_all').on('click', function () {
                 $("#trash_form").attr('action', app_url + "/customer/customerUsers/bulkDelete");
             });
+
             $('.trash_delete').on('click', function (e) {
                 e.preventDefault();
                 $(this).parent('td').siblings().find('.trashselect').prop('checked', 'checked');
@@ -618,7 +614,19 @@
             });
 
         });
-    </script>
 
+        function showAssignModal(user) {
+            var user_id = user.id;
+
+            var regions = @json($regions, JSON_THROW_ON_ERROR);
+
+
+            var user_branches = user.branches.map(function (value, index, array) {
+                return value.id;
+            }).join(',');
+
+            assign_user_to_branch_model_alert(user_id, user_branches, [], regions);
+        }
+    </script>
 @endpush
 
