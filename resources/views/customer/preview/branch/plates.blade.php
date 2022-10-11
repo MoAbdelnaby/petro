@@ -731,7 +731,7 @@
                                                                             <a id="download-{{$item->id}}"
                                                                                {{--                                                                           download--}}
                                                                                {{--                                                                           class="download_invoice"--}}
-                                                                               onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"
+{{--                                                                               onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"--}}
                                                                                href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceStatus->fileUrl}}"
                                                                                data-toggle="popover" data-trigger="hover"
                                                                                data-content="Preview Invoice">
