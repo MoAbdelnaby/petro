@@ -126,6 +126,7 @@ class ReportController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            dd($e);
             return unKnownError($e->getMessage());
         }
     }
