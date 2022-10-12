@@ -62,7 +62,7 @@ class UserController extends Controller
 //            $package = $this->packageRepo->getactivePackage();
 
 //            if (Auth::check()) {
-                $userSettings = UserSetting::where('user_id', Auth::user()->id)->first();
+            $userSettings = UserSetting::where('user_id', Auth::user()->id)->first();
 //            }
 
             $userModelBranches = [];
@@ -114,11 +114,12 @@ class UserController extends Controller
             $data['speedtest'] = ($request->speedtest == 'on');
 
             $user = User::withTrashed()->firstOrCreate(
-                Arr::only($data,['email']),
-                Arr::except($data,['email'])
+                Arr::only($data, ['email']),
+                Arr::except($data, ['email'])
             );
-            if($user->trashed()){
-                 $user->restore();
+            if ($user->trashed()) {
+                $user->restore();
+                $user->update($data);
             }
             $user->save();
             $user->refresh();
@@ -145,11 +146,11 @@ class UserController extends Controller
     public function edit($id)
     {
         try {
-            $user = User::where('id',$id)->with('roles')->first();
+            $user = User::where('id', $id)->with('roles')->first();
             $positions = Position::primary()->get();
 
             if ((auth()->user()->type == "subadmin" && $user->type != "subadmin") || auth()->user()->type == "customer") {
-                return view('customer.users.edit', compact( 'user', 'positions'));
+                return view('customer.users.edit', compact('user', 'positions'));
             }
 
             return redirect()->back()->with('danger', 'Can not edit this user');
