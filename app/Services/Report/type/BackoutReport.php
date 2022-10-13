@@ -4,6 +4,7 @@ namespace App\Services\Report\type;
 
 use App\Models\Branch;
 use App\Services\Report\BaseReport;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use JsonException;
 
@@ -211,15 +212,24 @@ class BackoutReport extends BaseReport
 
         $filter['column'] = "$this->mainTable.checkInDate";
 
+        if (auth()->user()->type === 'subcustomer') {
+            $branches = Branch::active()->primary()
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->pluck('id')->toArray();
+        } else {
+            $branches = Branch::active()->primary()->pluck('id')->toArray();
+        }
+
+        $date = Carbon::parse($filter['end'])->format('Y-m-d');
         $query = DB::table($this->mainTable)
             ->whereIn("$this->mainTable.status", ['completed', 'modified'])
             ->where("$this->mainTable.plate_status", '=', 'success')
             ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
             ->where('branches.user_id', parentID())
             ->where('branches.active', true)
-            ->where("$this->mainTable.checkInDate", $filter['end'])
+            ->whereDate("$this->mainTable.checkInDate", $date)
             ->whereNull('branches.deleted_at')
-            ->whereIn('branches.id', $list)
+            ->whereIn('branches.id',$branches)
             ->distinct()
             ->select(
                 'branches.name as branch_name',
@@ -228,8 +238,7 @@ class BackoutReport extends BaseReport
                 DB::raw("COUNT(*) as total"),
             );
 
-        $this->handleDateFilter($query, $filter, true);
-
+//        $this->handleDateFilter($query, $filter, true);
         $result = $query->groupBy('branch_name')->get()->toArray();
 
         return ['table' => $result];

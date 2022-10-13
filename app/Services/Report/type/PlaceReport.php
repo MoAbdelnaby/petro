@@ -18,6 +18,7 @@ class PlaceReport extends BaseReport
 {
     public $query;
     public string $mainTable = "area_duration_days";
+    public string $profileTable = "carprofiles";
 
     public function getCityQuery($list)
     {
@@ -120,6 +121,7 @@ class PlaceReport extends BaseReport
 //        }
 
         $report['charts'] = $this->prepareChart($result, $key);
+        $report['branch_backout'] = $this->handleBranchBackout($filter);
         $report["info"] = [
             "list" => ucfirst($key),
             "unit" => "Hours",
@@ -395,5 +397,50 @@ class PlaceReport extends BaseReport
         }
 
         return $result ?? [];
+    }
+
+    public function handleBranchBackout($filter): array
+    {
+        $data = [];
+        if (isset($filter['show_by'])) {
+            $data = $this->handleListQuery($filter);
+        }
+        $list = $data['list'] ?? [];
+        if (!is_array($list)) {
+            $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
+        }
+
+        $filter['column'] = "$this->profileTable.checkInDate";
+
+        if (auth()->user()->type === 'subcustomer') {
+            $branches = Branch::active()->primary()
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->pluck('id')->toArray();
+        } else {
+            $branches = Branch::active()->primary()->pluck('id')->toArray();
+        }
+
+        $date = Carbon::parse($filter['end'])->format('Y-m-d');
+        $query = DB::table($this->profileTable)
+            ->whereIn("$this->profileTable.status", ['completed', 'modified'])
+            ->where("$this->profileTable.plate_status", '=', 'success')
+            ->join('branches', 'branches.id', '=', "$this->profileTable.branch_id")
+            ->where('branches.user_id', parentID())
+            ->where('branches.active', true)
+            ->whereDate("$this->profileTable.checkInDate", $date)
+            ->whereNull('branches.deleted_at')
+            ->whereIn('branches.id',$branches)
+            ->distinct()
+            ->select(
+                'branches.name as branch_name',
+                DB::raw("(DATE_FORMAT($this->profileTable.checkInDate, '%d-%m-%Y')) as day"),
+                DB::raw("COUNT(CASE WHEN invoice != 0 then 1 ELSE NULL END) as backout"),
+                DB::raw("COUNT(*) as total"),
+            );
+
+//        $this->handleDateFilter($query, $filter, true);
+        $result = $query->groupBy('branch_name')->get()->toArray();
+
+        return ['table' => $result];
     }
 }

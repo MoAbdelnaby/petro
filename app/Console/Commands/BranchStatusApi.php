@@ -56,20 +56,22 @@ class BranchStatusApi extends Command
             $AiValue = 15;
             $callTime = env('Branch_Status_Time', 5);
 
-            $now = Carbon::now();
             $branches = DB::table("last_error_branch_views as branchError")
                 ->join("branches as branch", "branchError.branch_code", "=", "branch.code")
+                ->whereDate('branchError.created_at', Carbon::today())
                 ->select("branch.id as br_id", "branch.name as name", "branchError.*")
+                ->latest()
                 ->get();
+
 
             //Check If Online Before 15 Min
             foreach ($branches as $branch) {
                 $this->comment('CASE 2');
                 $this->comment($branch->name);
                 $branchStatus = BranchStatus::where('branch_code', $branch->branch_code)->first();
-                $data['last_connected'] = $now->diffForHumans($branch->created_at, true);
+                $data['last_connected'] = Carbon::now()->diffForHumans($branch->created_at, true);
 
-                if ($now->subMinutes($AiValue) < $branch->created_at) {
+                if (Carbon::now()->subMinutes($AiValue) < $branch->created_at) {
                     $data['status'] = 'online';
                     $data['last_error'] = $branch->error;
 
@@ -168,40 +170,40 @@ class BranchStatusApi extends Command
                 }
 
                 if ($branch_work) {
-                    $now = Carbon::now();
-                    $start = Carbon::parse($branch_work->start_time);
-                    $end = Carbon::parse($branch_work->end_time);
-                    if ($now < $end && $now > $start) {
+//                    $now = Carbon::now();
+//                    $start = Carbon::parse($branch_work->start_time);
+//                    $end = Carbon::parse($branch_work->end_time);
+//                    if ($now < $end && $now > $start) {
 //                        if ($now->subMinutes($minutes) > $branch->created_at) {
-                        $this->comment('Start2');
-                        foreach ($users as $user) {
-                            $check = DB::table('branches_users')
-                                ->where('user_id', $user->id)
-                                ->where('branch_id', $branch->br_id)
-                                ->first();
+                    $this->comment('Start2');
+                    foreach ($users as $user) {
+                        $check = DB::table('branches_users')
+                            ->where('user_id', $user->id)
+                            ->where('branch_id', $branch->br_id)
+                            ->first();
 
 //                            $this->comment($branch->br_id, $check);
 
-                            if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
+                        if ($check && $check->notified == '0' && $user->mail_notify == 'on') {
 
-                                try {
-                                    dispatch(new SendBranchStatusMailJob($branch, $minutes, $user->email, $user->name));
-                                    $user->notify(new BranchStatusNotification($branch, $escalationBranchId));
-                                } catch (\Exception $e) {
-                                    $this->comment($e->getMessage());
-                                }
-
-                                $this->comment('Email Sent');
-
-                                DB::table('branches_users')
-                                    ->where('user_id', $user->id)
-                                    ->where('branch_id', $branch->br_id)
-                                    ->update(['notified' => '1']);
-
+                            try {
+                                dispatch(new SendBranchStatusMailJob($branch, $minutes, $user->email, $user->name));
+                                $user->notify(new BranchStatusNotification($branch, $escalationBranchId));
+                            } catch (\Exception $e) {
+                                $this->comment($e->getMessage());
                             }
+
+                            $this->comment('Email Sent');
+
+                            DB::table('branches_users')
+                                ->where('user_id', $user->id)
+                                ->where('branch_id', $branch->br_id)
+                                ->update(['notified' => '1']);
+
                         }
-//                        }
                     }
+//                        }
+//                    }
                 }
             }
         } catch (\Exception $e) {

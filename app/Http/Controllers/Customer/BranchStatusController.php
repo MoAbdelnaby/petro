@@ -269,7 +269,7 @@ class BranchStatusController extends Controller
                 ->first();
             $ids = $user->branches->pluck('id')->toArray();
 
-        $branches = Branch::primary()->with('region')
+        $branches = Branch::primary()->active()->with('region')
             ->whereIn('id',$ids)
             ->get();
         $on = $branches->where('status',1)->whereIn('id',$ids)->count();

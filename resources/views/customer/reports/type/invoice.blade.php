@@ -183,7 +183,32 @@
                                             <div class="pt-4 mb-5" id="BranchInvoiceSideBarCon" style="display: none">
                                                 <div id="BranchInvoiceSideBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
-                                        @elseif(count($report['branch_check']['table']??[]))
+
+                                    <table class="table dataTable text-center no-footer">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>#</th>
+                                            <th>{{ __('app.branch_name') }}</th>
+                                            <th>{{ __('app.day') }}</th>
+                                            <th>{{ __('app.Total_Car') }}</th>
+                                            <th>{{ __('app.backout') }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($report['branch_backout']['table'] as $index=>$item)
+                                            <tr>
+                                                <td>{{ ++$index}}</td>
+                                                <td>{{ $item->branch_name }}</td>
+                                                <td>{{ $item->day }}</td>
+                                                <td>{{ $item->total }}</td>
+                                                <td>{{ $item->backout }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+
+
+                                @elseif(count($report['branch_check']['table']??[]))
                                             <a href="{{route('reports.export',array_merge(['type' => 'invoice','integration'=>request('integration'),'branch_check'=>true], request()->toArray()))}}"
                                                id="export_excel" data-type="xls" style="position: absolute; left: 10%;"
                                                     class="btn btn-primary submit_form waves-effect waves-light">

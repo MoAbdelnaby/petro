@@ -146,6 +146,29 @@
                                             <div class="pt-4 mb-5" id="BranchStayingSideBarCon" style="display: none">
                                                 <div id="BranchStayingSideBar" class="chartDiv" style="min-height: 450px"></div>
                                             </div>
+                                            <table class="table dataTable text-center no-footer">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th>#</th>
+                                                    <th>{{ __('app.branch_name') }}</th>
+                                                    <th>{{ __('app.day') }}</th>
+                                                    <th>{{ __('app.Total_Car') }}</th>
+                                                    <th>{{ __('app.backout') }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($report['branch_backout']['table'] as $index=>$item)
+                                                    <tr>
+                                                        <td>{{ ++$index}}</td>
+                                                        <td>{{ $item->branch_name }}</td>
+                                                        <td>{{ $item->day }}</td>
+                                                        <td>{{ $item->total }}</td>
+                                                        <td>{{ $item->backout }}</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+
                                         @else
                                             <div class="col-12 text-center">
                                                 <img src="{{ asset('images/no-results.webp') }}" class="no-results-image col-12 col-md-7  mt-5"
