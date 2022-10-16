@@ -420,7 +420,7 @@ class PlaceReport extends BaseReport
             $branches = Branch::active()->primary()->pluck('id')->toArray();
         }
 
-        $date = Carbon::parse($filter['end'])->format('Y-m-d');
+        $date = !empty($filter['end']) ? Carbon::parse($filter['end'])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $query = DB::table($this->profileTable)
             ->whereIn("$this->profileTable.status", ['completed', 'modified'])
             ->where("$this->profileTable.plate_status", '=', 'success')

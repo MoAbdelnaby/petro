@@ -220,7 +220,7 @@ class BackoutReport extends BaseReport
             $branches = Branch::active()->primary()->pluck('id')->toArray();
         }
 
-        $date = Carbon::parse($filter['end'])->format('Y-m-d');
+        $date = !empty($filter['end']) ? Carbon::parse($filter['end'])->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $query = DB::table($this->mainTable)
             ->whereIn("$this->mainTable.status", ['completed', 'modified'])
             ->where("$this->mainTable.plate_status", '=', 'success')
