@@ -197,6 +197,7 @@ class UserController extends Controller
 
     public function editchangepassword(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'oldpassword' => ['required', 'min:8', new MatchOldPassword],
             'password' => 'required|min:8|confirmed',
@@ -206,7 +207,7 @@ class UserController extends Controller
         }
         User::find(auth()->user()->id)->update(['password' => $request->password]);
 
-        return redirect('/auth/users/changepassword/' . auth()->user()->id)->with('success', __('app.change_success_message'));
+        return redirect()->back()->with('success', __('app.change_success_message'));
 
     }
 

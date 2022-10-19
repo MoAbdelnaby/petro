@@ -33,7 +33,7 @@
                 <!--begin::Aside-->
                 <div class="d-flex flex-center flex-lg-start flex-column">
                     <!--begin::Logo-->
-                    <a href="/login.html" class="mb-7">
+                    <a href="{{route('login')}}" class="mb-7">
                         <img alt="Logo" src="{{asset('/new-login')}}/petromin.png" />
                     </a>
                     <!--end::Logo-->
