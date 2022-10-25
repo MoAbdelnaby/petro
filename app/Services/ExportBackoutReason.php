@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Exports\BackoutExport;
 use App\Models\Branch;
+use Carbon\Carbon;
 use Excel;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -26,24 +27,26 @@ class ExportBackoutReason implements IExportFile
 
             $query = \DB::table('backout_reasons')
                 ->select('backout_reasons.*', 'branches.name as branch_name')
-                ->join('branches', 'backout_reasons.BayCode', '=', 'branches.code')
-                ->where('backout_reasons.BayCode', '=', $branch->code)
+                ->join('branches', 'backout_reasons.station_code', '=', 'branches.code')
+                ->whereNull('branches.deleted_at')
+                ->where('backout_reasons.station_code', '=', $branch->code)
                 ->orderBy('backout_reasons.id', 'DESC');
 
             if ($file->start) {
-                $start = date('Y-m-d h:i:s', strtotime($file->start . ' 00:00:00'));
-                $query = $query->whereDate('backout_reasons.created_at', '>=', $start);
+//                $start = date('Y-m-d h:i:s', strtotime($file->start . ' 00:00:00'));
+                $query = $query->whereDate('backout_reasons.created_at', '>=', Carbon::parse($file->start));
             }
 
             if ($file->end) {
-                $end = date('Y-m-d h:i:s', strtotime($file->end . ' 00:00:00'));
-                $query = $query->whereDate('backout_reasons.created_at', '<=', $end);
+//                $end = date('Y-m-d h:i:s', strtotime($file->end . ' 00:00:00'));
+                $query = $query->whereDate('backout_reasons.created_at', '<=', Carbon::parse($file->end));
             }
 
             $result = [];
             $query->chunk(500, function ($item) use (&$result) {
                 $result = array_merge($result, $item->toArray());
             });
+
 
             $path = "branches/$file->branch_id/files/backout_reasons";
 

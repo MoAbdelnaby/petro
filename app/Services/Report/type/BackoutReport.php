@@ -226,6 +226,10 @@ class BackoutReport extends BaseReport
             ->where("$this->mainTable.plate_status", '=', 'success')
             ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
             ->where('branches.user_id', parentID())
+            ->when(isset($filter['branch_data']),function ($q) use($filter){
+//                return $q->where('station_code', Branch::find($filter['branch_data'])->code);
+                return $q->where('branches.id', $filter['branch_data']);
+            })
             ->where('branches.active', true)
             ->whereDate("$this->mainTable.checkInDate", $date)
             ->whereNull('branches.deleted_at')

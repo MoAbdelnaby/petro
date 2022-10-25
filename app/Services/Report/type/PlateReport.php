@@ -240,6 +240,10 @@ class PlateReport extends BaseReport
             ->join('branches', 'branches.id', '=', "$this->mainTable.branch_id")
             ->where('branches.user_id', parentID())
             ->where('branches.active', true)
+            ->when(isset($filter['branch_data']),function ($q) use($filter){
+//                return $q->where('station_code', Branch::find($filter['branch_data'])->code);
+                return $q->where('branches.id', $filter['branch_data']);
+            })
             ->whereDate("$this->mainTable.checkInDate", $date)
             ->whereNull('branches.deleted_at')
             ->whereIn('branches.id',$branches)
