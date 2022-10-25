@@ -427,6 +427,7 @@ class PlaceReport extends BaseReport
             ->join('branches', 'branches.id', '=', "$this->profileTable.branch_id")
             ->where('branches.user_id', parentID())
             ->where('branches.active', true)
+            ->where("$this->profileTable.plate_status", "success")
             ->when(isset($filter['branch_data']),function ($q) use($filter){
 //                return $q->where('station_code', Branch::find($filter['branch_data'])->code);
                 return $q->where('branches.id', $filter['branch_data']);
@@ -438,9 +439,18 @@ class PlaceReport extends BaseReport
             ->select(
                 'branches.name as branch_name',
                 DB::raw("(DATE_FORMAT($this->profileTable.checkInDate, '%d-%m-%Y')) as day"),
-                DB::raw("COUNT(CASE WHEN invoice != 0 then 1 ELSE NULL END) as backout"),
+//                DB::raw("COUNT(CASE WHEN invoice != 0 then 1 ELSE NULL END) as backout"),
+//                DB::raw("COUNT(CASE WHEN UNIX_TIMESTAMP(invoice) = 0 then 1 ELSE NULL END) as backout"),
+//                DB::raw("COUNT(NULLIF(invoice,'0')) AS backout"),
+//                DB::raw("SUM(case when invoice != ' ' then 1 else 0 end) as backout"),
+//                DB::raw("COUNT(ISNULL(invoice)) AS backout"),
+//                DB::raw("COUNT(!ISNULL(invoice)) AS invoiced"),
+//                DB::raw("IFNULL(COUNT(invoice), 0) AS backout"),
+//                DB::raw("COUNT(!ISNULL(invoice)) as total"),
+                DB::raw("SUM(CASE WHEN ISNULL(invoice) then 1 ELSE 0 END) as backout"),
                 DB::raw("COUNT(*) as total"),
             );
+
 
 //        $this->handleDateFilter($query, $filter, true);
         $result = $query->groupBy('branch_name')->get()->toArray();

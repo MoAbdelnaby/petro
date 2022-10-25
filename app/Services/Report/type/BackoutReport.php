@@ -238,7 +238,7 @@ class BackoutReport extends BaseReport
             ->select(
                 'branches.name as branch_name',
                 DB::raw("(DATE_FORMAT($this->mainTable.checkInDate, '%d-%m-%Y')) as day"),
-                DB::raw("COUNT(CASE WHEN invoice != 0 then 1 ELSE NULL END) as backout"),
+                DB::raw("COUNT(CASE WHEN invoice != NULL then 1 ELSE NULL END) as backout"),
                 DB::raw("COUNT(*) as total"),
             );
 
