@@ -193,8 +193,13 @@ class ReportController extends Controller
             $check = \Excel::store(new ExportFiles($list), '/public/' . $file_path);
 
             if ($check) {
-                $file = public_path() . "/storage/$file_path";
-                return \Response::download($file, $name, ['Content-Type: application/xls']);
+                if($request->ajax()) {
+                    $file  = url('storage/' .$file_path);
+                    return response()->json(['file'=> $file ,'name'=> $name]);
+                }
+                $file = storage_path('app/public/'.$file_path);
+                $headers = array('Content-Type' => \File::mimeType($file));
+                return \Response::download($file, $name, $headers);
             }
 
             return redirect()->back()->with('danger', "Fail To Download File");

@@ -103,19 +103,49 @@
                 }
             });
 
+            {{--$(".btn_download").on('click', function (e) {--}}
+            {{--    e.preventDefault();--}}
+
+            {{--    let currentForm = @json(request()->query());--}}
+            {{--    let url = `${app_url}/customer/reports/${type}/download`;--}}
+            {{--    let token = $('meta[name="csrf-token"]').attr("content");--}}
+            {{--    let inputs = `<input name="_token" value="${token}">`;--}}
+
+            {{--    for (var key of Object.keys(currentForm)) {--}}
+            {{--        inputs += `<input name=${key} value=${currentForm[key] ?? ''} >`;--}}
+            {{--    }--}}
+
+            {{--    $(`<form action=${url}>${inputs}</form>`).appendTo('body').submit().remove();--}}
+            {{--});--}}
+
             $(".btn_download").on('click', function (e) {
                 e.preventDefault();
 
                 let currentForm = @json(request()->query());
                 let url = `${app_url}/customer/reports/${type}/download`;
-                let token = $('meta[name="csrf-token"]').attr("content");
-                let inputs = `<input name="_token" value="${token}">`;
 
+                const data = [];
                 for (var key of Object.keys(currentForm)) {
-                    inputs += `<input name=${key} value=${currentForm[key] ?? ''} >`;
+                    data[key]=currentForm[key]
                 }
+                data['_token']=$('meta[name="csrf-token"]').attr('content');
+                e.stopPropagation();
+                $.get(url,{...data}).then(res => {
 
-                $(`<form action=${url}>${inputs}</form>`).appendTo('body').submit().remove();
+                    var tmpLink = document.createElement('a');
+                    tmpLink.download = res.name; // set the name of the download file
+                    tmpLink.href = res.file;
+                    // temporarily add link to body and initiate the download
+                    document.body.appendChild(tmpLink);
+                    $(tmpLink).attr('target', '_blank')
+                    tmpLink.click();
+                    document.body.removeChild(tmpLink);
+
+                    // Toast.fire({
+                    //     icon: 'success',
+                    //     title: 'file downloaded successfully'
+                    // })
+                })
             });
 
             $(".filter-form").on("submit", function (e) {
