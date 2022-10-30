@@ -18,7 +18,6 @@ class BackoutReasonController extends Controller
 {
     public function index(BranchMessageRequest $request)
     {
-
         if (in_array($request->type, ['pdf', 'xls'])) {
             return $this->export($request->all());
         }
@@ -27,7 +26,7 @@ class BackoutReasonController extends Controller
             $branches = Branch::active()->primary()
                 ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
                 ->get();
-        }else {
+        } else {
 
             $branches = DB::table('branches')
                 ->select('branches.*')
@@ -42,16 +41,22 @@ class BackoutReasonController extends Controller
         $query = BackoutReason::query()
             ->with(['carprofile'])
             ->select(['backout_reasons.*', 'branches.name'])
-            ->join('branches', 'branches.code', '=', 'backout_reasons.station_code')
-            ->when(($request->branch_code != null), function ($q) {
-                return $q->where('station_code', \request('branch_code'));
-            });
+            ->join('branches', 'branches.code', '=', 'backout_reasons.station_code');
+//            ->when(($request->branch_code != null), function ($q) {
+//                return $q->where('station_code', \request('branch_code'));
+//            });
         if (auth()->user()->type == 'subcustomer' && $request->branch_code == null) {
+
             $codes = Branch::active()->primary()->select('code')
                 ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
                 ->pluck('code')->toArray();
             $query->whereIn('branches.code', $codes);
         }
+        if ( !empty($request->branch_code)) {
+//            dd($request->branch_code,'gg');
+            $query->whereIn('branches.code', $request->branch_code);
+        }
+//        dd($query->toSql());
 
         if ($request->start_date) {
             $query->whereDate('backout_reasons.created_at', '>=', $request->start_date);

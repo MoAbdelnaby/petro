@@ -96,31 +96,56 @@
                                                 <i class="fas fa-sort-alt"></i> Filter
                                             </a>
                                             <div class="filter-content ">
-                                                <form method="get" id="form" class="filter-form"
+                                                <form method="post" id="form" class="filter-form"
                                                       action="{{route('branch.backout_reasons')}}">
                                                     @csrf
                                                     <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="form-group">
-                                                                <label class="w-100">@lang('app.Select_branch')
-                                                                    * </label>
-                                                                <div class="select-cont position-relative">
-                                                                    <select class="form-control" id="select_branch"
-                                                                            name="branch_code">
-                                                                        <option value=""
-                                                                                selected>{{ __('app.Select_branch') }}</option>
-                                                                        @foreach($branches as $branch)
-                                                                            <option value="{{$branch->code}}"
-                                                                            @if(request('branch_code') != null)
-                                                                                {{request('branch_code') == $branch->code ? 'selected' : ''}}
-                                                                                @endif>{{$branch->name}}</option>
-                                                                        @endforeach
-                                                                    </select>
+                                                        <div class="col-12 branch_container">
+                                                            <div class="row ">
+                                                                <div class="col-md-10">
+                                                                    <div class="form-group">
+                                                                        <label class="w-100">@lang('app.Select_branch')
+                                                                            * </label>
+                                                                        <div class="select-cont position-relative">
+                                                                            <select
+                                                                                class="form-control select_2 required select_branch"
+                                                                                multiple id="select_branch"
+                                                                                required
+                                                                                name="branch_code[]">
+{{--                                                                                <option value=""--}}
+{{--                                                                                        selected>{{ __('app.Select_branch') }}</option>--}}
+                                                                                @foreach($branches as $branch)
+                                                                                    <option value="{{$branch->code}}"
+                                                                                    @if(request('branch_code') != null)
+                                                                                        {{request('branch_code') == $branch->code ? 'selected' : ''}}
+                                                                                        @endif>{{$branch->name}}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                        <div
+                                                                            class="invalid-feedback d-block name-feedback">
+                                                                            <strong>{{$errors->has('branch_code')?$errors->first('branch_code'):''}}</strong>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="invalid-feedback d-block name-feedback">
-                                                                    <strong>{{$errors->has('branch_code')?$errors->first('branch_code'):''}}</strong>
+                                                                <div class="col-md-2"
+                                                                     style="margin-left: -25px; padding-top: 5px">
+                                                                    <label for="selectallbranches"
+                                                                           class=" pl-4 mt-4">
+                                                                        <input class="trashselect" type="checkbox"
+                                                                                id="selectallbranches"
+                                                                        >
+                                                                        <span class="checkmark"></span>
+                                                                        <strong>{{ __('app.all') }}</strong>
+
+                                                                    </label>
+                                                                    {{-- <input type="checkbox" id="selectallbranches" > Select All --}}
+                                                                    {{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
                                                                 </div>
+
                                                             </div>
+
+
                                                         </div>
 
                                                         <div class="col-12 mb-2">
@@ -220,7 +245,7 @@
                                             <th class="th-sm">{{__('app.reason2')}}</th>
                                             <th class="th-sm">{{__('app.createdIn')}}</th>
                                             <th class="th-sm">{{__('app.gym.period')}}</th>
-{{--                                            <th class="th-sm">{{__('app.carprofile')}}</th>--}}
+                                            {{--                                            <th class="th-sm">{{__('app.carprofile')}}</th>--}}
                                             <th class="th-sm">{{__('app.mac_createdIn')}}</th>
                                             {{--                                                <th class="th-sm">{{__('app.manage')}}</th>--}}
                                         </tr>
@@ -244,24 +269,24 @@
                                                         <td class="checkin-date"></td>
                                                         <td class="period"></td>
                                                     @endif
-{{--                                                    <td>--}}
-{{--                                                        @if(!is_null($item->carprofile_id))--}}
-{{--                                                            <a class="" data-toggle="popover"--}}
-{{--                                                               data-trigger="hover"--}}
-{{--                                                               data-content="{{ __('app.Available')  }}">--}}
-{{--                                                                <i class="fas fa-circle text-success "></i>--}}
-{{--                                                            </a>--}}
+                                                    {{--                                                    <td>--}}
+                                                    {{--                                                        @if(!is_null($item->carprofile_id))--}}
+                                                    {{--                                                            <a class="" data-toggle="popover"--}}
+                                                    {{--                                                               data-trigger="hover"--}}
+                                                    {{--                                                               data-content="{{ __('app.Available')  }}">--}}
+                                                    {{--                                                                <i class="fas fa-circle text-success "></i>--}}
+                                                    {{--                                                            </a>--}}
 
-{{--                                                        @else--}}
-{{--                                                            <a class="" data-toggle="popover"--}}
-{{--                                                               data-trigger="hover"--}}
-{{--                                                               data-content="{{ __('app.Unavailable')  }}">--}}
-{{--                                                                <i class="fas fa-circle text-danger"></i>--}}
-{{--                                                            </a>--}}
-{{--                                                        @endif--}}
-{{--                                                    </td>--}}
+                                                    {{--                                                        @else--}}
+                                                    {{--                                                            <a class="" data-toggle="popover"--}}
+                                                    {{--                                                               data-trigger="hover"--}}
+                                                    {{--                                                               data-content="{{ __('app.Unavailable')  }}">--}}
+                                                    {{--                                                                <i class="fas fa-circle text-danger"></i>--}}
+                                                    {{--                                                            </a>--}}
+                                                    {{--                                                        @endif--}}
+                                                    {{--                                                    </td>--}}
                                                     <td>{{$item->created_at}}</td>
-{{--                                                    <td>{{optional($item->created_at)->format('d-M-Y')}}</td>--}}
+                                                    {{--                                                    <td>{{optional($item->created_at)->format('d-M-Y')}}</td>--}}
                                                     {{--                                                    <td></td>--}}
                                                 </tr>
                                             @endforeach
@@ -403,9 +428,28 @@
                 select.closest('.form-group').find('.invalid-feedback').html('<strong>Please select branch</strog>')
             }
         })
+
         $('#select_branch').on('change', function () {
             $(this).closest('.form-group').find(".invalid-feedback").hide();
         });
+
+
+        $(document).ready(function () {
+            $("#selectallbranches").click(function () {
+
+                if ($("#selectallbranches").is(':checked')) {
+                    $(this).closest(".branch_container").find('.select_branch > option').prop("selected", "selected");
+                    $(this).closest(".branch_container").find('.select_branch').trigger("change");
+                } else {
+                    $(this).closest(".branch_container").find('.select_branch').val(null);
+                    $(this).closest(".branch_container").find('.select_branch').trigger("change");
+                }
+            });
+
+            $("#checkValButton").click(function () {
+                alert($(".select_branch").val());
+            });
+        })
 
     </script>
 @endpush

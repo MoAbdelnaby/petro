@@ -148,7 +148,7 @@ Route::group(['middleware' => ['auth', 'speed']], function () {
     Route::post('/users/editchangepassword', 'Auth\UserController@editchangepassword')->name('users.editchangepassword');
     Route::get('/customerhome', 'Customer\CustomerPackagesController@statistics')->name('CustomerHome');
     Route::post('/users/updateprofile', 'Auth\UserController@updateprofile')->name('users.updateprofile');
-    Route::get('branches/backout-reasons', 'Customer\BackoutReasonController@index')->name('branch.backout_reasons');
+    Route::match(['get', 'post'],'branches/backout-reasons', 'Customer\BackoutReasonController@index')->name('branch.backout_reasons');
     Route::post('branches/backout-reasons/export', 'Customer\BackoutReasonController@export')->name('branch.backout_reason_export');
     Route::get('branches/backout-reasons/exported', 'Customer\BackoutReasonController@exportedFile')->name('branch.backout_reason_exported');
 
