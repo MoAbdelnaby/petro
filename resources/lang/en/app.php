@@ -156,6 +156,7 @@ return [
     'Branch_data' => 'Branch data',
     'Select_branches' => 'Select branches',
     'Select_branch' => 'Select branch',
+    'Select_all_branches' => 'All branches',
     'Filter' => 'Filter',
     'Edit_Information' => 'Edit Information',
     'Close' => 'Close',

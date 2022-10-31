@@ -96,13 +96,13 @@
                                                 <i class="fas fa-sort-alt"></i> Filter
                                             </a>
                                             <div class="filter-content ">
-                                                <form method="post" id="form" class="filter-form"
+                                                <form method="get" id="form" class="filter-form"
                                                       action="{{route('branch.backout_reasons')}}">
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col-12 branch_container">
                                                             <div class="row ">
-                                                                <div class="col-md-10">
+                                                                <div class="col-md-12">
                                                                     <div class="form-group">
                                                                         <label class="w-100">@lang('app.Select_branch')
                                                                             * </label>
@@ -112,8 +112,8 @@
                                                                                 multiple id="select_branch"
                                                                                 required
                                                                                 name="branch_code[]">
-{{--                                                                                <option value=""--}}
-{{--                                                                                        selected>{{ __('app.Select_branch') }}</option>--}}
+                                                                                <option value="all"
+                                                                                        selected>{{ __('app.Select_all_branches') }}</option>
                                                                                 @foreach($branches as $branch)
                                                                                     <option value="{{$branch->code}}"
                                                                                     @if(request('branch_code') != null)
@@ -128,20 +128,20 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-2"
-                                                                     style="margin-left: -25px; padding-top: 5px">
-                                                                    <label for="selectallbranches"
-                                                                           class=" pl-4 mt-4">
-                                                                        <input class="trashselect" type="checkbox"
-                                                                                id="selectallbranches"
-                                                                        >
-                                                                        <span class="checkmark"></span>
-                                                                        <strong>{{ __('app.all') }}</strong>
+{{--                                                                <div class="col-md-2"--}}
+{{--                                                                     style="margin-left: -25px; padding-top: 5px">--}}
+{{--                                                                    <label for="selectallbranches"--}}
+{{--                                                                           class=" pl-4 mt-4">--}}
+{{--                                                                        <input class="trashselect" type="checkbox"--}}
+{{--                                                                                id="selectallbranches"--}}
+{{--                                                                        >--}}
+{{--                                                                        <span class="checkmark"></span>--}}
+{{--                                                                        <strong>{{ __('app.all') }}</strong>--}}
 
-                                                                    </label>
-                                                                    {{-- <input type="checkbox" id="selectallbranches" > Select All --}}
-                                                                    {{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
-                                                                </div>
+{{--                                                                    </label>--}}
+{{--                                                                    --}}{{-- <input type="checkbox" id="selectallbranches" > Select All --}}
+{{--                                                                    --}}{{--                                                                    <input type="button" id="checkValButton" value="check Selected">--}}
+{{--                                                                </div>--}}
 
                                                             </div>
 

@@ -52,9 +52,12 @@ class BackoutReasonController extends Controller
                 ->pluck('code')->toArray();
             $query->whereIn('branches.code', $codes);
         }
-        if ( !empty($request->branch_code)) {
+        if (!empty($request->branch_code) && $request->branch_code[0] != 'all') {
 //            dd($request->branch_code,'gg');
+
             $query->whereIn('branches.code', $request->branch_code);
+
+
         }
 //        dd($query->toSql());
 
