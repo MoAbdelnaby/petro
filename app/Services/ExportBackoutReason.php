@@ -20,17 +20,23 @@ class ExportBackoutReason implements IExportFile
     public function export($file): bool
     {
         try {
-            $branch_id = $file->branch_id;
-            $branch = Branch::where('id', $branch_id)->first();
+            $code = NULL;
+            if (!is_null($file->branch_id) || !empty($file->branch_id)) {
+                $branch_id = $file->branch_id;
+                $branch = Branch::where('id', $branch_id)->first();
+                $code = $branch->code;
+            }
 
             $type = $file->type;
 
             $query = \DB::table('backout_reasons')
                 ->select('backout_reasons.*', 'branches.name as branch_name')
                 ->join('branches', 'backout_reasons.station_code', '=', 'branches.code')
-                ->whereNull('branches.deleted_at')
-                ->where('backout_reasons.station_code', '=', $branch->code)
-                ->orderBy('backout_reasons.id', 'DESC');
+                ->whereNull('branches.deleted_at');
+            if (!is_null($code)) {
+                $query->where('backout_reasons.station_code', '=', $code);
+            }
+            $query->orderBy('backout_reasons.id', 'DESC');
 
             if ($file->start) {
 //                $start = date('Y-m-d h:i:s', strtotime($file->start . ' 00:00:00'));
@@ -47,9 +53,14 @@ class ExportBackoutReason implements IExportFile
                 $result = array_merge($result, $item->toArray());
             });
 
-
-            $path = "branches/$file->branch_id/files/backout_reasons";
-
+            if (!is_null($file->branch_id) || !empty($file->branch_id)) {
+                $path = "branches/$file->branch_id/files/backout_reasons";
+            } else {
+                $path = "branches/all/files/backout_reasons";
+                if (!is_dir(storage_path("/app/public/" . $path))) {
+                    \File::makeDirectory(storage_path("/app/public/" . $path), 0777, true, true);
+                }
+            }
             $file_path = $path . '/' . $file->name;
 
             $check = false;

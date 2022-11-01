@@ -81,17 +81,21 @@ class BackoutReasonController extends Controller
     public function export($request)
     {
         $request = (object)$request;
-        $current_branch = Branch::where('code', $request->branch_code)->first();
         $type = $request->type;
 
         $start_name = $request->start_date ?? 'first';
         $last_name = $request->end_date ?? 'last';
-        $name = "{$current_branch->name}_file_from_{$start_name}_to_{$last_name}.$type";
+
+        $current_branch = 'backout';
+        if (!empty($request->branch_code) && $request->branch_code[0] != 'all' && count($request->branch_code) == 1) {
+            $current_branch = Branch::where('code', $request->branch_code)->first();
+            $name = "{$current_branch->name}_file_from_{$start_name}_to_{$last_name}.$type";
+        }
 
         $file = BranchFiles::firstOrCreate([
             'start' => $request->start_date ?? null,
             'end' => $request->end_date ?? null,
-            'branch_id' => $current_branch->id,
+            'branch_id' => $current_branch == 'backout' ? NULL : $current_branch->id,
             'type' => $type,
             'model_type' => 'backout',
         ], [

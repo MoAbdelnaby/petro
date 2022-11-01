@@ -85,6 +85,7 @@
             <th>Reason1</th>
             <th>Reason2</th>
             <th>Reason3</th>
+            <th>created at</th>
         </tr>
         </thead>
         <tbody>
@@ -102,6 +103,7 @@
                 <td>{{$item->reason1}}</td>
                 <td>{{$item->reason2}}</td>
                 <td>{{$item->reason3}}</td>
+                <td>{{$item->created_at}}</td>
             </tr>
         @endforeach
         </tbody>
