@@ -86,7 +86,9 @@ class ExportBackoutReason implements IExportFile
             }
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage() . $e->getLine());
+            $file->status = false;
+            $file->save();
+//            Log::error($e->getMessage() . $e->getLine());
         }
 
         return true;
