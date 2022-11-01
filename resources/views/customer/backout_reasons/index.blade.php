@@ -170,10 +170,10 @@
                                                                 class="btn btn-primary submit_form waves-effect waves-light">
                                                             <i class="fas fa-file-excel-o"></i> {{ __('app.ExportExcel') }}
                                                         </button>
-                                                        <button type="submit" id="export_excel" data-type="pdf"
-                                                                class="btn btn-primary submit_form waves-effect waves-light">
-                                                            <i class="fas fa-file-pdf-o"></i> {{ __('app.ExportPdf') }}
-                                                        </button>
+{{--                                                        <button type="submit" id="export_excel" data-type="pdf"--}}
+{{--                                                                class="btn btn-primary submit_form waves-effect waves-light">--}}
+{{--                                                            <i class="fas fa-file-pdf-o"></i> {{ __('app.ExportPdf') }}--}}
+{{--                                                        </button>--}}
                                                         <button type="submit" id="search" data-type="search"
                                                                 class="btn btn-secondary waves-effect waves-light px-4 py-2 submit-btn">
                                                             <i class="fas fa-search"></i> {{ __('app.Search') }}
