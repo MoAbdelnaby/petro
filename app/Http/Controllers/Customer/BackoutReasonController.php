@@ -87,6 +87,8 @@ class BackoutReasonController extends Controller
         $last_name = $request->end_date ?? 'last';
 
         $current_branch = 'backout';
+        $name = "{$current_branch->name}_file_from_{$start_name}_to_{$last_name}.$type";
+        
         if (!empty($request->branch_code) && $request->branch_code[0] != 'all' && count($request->branch_code) == 1) {
             $current_branch = Branch::where('code', $request->branch_code)->first();
             $name = "{$current_branch->name}_file_from_{$start_name}_to_{$last_name}.$type";
