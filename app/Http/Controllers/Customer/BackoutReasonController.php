@@ -119,7 +119,7 @@ class BackoutReasonController extends Controller
     {
         $items = BranchFiles::when($request->has('branch_id'), function ($q) {
             return $q->where('branch_id', \request('branch_id'));
-        })->where('user_id', parentID())
+        })->where('user_id', auth()->user()->id)
             ->where('model_type', 'backout')
             ->latest()
             ->paginate(10);
