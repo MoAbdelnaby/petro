@@ -156,6 +156,8 @@
                                                         <div class="col-12 mb-2">
                                                             <label>{{__('app.start')}}</label>
                                                             <input type="date" name="start_date" class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
                                                                    value="{{old('start_date') ?? request('start_date')}}"/>
                                                             <div class="invalid-feedback d-block name-feedback">
                                                                 <strong>{{$errors->has('start_date')?$errors->first('start_date'):''}}</strong>
@@ -164,6 +166,8 @@
                                                         <div class="col-12">
                                                             <label>{{__('app.end')}}</label>
                                                             <input type="date" name="end_date" class="form-control"
+                                                                   max="{{\Carbon\Carbon::now()->format('Y-m-d')}}"
+                                                                   oninput="if (this.value >= this.max) this.value = this.max;"
                                                                    value="{{old('end_date') ?? request('end_date')}}"/>
                                                             <div class="invalid-feedback d-block name-feedback">
                                                                 <strong>{{$errors->has('end_date')?$errors->first('end_date'):''}}</strong>

@@ -494,7 +494,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??now()->subDays(30)->toDateString()}}
+                                                {{request('start')??now()->startOfMonth()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -639,7 +639,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??now()->subDays(30)->toDateString()}}
+                                                {{request('start')??now()->startOfMonth()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -783,7 +783,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??now()->subDays(30)->toDateString()}}
+                                                {{request('start')??now()->startOfMonth()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -927,7 +927,7 @@
                                         <div class="duration mr-4">
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')??now()->subDays(30)->toDateString()}}
+                                                {{request('start')??now()->startOfMonth()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"

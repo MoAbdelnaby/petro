@@ -76,8 +76,13 @@ class CustomerPackagesController extends Controller
 
             $report[$type] = ReportService::handle($type, $filter);
         }
-
-        $branches = Branch::active()->primary()->select('id', 'name')->get();
+        if (auth()->user()->type === 'subcustomer') {
+            $branches = Branch::active()->primary()
+                ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
+                ->select('id', 'name')->get();
+        }else{
+            $branches = Branch::active()->primary()->select('id', 'name')->get();
+        }
 
         return view('customerhome', [
             'statistics' => $statistics,
@@ -350,7 +355,7 @@ class CustomerPackagesController extends Controller
     public function handleFilterFormat($branches, $filter): array
     {
         return [
-            'start' => $filter['start'] ?? Carbon::now()->subDays(30)->toDateString(),
+            'start' => $filter['start'] ?? Carbon::now()->startOfMonth()->toDateString(),
             'end' => $filter['end'] ?? Carbon::now()->toDateString(),
             'show_by' => 'branch',
             'default' => true,

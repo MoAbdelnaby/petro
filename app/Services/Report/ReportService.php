@@ -32,13 +32,13 @@ class ReportService
             $installed_branches = Branch::active()->primary()->installed()
                 ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
                 ->count();
-            $branches = Branch::primary()
+            $branches = Branch::primary()->active()
                 ->whereHas('branch_users', fn($q) => $q->where('user_id', auth()->id()))
                 ->count();
         } else {
             $active_branches = Branch::active()->primary()->count();
             $installed_branches = Branch::active()->primary()->installed()->count();
-            $branches = Branch::primary()->count();
+            $branches = Branch::primary()->active()->count();
         }
 
         $filter = [
@@ -178,7 +178,7 @@ class ReportService
 
             $result[] = [
                 'Branch Name' => $branch->name ?? 0,
-                'Start Date' => $start ?? now()->subDays(30)->toDateString(),
+                'Start Date' => $start ?? now()->startOfMonth()->toDateString(),
                 'End Date' => $end ?? now()->toDateString(),
                 'Area Count' => $areas ?? 0,
                 'Car Count' => $cars ?? 0,
@@ -204,7 +204,7 @@ class ReportService
      */
     public static function handleDateFilter($query, $filter, bool $timeStamp = false)
     {
-        $filter['start'] = empty($filter['start']) ? now()->subDays(30)->toDateString() : $filter['start'];
+        $filter['start'] = empty($filter['start']) ? now()->startOfMonth()->toDateString() : $filter['start'];
 
         if ($filter['start'] ?? false) {
             $start = (Carbon::parse($filter['start']) > now()) ? now() : Carbon::parse($filter['start']);

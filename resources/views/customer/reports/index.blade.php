@@ -133,25 +133,25 @@
 
                                                     </div>
 
-                                                    <div class="form-group input-group input-daterange">
+                                                    <div class="form-group input-daterange">
                                                         <div class="d-flex align-items-end row">
                                                             <div class="col-md-12 mt-2">
                                                                 <label
                                                                     class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
-                                                                <input type="datetime-local"
+                                                                <input type="date"
                                                                        value="{{request('start')}}" name="start"
                                                                        class="form-control"
-                                                                       max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                       max="{{\Carbon\Carbon::now()->format('Y-m-d')}}"
                                                                        oninput="if (this.value >= this.max) this.value = this.max;"
                                                                 />
                                                             </div>
 
                                                             <div class="col-md-12 mt-2">
                                                                 <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
-                                                                <input type="datetime-local" value="{{request('end')}}"
+                                                                <input type="date" value="{{request('end')}}"
                                                                        name="end"
                                                                        class="form-control"
-                                                                       max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                                                       max="{{\Carbon\Carbon::now()->format('Y-m-d')}}"
                                                                        oninput="if (this.value >= this.max) this.value = this.max;"
                                                                 />
                                                             </div>
@@ -213,7 +213,7 @@
                                             </i>
                                             <p>
                                                 <b>{{ __('app.from') }} : </b>
-                                                {{request('start')?? now()->subDays(30)->toDateString()}}
+                                                {{request('start')?? now()->startOfMonth()->toDateString()}}
                                             </p>
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg"

@@ -20,8 +20,14 @@ class CreateTopBranchViewsPLateTable extends Migration
 //            GROUP BY branch_id ORDER BY count DESC LIMIT 10
 //            )
 //        ");
-        \DB::statement("select count(`carprofiles`.`id`) AS `count`,`carprofiles`.`branch_id` AS `branch_id` from `carprofiles` WHERE created_at BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE() group by `carprofiles`.`branch_id` order by `count` desc limit 10");
+//        \DB::statement("select count(`carprofiles`.`id`) AS `count`,`carprofiles`.`branch_id` AS `branch_id` from `carprofiles` WHERE created_at BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE() group by `carprofiles`.`branch_id` order by `count` desc limit 10");
+//        \DB::statement("(select count(`carprofiles`.`id`) AS `count`,`carprofiles`.`branch_id` AS `branch_id` from `carprofiles` where (`carprofiles`.`created_at` between (curdate() - interval 30 day) and curdate()) group by `carprofiles`.`branch_id` order by `count` desc limit 10)");
+//        select count(`carprofiles`.`id`) AS `count`,`carprofiles`.`branch_id` AS `branch_id` from `carprofiles` where (`carprofiles`.`created_at` between DATE_SUB(CURRENT_DATE, INTERVAL DAYOFMONTH(CURRENT_DATE)-1 DAY) and curdate()) group by `carprofiles`.`branch_id` order by `count` desc limit 10
+
+//        select count(`carprofiles`.`id`) AS `count`,`carprofiles`.`branch_id` AS `branch_id` from `carprofiles` where (`carprofiles`.`created_at` BETWEEN (curdate() - dayofmonth(CURDATE()) + 1) and curdate()) group by `carprofiles`.`branch_id` order by `count` desc limit 10
+        \DB::statement("(select count(`carprofiles`.`id`) AS `count`,`carprofiles`.`branch_id` AS `branch_id` from `carprofiles` where (`carprofiles`.`created_at` between date((curdate() - dayofmonth(curdate())) + 1) and curdate()) group by `carprofiles`.`branch_id` order by `count` desc limit 10)");
     }
+
 
     /**
      * Reverse the migrations.

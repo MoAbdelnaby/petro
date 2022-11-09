@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Services\SeederCheck;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,7 +26,7 @@ class Branch extends Model
 
     public function getStatusAttribute(): bool
     {
-        return $this->last_connected >= now()->subMinutes(15);
+        return $this->last_connected >= Carbon::now()->subMinutes(15);
     }
 
     public function scopeActive($query)
