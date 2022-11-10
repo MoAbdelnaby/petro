@@ -57,11 +57,18 @@ class ReportService
         $areas = AreaStatus::query();
 
         //Handle filter date [start-end]
-        self::handleDateFilter($cars, $filter, true);
-        self::handleDateFilter($invoice, $filter, true);
-        self::handleDateFilter($welcome, $filter, true);
-        self::handleDateFilter($backout, $filter, true);
-        self::handleDateFilter($serving, $filter, true);
+//        self::handleDateFilter($cars, $filter, true);
+//        self::handleDateFilter($invoice, $filter, true);
+//        self::handleDateFilter($welcome, $filter, true);
+//        self::handleDateFilter($backout, $filter, true);
+//        self::handleDateFilter($serving, $filter, true);
+
+        self::handleDateFilter($cars, $filter);
+        self::handleDateFilter($invoice, $filter);
+        self::handleDateFilter($welcome, $filter);
+        self::handleDateFilter($backout, $filter);
+        self::handleDateFilter($serving, $filter);
+
 
         if (!empty($lists)) {
             if (!is_array($lists)) {
@@ -158,11 +165,17 @@ class ReportService
             $areas = AreaStatus::query();
 
             //Handle filter date [start-end]
-            self::handleDateFilter($cars, $filter, true);
-            self::handleDateFilter($invoice, $filter, true);
-            self::handleDateFilter($welcome, $filter, true);
-            self::handleDateFilter($backout, $filter, true);
-            self::handleDateFilter($serving, $filter, true);
+//            self::handleDateFilter($cars, $filter, true);
+//            self::handleDateFilter($invoice, $filter, true);
+//            self::handleDateFilter($welcome, $filter, true);
+//            self::handleDateFilter($backout, $filter, true);
+//            self::handleDateFilter($serving, $filter, true);
+
+            self::handleDateFilter($cars, $filter);
+            self::handleDateFilter($invoice, $filter);
+            self::handleDateFilter($welcome, $filter);
+            self::handleDateFilter($backout, $filter);
+            self::handleDateFilter($serving, $filter);
 
             $areas = $areas->count();
             $cars = $cars->count();
@@ -207,6 +220,7 @@ class ReportService
         $filter['start'] = empty($filter['start']) ? now()->startOfMonth()->toDateString() : $filter['start'];
 
         if ($filter['start'] ?? false) {
+
             $start = (Carbon::parse($filter['start']) > now()) ? now() : Carbon::parse($filter['start']);
             if ($timeStamp) {
                 $query->where($filter['column'], '>=', $start->format('Y-m-d H:i:s'));
@@ -216,6 +230,7 @@ class ReportService
         }
 
         if ($filter['end'] ?? false) {
+
             $end = Carbon::parse($filter['end']) > now() ? now() : Carbon::parse($filter['end']);
             if ($timeStamp) {
                 $query->where($filter['column'], '<=', $end->format('Y-m-d H:i:s'));
