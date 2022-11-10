@@ -43,19 +43,20 @@
             </div>
 
 
-            <div class="form-group input-group input-daterange">
+            <div class="form-group  input-daterange">
                 <div class="d-flex align-items-end mt-4 row">
                     <div class="col-md-12">
                         <label class="mb-0  p-0">{{__('app.gym.Start_Date')}}</label>
-                        <input type="datetime-local" value="{{request('start')}}" name="start"
+                        <input type="date" value="{{request('start')}}" name="start"
                                class="form-control" max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
                                oninput="if (this.value >= this.max) this.value = this.max;"
                         />
                     </div>
 
+
                     <div class="col-md-12 mt-3">
                         <label class="mb-0 ">{{__('app.gym.End_Date')}}</label>
-                        <input type="datetime-local" value="{{request('end')}}" name="end"
+                        <input type="date" value="{{request('end')}}" name="end"
                                class="form-control" max="{{\Carbon\Carbon::now()->addDay()->format('Y-m-d')}}"
                                oninput="if (this.value >= this.max) this.value = this.max;"
                         />
