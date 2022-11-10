@@ -948,7 +948,7 @@ return array(
     'minute' => 'دقيقة',
     'month' => 'شهر',
     'most_data_statistics' => 'معظم إحصائيات البيانات',
-    'most_statistics' => 'معظم الإحصائيات',
+    'most_statistics' => 'معظم الإحصائيات [هذا الشهر]',
     'motorcycle_Count' => 'عدد الدراجات النارية',
     'new' => 'جديد',
     'new_escalation' => 'تصعيد جديد',

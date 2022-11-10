@@ -20,7 +20,7 @@
                         <div class="iq-card iq-card-block iq-card-stretch iq-card-height p-0">
                             <div class="iq-card-body p-0">
                                 <div class="custom-head mb-2 c-flex">
-                                    <h2>{{ __('app.most_statistics') }} [ Last 30 Days ]</h2>
+                                    <h2>{{ __('app.most_statistics') }} </h2>
                                     {{--                                    <div class="filter-pills-cont">--}}
                                     {{--                                        <ul class="nav nav-pills ">--}}
                                     {{--                                            <li class="nav-item">--}}

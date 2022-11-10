@@ -1584,7 +1584,7 @@ return [
     'Default_report' => 'Default Report',
     'area_count' => 'Area Count',
     'most_data_statistics' => 'Most Data Statistics',
-    'most_statistics' => 'Most Statistics',
+    'most_statistics' => 'Most Statistics [This Month]',
     'something_error' => 'Something Error',
     'city' => 'City',
     'show_by' => 'Show By',
