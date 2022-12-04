@@ -215,6 +215,7 @@ class ReportController extends Controller
      */
     public function downloadStatistics(Request $request)
     {
+//        return response()->json(['data'=> $request->all()]);
         if (auth()->user()->type === 'subcustomer') {
             $branches = Branch::active()->primary()->select('id', 'name')
                 ->with('areas')
@@ -241,6 +242,12 @@ class ReportController extends Controller
         $check = \Excel::store(new ExportFiles($data), '/public/' . $file_path);
 
         if ($check) {
+
+            if($request->ajax()) {
+                $file  = url('storage/' .$file_path);
+                return response()->json(['file'=> $file ,'name'=> $name]);
+            }
+
             $file = public_path() . "/storage/$file_path";
             return \Response::download($file, $name, ['Content-Type: application/xls']);
         }

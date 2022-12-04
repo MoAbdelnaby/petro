@@ -86,15 +86,18 @@
                                                href="{{route('reports.index')}}">
                                                 <i class="fas fa-bookmark"></i> &nbsp;{{ __('app.Default_report') }}
                                             </a>
+
                                             <a class="btn btn-info waves-effect waves-light px-2 py-2 btn-sm static_download">
-                                                <i class="fas fa-download"></i> &nbsp;{{ __('app.Download') }}
+                                                <i class="fas fa-download"></i>
+                                                <span class="statistcs-spinner spinner-grow spinner-grow-sm " style="display: none" role="status" aria-hidden="true"></span>
+                                                &nbsp;{{ __('app.Download') }}
                                             </a>
                                             <a class="btn-filter btn btn-primary waves-effect waves-light px-2 py-2"
                                                data-toggle="dropdown" href="#">
                                                 <i class="fa-solid fa-filter"></i> &nbsp;{{ __('app.Filter') }}
                                             </a>
                                             <div class="filter-content" aria-labelledby="dropdownMenuButton">
-                                                <form action="{{route('reports.index')}}" method="post"
+                                                <form action="{{route('reports.index')}}" method="get"
                                                       class="filter-form">
                                                     @csrf
                                                     <div class="row">
@@ -584,20 +587,51 @@
 
             $("#select_branch").select2();
 
+            {{--$(".static_download").on('click', function (e) {--}}
+            {{--    e.preventDefault();--}}
+
+            {{--    let currentForm = @json(request()->query());--}}
+            {{--    let url = '{{route('report.downloadStatistics')}}';--}}
+            {{--    let token = $('meta[name="csrf-token"]').attr("content");--}}
+            {{--    let inputs = `<input name="_token" value="${token}">`;--}}
+
+            {{--    for (var key of Object.keys(currentForm)) {--}}
+            {{--        inputs += `<input name=${key} value=${currentForm[key] ?? ''} >`;--}}
+            {{--    }--}}
+
+            {{--    $(`<form action=${url}>${inputs}</form>`).appendTo('body').submit().remove();--}}
+            {{--});--}}
+
             $(".static_download").on('click', function (e) {
                 e.preventDefault();
-
+                $('.statistcs-spinner').show()
                 let currentForm = @json(request()->query());
                 let url = '{{route('report.downloadStatistics')}}';
-                let token = $('meta[name="csrf-token"]').attr("content");
-                let inputs = `<input name="_token" value="${token}">`;
 
+                const data = [];
                 for (var key of Object.keys(currentForm)) {
-                    inputs += `<input name=${key} value=${currentForm[key] ?? ''} >`;
+                    data[key]=currentForm[key]
                 }
+                data['_token']=$('meta[name="csrf-token"]').attr('content');
+                e.stopPropagation();
+                $.get(url,{...data}).then(res => {
 
-                $(`<form action=${url}>${inputs}</form>`).appendTo('body').submit().remove();
+                    var tmpLink = document.createElement('a');
+                    tmpLink.download = res.name; // set the name of the download file
+                    tmpLink.href = res.file;
+                    // temporarily add link to body and initiate the download
+                    document.body.appendChild(tmpLink);
+                    $(tmpLink).attr('target', '_blank')
+                    tmpLink.click();
+                    document.body.removeChild(tmpLink);
+                    $('.statistcs-spinner').hide()
+                    // Toast.fire({
+                    //     icon: 'success',
+                    //     title: 'file downloaded successfully'
+                    // })
+                })
             });
+
 
             //Show Card Report
             $(".card_report").on('click', function (e) {

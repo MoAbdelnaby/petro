@@ -439,7 +439,7 @@ class PlaceReport extends BaseReport
             ->select(
                 'branches.name as branch_name',
                 DB::raw("(DATE_FORMAT($this->profileTable.checkInDate, '%d-%m-%Y')) as day"),
-//                DB::raw("COUNT(CASE WHEN invoice != 0 then 1 ELSE NULL END) as backout"),
+//                DB::raw("COUNT(CASE WHEN invoice != 0 then NULL ELSE 1 END) as backout"),
 //                DB::raw("COUNT(CASE WHEN UNIX_TIMESTAMP(invoice) = 0 then 1 ELSE NULL END) as backout"),
 //                DB::raw("COUNT(NULLIF(invoice,'0')) AS backout"),
 //                DB::raw("SUM(case when invoice != ' ' then 1 else 0 end) as backout"),
