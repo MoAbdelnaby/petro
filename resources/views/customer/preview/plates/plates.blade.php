@@ -631,7 +631,7 @@
                                                                         @if($item->invoiceStatus->status == 'sent')
                                                                             <a id="download-{{$item->id}}"
                                                                                {{--                                                                               onclick="reviewPdf('{{$item->plate_en}}','{{$item->id}}',event)"--}}
-                                                                               href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceStatus->fileUrl}}"
+                                                                               href="{{!empty($item->invoiceStatus->fileUrl) ? config('app.azure_storage').config('app.azure_container').$item->invoiceStatus->fileUrl : "#"}}"
                                                                                data-toggle="popover"
                                                                                data-trigger="hover"
                                                                                data-content="Preview Invoice">
@@ -647,11 +647,10 @@
                                                                                    style="font-size: 19px"></i>
                                                                             </a>
                                                                         @elseif($item->invoiceStatus->status == 'received')
-                                                                            <a data-toggle="popover"
-                                                                               data-trigger="hover"
-                                                                               data-content=" {{ __('Invoiced Received') }}">
-                                                                                <i class="fas fa-file-import text-info"
-                                                                                   style="font-size: 19px"></i>
+                                                                            <a
+                                                                                href="{{config('app.azure_storage').config('app.azure_container').$item->invoiceStatus->fileUrl}}"
+                                                                                data-toggle="popover" data-trigger="hover" data-content=" {{ __('Invoiced Received') }}">
+                                                                                <i class="fas fa-file-import text-info" style="font-size: 19px"></i>
                                                                             </a>
                                                                         @endif
 
