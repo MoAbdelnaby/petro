@@ -602,18 +602,18 @@
                                                                     @if(!is_null($item->welcomeStatus))
                                                                         @if($item->welcomeStatus->status == 'sent')
                                                                             <a data-toggle="popover" data-trigger="hover" data-content="Welcome Sent">
-                                                                                <i class="fa fa-comment text-success"
+                                                                                <i class="fa fa-comment text-success"  style="font-size: 19px"
                                                                                    ></i>
                                                                             </a>
 
                                                                         @elseif( $item->welcomeStatus->status == 'failed')
                                                                             <a data-toggle="popover" data-trigger="hover" data-content="{{$item->welcomeStatus->error_reason}}">
-                                                                                <i class="fa fa-comment-medical text-warning"
+                                                                                <i class="fa fa-comment-medical text-warning"  style="font-size: 19px"
                                                                                   ></i>
                                                                             </a>
                                                                         @elseif($item->welcomeStatus->status == 'received')
                                                                             <a data-toggle="popover" data-trigger="hover" data-content=" {{ __('Welcome Received') }}">
-                                                                                <i class="fa fa-comment-dots fa-2x text-info" ></i>
+                                                                                <i class="fa fa-comment-dots  text-info"  style="font-size: 19px" ></i>
                                                                             </a>
                                                                         @endif
 
@@ -621,7 +621,7 @@
                                                                         <a class="" data-toggle="popover"
                                                                            data-trigger="hover"
                                                                            data-content="Not Sent">
-                                                                            <i class="fas fa-comment-slash text-danger"></i>
+                                                                            <i class="fas fa-comment-slash text-danger"  style="font-size: 19px"></i>
                                                                         </a>
                                                                     @endif
                                                                 </td>
