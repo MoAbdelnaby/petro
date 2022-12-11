@@ -79,11 +79,12 @@ class PlateReport extends BaseReport
         $query = DB::table($this->mainTable)
             ->whereIn("branch_id", $list)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+            ->join("backout_reasons", "backout_reasons.car_profile_id", '=', "$this->mainTable.id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
             ->where("$this->mainTable.status", '=', 'completed')
             ->where("$this->mainTable.plate_status", '=', 'success')
-            ->selectRaw("branch_id as list_id,branches.name as list_name, $selectQuery");
+            ->selectRaw("branch_id as list_id,branches.name as list_name,backout_reasons.reason1,backout_reasons.reason2,backout_reasons.reason3, $selectQuery");
 
         $this->query = $query;
     }
@@ -100,11 +101,12 @@ class PlateReport extends BaseReport
         $query = DB::table($this->mainTable)
             ->whereIn("$this->mainTable.branch_id", $list)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
+            ->join("backout_reasons", "backout_reasons.car_profile_id", '=', "$this->mainTable.id")
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
             ->where("$this->mainTable.status", '=', 'completed')
             ->where("$this->mainTable.plate_status", '=', 'success')
-            ->selectRaw("BayCode as list_id,BayCode as list_name, $selectQuery");
+            ->selectRaw("carprofiles.BayCode as list_id,carprofiles.BayCode as list_name,backout_reasons.reason1,backout_reasons.reason2,backout_reasons.reason3, $selectQuery");
 
         $this->query = $query;
     }
@@ -120,12 +122,11 @@ class PlateReport extends BaseReport
         $filter["column"] = "$this->mainTable.checkInDate";
 
         $query = $this->handleDateFilter($this->query, $filter, true);
-
         if ($filter['download'] ?? false) {
             return collect($query->get())->groupBy("list_id")
                 ->mapWithKeys(function ($item) use ($key) {
                     return [$item[0]->list_name => array_map(static function ($el) use ($key) {
-                        return array_unique([
+                        return [
                             ucfirst($key) . " Name" => $el->list_name,
                             'Branch Name' => $el->branch_name,
                             'Area Name' => "Area# $el->BayCode",
@@ -134,9 +135,13 @@ class PlateReport extends BaseReport
                             'CheckIn Date' => $el->checkInDate,
                             'CheckOutDate' => $el->checkOutDate,
                             'Duration' => str_replace('before', '', \Carbon\Carbon::parse($el->checkInDate)->diffForHumans($el->checkOutDate)),
-                            'Invoice' => $el->invoice,
-                            'Welcome' => $el->welcome,
-                        ]);
+                            'InvoiceTime' => $el->invoice,
+                            'Status' => !empty($el->invoice) ? 'invoiced' : 'Backout',
+                            'WelcomeTime' => $el->welcome,
+                            'reason 1' => $el->reason1,
+                            'reason 2' => $el->reason2,
+                            'reason 3' => $el->reason3,
+                        ];
                     }, $item->toArray())];
                 })->toArray();
         }
@@ -205,7 +210,7 @@ class PlateReport extends BaseReport
             $list = \Arr::wrap(str_contains($list, ',') ? explode(',', $list) : $list);
         }
 
-        $selectQuery = 'branches.name as branch_name,BayCode,plate_en,plate_ar,invoice,welcome,checkInDate,checkOutDate';
+        $selectQuery = 'branches.name as branch_name,carprofiles.BayCode,plate_en,plate_ar,invoice,welcome,checkInDate,checkOutDate';
 
         $this->$func_name($list, $selectQuery);
 

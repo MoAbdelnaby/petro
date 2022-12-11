@@ -125,7 +125,6 @@ class ReportService
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-
         return $reportObject->prepare($filter);
     }
 
