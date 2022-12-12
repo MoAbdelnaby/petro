@@ -29,10 +29,10 @@
         </div>
     </div>
 
-    <div class="col-md-12 mt-4 {{(in_array(request('branch_type') ,['branch','area'])) ? "show" : ""}}" id="specific_branch"
+    <div class="col-md-12 mt-4   {{(in_array(request('branch_type') ,['branch','area'])) ? "show" : ""}}" id="specific_branch"
          @if(request('branch_type') == 'branch') style="display: block" @else style="display: none" @endif>
         <lebel>{{ __('app.Select_branch') }}:</lebel>
-        <select class="form-control nice-select required" name="branch_data">
+        <select class="form-control select-specefic-branch nice-select required" name="branch_data">
             <option value="">{{ __('app.Select_Branch') }}</option>
             @foreach($branches as $branch)
                 <option value="{{$branch->id}}" @if(request('branch_data') == $branch->id) selected @endif>{{$branch->name}}</option>
@@ -62,6 +62,7 @@
 @push('js')
     <script>
         $(function () {
+            $(".select-specefic-branch").select2();
             $('#branch_type').change(function () {
                 let branch_type = $(this).val();
                 if (branch_type === 'comparison') {
