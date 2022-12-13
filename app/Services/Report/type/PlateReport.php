@@ -77,14 +77,16 @@ class PlateReport extends BaseReport
         $selectQuery = $selectQuery ?? $this->selectQuery;
 
         $query = DB::table($this->mainTable)
-            ->whereIn("branch_id", $list)
+            ->whereIn("carprofiles.branch_id", $list)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->leftJoin("backout_reasons", "backout_reasons.car_profile_id", '=', "$this->mainTable.id")
+            ->leftJoin("message_logs", "message_logs.carprofile_id", '=', "$this->mainTable.id")
+            ->where("message_logs.type", '=', 'invoice')
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
             ->where("$this->mainTable.status", '=', 'completed')
             ->where("$this->mainTable.plate_status", '=', 'success')
-            ->selectRaw("branch_id as list_id,branches.name as list_name,backout_reasons.reason1,backout_reasons.reason2,backout_reasons.reason3, $selectQuery");
+            ->selectRaw("carprofiles.branch_id as list_id,branches.name as list_name,backout_reasons.reason1,backout_reasons.reason2,backout_reasons.reason3,message_logs.fileUrl, $selectQuery");
 
         $this->query = $query;
     }
@@ -102,11 +104,14 @@ class PlateReport extends BaseReport
             ->whereIn("$this->mainTable.branch_id", $list)
             ->join("branches", "branches.id", '=', "$this->mainTable.branch_id")
             ->leftJoin("backout_reasons", "backout_reasons.car_profile_id", '=', "$this->mainTable.id")
+            ->leftJoin("message_logs", "message_logs.carprofile_id", '=', "$this->mainTable.id")
+            ->where("message_logs.type", '=', 'invoice')
             ->where("branches.user_id", '=', parentID())
             ->where("branches.active", '=', true)
+            ->where("message_logs.type", '=', 'invoice')
             ->where("$this->mainTable.status", '=', 'completed')
             ->where("$this->mainTable.plate_status", '=', 'success')
-            ->selectRaw("carprofiles.BayCode as list_id,carprofiles.BayCode as list_name,backout_reasons.reason1,backout_reasons.reason2,backout_reasons.reason3, $selectQuery");
+            ->selectRaw("carprofiles.BayCode as list_id,carprofiles.BayCode as list_name,backout_reasons.reason1,backout_reasons.reason2,backout_reasons.reason3,message_logs.fileUrl, $selectQuery");
 
         $this->query = $query;
     }
@@ -135,9 +140,9 @@ class PlateReport extends BaseReport
                             'CheckIn Date' => $el->checkInDate,
                             'CheckOutDate' => $el->checkOutDate,
                             'Duration' => str_replace('before', '', \Carbon\Carbon::parse($el->checkInDate)->diffForHumans($el->checkOutDate)),
-                            'InvoiceTime' => $el->invoice,
-                            'Status' => !empty($el->invoice) ? 'invoiced' : 'Backout',
-                            'WelcomeTime' => $el->welcome,
+                            'InvoiceMessageTime' => $el->invoice,
+                            'Status' => isset($el->fileUrl) && !empty($el->fileUrl) ? 'invoiced' : 'Backout',
+                            'WelcomeMeesageTime' => $el->welcome,
                             'reason 1' => $el->reason1,
                             'reason 2' => $el->reason2,
                             'reason 3' => $el->reason3,
