@@ -5,6 +5,7 @@ namespace App\Services\Report;
 use App\Models\AreaStatus;
 use App\Models\Branch;
 use App\Models\Carprofile;
+use App\Models\MessageLog;
 use App\Models\Region;
 use App\Services\Report\type\PlaceReport;
 use App\User;
@@ -50,7 +51,8 @@ class ReportService
 
         //System Models Statics
         $cars = Carprofile::where('status', 'completed')->where('plate_status', 'success');
-        $invoice = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+//        $invoice = Carprofile::where('status', 'completed')->where('plate_status', 'success');
+        $invoice = MessageLog::where('type', 'invoice')->whereNotNull('fileUrl');
         $welcome = Carprofile::where('status', 'completed')->where('plate_status', 'success');
         $backout = Carprofile::where('status', 'completed')->where('plate_status', 'success');
         $serving = Carprofile::where('status', 'completed')->where('plate_status', 'success');
@@ -64,7 +66,7 @@ class ReportService
 //        self::handleDateFilter($serving, $filter, true);
 
         self::handleDateFilter($cars, $filter);
-        self::handleDateFilter($invoice, $filter);
+        self::handleDateFilter($invoice, $filter,false,'invoice');
         self::handleDateFilter($welcome, $filter);
         self::handleDateFilter($backout, $filter);
         self::handleDateFilter($serving, $filter);
@@ -85,7 +87,7 @@ class ReportService
 
         $areas = $areas->count();
         $cars = $cars->count();
-        $invoice = $invoice->where('invoice', '<>', null)->count();
+        $invoice = $invoice->count();
         $welcome = $welcome->where('welcome', '<>', null)->count();
         $backout = $backout->where('invoice', '=', null)->count();
         $serving = $serving->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
@@ -157,7 +159,8 @@ class ReportService
 
             //System Models Statics
             $cars = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
-            $invoice = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+//            $invoice = MessageLog::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
+            $invoice = MessageLog::where('type', 'invoice')->whereNotNull('fileUrl')->where('branch_id', $branch->id);
             $welcome = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
             $backout = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
             $serving = Carprofile::where('status', 'completed')->where('plate_status', 'success')->where('branch_id', $branch->id);
@@ -171,14 +174,14 @@ class ReportService
 //            self::handleDateFilter($serving, $filter, true);
 
             self::handleDateFilter($cars, $filter);
-            self::handleDateFilter($invoice, $filter);
+            self::handleDateFilter($invoice, $filter,false,'invoice');
             self::handleDateFilter($welcome, $filter);
             self::handleDateFilter($backout, $filter);
             self::handleDateFilter($serving, $filter);
 
             $areas = $areas->count();
             $cars = $cars->count();
-            $invoice = $invoice->where('invoice', '<>', null)->count();
+            $invoice = $invoice->count();
             $welcome = $welcome->where('welcome', '<>', null)->count();
             $backout = $backout->where('invoice', '=', null)->count();
             $serving = $serving->select(DB::raw('round(AVG(TIMESTAMPDIFF(MINUTE,checkInDate,checkOutDate)),0) as duration'))->first()['duration'];
@@ -214,7 +217,7 @@ class ReportService
      * @param bool $timeStamp
      * @return mixed
      */
-    public static function handleDateFilter($query, $filter, bool $timeStamp = false)
+    public static function handleDateFilter($query, $filter, bool $timeStamp = false,$type='normal')
     {
         $filter['start'] = empty($filter['start']) ? now()->startOfMonth()->toDateString() : $filter['start'];
 
@@ -224,7 +227,12 @@ class ReportService
             if ($timeStamp) {
                 $query->where($filter['column'], '>=', $start->format('Y-m-d H:i:s'));
             } else {
-                $query->whereDate($filter['column'], '>=', $start->format('Y-m-d'));
+                if($type=='normal'){
+                    $query->whereDate($filter['column'], '>=', $start->format('Y-m-d'));
+                }else{
+                    $query->whereDate('created_at', '>=', $start->format('Y-m-d'));
+                }
+
             }
         }
 
@@ -234,7 +242,11 @@ class ReportService
             if ($timeStamp) {
                 $query->where($filter['column'], '<=', $end->format('Y-m-d H:i:s'));
             } else {
-                $query->whereDate($filter['column'], '<=', $end->format('Y-m-d'));
+                if($type=='normal'){
+                    $query->whereDate($filter['column'], '<=', $end->format('Y-m-d'));
+                }else{
+                    $query->whereDate('created_at', '<=', $end->format('Y-m-d'));
+                }
             }
         }
 
